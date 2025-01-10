@@ -1,0 +1,45 @@
+# ControlDomain
+
+
+## Values
+
+| Name                                      | Value                                     |
+| ----------------------------------------- | ----------------------------------------- |
+| `ARTIFICIAL_AND_AUTONOMOUSTECHNOLOGY`     | ARTIFICIAL_&_AUTONOMOUS_TECHNOLOGY        |
+| `ASSET_MANAGEMENT`                        | ASSET_MANAGEMENT                          |
+| `BUSINESSCONTINUITY_AND_DISASTERRECOVERY` | BUSINESS_CONTINUITY_&_DISASTER_RECOVERY   |
+| `CAPACITY_AND_PERFORMANCEPLANNING`        | CAPACITY_&_PERFORMANCE_PLANNING           |
+| `CHANGE_MANAGEMENT`                       | CHANGE_MANAGEMENT                         |
+| `CLOUD_SECURITY`                          | CLOUD_SECURITY                            |
+| `COMPLIANCE`                              | COMPLIANCE                                |
+| `CONFIGURATION_MANAGEMENT`                | CONFIGURATION_MANAGEMENT                  |
+| `CONTINUOUS_MONITORING`                   | CONTINUOUS_MONITORING                     |
+| `CRYPTOGRAPHIC_PROTECTIONS`               | CRYPTOGRAPHIC_PROTECTIONS                 |
+| `DATACLASSIFICATION_AND_HANDLING`         | DATA_CLASSIFICATION_&_HANDLING            |
+| `EMBEDDED_TECHNOLOGY`                     | EMBEDDED_TECHNOLOGY                       |
+| `ENDPOINT_SECURITY`                       | ENDPOINT_SECURITY                         |
+| `HUMAN_RESOURCES_SECURITY`                | HUMAN_RESOURCES_SECURITY                  |
+| `IDENTIFICATION_AND_AUTHENTICATION`       | IDENTIFICATION_&_AUTHENTICATION           |
+| `INCIDENT_RESPONSE`                       | INCIDENT_RESPONSE                         |
+| `INFORMATION_ASSURANCE`                   | INFORMATION_ASSURANCE                     |
+| `MAINTENANCE`                             | MAINTENANCE                               |
+| `MOBILE_DEVICE_MANAGEMENT`                | MOBILE_DEVICE_MANAGEMENT                  |
+| `NETWORK_SECURITY`                        | NETWORK SECURITY                          |
+| `PHYSICAL_AND_ENVIRONMENTALSECURITY`      | PHYSICAL_&_ENVIRONMENTAL_SECURITY         |
+| `PRIVACY`                                 | PRIVACY                                   |
+| `PROJECT_AND_RESOURCEMANAGEMENT`          | PROJECT_&_RESOURCE MANAGEMENT             |
+| `RISK_MANAGEMENT`                         | RISK_MANAGEMENT                           |
+| `SECUREENGINEERING_AND_ARCHITECTURE`      | SECURE_ENGINEERING_&_ARCHITECTURE         |
+| `SECURITYAWARENESS_AND_TRAINING`          | SECURITY_AWARENESS_&_TRAINING             |
+| `SECURITY_OPERATIONS`                     | SECURITY_OPERATIONS                       |
+| `SECURITY_AND_PRIVACYGOVERNANCE`          | SECURITY_&_PRIVACY_GOVERNANCE             |
+| `TECHNOLOGYDEVELOPMENT_AND_ACQUISITION`   | TECHNOLOGY_DEVELOPMENT_&_ACQUISITION      |
+| `THIRD_PARTY_MANAGEMENT`                  | THIRD-PARTY_MANAGEMENT                    |
+| `THREAT_MANAGEMENT`                       | THREAT_MANAGEMENT                         |
+| `VULNERABILITY_AND_PATCHMANAGEMENT`       | VULNERABILITY_&_PATCH_MANAGEMENT          |
+| `WEB_SECURITY`                            | WEB_SECURITY                              |
+| `ADMINISTRATIVE`                          | ADMINISTRATIVE                            |
+| `PHYSICAL`                                | PHYSICAL                                  |
+| `TECHNICAL`                               | TECHNICAL                                 |
+| `BASIC`                                   | BASIC                                     |
+| `DERIVED`                                 | DERIVED                                   |

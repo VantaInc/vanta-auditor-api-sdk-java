@@ -1,0 +1,81 @@
+overlay: 1.0.0
+info:
+  title: Speakeasy Modifications
+  version: 0.0.2
+  x-speakeasy-metadata:
+    after: ""
+    before: ""
+    type: speakeasy-modifications
+actions:
+  - target: $["paths"]["/auditors"]["post"]
+    update:
+      x-speakeasy-name-override: create
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Auditors.CreateAuditor()
+      after: sdk.auditors.create()
+      reviewed_at: 1736517355673
+      created_at: 1736517352263
+  - target: $["paths"]["/audits/{auditId}/evidence"]["get"]
+    update:
+      x-speakeasy-name-override: listEvidence
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Audits.ListAuditEvidence()
+      after: sdk.audits.listEvidence()
+      reviewed_at: 1736517355673
+      created_at: 1736517352263
+  - target: $["paths"]["/audits/{auditId}/controls"]["get"]
+    update:
+      x-speakeasy-name-override: listControls
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Audits.ListAuditControls()
+      after: sdk.audits.listControls()
+      reviewed_at: 1736517355673
+      created_at: 1736517352263
+  - target: $["paths"]["/audits/{auditId}/comments"]["get"]
+    update:
+      x-speakeasy-name-override: listComments
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Audits.ListAuditComments()
+      after: sdk.audits.listComments()
+      reviewed_at: 1736517355673
+      created_at: 1736517352263
+  - target: $["paths"]["/audits/{auditId}/evidence/{auditEvidenceId}/urls"]["get"]
+    update:
+      x-speakeasy-name-override: listEvidenceUrls
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Audits.ListAuditEvidenceUrls()
+      after: sdk.audits.listEvidenceUrls()
+      reviewed_at: 1736517355673
+      created_at: 1736517352263
+  - target: $["paths"]["/audits/{auditId}/evidence/{auditEvidenceId}"]["patch"]
+    update:
+      x-speakeasy-name-override: updateEvidence
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Audits.UpdateAuditEvidence()
+      after: sdk.audits.updateEvidence()
+      reviewed_at: 1736517355673
+      created_at: 1736517352263
+  - target: $["paths"]["/audits/{auditId}/evidence/{auditEvidenceId}/comments"]["post"]
+    update:
+      x-speakeasy-name-override: createCommentForEvidence
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Audits.CreateCommentForAuditEvidence()
+      after: sdk.audits.createCommentForEvidence()
+      reviewed_at: 1736517355673
+      created_at: 1736517352263
+  - target: $["paths"]["/audits"]["get"]
+    update:
+      x-speakeasy-name-override: list
+    x-speakeasy-metadata:
+      type: method-name
+      before: sdk.Audits.ListAudits()
+      after: sdk.audits.list()
+      reviewed_at: 1736517355673
+      created_at: 1736517352263

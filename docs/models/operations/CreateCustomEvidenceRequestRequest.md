@@ -1,0 +1,9 @@
+# CreateCustomEvidenceRequestRequest
+
+
+## Fields
+
+| Field                                                                                           | Type                                                                                            | Required                                                                                        | Description                                                                                     |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                       | *String*                                                                                        | :heavy_check_mark:                                                                              | N/A                                                                                             |
+| `createCustomEvidenceRequestInput`                                                              | [CreateCustomEvidenceRequestInput](../../models/components/CreateCustomEvidenceRequestInput.md) | :heavy_check_mark:                                                                              | N/A                                                                                             |

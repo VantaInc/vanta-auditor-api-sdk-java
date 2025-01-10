@@ -1,0 +1,301 @@
+lockVersion: 2.0.0
+id: f42d74f5-5725-46fa-b13c-649b7ef895c3
+management:
+  docChecksum: 1e9d3c6248fac856e4523346afc17c87
+  docVersion: 1.0.0
+  speakeasyVersion: 1.461.0
+  generationVersion: 2.486.1
+  releaseVersion: 0.1.1
+  configChecksum: c1ec2c23f037c30bd2d632d8a5b6c6ea
+features:
+  java:
+    additionalDependencies: 0.1.0
+    constsAndDefaults: 0.1.1
+    core: 3.33.4
+    flattening: 2.81.1
+    globalSecurity: 2.82.7
+    globalSecurityCallbacks: 0.1.0
+    globalSecurityFlattening: 0.1.0
+    globalServerURLs: 2.82.1
+    nameOverrides: 2.81.3
+    nullables: 0.1.0
+    sdkHooks: 0.1.0
+    unions: 0.0.6
+generatedFiles:
+  - .gitattributes
+  - CONTRIBUTING.md
+  - USAGE.md
+  - build.gradle
+  - docs/models/components/AddAuditorInput.md
+  - docs/models/components/AddCommentInput.md
+  - docs/models/components/Audit.md
+  - docs/models/components/AuditEvidenceState.md
+  - docs/models/components/AuditEvidenceType.md
+  - docs/models/components/AuditEvidenceUpdateInput.md
+  - docs/models/components/Auditor.md
+  - docs/models/components/AuditorControl.md
+  - docs/models/components/AuditorEnabledStateTransition.md
+  - docs/models/components/Comment.md
+  - docs/models/components/Control.md
+  - docs/models/components/ControlDomain.md
+  - docs/models/components/ControlOwner.md
+  - docs/models/components/ControlSource.md
+  - docs/models/components/CreateCustomControlInput.md
+  - docs/models/components/CreateCustomEvidenceRequestInput.md
+  - docs/models/components/CustomEvidenceRequest.md
+  - docs/models/components/Evidence.md
+  - docs/models/components/EvidenceControl.md
+  - docs/models/components/EvidenceUrl.md
+  - docs/models/components/FrameworkId.md
+  - docs/models/components/FrameworkSection.md
+  - docs/models/components/FrameworkSectionFrameworkId.md
+  - docs/models/components/Owner.md
+  - docs/models/components/PageInfo.md
+  - docs/models/components/PaginatedResponseAudit.md
+  - docs/models/components/PaginatedResponseAuditorControl.md
+  - docs/models/components/PaginatedResponseAuditorControlResults.md
+  - docs/models/components/PaginatedResponseComment.md
+  - docs/models/components/PaginatedResponseCommentResults.md
+  - docs/models/components/PaginatedResponseEvidence.md
+  - docs/models/components/PaginatedResponseEvidenceResults.md
+  - docs/models/components/PaginatedResponseEvidenceUrl.md
+  - docs/models/components/PaginatedResponseEvidenceUrlResults.md
+  - docs/models/components/RecurrenceDuration.md
+  - docs/models/components/Results.md
+  - docs/models/components/Role.md
+  - docs/models/components/Security.md
+  - docs/models/components/StatusUpdate.md
+  - docs/models/operations/CreateAuditorResponse.md
+  - docs/models/operations/CreateCommentForAuditEvidenceRequest.md
+  - docs/models/operations/CreateCommentForAuditEvidenceResponse.md
+  - docs/models/operations/CreateCustomControlRequest.md
+  - docs/models/operations/CreateCustomControlResponse.md
+  - docs/models/operations/CreateCustomEvidenceRequestRequest.md
+  - docs/models/operations/CreateCustomEvidenceRequestResponse.md
+  - docs/models/operations/ListAuditCommentsRequest.md
+  - docs/models/operations/ListAuditCommentsResponse.md
+  - docs/models/operations/ListAuditControlsRequest.md
+  - docs/models/operations/ListAuditControlsResponse.md
+  - docs/models/operations/ListAuditEvidenceRequest.md
+  - docs/models/operations/ListAuditEvidenceResponse.md
+  - docs/models/operations/ListAuditEvidenceUrlsRequest.md
+  - docs/models/operations/ListAuditEvidenceUrlsResponse.md
+  - docs/models/operations/ListAuditsRequest.md
+  - docs/models/operations/ListAuditsResponse.md
+  - docs/models/operations/UpdateAuditEvidenceRequest.md
+  - docs/models/operations/UpdateAuditEvidenceResponse.md
+  - docs/sdks/auditors/README.md
+  - docs/sdks/audits/README.md
+  - docs/sdks/vanta/README.md
+  - gradle/wrapper/gradle-wrapper.jar
+  - gradle/wrapper/gradle-wrapper.properties
+  - gradlew
+  - gradlew.bat
+  - settings.gradle
+  - src/main/java/com/vanta/vanta_auditor_api/Auditors.java
+  - src/main/java/com/vanta/vanta_auditor_api/Audits.java
+  - src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java
+  - src/main/java/com/vanta/vanta_auditor_api/SecuritySource.java
+  - src/main/java/com/vanta/vanta_auditor_api/Vanta.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/AddAuditorInput.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/AddCommentInput.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/Audit.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditEvidenceState.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditEvidenceType.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditEvidenceUpdateInput.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/Auditor.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditorControl.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditorEnabledStateTransition.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/Comment.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/Control.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/ControlDomain.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/ControlOwner.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/ControlSource.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/CreateCustomControlInput.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/CreateCustomEvidenceRequestInput.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/CustomEvidenceRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/Evidence.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/EvidenceControl.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/EvidenceUrl.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/FrameworkId.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/FrameworkSection.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/FrameworkSectionFrameworkId.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/Owner.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/PageInfo.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAudit.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAuditorControl.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAuditorControlResults.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseComment.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseCommentResults.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseEvidence.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseEvidenceResults.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseEvidenceUrl.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseEvidenceUrlResults.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/RecurrenceDuration.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/Results.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/Role.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/Security.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/StatusUpdate.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/errors/APIException.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/errors/AuthException.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateAuditorRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateAuditorResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCommentForAuditEvidenceRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCommentForAuditEvidenceRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCommentForAuditEvidenceResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCustomControlRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCustomControlRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCustomControlResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCustomEvidenceRequestRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCustomEvidenceRequestRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCustomEvidenceRequestResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditCommentsRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditCommentsRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditCommentsResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditControlsRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditControlsRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditControlsResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditEvidenceRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditEvidenceRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditEvidenceResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditEvidenceUrlsRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditEvidenceUrlsRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditEvidenceUrlsResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditsRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditsRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditsResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/SDKMethodInterfaces.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/UpdateAuditEvidenceRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/UpdateAuditEvidenceRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/UpdateAuditEvidenceResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/BackoffStrategy.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/BigDecimalString.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/BigIntegerString.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Deserializers.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/EventStream.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/EventStreamLineReader.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/EventStreamMessage.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/EventStreamReader.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/FormMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/HTTPClient.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/HTTPRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/HeaderMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Helpers.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Hook.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Hooks.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/JSON.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/LazySingletonValue.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Metadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/MultipartFormMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/OneOfDeserializer.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Options.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/PathParamsMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/QueryParameter.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/QueryParameters.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/QueryParamsMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/RequestBody.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/RequestMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Response.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Retries.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/RetryConfig.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Security.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/SecurityMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/SerializedBody.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/SessionManager.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/SpeakeasyHTTPClient.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/SpeakeasyMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/TypedObject.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Types.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Utf8UrlEncoder.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Utils.java
+examples:
+  ListAudits:
+    Example 1:
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56Z", "auditEndDate": "2024-03-14T21:25:56Z", "earlyAccessStartsDate": "2024-03-07T21:25:56Z", "framework": "SOC 2 Type II", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": "2024-03-07T21:25:56Z", "creationDate": "2024-03-07T21:25:56Z", "modificationDate": "2024-03-07T21:25:56Z", "completionDate": "2024-03-07T21:25:56Z"}], "pageInfo": {"endCursor": "YXJyYXljb25uZWN0aW9uOjE=", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "YXJyYXljb25uZWN0aW9uOjA="}}}
+  ListAuditEvidenceUrls:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+          auditEvidenceId: "<id>"
+        query: {}
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "NjVmYzgxYTMzNTljODUwOGM5YWY4ODBm", "url": "https://s3.amazonaws.com/audit-evidence/2022/audit.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=secret%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20221104T140227Z&X-Amz-Expires=3600&X-Amz-SignedHeaders=host&X-Amz-Signature=b228dbec8c1008c80c162e1210e4503dceead1e4d4751b4d9787314fd6da4d55", "filename": "example.jpg", "isDownloadable": true}], "pageInfo": {"endCursor": "YXJyYXljb25uZWN0aW9uOjE=", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "YXJyYXljb25uZWN0aW9uOjA="}}}
+  ListAuditEvidence:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+        query: {}
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "65fc81a3359c8508c9af880f", "externalId": "cG9saWN5OmFjY2Vzcy1jb250cm9sLXBvbGljeQo=", "status": "Ready for audit", "name": "Access Control Policy", "deletionDate": "2024-03-07T21:25:56Z", "creationDate": "2024-03-07T21:25:56Z", "statusUpdatedDate": "2024-03-07T21:25:56Z", "testStatus": "The test was passing during this period", "evidenceType": "Policy", "evidenceId": "access-control-policy", "relatedControls": [{"name": "CRY-104", "sectionNames": ["Article 13"]}], "description": "example description of test"}], "pageInfo": {"endCursor": "YXJyYXljb25uZWN0aW9uOjE=", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "YXJyYXljb25uZWN0aW9uOjA="}}}
+  ListAuditComments:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+        query: {}
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "65fc81a3359c8508c9af880f", "auditEvidenceId": "65fc81a3359c8508c9af880f", "text": "Some comment", "creationDate": "2024-03-07T21:25:56Z", "modificationDate": "2024-03-07T21:25:56Z", "email": "vlad@vantaroo.com"}], "pageInfo": {"endCursor": "YXJyYXljb25uZWN0aW9uOjE=", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "YXJyYXljb25uZWN0aW9uOjA="}}}
+  ListAuditControls:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+        query: {}
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "a2f7e1b9d0c3f4e5a6c7b8d9", "externalId": "CRY-104", "name": "Data encryption utilized", "description": "Access reviews are performed to ensure that access is appropriate for the user's role and responsibilities.", "source": "Vanta", "domains": ["CRYPTOGRAPHIC_PROTECTIONS"], "owner": {"id": "65e1efde08e8478f143a8ff9", "displayName": "Example Owner", "emailAddress": "example-person@email.com"}, "framework": "soc2"}], "pageInfo": {"endCursor": "YXJyYXljb25uZWN0aW9uOjE=", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "YXJyYXljb25uZWN0aW9uOjA="}}}
+  CreateCommentForAuditEvidence:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+          auditEvidenceId: "<id>"
+      requestBody:
+        application/json: {"text": "<value>", "email": "Earnestine28@yahoo.com", "creationDate": "2024-11-28T04:59:12.710Z"}
+      responses:
+        "200":
+          application/json: {"id": "65fc81a3359c8508c9af880f", "auditEvidenceId": "65fc81a3359c8508c9af880f", "text": "Some comment", "creationDate": "2024-03-07T21:25:56Z", "modificationDate": "2024-03-07T21:25:56Z", "email": "vlad@vantaroo.com"}
+  UpdateAuditEvidence:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+          auditEvidenceId: "<id>"
+      responses:
+        "200":
+          application/json: {"id": "65fc81a3359c8508c9af880f", "externalId": "cG9saWN5OmFjY2Vzcy1jb250cm9sLXBvbGljeQo=", "status": "Ready for audit", "name": "Access Control Policy", "deletionDate": "2024-03-07T21:25:56Z", "creationDate": "2024-03-07T21:25:56Z", "statusUpdatedDate": "2024-03-07T21:25:56Z", "testStatus": "The test was passing during this period", "evidenceType": "Policy", "evidenceId": "access-control-policy", "relatedControls": [{"name": "CRY-104", "sectionNames": ["Article 13"]}], "description": "example description of test"}
+  CreateCustomEvidenceRequest:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+      requestBody:
+        application/json: {"controlIds": ["<value>"], "title": "<value>", "description": "now whoa while", "cadence": "P3M", "reminderWindow": "P0D", "isRestricted": true}
+      responses:
+        "200":
+          application/json: {"id": "65fc81a3359c8508c9af880f", "controlIds": ["1.1.2.a"], "title": "Access Control Policy", "description": "Description for Access Control Policy", "cadence": "P6M", "reminderWindow": "P6M", "isRestricted": true}
+  CreateCustomControl:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+      requestBody:
+        application/json: {"externalId": "<id>", "name": "<value>", "description": "even keenly afore mmm yearningly ouch tough yearly intent", "effectiveDate": "2024-07-08T11:52:30.590Z", "category": "THREAT_MANAGEMENT"}
+      responses:
+        "201":
+          application/json: {"id": "65fc81a3359c8508c9af880f", "externalId": "<id>", "name": "<value>", "description": "Description for Access Control Policy", "source": "Vanta", "domains": ["<value>"], "owner": {"id": "<id>", "displayName": "Jamey_Swaniawski", "emailAddress": "Sibyl.Connelly@yahoo.com"}}
+  CreateAuditor:
+    Example 1:
+      requestBody:
+        application/json: {"email": "Cooper59@hotmail.com", "givenName": "<value>", "familyName": "<value>"}
+      responses:
+        "200":
+          application/json: {"id": "65fc81a3359c8508c9af880f", "organizationId": "8c9af880f1a335965fc850c8", "email": "testauditor@audit.com", "givenName": "Sam", "familyName": "Auditor"}
+generatedTests: {}
