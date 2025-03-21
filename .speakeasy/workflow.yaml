@@ -12,6 +12,12 @@ targets:
     vanta:
         target: java
         source: Conduct an audit
+        publish:
+            java:
+                ossrhUsername: $ossrh_username
+                ossrhPassword: $ossrh_password
+                gpgSecretKey: $java_gpg_secret_key
+                gpgPassPhrase: $java_gpg_passphrase
         codeSamples:
             registry:
                 location: registry.speakeasyapi.dev/vanta/vanta/conduct-an-audit-java-code-samples
