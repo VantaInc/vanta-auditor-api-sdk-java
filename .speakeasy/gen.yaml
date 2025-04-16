@@ -18,12 +18,12 @@ java:
   additionalPlugins: []
   artifactID: vanta-auditor-api
   clientServerStatusCodesAsErrors: true
-  companyEmail: info@mycompany.com
-  companyName: My Company
-  companyURL: www.mycompany.com
+  companyEmail: sdk@vanta.com
+  companyName: Vanta
+  companyURL: www.vanta.com
   defaultErrorName: APIException
   flattenGlobalSecurity: true
-  githubURL: github.com/owner/repo
+  githubURL: github.com/VantaInc/vanta-auditor-api-sdk-java
   groupID: com.vanta
   imports:
     option: openapi
