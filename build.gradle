@@ -14,6 +14,7 @@ plugins {
     id 'java-library'
     id 'maven-publish'
     id 'signing'
+    id 'cl.franciscosolis.sonatype-central-upload' version '1.0.3'
 }
 
 compileJava.options.encoding = "UTF-8"
@@ -38,8 +39,12 @@ model {
     }
 }
 
+version = "${version}"
+group = "${groupId}"
+
 jar {
     dependsOn(":generatePomFileForMavenPublication")
+    archiveBaseName = "${artifactId}"
 
     into("META-INF/maven/com.vanta/vanta-auditor-api") {
         from("$buildDir/pom.xml")
@@ -60,15 +65,33 @@ tasks.withType(Javadoc) {
   options.addStringOption('Xdoclint:none', '-quiet')
 }
 
-group = "com.vanta"
-version = "0.1.1"
-
 sourcesJar {
-    archiveBaseName = "vanta-auditor-api"
+    archiveBaseName = "${artifactId}"
 }
 
 javadocJar {
-    archiveBaseName = "vanta-auditor-api"
+    archiveBaseName = "${artifactId}"
+}
+sonatypeCentralUpload {
+    // This is your Sonatype generated username
+    username = System.getenv("SONATYPE_USERNAME")
+    // This is your sonatype generated password
+    password = System.getenv("SONATYPE_PASSWORD")
+
+    // This is a list of files to upload. Ideally you would point to your jar file, source and javadoc jar (required by central)
+    archives = files(
+      "$buildDir/libs/${artifactId}-${version}.jar",
+      "$buildDir/libs/${artifactId}-${version}-sources.jar",
+      "$buildDir/libs/${artifactId}-${version}-javadoc.jar"
+    )
+
+    // This is the pom file to upload. This is required by central
+    pom = file("$buildDir/pom.xml")
+
+    // This is your PGP private key. This is required to sign your files
+    signingKey = System.getenv("SONATYPE_SIGNING_KEY")
+    // This is your PGP private key passphrase to decrypt your private key
+    signingKeyPassphrase = System.getenv("SIGNING_KEY_PASSPHRASE")
 }
 
 
@@ -76,19 +99,21 @@ publishing {
 
     publications {
         maven(MavenPublication) {
-            groupId = 'com.vanta'
-            artifactId = 'vanta-auditor-api'
-            version = '0.1.1'
+            // note that properties can't yet be used below!
+            // https://github.com/gradle/gradle/issues/18619
+            groupId = "com.vanta"
+            artifactId = "vanta-auditor-api"
+            version = "0.2.0"
 
             from components.java
 
             pom {
-                name = 'My Company Java SDK'
-                description = 'SDK enabling Java developers to easily integrate with the My Company API.'
-                url = 'https://github.com/owner/repo'
+                name = 'Vanta Java SDK'
+                description = 'SDK enabling Java developers to easily integrate with the Vanta API.'
+                url = 'https://github.com/VantaInc/vanta-auditor-api-sdk-java'
                 scm {
-                    url = 'github.com/owner/repo'
-                    connection = 'scm:git:ssh://git@github.com/owner/repo.git'
+                    url = 'github.com/VantaInc/vanta-auditor-api-sdk-java'
+                    connection = 'scm:git:ssh://git@github.com/VantaInc/vanta-auditor-api-sdk-java.git'
                 }
                 licenses {
                     license {
@@ -98,14 +123,14 @@ publishing {
                 }
                 developers {
                     developer {
-                        name = 'My Company'
-                        organization = 'My Company'
-                        email = 'info@mycompany.com'
+                        name = 'Vanta'
+                        organization = 'Vanta'
+                        email = 'sdk@vanta.com'
                     }
                 }
                 organization {
-                    name = 'My Company'
-                    url = 'www.mycompany.com'
+                    name = 'Vanta'
+                    url = 'www.vanta.com'
                 }
             }
         }
@@ -129,7 +154,6 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.2'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.18.2'
     api('org.openapitools:jackson-databind-nullable:0.2.6') {exclude group: 'com.fasterxml.jackson.core', module: 'jackson-databind'}
-    implementation 'org.apache.httpcomponents.client5:httpclient5:5.4.1'
     implementation 'commons-io:commons-io:2.18.0'
 }
 

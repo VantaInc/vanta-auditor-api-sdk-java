@@ -5,7 +5,6 @@ package hello.world;
 import com.vanta.vanta_auditor_api.Vanta;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import java.lang.Exception;
-import java.time.OffsetDateTime;
 
 public class Application {
 
@@ -16,9 +15,6 @@ public class Application {
             .build();
 
         ListAuditsResponse res = sdk.audits().list()
-                .pageSize(10)
-                .pageCursor("<value>")
-                .changedSinceDate(OffsetDateTime.parse("2025-04-22T08:39:55.981Z"))
                 .call();
 
         if (res.paginatedResponseAudit().isPresent()) {

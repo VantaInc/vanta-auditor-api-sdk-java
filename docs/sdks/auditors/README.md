@@ -30,7 +30,7 @@ public class Application {
             .build();
 
         AddAuditorInput req = AddAuditorInput.builder()
-                .email("Cooper59@hotmail.com")
+                .email("Loyal79@yahoo.com")
                 .givenName("<value>")
                 .familyName("<value>")
                 .build();

@@ -6,7 +6,7 @@
 ### Available Operations
 
 * [list](#list) - List audits
-* [listEvidenceUrls](#listevidenceurls) - List audit evidence url
+* [getEvidenceUrls](#getevidenceurls) - List audit evidence url
 * [listEvidence](#listevidence) - List audit evidence
 * [listComments](#listcomments) - List audit comments
 * [listControls](#listcontrols) - List audit controls
@@ -27,7 +27,6 @@ package hello.world;
 import com.vanta.vanta_auditor_api.Vanta;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import java.lang.Exception;
-import java.time.OffsetDateTime;
 
 public class Application {
 
@@ -38,9 +37,6 @@ public class Application {
             .build();
 
         ListAuditsResponse res = sdk.audits().list()
-                .pageSize(10)
-                .pageCursor("<value>")
-                .changedSinceDate(OffsetDateTime.parse("2025-04-22T08:39:55.981Z"))
                 .call();
 
         if (res.paginatedResponseAudit().isPresent()) {
@@ -68,9 +64,10 @@ public class Application {
 | -------------------------- | -------------------------- | -------------------------- |
 | models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
 
-## listEvidenceUrls
+## getEvidenceUrls
 
-Returns a paginated list of evidence urls for an audit.
+Returns a paginated list of evidence urls for an audit. This endpoint should be called whenever an
+evidence is created or has a statusUpdatedAt field that is more recent than the most recent polling event.
 
 ### Example Usage
 
@@ -89,11 +86,9 @@ public class Application {
                 .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
             .build();
 
-        ListAuditEvidenceUrlsResponse res = sdk.audits().listEvidenceUrls()
+        ListAuditEvidenceUrlsResponse res = sdk.audits().getEvidenceUrls()
                 .auditId("<id>")
                 .auditEvidenceId("<id>")
-                .pageSize(10)
-                .pageCursor("<value>")
                 .call();
 
         if (res.paginatedResponseEvidenceUrl().isPresent()) {
@@ -134,7 +129,6 @@ package hello.world;
 import com.vanta.vanta_auditor_api.Vanta;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditEvidenceResponse;
 import java.lang.Exception;
-import java.time.OffsetDateTime;
 
 public class Application {
 
@@ -146,9 +140,6 @@ public class Application {
 
         ListAuditEvidenceResponse res = sdk.audits().listEvidence()
                 .auditId("<id>")
-                .pageSize(10)
-                .pageCursor("<value>")
-                .changedSinceDate(OffsetDateTime.parse("2024-04-16T02:08:40.568Z"))
                 .call();
 
         if (res.paginatedResponseEvidence().isPresent()) {
@@ -189,7 +180,6 @@ package hello.world;
 import com.vanta.vanta_auditor_api.Vanta;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditCommentsResponse;
 import java.lang.Exception;
-import java.time.OffsetDateTime;
 
 public class Application {
 
@@ -201,9 +191,6 @@ public class Application {
 
         ListAuditCommentsResponse res = sdk.audits().listComments()
                 .auditId("<id>")
-                .pageSize(10)
-                .pageCursor("<value>")
-                .changedSinceDate(OffsetDateTime.parse("2023-04-04T02:10:35.499Z"))
                 .call();
 
         if (res.paginatedResponseComment().isPresent()) {
@@ -255,8 +242,6 @@ public class Application {
 
         ListAuditControlsResponse res = sdk.audits().listControls()
                 .auditId("<id>")
-                .pageSize(10)
-                .pageCursor("<value>")
                 .call();
 
         if (res.paginatedResponseAuditorControl().isPresent()) {
@@ -312,8 +297,8 @@ public class Application {
                 .auditEvidenceId("<id>")
                 .addCommentInput(AddCommentInput.builder()
                     .text("<value>")
-                    .email("Earnestine28@yahoo.com")
-                    .creationDate(OffsetDateTime.parse("2024-11-28T04:59:12.710Z"))
+                    .email("Alexis74@hotmail.com")
+                    .creationDate(OffsetDateTime.parse("2024-08-13T11:18:40.035Z"))
                     .build())
                 .call();
 
@@ -430,6 +415,7 @@ public class Application {
                     .cadence(RecurrenceDuration.P3_M)
                     .reminderWindow(RecurrenceDuration.P0_D)
                     .isRestricted(true)
+                    .auditorEmail("<value>")
                     .build())
                 .call();
 
