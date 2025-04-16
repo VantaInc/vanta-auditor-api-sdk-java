@@ -1,20 +1,21 @@
-speakeasyVersion: 1.461.0
+speakeasyVersion: 1.533.0
 sources:
     Conduct an audit:
         sourceNamespace: conduct-an-audit
-        sourceRevisionDigest: sha256:bba8d11fbff22e86b8cebb373cb9162f76c94b0b1449836c09c28ccdf3cf44e3
-        sourceBlobDigest: sha256:5caeae09f7a133bc6ef4326e74b8aed18fe8b45f74e6b2dc0ac7ee9f0e335cdc
+        sourceRevisionDigest: sha256:fa49ac1c79f171ea6a2d1c947afc689d53fdcfacc6d0c758607d67082c43f3f7
+        sourceBlobDigest: sha256:bbe79169dea0b06f442a5b981fda5eb09f04b5ea369ef9832e48e6feabdccc08
         tags:
             - latest
+            - speakeasy-sdk-regen-1744825786
             - 1.0.0
 targets:
     vanta:
         source: Conduct an audit
         sourceNamespace: conduct-an-audit
-        sourceRevisionDigest: sha256:bba8d11fbff22e86b8cebb373cb9162f76c94b0b1449836c09c28ccdf3cf44e3
-        sourceBlobDigest: sha256:5caeae09f7a133bc6ef4326e74b8aed18fe8b45f74e6b2dc0ac7ee9f0e335cdc
+        sourceRevisionDigest: sha256:fa49ac1c79f171ea6a2d1c947afc689d53fdcfacc6d0c758607d67082c43f3f7
+        sourceBlobDigest: sha256:bbe79169dea0b06f442a5b981fda5eb09f04b5ea369ef9832e48e6feabdccc08
         codeSamplesNamespace: conduct-an-audit-java-code-samples
-        codeSamplesRevisionDigest: sha256:7c052d0f29831ff949372057318d15e2957096e098b22f7a3f313513029c513c
+        codeSamplesRevisionDigest: sha256:3438586112f5de4156d99fa595eb77066b0fe12b05f8e0be4b0d1a1d8fe2618e
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
@@ -30,6 +31,12 @@ workflow:
         vanta:
             target: java
             source: Conduct an audit
+            publish:
+                java:
+                    ossrhUsername: $ossrh_username
+                    ossrhPassword: $ossrh_password
+                    gpgSecretKey: $java_gpg_secret_key
+                    gpgPassPhrase: $java_gpg_passphrase
             codeSamples:
                 registry:
                     location: registry.speakeasyapi.dev/vanta/vanta/conduct-an-audit-java-code-samples

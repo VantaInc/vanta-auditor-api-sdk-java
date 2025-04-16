@@ -33,6 +33,7 @@ Conduct an audit: The Auditor API lets audit firms conduct audits from a tool ou
 * [Development](#development)
   * [Maturity](#maturity)
   * [Contributions](#contributions)
+* [vanta-auditor-api-sdk-java](#vanta-auditor-api-sdk-java)
 
 <!-- End Table of Contents [toc] -->
 
@@ -47,7 +48,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'com.vanta:vanta-auditor-api:0.1.1'
+implementation 'com.vanta:vanta-auditor-api:0.2.0'
 ```
 
 Maven:
@@ -55,7 +56,7 @@ Maven:
 <dependency>
     <groupId>com.vanta</groupId>
     <artifactId>vanta-auditor-api</artifactId>
-    <version>0.1.1</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
@@ -72,6 +73,29 @@ On Windows:
 ```bash
 gradlew.bat publishToMavenLocal -Pskip.signing
 ```
+
+### Logging
+A logging framework/facade has not yet been adopted but is under consideration.
+
+For request and response logging (especially json bodies) use:
+```java
+SpeakeasyHTTPClient.setDebugLogging(true); // experimental API only (may change without warning)
+```
+Example output:
+```
+Sending request: http://localhost:35123/bearer#global GET
+Request headers: {Accept=[application/json], Authorization=[******], Client-Level-Header=[added by client], Idempotency-Key=[some-key], x-speakeasy-user-agent=[speakeasy-sdk/java 0.0.1 internal 0.1.0 org.openapis.openapi]}
+Received response: (GET http://localhost:35123/bearer#global) 200
+Response headers: {access-control-allow-credentials=[true], access-control-allow-origin=[*], connection=[keep-alive], content-length=[50], content-type=[application/json], date=[Wed, 09 Apr 2025 01:43:29 GMT], server=[gunicorn/19.9.0]}
+Response body:
+{
+  "authenticated": true, 
+  "token": "global"
+}
+```
+WARNING: This should only used for temporary debugging purposes. Leaving this option on in a production system could expose credentials/secrets in logs. <i>Authorization</i> headers are redacted by default and there is the ability to specify redacted header names via `SpeakeasyHTTPClient.setRedactedHeaders`.
+
+Another option is to set the System property `-Djdk.httpclient.HttpClient.log=all`. However, this second option does not log bodies.
 <!-- End SDK Installation [installation] -->
 
 <!-- Start SDK Example Usage [usage] -->
@@ -85,7 +109,6 @@ package hello.world;
 import com.vanta.vanta_auditor_api.Vanta;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import java.lang.Exception;
-import java.time.OffsetDateTime;
 
 public class Application {
 
@@ -96,9 +119,6 @@ public class Application {
             .build();
 
         ListAuditsResponse res = sdk.audits().list()
-                .pageSize(10)
-                .pageCursor("<value>")
-                .changedSinceDate(OffsetDateTime.parse("2025-04-22T08:39:55.981Z"))
                 .call();
 
         if (res.paginatedResponseAudit().isPresent()) {
@@ -127,7 +147,6 @@ package hello.world;
 import com.vanta.vanta_auditor_api.Vanta;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import java.lang.Exception;
-import java.time.OffsetDateTime;
 
 public class Application {
 
@@ -138,9 +157,6 @@ public class Application {
             .build();
 
         ListAuditsResponse res = sdk.audits().list()
-                .pageSize(10)
-                .pageCursor("<value>")
-                .changedSinceDate(OffsetDateTime.parse("2025-04-22T08:39:55.981Z"))
                 .call();
 
         if (res.paginatedResponseAudit().isPresent()) {
@@ -164,7 +180,7 @@ public class Application {
 ### [audits()](docs/sdks/audits/README.md)
 
 * [list](docs/sdks/audits/README.md#list) - List audits
-* [listEvidenceUrls](docs/sdks/audits/README.md#listevidenceurls) - List audit evidence url
+* [getEvidenceUrls](docs/sdks/audits/README.md#getevidenceurls) - List audit evidence url
 * [listEvidence](docs/sdks/audits/README.md#listevidence) - List audit evidence
 * [listComments](docs/sdks/audits/README.md#listcomments) - List audit comments
 * [listControls](docs/sdks/audits/README.md#listcontrols) - List audit controls
@@ -196,7 +212,6 @@ package hello.world;
 import com.vanta.vanta_auditor_api.Vanta;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import java.lang.Exception;
-import java.time.OffsetDateTime;
 
 public class Application {
 
@@ -207,9 +222,6 @@ public class Application {
             .build();
 
         ListAuditsResponse res = sdk.audits().list()
-                .pageSize(10)
-                .pageCursor("<value>")
-                .changedSinceDate(OffsetDateTime.parse("2025-04-22T08:39:55.981Z"))
                 .call();
 
         if (res.paginatedResponseAudit().isPresent()) {
@@ -223,6 +235,44 @@ public class Application {
 <!-- Start Server Selection [server] -->
 ## Server Selection
 
+### Select Server by Index
+
+You can override the default server globally using the `.serverIndex(int serverIdx)` builder method when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
+
+| #   | Server                         | Description    |
+| --- | ------------------------------ | -------------- |
+| 0   | `https://api.vanta.com/v1`     | US Region API  |
+| 1   | `https://api.eu.vanta.com/v1`  | EU Region API  |
+| 2   | `https://api.aus.vanta.com/v1` | AUS Region API |
+
+#### Example
+
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .serverIndex(2)
+                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+            .build();
+
+        ListAuditsResponse res = sdk.audits().list()
+                .call();
+
+        if (res.paginatedResponseAudit().isPresent()) {
+            // handle response
+        }
+    }
+}
+```
+
 ### Override Server URL Per-Client
 
 The default server can also be overridden globally using the `.serverURL(String serverUrl)` builder method when initializing the SDK client instance. For example:
@@ -232,7 +282,6 @@ package hello.world;
 import com.vanta.vanta_auditor_api.Vanta;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import java.lang.Exception;
-import java.time.OffsetDateTime;
 
 public class Application {
 
@@ -244,9 +293,6 @@ public class Application {
             .build();
 
         ListAuditsResponse res = sdk.audits().list()
-                .pageSize(10)
-                .pageCursor("<value>")
-                .changedSinceDate(OffsetDateTime.parse("2025-04-22T08:39:55.981Z"))
                 .call();
 
         if (res.paginatedResponseAudit().isPresent()) {
