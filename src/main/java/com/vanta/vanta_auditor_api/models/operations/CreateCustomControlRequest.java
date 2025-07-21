@@ -10,12 +10,13 @@ import com.vanta.vanta_auditor_api.utils.SpeakeasyMetadata;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class CreateCustomControlRequest {
 
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=auditId")
     private String auditId;
+
 
     @SpeakeasyMetadata("request:mediaType=application/json")
     private CreateCustomControlInput createCustomControlInput;
@@ -40,9 +41,10 @@ public class CreateCustomControlRequest {
         return createCustomControlInput;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public CreateCustomControlRequest withAuditId(String auditId) {
         Utils.checkNotNull(auditId, "auditId");
@@ -56,7 +58,6 @@ public class CreateCustomControlRequest {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -67,15 +68,14 @@ public class CreateCustomControlRequest {
         }
         CreateCustomControlRequest other = (CreateCustomControlRequest) o;
         return 
-            Objects.deepEquals(this.auditId, other.auditId) &&
-            Objects.deepEquals(this.createCustomControlInput, other.createCustomControlInput);
+            Utils.enhancedDeepEquals(this.auditId, other.auditId) &&
+            Utils.enhancedDeepEquals(this.createCustomControlInput, other.createCustomControlInput);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            auditId,
-            createCustomControlInput);
+        return Utils.enhancedHash(
+            auditId, createCustomControlInput);
     }
     
     @Override
@@ -84,16 +84,18 @@ public class CreateCustomControlRequest {
                 "auditId", auditId,
                 "createCustomControlInput", createCustomControlInput);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String auditId;
- 
+
         private CreateCustomControlInput createCustomControlInput;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder auditId(String auditId) {
             Utils.checkNotNull(auditId, "auditId");
@@ -101,16 +103,18 @@ public class CreateCustomControlRequest {
             return this;
         }
 
+
         public Builder createCustomControlInput(CreateCustomControlInput createCustomControlInput) {
             Utils.checkNotNull(createCustomControlInput, "createCustomControlInput");
             this.createCustomControlInput = createCustomControlInput;
             return this;
         }
-        
+
         public CreateCustomControlRequest build() {
+
             return new CreateCustomControlRequest(
-                auditId,
-                createCustomControlInput);
+                auditId, createCustomControlInput);
         }
+
     }
 }

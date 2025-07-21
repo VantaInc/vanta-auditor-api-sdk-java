@@ -15,7 +15,7 @@ public enum ControlSource {
     @JsonValue
     private final String value;
 
-    private ControlSource(String value) {
+    ControlSource(String value) {
         this.value = value;
     }
     

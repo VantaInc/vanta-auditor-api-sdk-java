@@ -1,27 +1,27 @@
 lockVersion: 2.0.0
 id: f42d74f5-5725-46fa-b13c-649b7ef895c3
 management:
-  docChecksum: 1a2b10b336197dc97b4e05876d814f28
+  docChecksum: 32687d9ba29da014326cc097fdfff59d
   docVersion: 1.0.0
-  speakeasyVersion: 1.533.0
-  generationVersion: 2.578.0
-  releaseVersion: 0.2.0
-  configChecksum: 23d16b94689a0480c660cd212b26e69c
+  speakeasyVersion: 1.583.0
+  generationVersion: 2.658.3
+  releaseVersion: 0.3.0
+  configChecksum: 04772eab57280291f66f591afacc7c70
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   published: true
 features:
   java:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.1
-    core: 3.37.1
+    core: 3.44.0
     flattening: 2.81.1
-    globalSecurity: 2.82.8
+    globalSecurity: 2.83.0
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
-    globalServerURLs: 2.82.1
+    globalServerURLs: 2.82.2
     nameOverrides: 2.81.3
     nullables: 0.1.0
-    sdkHooks: 1.0.0
+    sdkHooks: 1.1.0
     unions: 0.0.6
 generatedFiles:
   - .gitattributes
@@ -33,6 +33,7 @@ generatedFiles:
   - docs/models/components/AuditEvidenceState.md
   - docs/models/components/AuditEvidenceType.md
   - docs/models/components/AuditEvidenceUpdateInput.md
+  - docs/models/components/AuditFocus.md
   - docs/models/components/Auditor.md
   - docs/models/components/AuditorControl.md
   - docs/models/components/AuditorEnabledStateTransition.md
@@ -108,6 +109,7 @@ generatedFiles:
   - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditEvidenceState.java
   - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditEvidenceType.java
   - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditEvidenceUpdateInput.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditFocus.java
   - src/main/java/com/vanta/vanta_auditor_api/models/components/Auditor.java
   - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditorControl.java
   - src/main/java/com/vanta/vanta_auditor_api/models/components/AuditorEnabledStateTransition.java
@@ -172,20 +174,33 @@ generatedFiles:
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditsRequest.java
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditsRequestBuilder.java
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditsResponse.java
-  - src/main/java/com/vanta/vanta_auditor_api/models/operations/SDKMethodInterfaces.java
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/UpdateAuditEvidenceRequest.java
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/UpdateAuditEvidenceRequestBuilder.java
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/UpdateAuditEvidenceResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateAuditorOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateCommentForAuditEvidenceOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateCustomControlOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateCustomEvidenceRequestOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditCommentsOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditControlsOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditEvidenceOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditEvidenceUrlsOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditsOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/Operations.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/UpdateAuditEvidenceOperation.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/BackoffStrategy.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/BigDecimalString.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/BigIntegerString.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Constants.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/CopiableInputStream.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Deserializers.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/EventStream.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/EventStreamLineReader.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/EventStreamMessage.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/EventStreamReader.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Exceptions.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/FormMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Globals.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/HTTPClient.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/HTTPRequest.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/HasSecurity.java
@@ -230,7 +245,7 @@ examples:
           pageSize: 10
       responses:
         "200":
-          application/json: {"results": {"data": [{"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56Z", "auditEndDate": "2024-03-14T21:25:56Z", "earlyAccessStartsDate": "2024-03-07T21:25:56Z", "framework": "SOC 2 Type II", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": "2024-03-07T21:25:56Z", "creationDate": "2024-03-07T21:25:56Z", "modificationDate": "2024-03-07T21:25:56Z", "completionDate": "2024-03-07T21:25:56Z"}], "pageInfo": {"endCursor": "YXJyYXljb25uZWN0aW9uOjE=", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "YXJyYXljb25uZWN0aW9uOjA="}}}
+          application/json: {"results": {"data": [{"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56Z", "auditEndDate": "2024-03-14T21:25:56Z", "earlyAccessStartsAt": "2024-03-07T21:25:56Z", "framework": "SOC 2 Type II", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": "2024-03-07T21:25:56Z", "creationDate": "2024-03-07T21:25:56Z", "modificationDate": "2024-03-07T21:25:56Z", "completionDate": "2024-03-07T21:25:56Z", "auditFocus": "EXTERNAL"}], "pageInfo": {"endCursor": "YXJyYXljb25uZWN0aW9uOjE=", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "YXJyYXljb25uZWN0aW9uOjA="}}}
   ListAuditEvidenceUrls:
     Example 1:
       parameters:
@@ -279,7 +294,7 @@ examples:
           auditId: "<id>"
           auditEvidenceId: "<id>"
       requestBody:
-        application/json: {"text": "<value>", "email": "Alexis74@hotmail.com", "creationDate": "2024-08-13T11:18:40.035Z"}
+        application/json: {"text": "<value>", "email": "Carmen.Bogan@yahoo.com", "creationDate": "2024-05-28T11:04:29.369Z"}
       responses:
         "200":
           application/json: {"id": "65fc81a3359c8508c9af880f", "auditEvidenceId": "65fc81a3359c8508c9af880f", "text": "Some comment", "creationDate": "2024-03-07T21:25:56Z", "modificationDate": "2024-03-07T21:25:56Z", "deletionDate": "2024-03-07T21:25:56Z", "email": "vlad@vantaroo.com"}
@@ -300,7 +315,7 @@ examples:
         path:
           auditId: "<id>"
       requestBody:
-        application/json: {"controlIds": ["<value>"], "title": "<value>", "description": "now whoa while", "cadence": "P3M", "reminderWindow": "P0D", "isRestricted": true, "auditorEmail": "<value>"}
+        application/json: {"controlIds": ["<value 1>", "<value 2>"], "title": "<value>", "description": "pure bludgeon deliberately question although", "cadence": "P1D", "reminderWindow": "P0D", "isRestricted": false, "auditorEmail": "<value>"}
       responses:
         "200":
           application/json: {"id": "65fc81a3359c8508c9af880f", "controlIds": ["1.1.2.a"], "title": "Access Control Policy", "description": "Description for Access Control Policy", "cadence": "P6M", "reminderWindow": "P6M", "isRestricted": true}
@@ -310,16 +325,16 @@ examples:
         path:
           auditId: "<id>"
       requestBody:
-        application/json: {"externalId": "<id>", "name": "<value>", "description": "even keenly afore mmm yearningly ouch tough yearly intent", "effectiveDate": "2024-07-08T11:52:30.590Z", "category": "THREAT_MANAGEMENT"}
+        application/json: {"externalId": "<id>", "name": null, "description": "yet plus utter queasily what juvenile wound", "effectiveDate": "2024-11-10T13:58:54.564Z", "category": "CLOUD_SECURITY"}
       responses:
         "201":
           application/json: {"id": "a2f7e1b9d0c3f4e5a6c7b8d9", "externalId": "CRY-104", "name": "Data encryption utilized", "description": "Access reviews are performed to ensure that access is appropriate for the user's role and responsibilities.", "source": "Vanta", "domains": ["CRYPTOGRAPHIC_PROTECTIONS"], "owner": {"id": "65e1efde08e8478f143a8ff9", "displayName": "Example Owner", "emailAddress": "example-person@email.com"}, "role": "CONTROLLER", "customFields": [{"label": "Additional context", "value": "This control is critical for GDPR compliance"}]}
   CreateAuditor:
     Example 1:
       requestBody:
-        application/json: {"email": "Loyal79@yahoo.com", "givenName": "<value>", "familyName": "<value>"}
+        application/json: {"email": "Genesis_Kunze87@yahoo.com", "givenName": "<value>", "familyName": "<value>"}
       responses:
         "200":
           application/json: {"id": "65fc81a3359c8508c9af880f", "organizationId": "8c9af880f1a335965fc850c8", "email": "testauditor@audit.com", "givenName": "Sam", "familyName": "Auditor"}
-examplesVersion: 1.0.1
+examplesVersion: 1.0.2
 generatedTests: {}

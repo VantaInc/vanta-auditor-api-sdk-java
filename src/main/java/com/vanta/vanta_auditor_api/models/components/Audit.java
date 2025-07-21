@@ -14,11 +14,10 @@ import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
-public class Audit {
 
+public class Audit {
     /**
      * The unique identifier for the audit.
      */
@@ -60,8 +59,8 @@ public class Audit {
      * Timestamp at which auditors gain access to the audit. Occurs before the audit window begins
      */
     @JsonInclude(Include.ALWAYS)
-    @JsonProperty("earlyAccessStartsDate")
-    private Optional<OffsetDateTime> earlyAccessStartsDate;
+    @JsonProperty("earlyAccessStartsAt")
+    private Optional<OffsetDateTime> earlyAccessStartsAt;
 
     /**
      * The name of the framework for the audit
@@ -108,6 +107,10 @@ public class Audit {
     @JsonProperty("completionDate")
     private Optional<OffsetDateTime> completionDate;
 
+
+    @JsonProperty("auditFocus")
+    private AuditFocus auditFocus;
+
     @JsonCreator
     public Audit(
             @JsonProperty("id") String id,
@@ -116,21 +119,22 @@ public class Audit {
             @JsonProperty("customerOrganizationId") String customerOrganizationId,
             @JsonProperty("auditStartDate") OffsetDateTime auditStartDate,
             @JsonProperty("auditEndDate") OffsetDateTime auditEndDate,
-            @JsonProperty("earlyAccessStartsDate") Optional<OffsetDateTime> earlyAccessStartsDate,
+            @JsonProperty("earlyAccessStartsAt") Optional<OffsetDateTime> earlyAccessStartsAt,
             @JsonProperty("framework") String framework,
             @JsonProperty("allowAuditorEmails") List<String> allowAuditorEmails,
             @JsonProperty("allowAllAuditors") boolean allowAllAuditors,
             @JsonProperty("deletionDate") Optional<OffsetDateTime> deletionDate,
             @JsonProperty("creationDate") OffsetDateTime creationDate,
             @JsonProperty("modificationDate") Optional<OffsetDateTime> modificationDate,
-            @JsonProperty("completionDate") Optional<OffsetDateTime> completionDate) {
+            @JsonProperty("completionDate") Optional<OffsetDateTime> completionDate,
+            @JsonProperty("auditFocus") AuditFocus auditFocus) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(customerOrganizationName, "customerOrganizationName");
         Utils.checkNotNull(customerDisplayName, "customerDisplayName");
         Utils.checkNotNull(customerOrganizationId, "customerOrganizationId");
         Utils.checkNotNull(auditStartDate, "auditStartDate");
         Utils.checkNotNull(auditEndDate, "auditEndDate");
-        Utils.checkNotNull(earlyAccessStartsDate, "earlyAccessStartsDate");
+        Utils.checkNotNull(earlyAccessStartsAt, "earlyAccessStartsAt");
         Utils.checkNotNull(framework, "framework");
         Utils.checkNotNull(allowAuditorEmails, "allowAuditorEmails");
         Utils.checkNotNull(allowAllAuditors, "allowAllAuditors");
@@ -138,13 +142,14 @@ public class Audit {
         Utils.checkNotNull(creationDate, "creationDate");
         Utils.checkNotNull(modificationDate, "modificationDate");
         Utils.checkNotNull(completionDate, "completionDate");
+        Utils.checkNotNull(auditFocus, "auditFocus");
         this.id = id;
         this.customerOrganizationName = customerOrganizationName;
         this.customerDisplayName = customerDisplayName;
         this.customerOrganizationId = customerOrganizationId;
         this.auditStartDate = auditStartDate;
         this.auditEndDate = auditEndDate;
-        this.earlyAccessStartsDate = earlyAccessStartsDate;
+        this.earlyAccessStartsAt = earlyAccessStartsAt;
         this.framework = framework;
         this.allowAuditorEmails = allowAuditorEmails;
         this.allowAllAuditors = allowAllAuditors;
@@ -152,6 +157,7 @@ public class Audit {
         this.creationDate = creationDate;
         this.modificationDate = modificationDate;
         this.completionDate = completionDate;
+        this.auditFocus = auditFocus;
     }
     
     public Audit(
@@ -163,8 +169,13 @@ public class Audit {
             String framework,
             List<String> allowAuditorEmails,
             boolean allowAllAuditors,
-            OffsetDateTime creationDate) {
-        this(id, customerOrganizationName, Optional.empty(), customerOrganizationId, auditStartDate, auditEndDate, Optional.empty(), framework, allowAuditorEmails, allowAllAuditors, Optional.empty(), creationDate, Optional.empty(), Optional.empty());
+            OffsetDateTime creationDate,
+            AuditFocus auditFocus) {
+        this(id, customerOrganizationName, Optional.empty(),
+            customerOrganizationId, auditStartDate, auditEndDate,
+            Optional.empty(), framework, allowAuditorEmails,
+            allowAllAuditors, Optional.empty(), creationDate,
+            Optional.empty(), Optional.empty(), auditFocus);
     }
 
     /**
@@ -219,8 +230,8 @@ public class Audit {
      * Timestamp at which auditors gain access to the audit. Occurs before the audit window begins
      */
     @JsonIgnore
-    public Optional<OffsetDateTime> earlyAccessStartsDate() {
-        return earlyAccessStartsDate;
+    public Optional<OffsetDateTime> earlyAccessStartsAt() {
+        return earlyAccessStartsAt;
     }
 
     /**
@@ -279,9 +290,15 @@ public class Audit {
         return completionDate;
     }
 
-    public final static Builder builder() {
+    @JsonIgnore
+    public AuditFocus auditFocus() {
+        return auditFocus;
+    }
+
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * The unique identifier for the audit.
@@ -309,6 +326,7 @@ public class Audit {
         this.customerDisplayName = Optional.ofNullable(customerDisplayName);
         return this;
     }
+
 
     /**
      * The human readable name of the customer organization being audited (e.g. Vanta)
@@ -349,18 +367,19 @@ public class Audit {
     /**
      * Timestamp at which auditors gain access to the audit. Occurs before the audit window begins
      */
-    public Audit withEarlyAccessStartsDate(OffsetDateTime earlyAccessStartsDate) {
-        Utils.checkNotNull(earlyAccessStartsDate, "earlyAccessStartsDate");
-        this.earlyAccessStartsDate = Optional.ofNullable(earlyAccessStartsDate);
+    public Audit withEarlyAccessStartsAt(OffsetDateTime earlyAccessStartsAt) {
+        Utils.checkNotNull(earlyAccessStartsAt, "earlyAccessStartsAt");
+        this.earlyAccessStartsAt = Optional.ofNullable(earlyAccessStartsAt);
         return this;
     }
+
 
     /**
      * Timestamp at which auditors gain access to the audit. Occurs before the audit window begins
      */
-    public Audit withEarlyAccessStartsDate(Optional<OffsetDateTime> earlyAccessStartsDate) {
-        Utils.checkNotNull(earlyAccessStartsDate, "earlyAccessStartsDate");
-        this.earlyAccessStartsDate = earlyAccessStartsDate;
+    public Audit withEarlyAccessStartsAt(Optional<OffsetDateTime> earlyAccessStartsAt) {
+        Utils.checkNotNull(earlyAccessStartsAt, "earlyAccessStartsAt");
+        this.earlyAccessStartsAt = earlyAccessStartsAt;
         return this;
     }
 
@@ -400,6 +419,7 @@ public class Audit {
         return this;
     }
 
+
     /**
      * Timestamp when the audit was deleted
      */
@@ -427,6 +447,7 @@ public class Audit {
         return this;
     }
 
+
     /**
      * Timestamp when the audit was updated
      */
@@ -445,6 +466,7 @@ public class Audit {
         return this;
     }
 
+
     /**
      * Timestamp when the audit was marked completed, and report was uploaded
      */
@@ -454,7 +476,12 @@ public class Audit {
         return this;
     }
 
-    
+    public Audit withAuditFocus(AuditFocus auditFocus) {
+        Utils.checkNotNull(auditFocus, "auditFocus");
+        this.auditFocus = auditFocus;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -465,39 +492,31 @@ public class Audit {
         }
         Audit other = (Audit) o;
         return 
-            Objects.deepEquals(this.id, other.id) &&
-            Objects.deepEquals(this.customerOrganizationName, other.customerOrganizationName) &&
-            Objects.deepEquals(this.customerDisplayName, other.customerDisplayName) &&
-            Objects.deepEquals(this.customerOrganizationId, other.customerOrganizationId) &&
-            Objects.deepEquals(this.auditStartDate, other.auditStartDate) &&
-            Objects.deepEquals(this.auditEndDate, other.auditEndDate) &&
-            Objects.deepEquals(this.earlyAccessStartsDate, other.earlyAccessStartsDate) &&
-            Objects.deepEquals(this.framework, other.framework) &&
-            Objects.deepEquals(this.allowAuditorEmails, other.allowAuditorEmails) &&
-            Objects.deepEquals(this.allowAllAuditors, other.allowAllAuditors) &&
-            Objects.deepEquals(this.deletionDate, other.deletionDate) &&
-            Objects.deepEquals(this.creationDate, other.creationDate) &&
-            Objects.deepEquals(this.modificationDate, other.modificationDate) &&
-            Objects.deepEquals(this.completionDate, other.completionDate);
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.customerOrganizationName, other.customerOrganizationName) &&
+            Utils.enhancedDeepEquals(this.customerDisplayName, other.customerDisplayName) &&
+            Utils.enhancedDeepEquals(this.customerOrganizationId, other.customerOrganizationId) &&
+            Utils.enhancedDeepEquals(this.auditStartDate, other.auditStartDate) &&
+            Utils.enhancedDeepEquals(this.auditEndDate, other.auditEndDate) &&
+            Utils.enhancedDeepEquals(this.earlyAccessStartsAt, other.earlyAccessStartsAt) &&
+            Utils.enhancedDeepEquals(this.framework, other.framework) &&
+            Utils.enhancedDeepEquals(this.allowAuditorEmails, other.allowAuditorEmails) &&
+            Utils.enhancedDeepEquals(this.allowAllAuditors, other.allowAllAuditors) &&
+            Utils.enhancedDeepEquals(this.deletionDate, other.deletionDate) &&
+            Utils.enhancedDeepEquals(this.creationDate, other.creationDate) &&
+            Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
+            Utils.enhancedDeepEquals(this.completionDate, other.completionDate) &&
+            Utils.enhancedDeepEquals(this.auditFocus, other.auditFocus);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            customerOrganizationName,
-            customerDisplayName,
-            customerOrganizationId,
-            auditStartDate,
-            auditEndDate,
-            earlyAccessStartsDate,
-            framework,
-            allowAuditorEmails,
-            allowAllAuditors,
-            deletionDate,
-            creationDate,
-            modificationDate,
-            completionDate);
+        return Utils.enhancedHash(
+            id, customerOrganizationName, customerDisplayName,
+            customerOrganizationId, auditStartDate, auditEndDate,
+            earlyAccessStartsAt, framework, allowAuditorEmails,
+            allowAllAuditors, deletionDate, creationDate,
+            modificationDate, completionDate, auditFocus);
     }
     
     @Override
@@ -509,49 +528,54 @@ public class Audit {
                 "customerOrganizationId", customerOrganizationId,
                 "auditStartDate", auditStartDate,
                 "auditEndDate", auditEndDate,
-                "earlyAccessStartsDate", earlyAccessStartsDate,
+                "earlyAccessStartsAt", earlyAccessStartsAt,
                 "framework", framework,
                 "allowAuditorEmails", allowAuditorEmails,
                 "allowAllAuditors", allowAllAuditors,
                 "deletionDate", deletionDate,
                 "creationDate", creationDate,
                 "modificationDate", modificationDate,
-                "completionDate", completionDate);
+                "completionDate", completionDate,
+                "auditFocus", auditFocus);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String id;
- 
+
         private String customerOrganizationName;
- 
+
         private Optional<String> customerDisplayName = Optional.empty();
- 
+
         private String customerOrganizationId;
- 
+
         private OffsetDateTime auditStartDate;
- 
+
         private OffsetDateTime auditEndDate;
- 
-        private Optional<OffsetDateTime> earlyAccessStartsDate = Optional.empty();
- 
+
+        private Optional<OffsetDateTime> earlyAccessStartsAt = Optional.empty();
+
         private String framework;
- 
+
         private List<String> allowAuditorEmails;
- 
+
         private Boolean allowAllAuditors;
- 
+
         private Optional<OffsetDateTime> deletionDate = Optional.empty();
- 
+
         private OffsetDateTime creationDate;
- 
+
         private Optional<OffsetDateTime> modificationDate = Optional.empty();
- 
+
         private Optional<OffsetDateTime> completionDate = Optional.empty();
-        
+
+        private AuditFocus auditFocus;
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * The unique identifier for the audit.
@@ -562,6 +586,7 @@ public class Audit {
             return this;
         }
 
+
         /**
          * The domain name of the customer organization being audited (e.g. vanta.com)
          */
@@ -570,6 +595,7 @@ public class Audit {
             this.customerOrganizationName = customerOrganizationName;
             return this;
         }
+
 
         /**
          * The human readable name of the customer organization being audited (e.g. Vanta)
@@ -589,6 +615,7 @@ public class Audit {
             return this;
         }
 
+
         /**
          * The uuid of the customer organization being audited
          */
@@ -597,6 +624,7 @@ public class Audit {
             this.customerOrganizationId = customerOrganizationId;
             return this;
         }
+
 
         /**
          * The start of the audit window. This is also when data collection for audit starts.
@@ -607,6 +635,7 @@ public class Audit {
             return this;
         }
 
+
         /**
          * The end of the audit window.
          */
@@ -616,23 +645,25 @@ public class Audit {
             return this;
         }
 
+
         /**
          * Timestamp at which auditors gain access to the audit. Occurs before the audit window begins
          */
-        public Builder earlyAccessStartsDate(OffsetDateTime earlyAccessStartsDate) {
-            Utils.checkNotNull(earlyAccessStartsDate, "earlyAccessStartsDate");
-            this.earlyAccessStartsDate = Optional.ofNullable(earlyAccessStartsDate);
+        public Builder earlyAccessStartsAt(OffsetDateTime earlyAccessStartsAt) {
+            Utils.checkNotNull(earlyAccessStartsAt, "earlyAccessStartsAt");
+            this.earlyAccessStartsAt = Optional.ofNullable(earlyAccessStartsAt);
             return this;
         }
 
         /**
          * Timestamp at which auditors gain access to the audit. Occurs before the audit window begins
          */
-        public Builder earlyAccessStartsDate(Optional<OffsetDateTime> earlyAccessStartsDate) {
-            Utils.checkNotNull(earlyAccessStartsDate, "earlyAccessStartsDate");
-            this.earlyAccessStartsDate = earlyAccessStartsDate;
+        public Builder earlyAccessStartsAt(Optional<OffsetDateTime> earlyAccessStartsAt) {
+            Utils.checkNotNull(earlyAccessStartsAt, "earlyAccessStartsAt");
+            this.earlyAccessStartsAt = earlyAccessStartsAt;
             return this;
         }
+
 
         /**
          * The name of the framework for the audit
@@ -643,6 +674,7 @@ public class Audit {
             return this;
         }
 
+
         /**
          * Emails of auditors with access to audit
          */
@@ -652,6 +684,7 @@ public class Audit {
             return this;
         }
 
+
         /**
          * Set to true if all auditors in audit firm have access
          */
@@ -660,6 +693,7 @@ public class Audit {
             this.allowAllAuditors = allowAllAuditors;
             return this;
         }
+
 
         /**
          * Timestamp when the audit was deleted
@@ -679,6 +713,7 @@ public class Audit {
             return this;
         }
 
+
         /**
          * Timestamp when the audit was created
          */
@@ -687,6 +722,7 @@ public class Audit {
             this.creationDate = creationDate;
             return this;
         }
+
 
         /**
          * Timestamp when the audit was updated
@@ -706,6 +742,7 @@ public class Audit {
             return this;
         }
 
+
         /**
          * Timestamp when the audit was marked completed, and report was uploaded
          */
@@ -723,23 +760,23 @@ public class Audit {
             this.completionDate = completionDate;
             return this;
         }
-        
-        public Audit build() {
-            return new Audit(
-                id,
-                customerOrganizationName,
-                customerDisplayName,
-                customerOrganizationId,
-                auditStartDate,
-                auditEndDate,
-                earlyAccessStartsDate,
-                framework,
-                allowAuditorEmails,
-                allowAllAuditors,
-                deletionDate,
-                creationDate,
-                modificationDate,
-                completionDate);
+
+
+        public Builder auditFocus(AuditFocus auditFocus) {
+            Utils.checkNotNull(auditFocus, "auditFocus");
+            this.auditFocus = auditFocus;
+            return this;
         }
+
+        public Audit build() {
+
+            return new Audit(
+                id, customerOrganizationName, customerDisplayName,
+                customerOrganizationId, auditStartDate, auditEndDate,
+                earlyAccessStartsAt, framework, allowAuditorEmails,
+                allowAllAuditors, deletionDate, creationDate,
+                modificationDate, completionDate, auditFocus);
+        }
+
     }
 }

@@ -10,15 +10,17 @@ import com.vanta.vanta_auditor_api.utils.SpeakeasyMetadata;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class CreateCommentForAuditEvidenceRequest {
 
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=auditId")
     private String auditId;
 
+
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=auditEvidenceId")
     private String auditEvidenceId;
+
 
     @SpeakeasyMetadata("request:mediaType=application/json")
     private AddCommentInput addCommentInput;
@@ -51,9 +53,10 @@ public class CreateCommentForAuditEvidenceRequest {
         return addCommentInput;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public CreateCommentForAuditEvidenceRequest withAuditId(String auditId) {
         Utils.checkNotNull(auditId, "auditId");
@@ -73,7 +76,6 @@ public class CreateCommentForAuditEvidenceRequest {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -84,17 +86,15 @@ public class CreateCommentForAuditEvidenceRequest {
         }
         CreateCommentForAuditEvidenceRequest other = (CreateCommentForAuditEvidenceRequest) o;
         return 
-            Objects.deepEquals(this.auditId, other.auditId) &&
-            Objects.deepEquals(this.auditEvidenceId, other.auditEvidenceId) &&
-            Objects.deepEquals(this.addCommentInput, other.addCommentInput);
+            Utils.enhancedDeepEquals(this.auditId, other.auditId) &&
+            Utils.enhancedDeepEquals(this.auditEvidenceId, other.auditEvidenceId) &&
+            Utils.enhancedDeepEquals(this.addCommentInput, other.addCommentInput);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            auditId,
-            auditEvidenceId,
-            addCommentInput);
+        return Utils.enhancedHash(
+            auditId, auditEvidenceId, addCommentInput);
     }
     
     @Override
@@ -104,18 +104,20 @@ public class CreateCommentForAuditEvidenceRequest {
                 "auditEvidenceId", auditEvidenceId,
                 "addCommentInput", addCommentInput);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String auditId;
- 
+
         private String auditEvidenceId;
- 
+
         private AddCommentInput addCommentInput;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder auditId(String auditId) {
             Utils.checkNotNull(auditId, "auditId");
@@ -123,23 +125,25 @@ public class CreateCommentForAuditEvidenceRequest {
             return this;
         }
 
+
         public Builder auditEvidenceId(String auditEvidenceId) {
             Utils.checkNotNull(auditEvidenceId, "auditEvidenceId");
             this.auditEvidenceId = auditEvidenceId;
             return this;
         }
 
+
         public Builder addCommentInput(AddCommentInput addCommentInput) {
             Utils.checkNotNull(addCommentInput, "addCommentInput");
             this.addCommentInput = addCommentInput;
             return this;
         }
-        
+
         public CreateCommentForAuditEvidenceRequest build() {
+
             return new CreateCommentForAuditEvidenceRequest(
-                auditId,
-                auditEvidenceId,
-                addCommentInput);
+                auditId, auditEvidenceId, addCommentInput);
         }
+
     }
 }

@@ -3,7 +3,11 @@
  */
 package com.vanta.vanta_auditor_api.models.operations;
 
+import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
+
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.vanta.vanta_auditor_api.SDKConfiguration;
+import com.vanta.vanta_auditor_api.operations.ListAuditCommentsOperation;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
@@ -21,10 +25,10 @@ public class ListAuditCommentsRequestBuilder {
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
     private Optional<OffsetDateTime> changedSinceDate = Optional.empty();
-    private final SDKMethodInterfaces.MethodCallListAuditComments sdk;
+    private final SDKConfiguration sdkConfiguration;
 
-    public ListAuditCommentsRequestBuilder(SDKMethodInterfaces.MethodCallListAuditComments sdk) {
-        this.sdk = sdk;
+    public ListAuditCommentsRequestBuilder(SDKConfiguration sdkConfiguration) {
+        this.sdkConfiguration = sdkConfiguration;
     }
 
     public ListAuditCommentsRequestBuilder auditId(String auditId) {
@@ -69,15 +73,27 @@ public class ListAuditCommentsRequestBuilder {
         return this;
     }
 
-    public ListAuditCommentsResponse call() throws Exception {
+
+    private ListAuditCommentsRequest buildRequest() {
         if (pageSize == null) {
             pageSize = _SINGLETON_VALUE_PageSize.value();
         }
-        return sdk.listComments(
-            auditId,
+
+        ListAuditCommentsRequest request = new ListAuditCommentsRequest(auditId,
             pageSize,
             pageCursor,
             changedSinceDate);
+
+        return request;
+    }
+
+    public ListAuditCommentsResponse call() throws Exception {
+        
+        RequestOperation<ListAuditCommentsRequest, ListAuditCommentsResponse> operation
+              = new ListAuditCommentsOperation(sdkConfiguration);
+        ListAuditCommentsRequest request = buildRequest();
+
+        return operation.handleResponse(operation.doRequest(request));
     }
 
     private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_PageSize =

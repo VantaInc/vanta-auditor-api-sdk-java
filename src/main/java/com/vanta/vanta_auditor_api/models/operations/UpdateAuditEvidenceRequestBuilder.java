@@ -3,7 +3,11 @@
  */
 package com.vanta.vanta_auditor_api.models.operations;
 
+import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
+
+import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.AuditEvidenceUpdateInput;
+import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidenceOperation;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
 import java.lang.String;
@@ -13,10 +17,10 @@ public class UpdateAuditEvidenceRequestBuilder {
     private String auditId;
     private String auditEvidenceId;
     private AuditEvidenceUpdateInput auditEvidenceUpdateInput;
-    private final SDKMethodInterfaces.MethodCallUpdateAuditEvidence sdk;
+    private final SDKConfiguration sdkConfiguration;
 
-    public UpdateAuditEvidenceRequestBuilder(SDKMethodInterfaces.MethodCallUpdateAuditEvidence sdk) {
-        this.sdk = sdk;
+    public UpdateAuditEvidenceRequestBuilder(SDKConfiguration sdkConfiguration) {
+        this.sdkConfiguration = sdkConfiguration;
     }
 
     public UpdateAuditEvidenceRequestBuilder auditId(String auditId) {
@@ -37,11 +41,22 @@ public class UpdateAuditEvidenceRequestBuilder {
         return this;
     }
 
-    public UpdateAuditEvidenceResponse call() throws Exception {
 
-        return sdk.updateEvidence(
-            auditId,
+    private UpdateAuditEvidenceRequest buildRequest() {
+
+        UpdateAuditEvidenceRequest request = new UpdateAuditEvidenceRequest(auditId,
             auditEvidenceId,
             auditEvidenceUpdateInput);
+
+        return request;
+    }
+
+    public UpdateAuditEvidenceResponse call() throws Exception {
+        
+        RequestOperation<UpdateAuditEvidenceRequest, UpdateAuditEvidenceResponse> operation
+              = new UpdateAuditEvidenceOperation(sdkConfiguration);
+        UpdateAuditEvidenceRequest request = buildRequest();
+
+        return operation.handleResponse(operation.doRequest(request));
     }
 }

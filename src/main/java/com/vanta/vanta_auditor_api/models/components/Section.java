@@ -9,10 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class Section {
-
     /**
      * The section name
      */
@@ -51,9 +50,10 @@ public class Section {
         return framework;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * The section name
@@ -73,7 +73,6 @@ public class Section {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -84,15 +83,14 @@ public class Section {
         }
         Section other = (Section) o;
         return 
-            Objects.deepEquals(this.name, other.name) &&
-            Objects.deepEquals(this.framework, other.framework);
+            Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.framework, other.framework);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            name,
-            framework);
+        return Utils.enhancedHash(
+            name, framework);
     }
     
     @Override
@@ -101,16 +99,18 @@ public class Section {
                 "name", name,
                 "framework", framework);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String name;
- 
+
         private String framework;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * The section name
@@ -121,6 +121,7 @@ public class Section {
             return this;
         }
 
+
         /**
          * The section framework
          */
@@ -129,11 +130,12 @@ public class Section {
             this.framework = framework;
             return this;
         }
-        
+
         public Section build() {
+
             return new Section(
-                name,
-                framework);
+                name, framework);
         }
+
     }
 }

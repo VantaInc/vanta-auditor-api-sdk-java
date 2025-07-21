@@ -3,7 +3,11 @@
  */
 package com.vanta.vanta_auditor_api.models.operations;
 
+import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
+
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.vanta.vanta_auditor_api.SDKConfiguration;
+import com.vanta.vanta_auditor_api.operations.ListAuditControlsOperation;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
@@ -19,10 +23,10 @@ public class ListAuditControlsRequestBuilder {
                             "10",
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
-    private final SDKMethodInterfaces.MethodCallListAuditControls sdk;
+    private final SDKConfiguration sdkConfiguration;
 
-    public ListAuditControlsRequestBuilder(SDKMethodInterfaces.MethodCallListAuditControls sdk) {
-        this.sdk = sdk;
+    public ListAuditControlsRequestBuilder(SDKConfiguration sdkConfiguration) {
+        this.sdkConfiguration = sdkConfiguration;
     }
 
     public ListAuditControlsRequestBuilder auditId(String auditId) {
@@ -55,14 +59,26 @@ public class ListAuditControlsRequestBuilder {
         return this;
     }
 
-    public ListAuditControlsResponse call() throws Exception {
+
+    private ListAuditControlsRequest buildRequest() {
         if (pageSize == null) {
             pageSize = _SINGLETON_VALUE_PageSize.value();
         }
-        return sdk.listControls(
-            auditId,
+
+        ListAuditControlsRequest request = new ListAuditControlsRequest(auditId,
             pageSize,
             pageCursor);
+
+        return request;
+    }
+
+    public ListAuditControlsResponse call() throws Exception {
+        
+        RequestOperation<ListAuditControlsRequest, ListAuditControlsResponse> operation
+              = new ListAuditControlsOperation(sdkConfiguration);
+        ListAuditControlsRequest request = buildRequest();
+
+        return operation.handleResponse(operation.doRequest(request));
     }
 
     private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_PageSize =

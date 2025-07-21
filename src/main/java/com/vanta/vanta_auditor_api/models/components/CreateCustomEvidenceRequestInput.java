@@ -11,10 +11,9 @@ import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
-import java.util.Objects;
+
 
 public class CreateCustomEvidenceRequestInput {
-
     /**
      * A set of controls, referenced by id, to map the evidence to
      */
@@ -33,8 +32,10 @@ public class CreateCustomEvidenceRequestInput {
     @JsonProperty("description")
     private String description;
 
+
     @JsonProperty("cadence")
     private RecurrenceDuration cadence;
+
 
     @JsonProperty("reminderWindow")
     private RecurrenceDuration reminderWindow;
@@ -126,9 +127,10 @@ public class CreateCustomEvidenceRequestInput {
         return auditorEmail;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * A set of controls, referenced by id, to map the evidence to
@@ -187,7 +189,6 @@ public class CreateCustomEvidenceRequestInput {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -198,24 +199,20 @@ public class CreateCustomEvidenceRequestInput {
         }
         CreateCustomEvidenceRequestInput other = (CreateCustomEvidenceRequestInput) o;
         return 
-            Objects.deepEquals(this.controlIds, other.controlIds) &&
-            Objects.deepEquals(this.title, other.title) &&
-            Objects.deepEquals(this.description, other.description) &&
-            Objects.deepEquals(this.cadence, other.cadence) &&
-            Objects.deepEquals(this.reminderWindow, other.reminderWindow) &&
-            Objects.deepEquals(this.isRestricted, other.isRestricted) &&
-            Objects.deepEquals(this.auditorEmail, other.auditorEmail);
+            Utils.enhancedDeepEquals(this.controlIds, other.controlIds) &&
+            Utils.enhancedDeepEquals(this.title, other.title) &&
+            Utils.enhancedDeepEquals(this.description, other.description) &&
+            Utils.enhancedDeepEquals(this.cadence, other.cadence) &&
+            Utils.enhancedDeepEquals(this.reminderWindow, other.reminderWindow) &&
+            Utils.enhancedDeepEquals(this.isRestricted, other.isRestricted) &&
+            Utils.enhancedDeepEquals(this.auditorEmail, other.auditorEmail);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            controlIds,
-            title,
-            description,
-            cadence,
-            reminderWindow,
-            isRestricted,
+        return Utils.enhancedHash(
+            controlIds, title, description,
+            cadence, reminderWindow, isRestricted,
             auditorEmail);
     }
     
@@ -230,26 +227,28 @@ public class CreateCustomEvidenceRequestInput {
                 "isRestricted", isRestricted,
                 "auditorEmail", auditorEmail);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private List<String> controlIds;
- 
+
         private String title;
- 
+
         private String description;
- 
+
         private RecurrenceDuration cadence;
- 
+
         private RecurrenceDuration reminderWindow;
- 
+
         private Boolean isRestricted;
- 
+
         private String auditorEmail;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * A set of controls, referenced by id, to map the evidence to
@@ -260,6 +259,7 @@ public class CreateCustomEvidenceRequestInput {
             return this;
         }
 
+
         /**
          * Title for the evidence request
          */
@@ -268,6 +268,7 @@ public class CreateCustomEvidenceRequestInput {
             this.title = title;
             return this;
         }
+
 
         /**
          * Description for the evidence request
@@ -278,17 +279,20 @@ public class CreateCustomEvidenceRequestInput {
             return this;
         }
 
+
         public Builder cadence(RecurrenceDuration cadence) {
             Utils.checkNotNull(cadence, "cadence");
             this.cadence = cadence;
             return this;
         }
 
+
         public Builder reminderWindow(RecurrenceDuration reminderWindow) {
             Utils.checkNotNull(reminderWindow, "reminderWindow");
             this.reminderWindow = reminderWindow;
             return this;
         }
+
 
         /**
          * Whether this document contains sensitive data and needs more restrictive read access
@@ -299,6 +303,7 @@ public class CreateCustomEvidenceRequestInput {
             return this;
         }
 
+
         /**
          * Email of the auditor who created the custom evidence request.
          */
@@ -307,16 +312,14 @@ public class CreateCustomEvidenceRequestInput {
             this.auditorEmail = auditorEmail;
             return this;
         }
-        
+
         public CreateCustomEvidenceRequestInput build() {
+
             return new CreateCustomEvidenceRequestInput(
-                controlIds,
-                title,
-                description,
-                cadence,
-                reminderWindow,
-                isRestricted,
+                controlIds, title, description,
+                cadence, reminderWindow, isRestricted,
                 auditorEmail);
         }
+
     }
 }

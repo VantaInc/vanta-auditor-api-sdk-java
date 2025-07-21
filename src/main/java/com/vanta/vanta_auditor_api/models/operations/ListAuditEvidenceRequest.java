@@ -13,16 +13,18 @@ import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
-import java.util.Objects;
 import java.util.Optional;
+
 
 public class ListAuditEvidenceRequest {
 
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=auditId")
     private String auditId;
 
+
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=pageSize")
     private Optional<Integer> pageSize;
+
 
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=pageCursor")
     private Optional<String> pageCursor;
@@ -51,7 +53,8 @@ public class ListAuditEvidenceRequest {
     
     public ListAuditEvidenceRequest(
             String auditId) {
-        this(auditId, Optional.empty(), Optional.empty(), Optional.empty());
+        this(auditId, Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     @JsonIgnore
@@ -77,9 +80,10 @@ public class ListAuditEvidenceRequest {
         return changedSinceDate;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public ListAuditEvidenceRequest withAuditId(String auditId) {
         Utils.checkNotNull(auditId, "auditId");
@@ -93,6 +97,7 @@ public class ListAuditEvidenceRequest {
         return this;
     }
 
+
     public ListAuditEvidenceRequest withPageSize(Optional<Integer> pageSize) {
         Utils.checkNotNull(pageSize, "pageSize");
         this.pageSize = pageSize;
@@ -104,6 +109,7 @@ public class ListAuditEvidenceRequest {
         this.pageCursor = Optional.ofNullable(pageCursor);
         return this;
     }
+
 
     public ListAuditEvidenceRequest withPageCursor(Optional<String> pageCursor) {
         Utils.checkNotNull(pageCursor, "pageCursor");
@@ -120,6 +126,7 @@ public class ListAuditEvidenceRequest {
         return this;
     }
 
+
     /**
      * Includes all audit evidence that have changed since changedSinceDate.
      */
@@ -129,7 +136,6 @@ public class ListAuditEvidenceRequest {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -140,18 +146,16 @@ public class ListAuditEvidenceRequest {
         }
         ListAuditEvidenceRequest other = (ListAuditEvidenceRequest) o;
         return 
-            Objects.deepEquals(this.auditId, other.auditId) &&
-            Objects.deepEquals(this.pageSize, other.pageSize) &&
-            Objects.deepEquals(this.pageCursor, other.pageCursor) &&
-            Objects.deepEquals(this.changedSinceDate, other.changedSinceDate);
+            Utils.enhancedDeepEquals(this.auditId, other.auditId) &&
+            Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
+            Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor) &&
+            Utils.enhancedDeepEquals(this.changedSinceDate, other.changedSinceDate);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            auditId,
-            pageSize,
-            pageCursor,
+        return Utils.enhancedHash(
+            auditId, pageSize, pageCursor,
             changedSinceDate);
     }
     
@@ -163,26 +167,29 @@ public class ListAuditEvidenceRequest {
                 "pageCursor", pageCursor,
                 "changedSinceDate", changedSinceDate);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String auditId;
- 
+
         private Optional<Integer> pageSize;
- 
+
         private Optional<String> pageCursor = Optional.empty();
- 
+
         private Optional<OffsetDateTime> changedSinceDate = Optional.empty();
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder auditId(String auditId) {
             Utils.checkNotNull(auditId, "auditId");
             this.auditId = auditId;
             return this;
         }
+
 
         public Builder pageSize(int pageSize) {
             Utils.checkNotNull(pageSize, "pageSize");
@@ -196,6 +203,7 @@ public class ListAuditEvidenceRequest {
             return this;
         }
 
+
         public Builder pageCursor(String pageCursor) {
             Utils.checkNotNull(pageCursor, "pageCursor");
             this.pageCursor = Optional.ofNullable(pageCursor);
@@ -207,6 +215,7 @@ public class ListAuditEvidenceRequest {
             this.pageCursor = pageCursor;
             return this;
         }
+
 
         /**
          * Includes all audit evidence that have changed since changedSinceDate.
@@ -225,17 +234,17 @@ public class ListAuditEvidenceRequest {
             this.changedSinceDate = changedSinceDate;
             return this;
         }
-        
+
         public ListAuditEvidenceRequest build() {
             if (pageSize == null) {
                 pageSize = _SINGLETON_VALUE_PageSize.value();
             }
+
             return new ListAuditEvidenceRequest(
-                auditId,
-                pageSize,
-                pageCursor,
+                auditId, pageSize, pageCursor,
                 changedSinceDate);
         }
+
 
         private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_PageSize =
                 new LazySingletonValue<>(

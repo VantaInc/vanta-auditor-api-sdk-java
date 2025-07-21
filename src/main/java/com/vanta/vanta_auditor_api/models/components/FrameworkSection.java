@@ -9,12 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class FrameworkSection {
 
     @JsonProperty("frameworkId")
     private FrameworkSectionFrameworkId frameworkId;
+
 
     @JsonProperty("sectionId")
     private String sectionId;
@@ -39,9 +40,10 @@ public class FrameworkSection {
         return sectionId;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public FrameworkSection withFrameworkId(FrameworkSectionFrameworkId frameworkId) {
         Utils.checkNotNull(frameworkId, "frameworkId");
@@ -55,7 +57,6 @@ public class FrameworkSection {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -66,15 +67,14 @@ public class FrameworkSection {
         }
         FrameworkSection other = (FrameworkSection) o;
         return 
-            Objects.deepEquals(this.frameworkId, other.frameworkId) &&
-            Objects.deepEquals(this.sectionId, other.sectionId);
+            Utils.enhancedDeepEquals(this.frameworkId, other.frameworkId) &&
+            Utils.enhancedDeepEquals(this.sectionId, other.sectionId);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            frameworkId,
-            sectionId);
+        return Utils.enhancedHash(
+            frameworkId, sectionId);
     }
     
     @Override
@@ -83,16 +83,18 @@ public class FrameworkSection {
                 "frameworkId", frameworkId,
                 "sectionId", sectionId);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private FrameworkSectionFrameworkId frameworkId;
- 
+
         private String sectionId;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder frameworkId(FrameworkSectionFrameworkId frameworkId) {
             Utils.checkNotNull(frameworkId, "frameworkId");
@@ -100,16 +102,18 @@ public class FrameworkSection {
             return this;
         }
 
+
         public Builder sectionId(String sectionId) {
             Utils.checkNotNull(sectionId, "sectionId");
             this.sectionId = sectionId;
             return this;
         }
-        
+
         public FrameworkSection build() {
+
             return new FrameworkSection(
-                frameworkId,
-                sectionId);
+                frameworkId, sectionId);
         }
+
     }
 }

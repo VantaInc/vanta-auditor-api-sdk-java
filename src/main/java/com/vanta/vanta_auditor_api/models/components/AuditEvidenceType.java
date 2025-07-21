@@ -16,7 +16,7 @@ public enum AuditEvidenceType {
     @JsonValue
     private final String value;
 
-    private AuditEvidenceType(String value) {
+    AuditEvidenceType(String value) {
         this.value = value;
     }
     

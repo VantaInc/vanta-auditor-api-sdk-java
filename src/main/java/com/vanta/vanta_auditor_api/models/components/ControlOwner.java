@@ -9,7 +9,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
 
 /**
  * ControlOwner
@@ -17,7 +16,6 @@ import java.util.Objects;
  * <p>The control's owner.
  */
 public class ControlOwner {
-
     /**
      * Unique identifier for the person.
      */
@@ -73,9 +71,10 @@ public class ControlOwner {
         return emailAddress;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * Unique identifier for the person.
@@ -104,7 +103,6 @@ public class ControlOwner {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -115,17 +113,15 @@ public class ControlOwner {
         }
         ControlOwner other = (ControlOwner) o;
         return 
-            Objects.deepEquals(this.id, other.id) &&
-            Objects.deepEquals(this.displayName, other.displayName) &&
-            Objects.deepEquals(this.emailAddress, other.emailAddress);
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.displayName, other.displayName) &&
+            Utils.enhancedDeepEquals(this.emailAddress, other.emailAddress);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            displayName,
-            emailAddress);
+        return Utils.enhancedHash(
+            id, displayName, emailAddress);
     }
     
     @Override
@@ -135,18 +131,20 @@ public class ControlOwner {
                 "displayName", displayName,
                 "emailAddress", emailAddress);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String id;
- 
+
         private String displayName;
- 
+
         private String emailAddress;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * Unique identifier for the person.
@@ -157,6 +155,7 @@ public class ControlOwner {
             return this;
         }
 
+
         /**
          * Name of the person that is shown in product.
          */
@@ -166,6 +165,7 @@ public class ControlOwner {
             return this;
         }
 
+
         /**
          * Email address of the person.
          */
@@ -174,12 +174,12 @@ public class ControlOwner {
             this.emailAddress = emailAddress;
             return this;
         }
-        
+
         public ControlOwner build() {
+
             return new ControlOwner(
-                id,
-                displayName,
-                emailAddress);
+                id, displayName, emailAddress);
         }
+
     }
 }

@@ -12,16 +12,18 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
 import java.util.Optional;
+
 
 public class ListAuditControlsRequest {
 
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=auditId")
     private String auditId;
 
+
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=pageSize")
     private Optional<Integer> pageSize;
+
 
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=pageCursor")
     private Optional<String> pageCursor;
@@ -59,9 +61,10 @@ public class ListAuditControlsRequest {
         return pageCursor;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public ListAuditControlsRequest withAuditId(String auditId) {
         Utils.checkNotNull(auditId, "auditId");
@@ -75,6 +78,7 @@ public class ListAuditControlsRequest {
         return this;
     }
 
+
     public ListAuditControlsRequest withPageSize(Optional<Integer> pageSize) {
         Utils.checkNotNull(pageSize, "pageSize");
         this.pageSize = pageSize;
@@ -87,13 +91,13 @@ public class ListAuditControlsRequest {
         return this;
     }
 
+
     public ListAuditControlsRequest withPageCursor(Optional<String> pageCursor) {
         Utils.checkNotNull(pageCursor, "pageCursor");
         this.pageCursor = pageCursor;
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -104,17 +108,15 @@ public class ListAuditControlsRequest {
         }
         ListAuditControlsRequest other = (ListAuditControlsRequest) o;
         return 
-            Objects.deepEquals(this.auditId, other.auditId) &&
-            Objects.deepEquals(this.pageSize, other.pageSize) &&
-            Objects.deepEquals(this.pageCursor, other.pageCursor);
+            Utils.enhancedDeepEquals(this.auditId, other.auditId) &&
+            Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
+            Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            auditId,
-            pageSize,
-            pageCursor);
+        return Utils.enhancedHash(
+            auditId, pageSize, pageCursor);
     }
     
     @Override
@@ -124,24 +126,27 @@ public class ListAuditControlsRequest {
                 "pageSize", pageSize,
                 "pageCursor", pageCursor);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String auditId;
- 
+
         private Optional<Integer> pageSize;
- 
+
         private Optional<String> pageCursor = Optional.empty();
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder auditId(String auditId) {
             Utils.checkNotNull(auditId, "auditId");
             this.auditId = auditId;
             return this;
         }
+
 
         public Builder pageSize(int pageSize) {
             Utils.checkNotNull(pageSize, "pageSize");
@@ -155,6 +160,7 @@ public class ListAuditControlsRequest {
             return this;
         }
 
+
         public Builder pageCursor(String pageCursor) {
             Utils.checkNotNull(pageCursor, "pageCursor");
             this.pageCursor = Optional.ofNullable(pageCursor);
@@ -166,16 +172,16 @@ public class ListAuditControlsRequest {
             this.pageCursor = pageCursor;
             return this;
         }
-        
+
         public ListAuditControlsRequest build() {
             if (pageSize == null) {
                 pageSize = _SINGLETON_VALUE_PageSize.value();
             }
+
             return new ListAuditControlsRequest(
-                auditId,
-                pageSize,
-                pageCursor);
+                auditId, pageSize, pageCursor);
         }
+
 
         private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_PageSize =
                 new LazySingletonValue<>(
