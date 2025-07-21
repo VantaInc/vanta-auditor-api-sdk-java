@@ -3,7 +3,11 @@
  */
 package com.vanta.vanta_auditor_api.models.operations;
 
+import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
+
+import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomControlInput;
+import com.vanta.vanta_auditor_api.operations.CreateCustomControlOperation;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
 import java.lang.String;
@@ -12,10 +16,10 @@ public class CreateCustomControlRequestBuilder {
 
     private String auditId;
     private CreateCustomControlInput createCustomControlInput;
-    private final SDKMethodInterfaces.MethodCallCreateCustomControl sdk;
+    private final SDKConfiguration sdkConfiguration;
 
-    public CreateCustomControlRequestBuilder(SDKMethodInterfaces.MethodCallCreateCustomControl sdk) {
-        this.sdk = sdk;
+    public CreateCustomControlRequestBuilder(SDKConfiguration sdkConfiguration) {
+        this.sdkConfiguration = sdkConfiguration;
     }
 
     public CreateCustomControlRequestBuilder auditId(String auditId) {
@@ -30,10 +34,21 @@ public class CreateCustomControlRequestBuilder {
         return this;
     }
 
-    public CreateCustomControlResponse call() throws Exception {
 
-        return sdk.createCustomControl(
-            auditId,
+    private CreateCustomControlRequest buildRequest() {
+
+        CreateCustomControlRequest request = new CreateCustomControlRequest(auditId,
             createCustomControlInput);
+
+        return request;
+    }
+
+    public CreateCustomControlResponse call() throws Exception {
+        
+        RequestOperation<CreateCustomControlRequest, CreateCustomControlResponse> operation
+              = new CreateCustomControlOperation(sdkConfiguration);
+        CreateCustomControlRequest request = buildRequest();
+
+        return operation.handleResponse(operation.doRequest(request));
     }
 }

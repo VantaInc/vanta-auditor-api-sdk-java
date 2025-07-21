@@ -12,11 +12,10 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
-import java.util.Objects;
 import java.util.Optional;
 
-public class Comment {
 
+public class Comment {
     /**
      * The unique identifier for the comment
      */
@@ -92,7 +91,9 @@ public class Comment {
             String auditEvidenceId,
             String text,
             OffsetDateTime creationDate) {
-        this(id, auditEvidenceId, text, creationDate, Optional.empty(), Optional.empty(), Optional.empty());
+        this(id, auditEvidenceId, text,
+            creationDate, Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     /**
@@ -151,9 +152,10 @@ public class Comment {
         return email;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * The unique identifier for the comment
@@ -200,6 +202,7 @@ public class Comment {
         return this;
     }
 
+
     /**
      * When the comment was updated
      */
@@ -217,6 +220,7 @@ public class Comment {
         this.deletionDate = Optional.ofNullable(deletionDate);
         return this;
     }
+
 
     /**
      * When the comment was deleted
@@ -236,6 +240,7 @@ public class Comment {
         return this;
     }
 
+
     /**
      * The email of the comment author. This acts as a unique identifier to map users between Vanta and external systems.
      */
@@ -245,7 +250,6 @@ public class Comment {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -256,24 +260,20 @@ public class Comment {
         }
         Comment other = (Comment) o;
         return 
-            Objects.deepEquals(this.id, other.id) &&
-            Objects.deepEquals(this.auditEvidenceId, other.auditEvidenceId) &&
-            Objects.deepEquals(this.text, other.text) &&
-            Objects.deepEquals(this.creationDate, other.creationDate) &&
-            Objects.deepEquals(this.modificationDate, other.modificationDate) &&
-            Objects.deepEquals(this.deletionDate, other.deletionDate) &&
-            Objects.deepEquals(this.email, other.email);
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.auditEvidenceId, other.auditEvidenceId) &&
+            Utils.enhancedDeepEquals(this.text, other.text) &&
+            Utils.enhancedDeepEquals(this.creationDate, other.creationDate) &&
+            Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
+            Utils.enhancedDeepEquals(this.deletionDate, other.deletionDate) &&
+            Utils.enhancedDeepEquals(this.email, other.email);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            auditEvidenceId,
-            text,
-            creationDate,
-            modificationDate,
-            deletionDate,
+        return Utils.enhancedHash(
+            id, auditEvidenceId, text,
+            creationDate, modificationDate, deletionDate,
             email);
     }
     
@@ -288,26 +288,28 @@ public class Comment {
                 "deletionDate", deletionDate,
                 "email", email);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String id;
- 
+
         private String auditEvidenceId;
- 
+
         private String text;
- 
+
         private OffsetDateTime creationDate;
- 
+
         private Optional<OffsetDateTime> modificationDate = Optional.empty();
- 
+
         private Optional<OffsetDateTime> deletionDate = Optional.empty();
- 
+
         private Optional<String> email = Optional.empty();
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * The unique identifier for the comment
@@ -318,6 +320,7 @@ public class Comment {
             return this;
         }
 
+
         /**
          * The unique identifier for the audit evidence related to the comment.
          */
@@ -326,6 +329,7 @@ public class Comment {
             this.auditEvidenceId = auditEvidenceId;
             return this;
         }
+
 
         /**
          * The comment message
@@ -336,6 +340,7 @@ public class Comment {
             return this;
         }
 
+
         /**
          * When the comment was created
          */
@@ -344,6 +349,7 @@ public class Comment {
             this.creationDate = creationDate;
             return this;
         }
+
 
         /**
          * When the comment was updated
@@ -363,6 +369,7 @@ public class Comment {
             return this;
         }
 
+
         /**
          * When the comment was deleted
          */
@@ -381,6 +388,7 @@ public class Comment {
             return this;
         }
 
+
         /**
          * The email of the comment author. This acts as a unique identifier to map users between Vanta and external systems.
          */
@@ -398,16 +406,14 @@ public class Comment {
             this.email = email;
             return this;
         }
-        
+
         public Comment build() {
+
             return new Comment(
-                id,
-                auditEvidenceId,
-                text,
-                creationDate,
-                modificationDate,
-                deletionDate,
+                id, auditEvidenceId, text,
+                creationDate, modificationDate, deletionDate,
                 email);
         }
+
     }
 }

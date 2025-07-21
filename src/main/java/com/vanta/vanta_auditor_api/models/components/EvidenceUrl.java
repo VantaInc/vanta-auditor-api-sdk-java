@@ -10,10 +10,9 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class EvidenceUrl {
-
     /**
      * Vanta internal reference to evidence
      */
@@ -86,9 +85,10 @@ public class EvidenceUrl {
         return isDownloadable;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * Vanta internal reference to evidence
@@ -126,7 +126,6 @@ public class EvidenceUrl {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -137,18 +136,16 @@ public class EvidenceUrl {
         }
         EvidenceUrl other = (EvidenceUrl) o;
         return 
-            Objects.deepEquals(this.id, other.id) &&
-            Objects.deepEquals(this.url, other.url) &&
-            Objects.deepEquals(this.filename, other.filename) &&
-            Objects.deepEquals(this.isDownloadable, other.isDownloadable);
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.url, other.url) &&
+            Utils.enhancedDeepEquals(this.filename, other.filename) &&
+            Utils.enhancedDeepEquals(this.isDownloadable, other.isDownloadable);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            url,
-            filename,
+        return Utils.enhancedHash(
+            id, url, filename,
             isDownloadable);
     }
     
@@ -160,20 +157,22 @@ public class EvidenceUrl {
                 "filename", filename,
                 "isDownloadable", isDownloadable);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String id;
- 
+
         private String url;
- 
+
         private String filename;
- 
+
         private Boolean isDownloadable;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * Vanta internal reference to evidence
@@ -184,6 +183,7 @@ public class EvidenceUrl {
             return this;
         }
 
+
         /**
          * Pre-signed S3 URL for evidence
          */
@@ -192,6 +192,7 @@ public class EvidenceUrl {
             this.url = url;
             return this;
         }
+
 
         /**
          * File name of evidence
@@ -202,6 +203,7 @@ public class EvidenceUrl {
             return this;
         }
 
+
         /**
          * Set to true if this is a presigned s3 url. Set to false if this is a customer uploaded link
          */
@@ -210,13 +212,13 @@ public class EvidenceUrl {
             this.isDownloadable = isDownloadable;
             return this;
         }
-        
+
         public EvidenceUrl build() {
+
             return new EvidenceUrl(
-                id,
-                url,
-                filename,
+                id, url, filename,
                 isDownloadable);
         }
+
     }
 }

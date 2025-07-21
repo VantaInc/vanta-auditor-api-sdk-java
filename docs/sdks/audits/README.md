@@ -33,10 +33,11 @@ public class Application {
     public static void main(String[] args) throws Exception {
 
         Vanta sdk = Vanta.builder()
-                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
         ListAuditsResponse res = sdk.audits().list()
+                .pageSize(10)
                 .call();
 
         if (res.paginatedResponseAudit().isPresent()) {
@@ -53,6 +54,7 @@ public class Application {
 | `pageSize`                                                                                | *Optional\<Integer>*                                                                      | :heavy_minus_sign:                                                                        | N/A                                                                                       |
 | `pageCursor`                                                                              | *Optional\<String>*                                                                       | :heavy_minus_sign:                                                                        | N/A                                                                                       |
 | `changedSinceDate`                                                                        | [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html) | :heavy_minus_sign:                                                                        | Includes all audits that have changed since changedSinceDate.                             |
+| `isActiveAudit`                                                                           | *Optional\<Boolean>*                                                                      | :heavy_minus_sign:                                                                        | Includes only audits with no audit report uploaded                                        |
 
 ### Response
 
@@ -83,12 +85,13 @@ public class Application {
     public static void main(String[] args) throws Exception {
 
         Vanta sdk = Vanta.builder()
-                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
         ListAuditEvidenceUrlsResponse res = sdk.audits().getEvidenceUrls()
                 .auditId("<id>")
                 .auditEvidenceId("<id>")
+                .pageSize(10)
                 .call();
 
         if (res.paginatedResponseEvidenceUrl().isPresent()) {
@@ -135,11 +138,12 @@ public class Application {
     public static void main(String[] args) throws Exception {
 
         Vanta sdk = Vanta.builder()
-                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
         ListAuditEvidenceResponse res = sdk.audits().listEvidence()
                 .auditId("<id>")
+                .pageSize(10)
                 .call();
 
         if (res.paginatedResponseEvidence().isPresent()) {
@@ -186,11 +190,12 @@ public class Application {
     public static void main(String[] args) throws Exception {
 
         Vanta sdk = Vanta.builder()
-                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
         ListAuditCommentsResponse res = sdk.audits().listComments()
                 .auditId("<id>")
+                .pageSize(10)
                 .call();
 
         if (res.paginatedResponseComment().isPresent()) {
@@ -237,11 +242,12 @@ public class Application {
     public static void main(String[] args) throws Exception {
 
         Vanta sdk = Vanta.builder()
-                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
         ListAuditControlsResponse res = sdk.audits().listControls()
                 .auditId("<id>")
+                .pageSize(10)
                 .call();
 
         if (res.paginatedResponseAuditorControl().isPresent()) {
@@ -289,7 +295,7 @@ public class Application {
     public static void main(String[] args) throws Exception {
 
         Vanta sdk = Vanta.builder()
-                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
         CreateCommentForAuditEvidenceResponse res = sdk.audits().createCommentForEvidence()
@@ -297,8 +303,8 @@ public class Application {
                 .auditEvidenceId("<id>")
                 .addCommentInput(AddCommentInput.builder()
                     .text("<value>")
-                    .email("Alexis74@hotmail.com")
-                    .creationDate(OffsetDateTime.parse("2024-08-13T11:18:40.035Z"))
+                    .email("Carmen.Bogan@yahoo.com")
+                    .creationDate(OffsetDateTime.parse("2024-05-28T11:04:29.369Z"))
                     .build())
                 .call();
 
@@ -346,7 +352,7 @@ public class Application {
     public static void main(String[] args) throws Exception {
 
         Vanta sdk = Vanta.builder()
-                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
         UpdateAuditEvidenceResponse res = sdk.audits().updateEvidence()
@@ -402,19 +408,20 @@ public class Application {
     public static void main(String[] args) throws Exception {
 
         Vanta sdk = Vanta.builder()
-                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
         CreateCustomEvidenceRequestResponse res = sdk.audits().createCustomEvidenceRequest()
                 .auditId("<id>")
                 .createCustomEvidenceRequestInput(CreateCustomEvidenceRequestInput.builder()
                     .controlIds(List.of(
-                        "<value>"))
+                        "<value 1>",
+                        "<value 2>"))
                     .title("<value>")
-                    .description("now whoa while")
-                    .cadence(RecurrenceDuration.P3_M)
+                    .description("pure bludgeon deliberately question although")
+                    .cadence(RecurrenceDuration.P1_D)
                     .reminderWindow(RecurrenceDuration.P0_D)
-                    .isRestricted(true)
+                    .isRestricted(false)
                     .auditorEmail("<value>")
                     .build())
                 .call();
@@ -458,23 +465,24 @@ import com.vanta.vanta_auditor_api.models.components.CreateCustomControlInput;
 import com.vanta.vanta_auditor_api.models.operations.CreateCustomControlResponse;
 import java.lang.Exception;
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
 public class Application {
 
     public static void main(String[] args) throws Exception {
 
         Vanta sdk = Vanta.builder()
-                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
         CreateCustomControlResponse res = sdk.audits().createCustomControl()
                 .auditId("<id>")
                 .createCustomControlInput(CreateCustomControlInput.builder()
                     .externalId("<id>")
-                    .name("<value>")
-                    .description("even keenly afore mmm yearningly ouch tough yearly intent")
-                    .effectiveDate(OffsetDateTime.parse("2024-07-08T11:52:30.590Z"))
-                    .category(ControlDomain.THREAT_MANAGEMENT)
+                    .name(Optional.empty())
+                    .description("yet plus utter queasily what juvenile wound")
+                    .effectiveDate(OffsetDateTime.parse("2024-11-10T13:58:54.564Z"))
+                    .category(ControlDomain.CLOUD_SECURITY)
                     .build())
                 .call();
 

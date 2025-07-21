@@ -11,10 +11,9 @@ import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
-import java.util.Objects;
+
 
 public class CustomEvidenceRequest {
-
     /**
      * Internal id of the custom evidence request within Vanta
      */
@@ -39,8 +38,10 @@ public class CustomEvidenceRequest {
     @JsonProperty("description")
     private String description;
 
+
     @JsonProperty("cadence")
     private RecurrenceDuration cadence;
+
 
     @JsonProperty("reminderWindow")
     private RecurrenceDuration reminderWindow;
@@ -126,9 +127,10 @@ public class CustomEvidenceRequest {
         return isRestricted;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * Internal id of the custom evidence request within Vanta
@@ -187,7 +189,6 @@ public class CustomEvidenceRequest {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -198,24 +199,20 @@ public class CustomEvidenceRequest {
         }
         CustomEvidenceRequest other = (CustomEvidenceRequest) o;
         return 
-            Objects.deepEquals(this.id, other.id) &&
-            Objects.deepEquals(this.controlIds, other.controlIds) &&
-            Objects.deepEquals(this.title, other.title) &&
-            Objects.deepEquals(this.description, other.description) &&
-            Objects.deepEquals(this.cadence, other.cadence) &&
-            Objects.deepEquals(this.reminderWindow, other.reminderWindow) &&
-            Objects.deepEquals(this.isRestricted, other.isRestricted);
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.controlIds, other.controlIds) &&
+            Utils.enhancedDeepEquals(this.title, other.title) &&
+            Utils.enhancedDeepEquals(this.description, other.description) &&
+            Utils.enhancedDeepEquals(this.cadence, other.cadence) &&
+            Utils.enhancedDeepEquals(this.reminderWindow, other.reminderWindow) &&
+            Utils.enhancedDeepEquals(this.isRestricted, other.isRestricted);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            controlIds,
-            title,
-            description,
-            cadence,
-            reminderWindow,
+        return Utils.enhancedHash(
+            id, controlIds, title,
+            description, cadence, reminderWindow,
             isRestricted);
     }
     
@@ -230,26 +227,28 @@ public class CustomEvidenceRequest {
                 "reminderWindow", reminderWindow,
                 "isRestricted", isRestricted);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String id;
- 
+
         private List<String> controlIds;
- 
+
         private String title;
- 
+
         private String description;
- 
+
         private RecurrenceDuration cadence;
- 
+
         private RecurrenceDuration reminderWindow;
- 
+
         private Boolean isRestricted;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * Internal id of the custom evidence request within Vanta
@@ -260,6 +259,7 @@ public class CustomEvidenceRequest {
             return this;
         }
 
+
         /**
          * A set of controls, referenced by id, to map the evidence to
          */
@@ -268,6 +268,7 @@ public class CustomEvidenceRequest {
             this.controlIds = controlIds;
             return this;
         }
+
 
         /**
          * Title for the evidence request
@@ -278,6 +279,7 @@ public class CustomEvidenceRequest {
             return this;
         }
 
+
         /**
          * Description for the evidence request
          */
@@ -287,17 +289,20 @@ public class CustomEvidenceRequest {
             return this;
         }
 
+
         public Builder cadence(RecurrenceDuration cadence) {
             Utils.checkNotNull(cadence, "cadence");
             this.cadence = cadence;
             return this;
         }
 
+
         public Builder reminderWindow(RecurrenceDuration reminderWindow) {
             Utils.checkNotNull(reminderWindow, "reminderWindow");
             this.reminderWindow = reminderWindow;
             return this;
         }
+
 
         /**
          * Whether this document contains sensitive data and needs more restrictive read access
@@ -307,16 +312,14 @@ public class CustomEvidenceRequest {
             this.isRestricted = isRestricted;
             return this;
         }
-        
+
         public CustomEvidenceRequest build() {
+
             return new CustomEvidenceRequest(
-                id,
-                controlIds,
-                title,
-                description,
-                cadence,
-                reminderWindow,
+                id, controlIds, title,
+                description, cadence, reminderWindow,
                 isRestricted);
         }
+
     }
 }

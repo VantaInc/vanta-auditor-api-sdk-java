@@ -9,17 +9,19 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.SpeakeasyMetadata;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
-import java.util.Objects;
 import java.util.Optional;
+
 
 public class ListAuditsRequest {
 
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=pageSize")
     private Optional<Integer> pageSize;
+
 
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=pageCursor")
     private Optional<String> pageCursor;
@@ -30,21 +32,31 @@ public class ListAuditsRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=changedSinceDate")
     private Optional<OffsetDateTime> changedSinceDate;
 
+    /**
+     * Includes only audits with no audit report uploaded
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=isActiveAudit")
+    private Optional<Boolean> isActiveAudit;
+
     @JsonCreator
     public ListAuditsRequest(
             Optional<Integer> pageSize,
             Optional<String> pageCursor,
-            Optional<OffsetDateTime> changedSinceDate) {
+            Optional<OffsetDateTime> changedSinceDate,
+            Optional<Boolean> isActiveAudit) {
         Utils.checkNotNull(pageSize, "pageSize");
         Utils.checkNotNull(pageCursor, "pageCursor");
         Utils.checkNotNull(changedSinceDate, "changedSinceDate");
+        Utils.checkNotNull(isActiveAudit, "isActiveAudit");
         this.pageSize = pageSize;
         this.pageCursor = pageCursor;
         this.changedSinceDate = changedSinceDate;
+        this.isActiveAudit = isActiveAudit;
     }
     
     public ListAuditsRequest() {
-        this(Optional.empty(), Optional.empty(), Optional.empty());
+        this(Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     @JsonIgnore
@@ -65,15 +77,25 @@ public class ListAuditsRequest {
         return changedSinceDate;
     }
 
-    public final static Builder builder() {
+    /**
+     * Includes only audits with no audit report uploaded
+     */
+    @JsonIgnore
+    public Optional<Boolean> isActiveAudit() {
+        return isActiveAudit;
+    }
+
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public ListAuditsRequest withPageSize(int pageSize) {
         Utils.checkNotNull(pageSize, "pageSize");
         this.pageSize = Optional.ofNullable(pageSize);
         return this;
     }
+
 
     public ListAuditsRequest withPageSize(Optional<Integer> pageSize) {
         Utils.checkNotNull(pageSize, "pageSize");
@@ -86,6 +108,7 @@ public class ListAuditsRequest {
         this.pageCursor = Optional.ofNullable(pageCursor);
         return this;
     }
+
 
     public ListAuditsRequest withPageCursor(Optional<String> pageCursor) {
         Utils.checkNotNull(pageCursor, "pageCursor");
@@ -102,6 +125,7 @@ public class ListAuditsRequest {
         return this;
     }
 
+
     /**
      * Includes all audits that have changed since changedSinceDate.
      */
@@ -111,7 +135,25 @@ public class ListAuditsRequest {
         return this;
     }
 
-    
+    /**
+     * Includes only audits with no audit report uploaded
+     */
+    public ListAuditsRequest withIsActiveAudit(boolean isActiveAudit) {
+        Utils.checkNotNull(isActiveAudit, "isActiveAudit");
+        this.isActiveAudit = Optional.ofNullable(isActiveAudit);
+        return this;
+    }
+
+
+    /**
+     * Includes only audits with no audit report uploaded
+     */
+    public ListAuditsRequest withIsActiveAudit(Optional<Boolean> isActiveAudit) {
+        Utils.checkNotNull(isActiveAudit, "isActiveAudit");
+        this.isActiveAudit = isActiveAudit;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -122,17 +164,17 @@ public class ListAuditsRequest {
         }
         ListAuditsRequest other = (ListAuditsRequest) o;
         return 
-            Objects.deepEquals(this.pageSize, other.pageSize) &&
-            Objects.deepEquals(this.pageCursor, other.pageCursor) &&
-            Objects.deepEquals(this.changedSinceDate, other.changedSinceDate);
+            Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
+            Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor) &&
+            Utils.enhancedDeepEquals(this.changedSinceDate, other.changedSinceDate) &&
+            Utils.enhancedDeepEquals(this.isActiveAudit, other.isActiveAudit);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            pageSize,
-            pageCursor,
-            changedSinceDate);
+        return Utils.enhancedHash(
+            pageSize, pageCursor, changedSinceDate,
+            isActiveAudit);
     }
     
     @Override
@@ -140,20 +182,25 @@ public class ListAuditsRequest {
         return Utils.toString(ListAuditsRequest.class,
                 "pageSize", pageSize,
                 "pageCursor", pageCursor,
-                "changedSinceDate", changedSinceDate);
+                "changedSinceDate", changedSinceDate,
+                "isActiveAudit", isActiveAudit);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private Optional<Integer> pageSize;
- 
+
         private Optional<String> pageCursor = Optional.empty();
- 
+
         private Optional<OffsetDateTime> changedSinceDate = Optional.empty();
-        
+
+        private Optional<Boolean> isActiveAudit = Optional.empty();
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder pageSize(int pageSize) {
             Utils.checkNotNull(pageSize, "pageSize");
@@ -167,6 +214,7 @@ public class ListAuditsRequest {
             return this;
         }
 
+
         public Builder pageCursor(String pageCursor) {
             Utils.checkNotNull(pageCursor, "pageCursor");
             this.pageCursor = Optional.ofNullable(pageCursor);
@@ -178,6 +226,7 @@ public class ListAuditsRequest {
             this.pageCursor = pageCursor;
             return this;
         }
+
 
         /**
          * Includes all audits that have changed since changedSinceDate.
@@ -196,16 +245,36 @@ public class ListAuditsRequest {
             this.changedSinceDate = changedSinceDate;
             return this;
         }
-        
+
+
+        /**
+         * Includes only audits with no audit report uploaded
+         */
+        public Builder isActiveAudit(boolean isActiveAudit) {
+            Utils.checkNotNull(isActiveAudit, "isActiveAudit");
+            this.isActiveAudit = Optional.ofNullable(isActiveAudit);
+            return this;
+        }
+
+        /**
+         * Includes only audits with no audit report uploaded
+         */
+        public Builder isActiveAudit(Optional<Boolean> isActiveAudit) {
+            Utils.checkNotNull(isActiveAudit, "isActiveAudit");
+            this.isActiveAudit = isActiveAudit;
+            return this;
+        }
+
         public ListAuditsRequest build() {
             if (pageSize == null) {
                 pageSize = _SINGLETON_VALUE_PageSize.value();
             }
+
             return new ListAuditsRequest(
-                pageSize,
-                pageCursor,
-                changedSinceDate);
+                pageSize, pageCursor, changedSinceDate,
+                isActiveAudit);
         }
+
 
         private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_PageSize =
                 new LazySingletonValue<>(

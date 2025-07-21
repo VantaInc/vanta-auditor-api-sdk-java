@@ -14,12 +14,11 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-public class CreateCustomControlInput {
 
+public class CreateCustomControlInput {
     /**
      * The external id of the control.
      */
@@ -44,6 +43,7 @@ public class CreateCustomControlInput {
      */
     @JsonProperty("effectiveDate")
     private OffsetDateTime effectiveDate;
+
 
     @JsonProperty("category")
     private ControlDomain category;
@@ -93,7 +93,9 @@ public class CreateCustomControlInput {
             String description,
             OffsetDateTime effectiveDate,
             ControlDomain category) {
-        this(externalId, Optional.empty(), description, effectiveDate, category, JsonNullable.undefined(), JsonNullable.undefined());
+        this(externalId, Optional.empty(), description,
+            effectiveDate, category, JsonNullable.undefined(),
+            JsonNullable.undefined());
     }
 
     /**
@@ -152,9 +154,10 @@ public class CreateCustomControlInput {
         return (JsonNullable<Role>) role;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * The external id of the control.
@@ -173,6 +176,7 @@ public class CreateCustomControlInput {
         this.name = Optional.ofNullable(name);
         return this;
     }
+
 
     /**
      * The name of the control.
@@ -245,7 +249,6 @@ public class CreateCustomControlInput {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -256,24 +259,20 @@ public class CreateCustomControlInput {
         }
         CreateCustomControlInput other = (CreateCustomControlInput) o;
         return 
-            Objects.deepEquals(this.externalId, other.externalId) &&
-            Objects.deepEquals(this.name, other.name) &&
-            Objects.deepEquals(this.description, other.description) &&
-            Objects.deepEquals(this.effectiveDate, other.effectiveDate) &&
-            Objects.deepEquals(this.category, other.category) &&
-            Objects.deepEquals(this.sections, other.sections) &&
-            Objects.deepEquals(this.role, other.role);
+            Utils.enhancedDeepEquals(this.externalId, other.externalId) &&
+            Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.description, other.description) &&
+            Utils.enhancedDeepEquals(this.effectiveDate, other.effectiveDate) &&
+            Utils.enhancedDeepEquals(this.category, other.category) &&
+            Utils.enhancedDeepEquals(this.sections, other.sections) &&
+            Utils.enhancedDeepEquals(this.role, other.role);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            externalId,
-            name,
-            description,
-            effectiveDate,
-            category,
-            sections,
+        return Utils.enhancedHash(
+            externalId, name, description,
+            effectiveDate, category, sections,
             role);
     }
     
@@ -288,26 +287,28 @@ public class CreateCustomControlInput {
                 "sections", sections,
                 "role", role);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String externalId;
- 
+
         private Optional<String> name = Optional.empty();
- 
+
         private String description;
- 
+
         private OffsetDateTime effectiveDate;
- 
+
         private ControlDomain category;
- 
+
         private JsonNullable<? extends List<FrameworkSection>> sections = JsonNullable.undefined();
- 
+
         private JsonNullable<? extends Role> role = JsonNullable.undefined();
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * The external id of the control.
@@ -317,6 +318,7 @@ public class CreateCustomControlInput {
             this.externalId = externalId;
             return this;
         }
+
 
         /**
          * The name of the control.
@@ -336,6 +338,7 @@ public class CreateCustomControlInput {
             return this;
         }
 
+
         /**
          * The description of the control.
          */
@@ -344,6 +347,7 @@ public class CreateCustomControlInput {
             this.description = description;
             return this;
         }
+
 
         /**
          * The effective date of the control.
@@ -354,11 +358,13 @@ public class CreateCustomControlInput {
             return this;
         }
 
+
         public Builder category(ControlDomain category) {
             Utils.checkNotNull(category, "category");
             this.category = category;
             return this;
         }
+
 
         /**
          * Framework sections that the control should be mapped to.
@@ -377,6 +383,7 @@ public class CreateCustomControlInput {
             this.sections = sections;
             return this;
         }
+
 
         /**
          * The GDPR role of the control, which specifies whether the data is being "collected" or "processed". See the GdprRole enum for possible values.
@@ -397,16 +404,14 @@ public class CreateCustomControlInput {
             this.role = role;
             return this;
         }
-        
+
         public CreateCustomControlInput build() {
+
             return new CreateCustomControlInput(
-                externalId,
-                name,
-                description,
-                effectiveDate,
-                category,
-                sections,
+                externalId, name, description,
+                effectiveDate, category, sections,
                 role);
         }
+
     }
 }

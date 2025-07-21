@@ -11,10 +11,11 @@ public class Application {
     public static void main(String[] args) throws Exception {
 
         Vanta sdk = Vanta.builder()
-                .bearerAuth("<YOUR_BEARER_TOKEN_HERE>")
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
         ListAuditsResponse res = sdk.audits().list()
+                .pageSize(10)
                 .call();
 
         if (res.paginatedResponseAudit().isPresent()) {

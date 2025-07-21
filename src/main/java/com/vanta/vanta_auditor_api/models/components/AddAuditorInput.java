@@ -9,10 +9,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class AddAuditorInput {
-
     /**
      * Email of the new user.
      */
@@ -68,9 +67,10 @@ public class AddAuditorInput {
         return familyName;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * Email of the new user.
@@ -99,7 +99,6 @@ public class AddAuditorInput {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -110,17 +109,15 @@ public class AddAuditorInput {
         }
         AddAuditorInput other = (AddAuditorInput) o;
         return 
-            Objects.deepEquals(this.email, other.email) &&
-            Objects.deepEquals(this.givenName, other.givenName) &&
-            Objects.deepEquals(this.familyName, other.familyName);
+            Utils.enhancedDeepEquals(this.email, other.email) &&
+            Utils.enhancedDeepEquals(this.givenName, other.givenName) &&
+            Utils.enhancedDeepEquals(this.familyName, other.familyName);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            email,
-            givenName,
-            familyName);
+        return Utils.enhancedHash(
+            email, givenName, familyName);
     }
     
     @Override
@@ -130,18 +127,20 @@ public class AddAuditorInput {
                 "givenName", givenName,
                 "familyName", familyName);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String email;
- 
+
         private String givenName;
- 
+
         private String familyName;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * Email of the new user.
@@ -152,6 +151,7 @@ public class AddAuditorInput {
             return this;
         }
 
+
         /**
          * First name of the new user.
          */
@@ -161,6 +161,7 @@ public class AddAuditorInput {
             return this;
         }
 
+
         /**
          * Last name of the new user.
          */
@@ -169,12 +170,12 @@ public class AddAuditorInput {
             this.familyName = familyName;
             return this;
         }
-        
+
         public AddAuditorInput build() {
+
             return new AddAuditorInput(
-                email,
-                givenName,
-                familyName);
+                email, givenName, familyName);
         }
+
     }
 }

@@ -13,12 +13,11 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-public class AuditorControl {
 
+public class AuditorControl {
     /**
      * The control's unique ID.
      */
@@ -43,6 +42,7 @@ public class AuditorControl {
      */
     @JsonProperty("description")
     private String description;
+
 
     @JsonProperty("source")
     private ControlSource source;
@@ -131,7 +131,10 @@ public class AuditorControl {
             List<CustomField> customFields,
             String framework,
             List<Section> sections) {
-        this(id, Optional.empty(), name, description, source, domains, Optional.empty(), JsonNullable.undefined(), customFields, framework, sections);
+        this(id, Optional.empty(), name,
+            description, source, domains,
+            Optional.empty(), JsonNullable.undefined(), customFields,
+            framework, sections);
     }
 
     /**
@@ -220,9 +223,10 @@ public class AuditorControl {
         return sections;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * The control's unique ID.
@@ -241,6 +245,7 @@ public class AuditorControl {
         this.externalId = Optional.ofNullable(externalId);
         return this;
     }
+
 
     /**
      * The control's external ID.
@@ -292,6 +297,7 @@ public class AuditorControl {
         this.owner = Optional.ofNullable(owner);
         return this;
     }
+
 
     /**
      * The control's owner.
@@ -347,7 +353,6 @@ public class AuditorControl {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -358,33 +363,26 @@ public class AuditorControl {
         }
         AuditorControl other = (AuditorControl) o;
         return 
-            Objects.deepEquals(this.id, other.id) &&
-            Objects.deepEquals(this.externalId, other.externalId) &&
-            Objects.deepEquals(this.name, other.name) &&
-            Objects.deepEquals(this.description, other.description) &&
-            Objects.deepEquals(this.source, other.source) &&
-            Objects.deepEquals(this.domains, other.domains) &&
-            Objects.deepEquals(this.owner, other.owner) &&
-            Objects.deepEquals(this.role, other.role) &&
-            Objects.deepEquals(this.customFields, other.customFields) &&
-            Objects.deepEquals(this.framework, other.framework) &&
-            Objects.deepEquals(this.sections, other.sections);
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.externalId, other.externalId) &&
+            Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.description, other.description) &&
+            Utils.enhancedDeepEquals(this.source, other.source) &&
+            Utils.enhancedDeepEquals(this.domains, other.domains) &&
+            Utils.enhancedDeepEquals(this.owner, other.owner) &&
+            Utils.enhancedDeepEquals(this.role, other.role) &&
+            Utils.enhancedDeepEquals(this.customFields, other.customFields) &&
+            Utils.enhancedDeepEquals(this.framework, other.framework) &&
+            Utils.enhancedDeepEquals(this.sections, other.sections);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            externalId,
-            name,
-            description,
-            source,
-            domains,
-            owner,
-            role,
-            customFields,
-            framework,
-            sections);
+        return Utils.enhancedHash(
+            id, externalId, name,
+            description, source, domains,
+            owner, role, customFields,
+            framework, sections);
     }
     
     @Override
@@ -402,34 +400,36 @@ public class AuditorControl {
                 "framework", framework,
                 "sections", sections);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String id;
- 
+
         private Optional<String> externalId = Optional.empty();
- 
+
         private String name;
- 
+
         private String description;
- 
+
         private ControlSource source;
- 
+
         private List<String> domains;
- 
+
         private Optional<? extends Owner> owner = Optional.empty();
- 
+
         private JsonNullable<String> role = JsonNullable.undefined();
- 
+
         private List<CustomField> customFields;
- 
+
         private String framework;
- 
+
         private List<Section> sections;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * The control's unique ID.
@@ -439,6 +439,7 @@ public class AuditorControl {
             this.id = id;
             return this;
         }
+
 
         /**
          * The control's external ID.
@@ -458,6 +459,7 @@ public class AuditorControl {
             return this;
         }
 
+
         /**
          * The control's name.
          */
@@ -466,6 +468,7 @@ public class AuditorControl {
             this.name = name;
             return this;
         }
+
 
         /**
          * The control's description.
@@ -476,11 +479,13 @@ public class AuditorControl {
             return this;
         }
 
+
         public Builder source(ControlSource source) {
             Utils.checkNotNull(source, "source");
             this.source = source;
             return this;
         }
+
 
         /**
          * The security domains that the control belongs to.
@@ -490,6 +495,7 @@ public class AuditorControl {
             this.domains = domains;
             return this;
         }
+
 
         /**
          * The control's owner.
@@ -509,6 +515,7 @@ public class AuditorControl {
             return this;
         }
 
+
         /**
          * The control's GDPR role, if the control is a GDPR control.
          */
@@ -527,6 +534,7 @@ public class AuditorControl {
             return this;
         }
 
+
         /**
          * The control's custom field values, if control custom fields is included in your Vanta instance.
          */
@@ -535,6 +543,7 @@ public class AuditorControl {
             this.customFields = customFields;
             return this;
         }
+
 
         /**
          * The report standard framework fulfilled by the control.
@@ -545,6 +554,7 @@ public class AuditorControl {
             return this;
         }
 
+
         /**
          * Sections of a framework that this control satisfies
          */
@@ -553,20 +563,15 @@ public class AuditorControl {
             this.sections = sections;
             return this;
         }
-        
+
         public AuditorControl build() {
+
             return new AuditorControl(
-                id,
-                externalId,
-                name,
-                description,
-                source,
-                domains,
-                owner,
-                role,
-                customFields,
-                framework,
-                sections);
+                id, externalId, name,
+                description, source, domains,
+                owner, role, customFields,
+                framework, sections);
         }
+
     }
 }

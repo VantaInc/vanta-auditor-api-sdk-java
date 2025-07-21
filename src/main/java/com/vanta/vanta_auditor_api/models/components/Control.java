@@ -13,12 +13,11 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import org.openapitools.jackson.nullable.JsonNullable;
 
-public class Control {
 
+public class Control {
     /**
      * The control's unique ID.
      */
@@ -43,6 +42,7 @@ public class Control {
      */
     @JsonProperty("description")
     private String description;
+
 
     @JsonProperty("source")
     private ControlSource source;
@@ -111,7 +111,9 @@ public class Control {
             ControlSource source,
             List<String> domains,
             List<CustomField> customFields) {
-        this(id, Optional.empty(), name, description, source, domains, Optional.empty(), JsonNullable.undefined(), customFields);
+        this(id, Optional.empty(), name,
+            description, source, domains,
+            Optional.empty(), JsonNullable.undefined(), customFields);
     }
 
     /**
@@ -184,9 +186,10 @@ public class Control {
         return customFields;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * The control's unique ID.
@@ -205,6 +208,7 @@ public class Control {
         this.externalId = Optional.ofNullable(externalId);
         return this;
     }
+
 
     /**
      * The control's external ID.
@@ -257,6 +261,7 @@ public class Control {
         return this;
     }
 
+
     /**
      * The control's owner.
      */
@@ -293,7 +298,6 @@ public class Control {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -304,29 +308,23 @@ public class Control {
         }
         Control other = (Control) o;
         return 
-            Objects.deepEquals(this.id, other.id) &&
-            Objects.deepEquals(this.externalId, other.externalId) &&
-            Objects.deepEquals(this.name, other.name) &&
-            Objects.deepEquals(this.description, other.description) &&
-            Objects.deepEquals(this.source, other.source) &&
-            Objects.deepEquals(this.domains, other.domains) &&
-            Objects.deepEquals(this.owner, other.owner) &&
-            Objects.deepEquals(this.role, other.role) &&
-            Objects.deepEquals(this.customFields, other.customFields);
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.externalId, other.externalId) &&
+            Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.description, other.description) &&
+            Utils.enhancedDeepEquals(this.source, other.source) &&
+            Utils.enhancedDeepEquals(this.domains, other.domains) &&
+            Utils.enhancedDeepEquals(this.owner, other.owner) &&
+            Utils.enhancedDeepEquals(this.role, other.role) &&
+            Utils.enhancedDeepEquals(this.customFields, other.customFields);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            externalId,
-            name,
-            description,
-            source,
-            domains,
-            owner,
-            role,
-            customFields);
+        return Utils.enhancedHash(
+            id, externalId, name,
+            description, source, domains,
+            owner, role, customFields);
     }
     
     @Override
@@ -342,30 +340,32 @@ public class Control {
                 "role", role,
                 "customFields", customFields);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String id;
- 
+
         private Optional<String> externalId = Optional.empty();
- 
+
         private String name;
- 
+
         private String description;
- 
+
         private ControlSource source;
- 
+
         private List<String> domains;
- 
+
         private Optional<? extends ControlOwner> owner = Optional.empty();
- 
+
         private JsonNullable<String> role = JsonNullable.undefined();
- 
+
         private List<CustomField> customFields;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * The control's unique ID.
@@ -375,6 +375,7 @@ public class Control {
             this.id = id;
             return this;
         }
+
 
         /**
          * The control's external ID.
@@ -394,6 +395,7 @@ public class Control {
             return this;
         }
 
+
         /**
          * The control's name.
          */
@@ -402,6 +404,7 @@ public class Control {
             this.name = name;
             return this;
         }
+
 
         /**
          * The control's description.
@@ -412,11 +415,13 @@ public class Control {
             return this;
         }
 
+
         public Builder source(ControlSource source) {
             Utils.checkNotNull(source, "source");
             this.source = source;
             return this;
         }
+
 
         /**
          * The security domains that the control belongs to.
@@ -426,6 +431,7 @@ public class Control {
             this.domains = domains;
             return this;
         }
+
 
         /**
          * The control's owner.
@@ -445,6 +451,7 @@ public class Control {
             return this;
         }
 
+
         /**
          * The control's GDPR role, if the control is a GDPR control.
          */
@@ -463,6 +470,7 @@ public class Control {
             return this;
         }
 
+
         /**
          * The control's custom field values, if control custom fields is included in your Vanta instance.
          */
@@ -471,18 +479,14 @@ public class Control {
             this.customFields = customFields;
             return this;
         }
-        
+
         public Control build() {
+
             return new Control(
-                id,
-                externalId,
-                name,
-                description,
-                source,
-                domains,
-                owner,
-                role,
-                customFields);
+                id, externalId, name,
+                description, source, domains,
+                owner, role, customFields);
         }
+
     }
 }

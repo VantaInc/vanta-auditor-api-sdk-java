@@ -3,17 +3,21 @@
  */
 package com.vanta.vanta_auditor_api.models.operations;
 
+import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
+
+import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.AddAuditorInput;
+import com.vanta.vanta_auditor_api.operations.CreateAuditorOperation;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
 
 public class CreateAuditorRequestBuilder {
 
     private AddAuditorInput request;
-    private final SDKMethodInterfaces.MethodCallCreateAuditor sdk;
+    private final SDKConfiguration sdkConfiguration;
 
-    public CreateAuditorRequestBuilder(SDKMethodInterfaces.MethodCallCreateAuditor sdk) {
-        this.sdk = sdk;
+    public CreateAuditorRequestBuilder(SDKConfiguration sdkConfiguration) {
+        this.sdkConfiguration = sdkConfiguration;
     }
 
     public CreateAuditorRequestBuilder request(AddAuditorInput request) {
@@ -23,8 +27,10 @@ public class CreateAuditorRequestBuilder {
     }
 
     public CreateAuditorResponse call() throws Exception {
+        
+        RequestOperation<AddAuditorInput, CreateAuditorResponse> operation
+              = new CreateAuditorOperation(sdkConfiguration);
 
-        return sdk.create(
-            request);
+        return operation.handleResponse(operation.doRequest(request));
     }
 }

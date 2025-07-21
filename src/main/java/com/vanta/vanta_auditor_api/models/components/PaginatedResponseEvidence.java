@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class PaginatedResponseEvidence {
 
@@ -28,9 +28,10 @@ public class PaginatedResponseEvidence {
         return results;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public PaginatedResponseEvidence withResults(PaginatedResponseEvidenceResults results) {
         Utils.checkNotNull(results, "results");
@@ -38,7 +39,6 @@ public class PaginatedResponseEvidence {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -49,12 +49,12 @@ public class PaginatedResponseEvidence {
         }
         PaginatedResponseEvidence other = (PaginatedResponseEvidence) o;
         return 
-            Objects.deepEquals(this.results, other.results);
+            Utils.enhancedDeepEquals(this.results, other.results);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
+        return Utils.enhancedHash(
             results);
     }
     
@@ -63,24 +63,28 @@ public class PaginatedResponseEvidence {
         return Utils.toString(PaginatedResponseEvidence.class,
                 "results", results);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private PaginatedResponseEvidenceResults results;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder results(PaginatedResponseEvidenceResults results) {
             Utils.checkNotNull(results, "results");
             this.results = results;
             return this;
         }
-        
+
         public PaginatedResponseEvidence build() {
+
             return new PaginatedResponseEvidence(
                 results);
         }
+
     }
 }

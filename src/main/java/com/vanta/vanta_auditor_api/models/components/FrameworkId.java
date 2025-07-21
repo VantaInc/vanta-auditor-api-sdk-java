@@ -48,7 +48,7 @@ public enum FrameworkId {
     @JsonValue
     private final String value;
 
-    private FrameworkId(String value) {
+    FrameworkId(String value) {
         this.value = value;
     }
     

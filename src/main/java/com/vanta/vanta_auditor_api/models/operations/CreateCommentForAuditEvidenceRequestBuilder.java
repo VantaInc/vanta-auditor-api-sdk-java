@@ -3,7 +3,11 @@
  */
 package com.vanta.vanta_auditor_api.models.operations;
 
+import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
+
+import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
+import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidenceOperation;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
 import java.lang.String;
@@ -13,10 +17,10 @@ public class CreateCommentForAuditEvidenceRequestBuilder {
     private String auditId;
     private String auditEvidenceId;
     private AddCommentInput addCommentInput;
-    private final SDKMethodInterfaces.MethodCallCreateCommentForAuditEvidence sdk;
+    private final SDKConfiguration sdkConfiguration;
 
-    public CreateCommentForAuditEvidenceRequestBuilder(SDKMethodInterfaces.MethodCallCreateCommentForAuditEvidence sdk) {
-        this.sdk = sdk;
+    public CreateCommentForAuditEvidenceRequestBuilder(SDKConfiguration sdkConfiguration) {
+        this.sdkConfiguration = sdkConfiguration;
     }
 
     public CreateCommentForAuditEvidenceRequestBuilder auditId(String auditId) {
@@ -37,11 +41,22 @@ public class CreateCommentForAuditEvidenceRequestBuilder {
         return this;
     }
 
-    public CreateCommentForAuditEvidenceResponse call() throws Exception {
 
-        return sdk.createCommentForEvidence(
-            auditId,
+    private CreateCommentForAuditEvidenceRequest buildRequest() {
+
+        CreateCommentForAuditEvidenceRequest request = new CreateCommentForAuditEvidenceRequest(auditId,
             auditEvidenceId,
             addCommentInput);
+
+        return request;
+    }
+
+    public CreateCommentForAuditEvidenceResponse call() throws Exception {
+        
+        RequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
+              = new CreateCommentForAuditEvidenceOperation(sdkConfiguration);
+        CreateCommentForAuditEvidenceRequest request = buildRequest();
+
+        return operation.handleResponse(operation.doRequest(request));
     }
 }

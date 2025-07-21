@@ -12,7 +12,6 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -21,7 +20,6 @@ import java.util.Optional;
  * <p>Provides information about the pagination of a dataset.
  */
 public class PageInfo {
-
     /**
      * The cursor that points to the end of the current page, or null if there is no such cursor.
      */
@@ -67,7 +65,8 @@ public class PageInfo {
     public PageInfo(
             boolean hasNextPage,
             boolean hasPreviousPage) {
-        this(Optional.empty(), hasNextPage, hasPreviousPage, Optional.empty());
+        this(Optional.empty(), hasNextPage, hasPreviousPage,
+            Optional.empty());
     }
 
     /**
@@ -102,9 +101,10 @@ public class PageInfo {
         return startCursor;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * The cursor that points to the end of the current page, or null if there is no such cursor.
@@ -114,6 +114,7 @@ public class PageInfo {
         this.endCursor = Optional.ofNullable(endCursor);
         return this;
     }
+
 
     /**
      * The cursor that points to the end of the current page, or null if there is no such cursor.
@@ -151,6 +152,7 @@ public class PageInfo {
         return this;
     }
 
+
     /**
      * The cursor that points to the start of the current page, or null if there is no such cursor.
      */
@@ -160,7 +162,6 @@ public class PageInfo {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -171,18 +172,16 @@ public class PageInfo {
         }
         PageInfo other = (PageInfo) o;
         return 
-            Objects.deepEquals(this.endCursor, other.endCursor) &&
-            Objects.deepEquals(this.hasNextPage, other.hasNextPage) &&
-            Objects.deepEquals(this.hasPreviousPage, other.hasPreviousPage) &&
-            Objects.deepEquals(this.startCursor, other.startCursor);
+            Utils.enhancedDeepEquals(this.endCursor, other.endCursor) &&
+            Utils.enhancedDeepEquals(this.hasNextPage, other.hasNextPage) &&
+            Utils.enhancedDeepEquals(this.hasPreviousPage, other.hasPreviousPage) &&
+            Utils.enhancedDeepEquals(this.startCursor, other.startCursor);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            endCursor,
-            hasNextPage,
-            hasPreviousPage,
+        return Utils.enhancedHash(
+            endCursor, hasNextPage, hasPreviousPage,
             startCursor);
     }
     
@@ -194,20 +193,22 @@ public class PageInfo {
                 "hasPreviousPage", hasPreviousPage,
                 "startCursor", startCursor);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private Optional<String> endCursor = Optional.empty();
- 
+
         private Boolean hasNextPage;
- 
+
         private Boolean hasPreviousPage;
- 
+
         private Optional<String> startCursor = Optional.empty();
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * The cursor that points to the end of the current page, or null if there is no such cursor.
@@ -227,6 +228,7 @@ public class PageInfo {
             return this;
         }
 
+
         /**
          * Indicates if there is another page after the current page.
          */
@@ -236,6 +238,7 @@ public class PageInfo {
             return this;
         }
 
+
         /**
          * Indicates if there is a page before the current page.
          */
@@ -244,6 +247,7 @@ public class PageInfo {
             this.hasPreviousPage = hasPreviousPage;
             return this;
         }
+
 
         /**
          * The cursor that points to the start of the current page, or null if there is no such cursor.
@@ -262,13 +266,13 @@ public class PageInfo {
             this.startCursor = startCursor;
             return this;
         }
-        
+
         public PageInfo build() {
+
             return new PageInfo(
-                endCursor,
-                hasNextPage,
-                hasPreviousPage,
+                endCursor, hasNextPage, hasPreviousPage,
                 startCursor);
         }
+
     }
 }

@@ -10,7 +10,7 @@ import com.vanta.vanta_auditor_api.utils.SpeakeasyMetadata;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class Security implements HasSecurity {
 
@@ -29,9 +29,10 @@ public class Security implements HasSecurity {
         return bearerAuth;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public Security withBearerAuth(String bearerAuth) {
         Utils.checkNotNull(bearerAuth, "bearerAuth");
@@ -39,7 +40,6 @@ public class Security implements HasSecurity {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -50,12 +50,12 @@ public class Security implements HasSecurity {
         }
         Security other = (Security) o;
         return 
-            Objects.deepEquals(this.bearerAuth, other.bearerAuth);
+            Utils.enhancedDeepEquals(this.bearerAuth, other.bearerAuth);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
+        return Utils.enhancedHash(
             bearerAuth);
     }
     
@@ -64,24 +64,28 @@ public class Security implements HasSecurity {
         return Utils.toString(Security.class,
                 "bearerAuth", bearerAuth);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String bearerAuth;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder bearerAuth(String bearerAuth) {
             Utils.checkNotNull(bearerAuth, "bearerAuth");
             this.bearerAuth = bearerAuth;
             return this;
         }
-        
+
         public Security build() {
+
             return new Security(
                 bearerAuth);
         }
+
     }
 }

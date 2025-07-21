@@ -3,7 +3,11 @@
  */
 package com.vanta.vanta_auditor_api.models.operations;
 
+import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
+
+import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomEvidenceRequestInput;
+import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequestOperation;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
 import java.lang.String;
@@ -12,10 +16,10 @@ public class CreateCustomEvidenceRequestRequestBuilder {
 
     private String auditId;
     private CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput;
-    private final SDKMethodInterfaces.MethodCallCreateCustomEvidenceRequest sdk;
+    private final SDKConfiguration sdkConfiguration;
 
-    public CreateCustomEvidenceRequestRequestBuilder(SDKMethodInterfaces.MethodCallCreateCustomEvidenceRequest sdk) {
-        this.sdk = sdk;
+    public CreateCustomEvidenceRequestRequestBuilder(SDKConfiguration sdkConfiguration) {
+        this.sdkConfiguration = sdkConfiguration;
     }
 
     public CreateCustomEvidenceRequestRequestBuilder auditId(String auditId) {
@@ -30,10 +34,21 @@ public class CreateCustomEvidenceRequestRequestBuilder {
         return this;
     }
 
-    public CreateCustomEvidenceRequestResponse call() throws Exception {
 
-        return sdk.createCustomEvidenceRequest(
-            auditId,
+    private CreateCustomEvidenceRequestRequest buildRequest() {
+
+        CreateCustomEvidenceRequestRequest request = new CreateCustomEvidenceRequestRequest(auditId,
             createCustomEvidenceRequestInput);
+
+        return request;
+    }
+
+    public CreateCustomEvidenceRequestResponse call() throws Exception {
+        
+        RequestOperation<CreateCustomEvidenceRequestRequest, CreateCustomEvidenceRequestResponse> operation
+              = new CreateCustomEvidenceRequestOperation(sdkConfiguration);
+        CreateCustomEvidenceRequestRequest request = buildRequest();
+
+        return operation.handleResponse(operation.doRequest(request));
     }
 }

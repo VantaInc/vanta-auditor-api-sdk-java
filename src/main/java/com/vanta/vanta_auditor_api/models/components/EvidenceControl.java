@@ -10,10 +10,9 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
-import java.util.Objects;
+
 
 public class EvidenceControl {
-
     /**
      * Name of control associated to this evidence
      */
@@ -52,9 +51,10 @@ public class EvidenceControl {
         return sectionNames;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * Name of control associated to this evidence
@@ -74,7 +74,6 @@ public class EvidenceControl {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -85,15 +84,14 @@ public class EvidenceControl {
         }
         EvidenceControl other = (EvidenceControl) o;
         return 
-            Objects.deepEquals(this.name, other.name) &&
-            Objects.deepEquals(this.sectionNames, other.sectionNames);
+            Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.sectionNames, other.sectionNames);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            name,
-            sectionNames);
+        return Utils.enhancedHash(
+            name, sectionNames);
     }
     
     @Override
@@ -102,16 +100,18 @@ public class EvidenceControl {
                 "name", name,
                 "sectionNames", sectionNames);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String name;
- 
+
         private List<String> sectionNames;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * Name of control associated to this evidence
@@ -122,6 +122,7 @@ public class EvidenceControl {
             return this;
         }
 
+
         /**
          * A list sections associated to the control
          */
@@ -130,11 +131,12 @@ public class EvidenceControl {
             this.sectionNames = sectionNames;
             return this;
         }
-        
+
         public EvidenceControl build() {
+
             return new EvidenceControl(
-                name,
-                sectionNames);
+                name, sectionNames);
         }
+
     }
 }

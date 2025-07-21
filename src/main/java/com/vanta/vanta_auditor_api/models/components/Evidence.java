@@ -13,11 +13,10 @@ import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
-public class Evidence {
 
+public class Evidence {
     /**
      * Vanta internal reference to evidence
      */
@@ -29,6 +28,7 @@ public class Evidence {
      */
     @JsonProperty("externalId")
     private String externalId;
+
 
     @JsonProperty("status")
     private AuditEvidenceState status;
@@ -64,6 +64,7 @@ public class Evidence {
     @JsonInclude(Include.ALWAYS)
     @JsonProperty("testStatus")
     private Optional<String> testStatus;
+
 
     @JsonProperty("evidenceType")
     private AuditEvidenceType evidenceType;
@@ -137,7 +138,10 @@ public class Evidence {
             AuditEvidenceType evidenceType,
             String evidenceId,
             List<EvidenceControl> relatedControls) {
-        this(id, externalId, status, name, Optional.empty(), creationDate, statusUpdatedDate, Optional.empty(), evidenceType, evidenceId, relatedControls, Optional.empty());
+        this(id, externalId, status,
+            name, Optional.empty(), creationDate,
+            statusUpdatedDate, Optional.empty(), evidenceType,
+            evidenceId, relatedControls, Optional.empty());
     }
 
     /**
@@ -230,9 +234,10 @@ public class Evidence {
         return description;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * Vanta internal reference to evidence
@@ -276,6 +281,7 @@ public class Evidence {
         return this;
     }
 
+
     /**
      * The date this Audit Evidence was deleted
      */
@@ -311,6 +317,7 @@ public class Evidence {
         this.testStatus = Optional.ofNullable(testStatus);
         return this;
     }
+
 
     /**
      * The outcome of the automated test run, for Test-type evidence
@@ -354,6 +361,7 @@ public class Evidence {
         return this;
     }
 
+
     /**
      * The description for the evidence. It will be set to null if the evidence is deleted
      */
@@ -363,7 +371,6 @@ public class Evidence {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -374,35 +381,27 @@ public class Evidence {
         }
         Evidence other = (Evidence) o;
         return 
-            Objects.deepEquals(this.id, other.id) &&
-            Objects.deepEquals(this.externalId, other.externalId) &&
-            Objects.deepEquals(this.status, other.status) &&
-            Objects.deepEquals(this.name, other.name) &&
-            Objects.deepEquals(this.deletionDate, other.deletionDate) &&
-            Objects.deepEquals(this.creationDate, other.creationDate) &&
-            Objects.deepEquals(this.statusUpdatedDate, other.statusUpdatedDate) &&
-            Objects.deepEquals(this.testStatus, other.testStatus) &&
-            Objects.deepEquals(this.evidenceType, other.evidenceType) &&
-            Objects.deepEquals(this.evidenceId, other.evidenceId) &&
-            Objects.deepEquals(this.relatedControls, other.relatedControls) &&
-            Objects.deepEquals(this.description, other.description);
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.externalId, other.externalId) &&
+            Utils.enhancedDeepEquals(this.status, other.status) &&
+            Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.deletionDate, other.deletionDate) &&
+            Utils.enhancedDeepEquals(this.creationDate, other.creationDate) &&
+            Utils.enhancedDeepEquals(this.statusUpdatedDate, other.statusUpdatedDate) &&
+            Utils.enhancedDeepEquals(this.testStatus, other.testStatus) &&
+            Utils.enhancedDeepEquals(this.evidenceType, other.evidenceType) &&
+            Utils.enhancedDeepEquals(this.evidenceId, other.evidenceId) &&
+            Utils.enhancedDeepEquals(this.relatedControls, other.relatedControls) &&
+            Utils.enhancedDeepEquals(this.description, other.description);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            externalId,
-            status,
-            name,
-            deletionDate,
-            creationDate,
-            statusUpdatedDate,
-            testStatus,
-            evidenceType,
-            evidenceId,
-            relatedControls,
-            description);
+        return Utils.enhancedHash(
+            id, externalId, status,
+            name, deletionDate, creationDate,
+            statusUpdatedDate, testStatus, evidenceType,
+            evidenceId, relatedControls, description);
     }
     
     @Override
@@ -421,36 +420,38 @@ public class Evidence {
                 "relatedControls", relatedControls,
                 "description", description);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String id;
- 
+
         private String externalId;
- 
+
         private AuditEvidenceState status;
- 
+
         private String name;
- 
+
         private Optional<OffsetDateTime> deletionDate = Optional.empty();
- 
+
         private OffsetDateTime creationDate;
- 
+
         private OffsetDateTime statusUpdatedDate;
- 
+
         private Optional<String> testStatus = Optional.empty();
- 
+
         private AuditEvidenceType evidenceType;
- 
+
         private String evidenceId;
- 
+
         private List<EvidenceControl> relatedControls;
- 
+
         private Optional<String> description = Optional.empty();
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * Vanta internal reference to evidence
@@ -461,6 +462,7 @@ public class Evidence {
             return this;
         }
 
+
         /**
          * This is a static UUID to map Audit Firm controls to Vanta controls
          */
@@ -470,11 +472,13 @@ public class Evidence {
             return this;
         }
 
+
         public Builder status(AuditEvidenceState status) {
             Utils.checkNotNull(status, "status");
             this.status = status;
             return this;
         }
+
 
         /**
          * Mutable name for evidence. Not guaranteed to be unique.
@@ -484,6 +488,7 @@ public class Evidence {
             this.name = name;
             return this;
         }
+
 
         /**
          * The date this Audit Evidence was deleted
@@ -503,6 +508,7 @@ public class Evidence {
             return this;
         }
 
+
         /**
          * The date this Audit Evidence was created
          */
@@ -512,6 +518,7 @@ public class Evidence {
             return this;
         }
 
+
         /**
          * Point in time that status was last updated
          */
@@ -520,6 +527,7 @@ public class Evidence {
             this.statusUpdatedDate = statusUpdatedDate;
             return this;
         }
+
 
         /**
          * The outcome of the automated test run, for Test-type evidence
@@ -539,11 +547,13 @@ public class Evidence {
             return this;
         }
 
+
         public Builder evidenceType(AuditEvidenceType evidenceType) {
             Utils.checkNotNull(evidenceType, "evidenceType");
             this.evidenceType = evidenceType;
             return this;
         }
+
 
         /**
          * Unique identifier for evidence
@@ -554,6 +564,7 @@ public class Evidence {
             return this;
         }
 
+
         /**
          * The controls associated to this evidence
          */
@@ -562,6 +573,7 @@ public class Evidence {
             this.relatedControls = relatedControls;
             return this;
         }
+
 
         /**
          * The description for the evidence. It will be set to null if the evidence is deleted
@@ -580,21 +592,15 @@ public class Evidence {
             this.description = description;
             return this;
         }
-        
+
         public Evidence build() {
+
             return new Evidence(
-                id,
-                externalId,
-                status,
-                name,
-                deletionDate,
-                creationDate,
-                statusUpdatedDate,
-                testStatus,
-                evidenceType,
-                evidenceId,
-                relatedControls,
-                description);
+                id, externalId, status,
+                name, deletionDate, creationDate,
+                statusUpdatedDate, testStatus, evidenceType,
+                evidenceId, relatedControls, description);
         }
+
     }
 }

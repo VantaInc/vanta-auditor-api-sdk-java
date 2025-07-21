@@ -51,7 +51,7 @@ public enum ControlDomain {
     @JsonValue
     private final String value;
 
-    private ControlDomain(String value) {
+    ControlDomain(String value) {
         this.value = value;
     }
     

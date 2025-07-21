@@ -12,8 +12,8 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
-import java.util.Objects;
 import java.util.Optional;
+
 
 public class AuditEvidenceUpdateInput {
 
@@ -38,9 +38,10 @@ public class AuditEvidenceUpdateInput {
         return (Optional<StatusUpdate>) statusUpdate;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public AuditEvidenceUpdateInput withStatusUpdate(StatusUpdate statusUpdate) {
         Utils.checkNotNull(statusUpdate, "statusUpdate");
@@ -48,13 +49,13 @@ public class AuditEvidenceUpdateInput {
         return this;
     }
 
+
     public AuditEvidenceUpdateInput withStatusUpdate(Optional<? extends StatusUpdate> statusUpdate) {
         Utils.checkNotNull(statusUpdate, "statusUpdate");
         this.statusUpdate = statusUpdate;
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -65,12 +66,12 @@ public class AuditEvidenceUpdateInput {
         }
         AuditEvidenceUpdateInput other = (AuditEvidenceUpdateInput) o;
         return 
-            Objects.deepEquals(this.statusUpdate, other.statusUpdate);
+            Utils.enhancedDeepEquals(this.statusUpdate, other.statusUpdate);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
+        return Utils.enhancedHash(
             statusUpdate);
     }
     
@@ -79,14 +80,16 @@ public class AuditEvidenceUpdateInput {
         return Utils.toString(AuditEvidenceUpdateInput.class,
                 "statusUpdate", statusUpdate);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private Optional<? extends StatusUpdate> statusUpdate = Optional.empty();
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder statusUpdate(StatusUpdate statusUpdate) {
             Utils.checkNotNull(statusUpdate, "statusUpdate");
@@ -99,10 +102,12 @@ public class AuditEvidenceUpdateInput {
             this.statusUpdate = statusUpdate;
             return this;
         }
-        
+
         public AuditEvidenceUpdateInput build() {
+
             return new AuditEvidenceUpdateInput(
                 statusUpdate);
         }
+
     }
 }

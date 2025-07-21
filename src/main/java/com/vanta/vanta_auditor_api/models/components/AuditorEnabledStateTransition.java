@@ -18,7 +18,7 @@ public enum AuditorEnabledStateTransition {
     @JsonValue
     private final String value;
 
-    private AuditorEnabledStateTransition(String value) {
+    AuditorEnabledStateTransition(String value) {
         this.value = value;
     }
     

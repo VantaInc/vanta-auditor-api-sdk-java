@@ -9,15 +9,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class StatusUpdate {
-
     /**
      * Email of the auditor who changed the state
      */
     @JsonProperty("auditorEmail")
     private String auditorEmail;
+
 
     @JsonProperty("stateTransition")
     private AuditorEnabledStateTransition stateTransition;
@@ -45,9 +45,10 @@ public class StatusUpdate {
         return stateTransition;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * Email of the auditor who changed the state
@@ -64,7 +65,6 @@ public class StatusUpdate {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -75,15 +75,14 @@ public class StatusUpdate {
         }
         StatusUpdate other = (StatusUpdate) o;
         return 
-            Objects.deepEquals(this.auditorEmail, other.auditorEmail) &&
-            Objects.deepEquals(this.stateTransition, other.stateTransition);
+            Utils.enhancedDeepEquals(this.auditorEmail, other.auditorEmail) &&
+            Utils.enhancedDeepEquals(this.stateTransition, other.stateTransition);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            auditorEmail,
-            stateTransition);
+        return Utils.enhancedHash(
+            auditorEmail, stateTransition);
     }
     
     @Override
@@ -92,16 +91,18 @@ public class StatusUpdate {
                 "auditorEmail", auditorEmail,
                 "stateTransition", stateTransition);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String auditorEmail;
- 
+
         private AuditorEnabledStateTransition stateTransition;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * Email of the auditor who changed the state
@@ -112,16 +113,18 @@ public class StatusUpdate {
             return this;
         }
 
+
         public Builder stateTransition(AuditorEnabledStateTransition stateTransition) {
             Utils.checkNotNull(stateTransition, "stateTransition");
             this.stateTransition = stateTransition;
             return this;
         }
-        
+
         public StatusUpdate build() {
+
             return new StatusUpdate(
-                auditorEmail,
-                stateTransition);
+                auditorEmail, stateTransition);
         }
+
     }
 }

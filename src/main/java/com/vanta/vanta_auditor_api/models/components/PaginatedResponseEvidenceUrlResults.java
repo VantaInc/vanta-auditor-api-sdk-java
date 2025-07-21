@@ -10,7 +10,7 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
-import java.util.Objects;
+
 
 public class PaginatedResponseEvidenceUrlResults {
 
@@ -46,9 +46,10 @@ public class PaginatedResponseEvidenceUrlResults {
         return pageInfo;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public PaginatedResponseEvidenceUrlResults withData(List<EvidenceUrl> data) {
         Utils.checkNotNull(data, "data");
@@ -65,7 +66,6 @@ public class PaginatedResponseEvidenceUrlResults {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -76,15 +76,14 @@ public class PaginatedResponseEvidenceUrlResults {
         }
         PaginatedResponseEvidenceUrlResults other = (PaginatedResponseEvidenceUrlResults) o;
         return 
-            Objects.deepEquals(this.data, other.data) &&
-            Objects.deepEquals(this.pageInfo, other.pageInfo);
+            Utils.enhancedDeepEquals(this.data, other.data) &&
+            Utils.enhancedDeepEquals(this.pageInfo, other.pageInfo);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            data,
-            pageInfo);
+        return Utils.enhancedHash(
+            data, pageInfo);
     }
     
     @Override
@@ -93,22 +92,25 @@ public class PaginatedResponseEvidenceUrlResults {
                 "data", data,
                 "pageInfo", pageInfo);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private List<EvidenceUrl> data;
- 
+
         private PageInfo pageInfo;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder data(List<EvidenceUrl> data) {
             Utils.checkNotNull(data, "data");
             this.data = data;
             return this;
         }
+
 
         /**
          * Provides information about the pagination of a dataset.
@@ -118,11 +120,12 @@ public class PaginatedResponseEvidenceUrlResults {
             this.pageInfo = pageInfo;
             return this;
         }
-        
+
         public PaginatedResponseEvidenceUrlResults build() {
+
             return new PaginatedResponseEvidenceUrlResults(
-                data,
-                pageInfo);
+                data, pageInfo);
         }
+
     }
 }

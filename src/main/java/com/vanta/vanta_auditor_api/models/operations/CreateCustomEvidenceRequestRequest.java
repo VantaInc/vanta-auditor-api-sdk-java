@@ -10,12 +10,13 @@ import com.vanta.vanta_auditor_api.utils.SpeakeasyMetadata;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class CreateCustomEvidenceRequestRequest {
 
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=auditId")
     private String auditId;
+
 
     @SpeakeasyMetadata("request:mediaType=application/json")
     private CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput;
@@ -40,9 +41,10 @@ public class CreateCustomEvidenceRequestRequest {
         return createCustomEvidenceRequestInput;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public CreateCustomEvidenceRequestRequest withAuditId(String auditId) {
         Utils.checkNotNull(auditId, "auditId");
@@ -56,7 +58,6 @@ public class CreateCustomEvidenceRequestRequest {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -67,15 +68,14 @@ public class CreateCustomEvidenceRequestRequest {
         }
         CreateCustomEvidenceRequestRequest other = (CreateCustomEvidenceRequestRequest) o;
         return 
-            Objects.deepEquals(this.auditId, other.auditId) &&
-            Objects.deepEquals(this.createCustomEvidenceRequestInput, other.createCustomEvidenceRequestInput);
+            Utils.enhancedDeepEquals(this.auditId, other.auditId) &&
+            Utils.enhancedDeepEquals(this.createCustomEvidenceRequestInput, other.createCustomEvidenceRequestInput);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            auditId,
-            createCustomEvidenceRequestInput);
+        return Utils.enhancedHash(
+            auditId, createCustomEvidenceRequestInput);
     }
     
     @Override
@@ -84,16 +84,18 @@ public class CreateCustomEvidenceRequestRequest {
                 "auditId", auditId,
                 "createCustomEvidenceRequestInput", createCustomEvidenceRequestInput);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String auditId;
- 
+
         private CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder auditId(String auditId) {
             Utils.checkNotNull(auditId, "auditId");
@@ -101,16 +103,18 @@ public class CreateCustomEvidenceRequestRequest {
             return this;
         }
 
+
         public Builder createCustomEvidenceRequestInput(CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput) {
             Utils.checkNotNull(createCustomEvidenceRequestInput, "createCustomEvidenceRequestInput");
             this.createCustomEvidenceRequestInput = createCustomEvidenceRequestInput;
             return this;
         }
-        
+
         public CreateCustomEvidenceRequestRequest build() {
+
             return new CreateCustomEvidenceRequestRequest(
-                auditId,
-                createCustomEvidenceRequestInput);
+                auditId, createCustomEvidenceRequestInput);
         }
+
     }
 }

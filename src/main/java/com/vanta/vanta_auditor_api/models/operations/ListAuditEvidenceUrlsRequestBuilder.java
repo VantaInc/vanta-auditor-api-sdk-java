@@ -3,7 +3,11 @@
  */
 package com.vanta.vanta_auditor_api.models.operations;
 
+import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
+
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.vanta.vanta_auditor_api.SDKConfiguration;
+import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceUrlsOperation;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
@@ -20,10 +24,10 @@ public class ListAuditEvidenceUrlsRequestBuilder {
                             "10",
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
-    private final SDKMethodInterfaces.MethodCallListAuditEvidenceUrls sdk;
+    private final SDKConfiguration sdkConfiguration;
 
-    public ListAuditEvidenceUrlsRequestBuilder(SDKMethodInterfaces.MethodCallListAuditEvidenceUrls sdk) {
-        this.sdk = sdk;
+    public ListAuditEvidenceUrlsRequestBuilder(SDKConfiguration sdkConfiguration) {
+        this.sdkConfiguration = sdkConfiguration;
     }
 
     public ListAuditEvidenceUrlsRequestBuilder auditId(String auditId) {
@@ -62,15 +66,27 @@ public class ListAuditEvidenceUrlsRequestBuilder {
         return this;
     }
 
-    public ListAuditEvidenceUrlsResponse call() throws Exception {
+
+    private ListAuditEvidenceUrlsRequest buildRequest() {
         if (pageSize == null) {
             pageSize = _SINGLETON_VALUE_PageSize.value();
         }
-        return sdk.getEvidenceUrls(
-            auditId,
+
+        ListAuditEvidenceUrlsRequest request = new ListAuditEvidenceUrlsRequest(auditId,
             auditEvidenceId,
             pageSize,
             pageCursor);
+
+        return request;
+    }
+
+    public ListAuditEvidenceUrlsResponse call() throws Exception {
+        
+        RequestOperation<ListAuditEvidenceUrlsRequest, ListAuditEvidenceUrlsResponse> operation
+              = new ListAuditEvidenceUrlsOperation(sdkConfiguration);
+        ListAuditEvidenceUrlsRequest request = buildRequest();
+
+        return operation.handleResponse(operation.doRequest(request));
     }
 
     private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_PageSize =

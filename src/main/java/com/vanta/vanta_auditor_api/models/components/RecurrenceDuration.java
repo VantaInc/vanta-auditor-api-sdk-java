@@ -20,7 +20,7 @@ public enum RecurrenceDuration {
     @JsonValue
     private final String value;
 
-    private RecurrenceDuration(String value) {
+    RecurrenceDuration(String value) {
         this.value = value;
     }
     

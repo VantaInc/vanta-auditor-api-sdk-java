@@ -4,6 +4,7 @@
 package com.vanta.vanta_auditor_api;
 
 import com.vanta.vanta_auditor_api.utils.HTTPClient;
+import com.vanta.vanta_auditor_api.utils.Hook.SdkInitData;
 import com.vanta.vanta_auditor_api.utils.RetryConfig;
 import com.vanta.vanta_auditor_api.utils.SpeakeasyHTTPClient;
 import com.vanta.vanta_auditor_api.utils.Utils;
@@ -36,13 +37,17 @@ public class Vanta {
         "https://api.aus.vanta.com/v1",
     };
 
+
     private final Audits audits;
 
+
     private final Auditors auditors;
+
 
     public Audits audits() {
         return audits;
     }
+
 
     public Auditors auditors() {
         return auditors;
@@ -56,6 +61,9 @@ public class Vanta {
     public static class Builder {
 
         private final SDKConfiguration sdkConfiguration = new SDKConfiguration();
+        private String serverUrl;
+        private String server;
+        
 
         private Builder() {
         }
@@ -67,7 +75,7 @@ public class Vanta {
          * @return The builder instance.
          */
         public Builder client(HTTPClient client) {
-            this.sdkConfiguration.defaultClient = client;
+            this.sdkConfiguration.setClient(client);
             return this;
         }
         /**
@@ -77,9 +85,9 @@ public class Vanta {
          * @return The builder instance.
          */
         public Builder bearerAuth(String bearerAuth) {
-            this.sdkConfiguration.securitySource = SecuritySource.of(com.vanta.vanta_auditor_api.models.components.Security.builder()
+            this.sdkConfiguration.setSecuritySource(SecuritySource.of(com.vanta.vanta_auditor_api.models.components.Security.builder()
               .bearerAuth(bearerAuth)
-              .build());
+              .build()));
             return this;
         }
 
@@ -90,7 +98,8 @@ public class Vanta {
          * @return The builder instance.
          */
         public Builder securitySource(SecuritySource securitySource) {
-            this.sdkConfiguration.securitySource = securitySource;
+            Utils.checkNotNull(securitySource, "securitySource");
+            this.sdkConfiguration.setSecuritySource(securitySource);
             return this;
         }
         
@@ -101,7 +110,7 @@ public class Vanta {
          * @return The builder instance.
          */
         public Builder serverURL(String serverUrl) {
-            this.sdkConfiguration.serverUrl = serverUrl;
+            this.serverUrl = serverUrl;
             return this;
         }
 
@@ -113,7 +122,7 @@ public class Vanta {
          * @return The builder instance.
          */
         public Builder serverURL(String serverUrl, Map<String, String> params) {
-            this.sdkConfiguration.serverUrl = Utils.templateUrl(serverUrl, params);
+            this.serverUrl = Utils.templateUrl(serverUrl, params);
             return this;
         }
         
@@ -124,8 +133,8 @@ public class Vanta {
          * @return The builder instance.
          */
         public Builder serverIndex(int serverIdx) {
-            this.sdkConfiguration.serverIdx = serverIdx;
-            this.sdkConfiguration.serverUrl = SERVERS[serverIdx];
+            this.sdkConfiguration.setServerIdx(serverIdx);
+            this.serverUrl= SERVERS[serverIdx];
             return this;
         }
         
@@ -136,9 +145,26 @@ public class Vanta {
          * @return The builder instance.
          */
         public Builder retryConfig(RetryConfig retryConfig) {
-            this.sdkConfiguration.retryConfig = Optional.of(retryConfig);
+            this.sdkConfiguration.setRetryConfig(Optional.of(retryConfig));
             return this;
         }
+
+        /**
+         * Enables debug logging for HTTP requests and responses, including JSON body content.
+         * <p>
+         * Convenience method that calls {@link HTTPClient#enableDebugLogging(boolean)}.
+         * {@link SpeakeasyHTTPClient} honors this setting. If you are using a custom HTTP client,
+         * it is up to the custom client to honor this setting.
+         * </p>
+         *
+         * @param enabled Whether to enable debug logging.
+         * @return The builder instance.
+         */
+        public Builder enableHTTPDebugLogging(boolean enabled) {
+            this.sdkConfiguration.client().enableDebugLogging(enabled);
+            return this;
+        }
+
         // Visible for testing, may be accessed via reflection in tests
         Builder _hooks(com.vanta.vanta_auditor_api.utils.Hooks hooks) {
             sdkConfiguration.setHooks(hooks);  
@@ -157,19 +183,11 @@ public class Vanta {
          * @return The SDK instance.
          */
         public Vanta build() {
-            if (sdkConfiguration.defaultClient == null) {
-                sdkConfiguration.defaultClient = new SpeakeasyHTTPClient();
+            if (serverUrl == null || serverUrl.isBlank()) {
+                serverUrl = SERVERS[0];
+                sdkConfiguration.setServerIdx(0);
             }
-	        if (sdkConfiguration.securitySource == null) {
-	    	    sdkConfiguration.securitySource = SecuritySource.of(null);
-	        }
-            if (sdkConfiguration.serverUrl == null || sdkConfiguration.serverUrl.isBlank()) {
-                sdkConfiguration.serverUrl = SERVERS[0];
-                sdkConfiguration.serverIdx = 0;
-            }
-            if (sdkConfiguration.serverUrl.endsWith("/")) {
-                sdkConfiguration.serverUrl = sdkConfiguration.serverUrl.substring(0, sdkConfiguration.serverUrl.length() - 1);
-            }
+            sdkConfiguration.setServerUrl(serverUrl);
             return new Vanta(sdkConfiguration);
         }
     }
@@ -185,8 +203,14 @@ public class Vanta {
 
     private Vanta(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
+        this.sdkConfiguration.initialize();
         this.audits = new Audits(sdkConfiguration);
         this.auditors = new Auditors(sdkConfiguration);
-        this.sdkConfiguration.initialize();
+        SdkInitData data = this.sdkConfiguration.hooks().sdkInit(
+                new SdkInitData(
+                        this.sdkConfiguration.resolvedServerUrl(), 
+                        this.sdkConfiguration.client()));
+        this.sdkConfiguration.setServerUrl(data.baseUrl());
+        this.sdkConfiguration.setClient(data.client());
     }
 }

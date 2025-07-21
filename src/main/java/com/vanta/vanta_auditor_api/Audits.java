@@ -3,21 +3,12 @@
  */
 package com.vanta.vanta_auditor_api;
 
-import com.fasterxml.jackson.core.type.TypeReference;
+import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
+
 import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
 import com.vanta.vanta_auditor_api.models.components.AuditEvidenceUpdateInput;
-import com.vanta.vanta_auditor_api.models.components.Comment;
-import com.vanta.vanta_auditor_api.models.components.Control;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomControlInput;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomEvidenceRequestInput;
-import com.vanta.vanta_auditor_api.models.components.CustomEvidenceRequest;
-import com.vanta.vanta_auditor_api.models.components.Evidence;
-import com.vanta.vanta_auditor_api.models.components.PaginatedResponseAudit;
-import com.vanta.vanta_auditor_api.models.components.PaginatedResponseAuditorControl;
-import com.vanta.vanta_auditor_api.models.components.PaginatedResponseComment;
-import com.vanta.vanta_auditor_api.models.components.PaginatedResponseEvidence;
-import com.vanta.vanta_auditor_api.models.components.PaginatedResponseEvidenceUrl;
-import com.vanta.vanta_auditor_api.models.errors.APIException;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceResponse;
@@ -42,46 +33,32 @@ import com.vanta.vanta_auditor_api.models.operations.ListAuditEvidenceUrlsRespon
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
-import com.vanta.vanta_auditor_api.models.operations.SDKMethodInterfaces.*;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceResponse;
-import com.vanta.vanta_auditor_api.utils.HTTPClient;
-import com.vanta.vanta_auditor_api.utils.HTTPRequest;
-import com.vanta.vanta_auditor_api.utils.Hook.AfterErrorContextImpl;
-import com.vanta.vanta_auditor_api.utils.Hook.AfterSuccessContextImpl;
-import com.vanta.vanta_auditor_api.utils.Hook.BeforeRequestContextImpl;
-import com.vanta.vanta_auditor_api.utils.SerializedBody;
-import com.vanta.vanta_auditor_api.utils.Utils.JsonShape;
-import com.vanta.vanta_auditor_api.utils.Utils;
-import java.io.InputStream;
+import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidenceOperation;
+import com.vanta.vanta_auditor_api.operations.CreateCustomControlOperation;
+import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequestOperation;
+import com.vanta.vanta_auditor_api.operations.ListAuditCommentsOperation;
+import com.vanta.vanta_auditor_api.operations.ListAuditControlsOperation;
+import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceOperation;
+import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceUrlsOperation;
+import com.vanta.vanta_auditor_api.operations.ListAuditsOperation;
+import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidenceOperation;
+import java.lang.Boolean;
 import java.lang.Exception;
 import java.lang.Integer;
-import java.lang.Object;
 import java.lang.String;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.time.OffsetDateTime;
-import java.util.List;
 import java.util.Optional;
 
-public class Audits implements
-            MethodCallListAudits,
-            MethodCallListAuditEvidenceUrls,
-            MethodCallListAuditEvidence,
-            MethodCallListAuditComments,
-            MethodCallListAuditControls,
-            MethodCallCreateCommentForAuditEvidence,
-            MethodCallUpdateAuditEvidence,
-            MethodCallCreateCustomEvidenceRequest,
-            MethodCallCreateCustomControl {
 
+public class Audits {
     private final SDKConfiguration sdkConfiguration;
 
     Audits(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
     }
-
 
     /**
      * List audits
@@ -91,7 +68,7 @@ public class Audits implements
      * @return The call builder
      */
     public ListAuditsRequestBuilder list() {
-        return new ListAuditsRequestBuilder(this);
+        return new ListAuditsRequestBuilder(sdkConfiguration);
     }
 
     /**
@@ -103,9 +80,10 @@ public class Audits implements
      * @throws Exception if the API call fails
      */
     public ListAuditsResponse listDirect() throws Exception {
-        return list(Optional.empty(), Optional.empty(), Optional.empty());
+        return list(Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
-    
+
     /**
      * List audits
      * 
@@ -114,135 +92,25 @@ public class Audits implements
      * @param pageSize 
      * @param pageCursor 
      * @param changedSinceDate Includes all audits that have changed since changedSinceDate.
+     * @param isActiveAudit Includes only audits with no audit report uploaded
      * @return The response from the API call
      * @throws Exception if the API call fails
      */
     public ListAuditsResponse list(
-            Optional<Integer> pageSize,
-            Optional<String> pageCursor,
-            Optional<OffsetDateTime> changedSinceDate) throws Exception {
+            Optional<Integer> pageSize, Optional<String> pageCursor,
+            Optional<OffsetDateTime> changedSinceDate, Optional<Boolean> isActiveAudit) throws Exception {
         ListAuditsRequest request =
             ListAuditsRequest
                 .builder()
                 .pageSize(pageSize)
                 .pageCursor(pageCursor)
                 .changedSinceDate(changedSinceDate)
+                .isActiveAudit(isActiveAudit)
                 .build();
-        
-        String _baseUrl = this.sdkConfiguration.serverUrl;
-        String _url = Utils.generateURL(
-                _baseUrl,
-                "/audits");
-        
-        HTTPRequest _req = new HTTPRequest(_url, "GET");
-        _req.addHeader("Accept", "application/json")
-            .addHeader("user-agent", 
-                SDKConfiguration.USER_AGENT);
-
-        _req.addQueryParams(Utils.getQueryParams(
-                ListAuditsRequest.class,
-                request, 
-                null));
-        
-        Optional<SecuritySource> _hookSecuritySource = this.sdkConfiguration.securitySource();
-        Utils.configureSecurity(_req,  
-                this.sdkConfiguration.securitySource.getSecurity());
-        HTTPClient _client = this.sdkConfiguration.defaultClient;
-        HttpRequest _r = 
-            sdkConfiguration.hooks()
-               .beforeRequest(
-                  new BeforeRequestContextImpl(
-                      _baseUrl,
-                      "ListAudits", 
-                      Optional.of(List.of()), 
-                      _hookSecuritySource),
-                  _req.build());
-        HttpResponse<InputStream> _httpRes;
-        try {
-            _httpRes = _client.send(_r);
-            if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX", "5XX")) {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "ListAudits",
-                            Optional.of(List.of()),
-                            _hookSecuritySource),
-                        Optional.of(_httpRes),
-                        Optional.empty());
-            } else {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterSuccess(
-                        new AfterSuccessContextImpl(
-                            _baseUrl,
-                            "ListAudits",
-                            Optional.of(List.of()), 
-                            _hookSecuritySource),
-                         _httpRes);
-            }
-        } catch (Exception _e) {
-            _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "ListAudits",
-                            Optional.of(List.of()),
-                            _hookSecuritySource), 
-                        Optional.empty(),
-                        Optional.of(_e));
-        }
-        String _contentType = _httpRes
-            .headers()
-            .firstValue("Content-Type")
-            .orElse("application/octet-stream");
-        ListAuditsResponse.Builder _resBuilder = 
-            ListAuditsResponse
-                .builder()
-                .contentType(_contentType)
-                .statusCode(_httpRes.statusCode())
-                .rawResponse(_httpRes);
-
-        ListAuditsResponse _res = _resBuilder.build();
-        
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "200")) {
-            if (Utils.contentTypeMatches(_contentType, "application/json")) {
-                PaginatedResponseAudit _out = Utils.mapper().readValue(
-                    Utils.toUtf8AndClose(_httpRes.body()),
-                    new TypeReference<PaginatedResponseAudit>() {});
-                _res.withPaginatedResponseAudit(Optional.ofNullable(_out));
-                return _res;
-            } else {
-                throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "Unexpected content-type received: " + _contentType, 
-                    Utils.extractByteArrayFromBody(_httpRes));
-            }
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "5XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        throw new APIException(
-            _httpRes, 
-            _httpRes.statusCode(), 
-            "Unexpected status code received: " + _httpRes.statusCode(), 
-            Utils.extractByteArrayFromBody(_httpRes));
+        RequestOperation<ListAuditsRequest, ListAuditsResponse> operation
+              = new ListAuditsOperation(sdkConfiguration);
+        return operation.handleResponse(operation.doRequest(request));
     }
-
-
 
     /**
      * List audit evidence url
@@ -253,7 +121,7 @@ public class Audits implements
      * @return The call builder
      */
     public ListAuditEvidenceUrlsRequestBuilder getEvidenceUrls() {
-        return new ListAuditEvidenceUrlsRequestBuilder(this);
+        return new ListAuditEvidenceUrlsRequestBuilder(sdkConfiguration);
     }
 
     /**
@@ -267,12 +135,11 @@ public class Audits implements
      * @return The response from the API call
      * @throws Exception if the API call fails
      */
-    public ListAuditEvidenceUrlsResponse getEvidenceUrls(
-            String auditId,
-            String auditEvidenceId) throws Exception {
-        return getEvidenceUrls(auditId, auditEvidenceId, Optional.empty(), Optional.empty());
+    public ListAuditEvidenceUrlsResponse getEvidenceUrls(String auditId, String auditEvidenceId) throws Exception {
+        return getEvidenceUrls(auditId, auditEvidenceId, Optional.empty(),
+            Optional.empty());
     }
-    
+
     /**
      * List audit evidence url
      * 
@@ -287,10 +154,8 @@ public class Audits implements
      * @throws Exception if the API call fails
      */
     public ListAuditEvidenceUrlsResponse getEvidenceUrls(
-            String auditId,
-            String auditEvidenceId,
-            Optional<Integer> pageSize,
-            Optional<String> pageCursor) throws Exception {
+            String auditId, String auditEvidenceId,
+            Optional<Integer> pageSize, Optional<String> pageCursor) throws Exception {
         ListAuditEvidenceUrlsRequest request =
             ListAuditEvidenceUrlsRequest
                 .builder()
@@ -299,123 +164,10 @@ public class Audits implements
                 .pageSize(pageSize)
                 .pageCursor(pageCursor)
                 .build();
-        
-        String _baseUrl = this.sdkConfiguration.serverUrl;
-        String _url = Utils.generateURL(
-                ListAuditEvidenceUrlsRequest.class,
-                _baseUrl,
-                "/audits/{auditId}/evidence/{auditEvidenceId}/urls",
-                request, null);
-        
-        HTTPRequest _req = new HTTPRequest(_url, "GET");
-        _req.addHeader("Accept", "application/json")
-            .addHeader("user-agent", 
-                SDKConfiguration.USER_AGENT);
-
-        _req.addQueryParams(Utils.getQueryParams(
-                ListAuditEvidenceUrlsRequest.class,
-                request, 
-                null));
-        
-        Optional<SecuritySource> _hookSecuritySource = this.sdkConfiguration.securitySource();
-        Utils.configureSecurity(_req,  
-                this.sdkConfiguration.securitySource.getSecurity());
-        HTTPClient _client = this.sdkConfiguration.defaultClient;
-        HttpRequest _r = 
-            sdkConfiguration.hooks()
-               .beforeRequest(
-                  new BeforeRequestContextImpl(
-                      _baseUrl,
-                      "ListAuditEvidenceUrls", 
-                      Optional.of(List.of()), 
-                      _hookSecuritySource),
-                  _req.build());
-        HttpResponse<InputStream> _httpRes;
-        try {
-            _httpRes = _client.send(_r);
-            if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX", "5XX")) {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "ListAuditEvidenceUrls",
-                            Optional.of(List.of()),
-                            _hookSecuritySource),
-                        Optional.of(_httpRes),
-                        Optional.empty());
-            } else {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterSuccess(
-                        new AfterSuccessContextImpl(
-                            _baseUrl,
-                            "ListAuditEvidenceUrls",
-                            Optional.of(List.of()), 
-                            _hookSecuritySource),
-                         _httpRes);
-            }
-        } catch (Exception _e) {
-            _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "ListAuditEvidenceUrls",
-                            Optional.of(List.of()),
-                            _hookSecuritySource), 
-                        Optional.empty(),
-                        Optional.of(_e));
-        }
-        String _contentType = _httpRes
-            .headers()
-            .firstValue("Content-Type")
-            .orElse("application/octet-stream");
-        ListAuditEvidenceUrlsResponse.Builder _resBuilder = 
-            ListAuditEvidenceUrlsResponse
-                .builder()
-                .contentType(_contentType)
-                .statusCode(_httpRes.statusCode())
-                .rawResponse(_httpRes);
-
-        ListAuditEvidenceUrlsResponse _res = _resBuilder.build();
-        
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "200")) {
-            if (Utils.contentTypeMatches(_contentType, "application/json")) {
-                PaginatedResponseEvidenceUrl _out = Utils.mapper().readValue(
-                    Utils.toUtf8AndClose(_httpRes.body()),
-                    new TypeReference<PaginatedResponseEvidenceUrl>() {});
-                _res.withPaginatedResponseEvidenceUrl(Optional.ofNullable(_out));
-                return _res;
-            } else {
-                throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "Unexpected content-type received: " + _contentType, 
-                    Utils.extractByteArrayFromBody(_httpRes));
-            }
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "5XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        throw new APIException(
-            _httpRes, 
-            _httpRes.statusCode(), 
-            "Unexpected status code received: " + _httpRes.statusCode(), 
-            Utils.extractByteArrayFromBody(_httpRes));
+        RequestOperation<ListAuditEvidenceUrlsRequest, ListAuditEvidenceUrlsResponse> operation
+              = new ListAuditEvidenceUrlsOperation(sdkConfiguration);
+        return operation.handleResponse(operation.doRequest(request));
     }
-
-
 
     /**
      * List audit evidence
@@ -425,7 +177,7 @@ public class Audits implements
      * @return The call builder
      */
     public ListAuditEvidenceRequestBuilder listEvidence() {
-        return new ListAuditEvidenceRequestBuilder(this);
+        return new ListAuditEvidenceRequestBuilder(sdkConfiguration);
     }
 
     /**
@@ -437,11 +189,11 @@ public class Audits implements
      * @return The response from the API call
      * @throws Exception if the API call fails
      */
-    public ListAuditEvidenceResponse listEvidence(
-            String auditId) throws Exception {
-        return listEvidence(auditId, Optional.empty(), Optional.empty(), Optional.empty());
+    public ListAuditEvidenceResponse listEvidence(String auditId) throws Exception {
+        return listEvidence(auditId, Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
-    
+
     /**
      * List audit evidence
      * 
@@ -455,10 +207,8 @@ public class Audits implements
      * @throws Exception if the API call fails
      */
     public ListAuditEvidenceResponse listEvidence(
-            String auditId,
-            Optional<Integer> pageSize,
-            Optional<String> pageCursor,
-            Optional<OffsetDateTime> changedSinceDate) throws Exception {
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<OffsetDateTime> changedSinceDate) throws Exception {
         ListAuditEvidenceRequest request =
             ListAuditEvidenceRequest
                 .builder()
@@ -467,123 +217,10 @@ public class Audits implements
                 .pageCursor(pageCursor)
                 .changedSinceDate(changedSinceDate)
                 .build();
-        
-        String _baseUrl = this.sdkConfiguration.serverUrl;
-        String _url = Utils.generateURL(
-                ListAuditEvidenceRequest.class,
-                _baseUrl,
-                "/audits/{auditId}/evidence",
-                request, null);
-        
-        HTTPRequest _req = new HTTPRequest(_url, "GET");
-        _req.addHeader("Accept", "application/json")
-            .addHeader("user-agent", 
-                SDKConfiguration.USER_AGENT);
-
-        _req.addQueryParams(Utils.getQueryParams(
-                ListAuditEvidenceRequest.class,
-                request, 
-                null));
-        
-        Optional<SecuritySource> _hookSecuritySource = this.sdkConfiguration.securitySource();
-        Utils.configureSecurity(_req,  
-                this.sdkConfiguration.securitySource.getSecurity());
-        HTTPClient _client = this.sdkConfiguration.defaultClient;
-        HttpRequest _r = 
-            sdkConfiguration.hooks()
-               .beforeRequest(
-                  new BeforeRequestContextImpl(
-                      _baseUrl,
-                      "ListAuditEvidence", 
-                      Optional.of(List.of()), 
-                      _hookSecuritySource),
-                  _req.build());
-        HttpResponse<InputStream> _httpRes;
-        try {
-            _httpRes = _client.send(_r);
-            if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX", "5XX")) {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "ListAuditEvidence",
-                            Optional.of(List.of()),
-                            _hookSecuritySource),
-                        Optional.of(_httpRes),
-                        Optional.empty());
-            } else {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterSuccess(
-                        new AfterSuccessContextImpl(
-                            _baseUrl,
-                            "ListAuditEvidence",
-                            Optional.of(List.of()), 
-                            _hookSecuritySource),
-                         _httpRes);
-            }
-        } catch (Exception _e) {
-            _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "ListAuditEvidence",
-                            Optional.of(List.of()),
-                            _hookSecuritySource), 
-                        Optional.empty(),
-                        Optional.of(_e));
-        }
-        String _contentType = _httpRes
-            .headers()
-            .firstValue("Content-Type")
-            .orElse("application/octet-stream");
-        ListAuditEvidenceResponse.Builder _resBuilder = 
-            ListAuditEvidenceResponse
-                .builder()
-                .contentType(_contentType)
-                .statusCode(_httpRes.statusCode())
-                .rawResponse(_httpRes);
-
-        ListAuditEvidenceResponse _res = _resBuilder.build();
-        
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "200")) {
-            if (Utils.contentTypeMatches(_contentType, "application/json")) {
-                PaginatedResponseEvidence _out = Utils.mapper().readValue(
-                    Utils.toUtf8AndClose(_httpRes.body()),
-                    new TypeReference<PaginatedResponseEvidence>() {});
-                _res.withPaginatedResponseEvidence(Optional.ofNullable(_out));
-                return _res;
-            } else {
-                throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "Unexpected content-type received: " + _contentType, 
-                    Utils.extractByteArrayFromBody(_httpRes));
-            }
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "5XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        throw new APIException(
-            _httpRes, 
-            _httpRes.statusCode(), 
-            "Unexpected status code received: " + _httpRes.statusCode(), 
-            Utils.extractByteArrayFromBody(_httpRes));
+        RequestOperation<ListAuditEvidenceRequest, ListAuditEvidenceResponse> operation
+              = new ListAuditEvidenceOperation(sdkConfiguration);
+        return operation.handleResponse(operation.doRequest(request));
     }
-
-
 
     /**
      * List audit comments
@@ -593,7 +230,7 @@ public class Audits implements
      * @return The call builder
      */
     public ListAuditCommentsRequestBuilder listComments() {
-        return new ListAuditCommentsRequestBuilder(this);
+        return new ListAuditCommentsRequestBuilder(sdkConfiguration);
     }
 
     /**
@@ -605,11 +242,11 @@ public class Audits implements
      * @return The response from the API call
      * @throws Exception if the API call fails
      */
-    public ListAuditCommentsResponse listComments(
-            String auditId) throws Exception {
-        return listComments(auditId, Optional.empty(), Optional.empty(), Optional.empty());
+    public ListAuditCommentsResponse listComments(String auditId) throws Exception {
+        return listComments(auditId, Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
-    
+
     /**
      * List audit comments
      * 
@@ -623,10 +260,8 @@ public class Audits implements
      * @throws Exception if the API call fails
      */
     public ListAuditCommentsResponse listComments(
-            String auditId,
-            Optional<Integer> pageSize,
-            Optional<String> pageCursor,
-            Optional<OffsetDateTime> changedSinceDate) throws Exception {
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<OffsetDateTime> changedSinceDate) throws Exception {
         ListAuditCommentsRequest request =
             ListAuditCommentsRequest
                 .builder()
@@ -635,123 +270,10 @@ public class Audits implements
                 .pageCursor(pageCursor)
                 .changedSinceDate(changedSinceDate)
                 .build();
-        
-        String _baseUrl = this.sdkConfiguration.serverUrl;
-        String _url = Utils.generateURL(
-                ListAuditCommentsRequest.class,
-                _baseUrl,
-                "/audits/{auditId}/comments",
-                request, null);
-        
-        HTTPRequest _req = new HTTPRequest(_url, "GET");
-        _req.addHeader("Accept", "application/json")
-            .addHeader("user-agent", 
-                SDKConfiguration.USER_AGENT);
-
-        _req.addQueryParams(Utils.getQueryParams(
-                ListAuditCommentsRequest.class,
-                request, 
-                null));
-        
-        Optional<SecuritySource> _hookSecuritySource = this.sdkConfiguration.securitySource();
-        Utils.configureSecurity(_req,  
-                this.sdkConfiguration.securitySource.getSecurity());
-        HTTPClient _client = this.sdkConfiguration.defaultClient;
-        HttpRequest _r = 
-            sdkConfiguration.hooks()
-               .beforeRequest(
-                  new BeforeRequestContextImpl(
-                      _baseUrl,
-                      "ListAuditComments", 
-                      Optional.of(List.of()), 
-                      _hookSecuritySource),
-                  _req.build());
-        HttpResponse<InputStream> _httpRes;
-        try {
-            _httpRes = _client.send(_r);
-            if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX", "5XX")) {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "ListAuditComments",
-                            Optional.of(List.of()),
-                            _hookSecuritySource),
-                        Optional.of(_httpRes),
-                        Optional.empty());
-            } else {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterSuccess(
-                        new AfterSuccessContextImpl(
-                            _baseUrl,
-                            "ListAuditComments",
-                            Optional.of(List.of()), 
-                            _hookSecuritySource),
-                         _httpRes);
-            }
-        } catch (Exception _e) {
-            _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "ListAuditComments",
-                            Optional.of(List.of()),
-                            _hookSecuritySource), 
-                        Optional.empty(),
-                        Optional.of(_e));
-        }
-        String _contentType = _httpRes
-            .headers()
-            .firstValue("Content-Type")
-            .orElse("application/octet-stream");
-        ListAuditCommentsResponse.Builder _resBuilder = 
-            ListAuditCommentsResponse
-                .builder()
-                .contentType(_contentType)
-                .statusCode(_httpRes.statusCode())
-                .rawResponse(_httpRes);
-
-        ListAuditCommentsResponse _res = _resBuilder.build();
-        
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "200")) {
-            if (Utils.contentTypeMatches(_contentType, "application/json")) {
-                PaginatedResponseComment _out = Utils.mapper().readValue(
-                    Utils.toUtf8AndClose(_httpRes.body()),
-                    new TypeReference<PaginatedResponseComment>() {});
-                _res.withPaginatedResponseComment(Optional.ofNullable(_out));
-                return _res;
-            } else {
-                throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "Unexpected content-type received: " + _contentType, 
-                    Utils.extractByteArrayFromBody(_httpRes));
-            }
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "5XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        throw new APIException(
-            _httpRes, 
-            _httpRes.statusCode(), 
-            "Unexpected status code received: " + _httpRes.statusCode(), 
-            Utils.extractByteArrayFromBody(_httpRes));
+        RequestOperation<ListAuditCommentsRequest, ListAuditCommentsResponse> operation
+              = new ListAuditCommentsOperation(sdkConfiguration);
+        return operation.handleResponse(operation.doRequest(request));
     }
-
-
 
     /**
      * List audit controls
@@ -761,7 +283,7 @@ public class Audits implements
      * @return The call builder
      */
     public ListAuditControlsRequestBuilder listControls() {
-        return new ListAuditControlsRequestBuilder(this);
+        return new ListAuditControlsRequestBuilder(sdkConfiguration);
     }
 
     /**
@@ -773,11 +295,10 @@ public class Audits implements
      * @return The response from the API call
      * @throws Exception if the API call fails
      */
-    public ListAuditControlsResponse listControls(
-            String auditId) throws Exception {
+    public ListAuditControlsResponse listControls(String auditId) throws Exception {
         return listControls(auditId, Optional.empty(), Optional.empty());
     }
-    
+
     /**
      * List audit controls
      * 
@@ -790,8 +311,7 @@ public class Audits implements
      * @throws Exception if the API call fails
      */
     public ListAuditControlsResponse listControls(
-            String auditId,
-            Optional<Integer> pageSize,
+            String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor) throws Exception {
         ListAuditControlsRequest request =
             ListAuditControlsRequest
@@ -800,123 +320,10 @@ public class Audits implements
                 .pageSize(pageSize)
                 .pageCursor(pageCursor)
                 .build();
-        
-        String _baseUrl = this.sdkConfiguration.serverUrl;
-        String _url = Utils.generateURL(
-                ListAuditControlsRequest.class,
-                _baseUrl,
-                "/audits/{auditId}/controls",
-                request, null);
-        
-        HTTPRequest _req = new HTTPRequest(_url, "GET");
-        _req.addHeader("Accept", "application/json")
-            .addHeader("user-agent", 
-                SDKConfiguration.USER_AGENT);
-
-        _req.addQueryParams(Utils.getQueryParams(
-                ListAuditControlsRequest.class,
-                request, 
-                null));
-        
-        Optional<SecuritySource> _hookSecuritySource = this.sdkConfiguration.securitySource();
-        Utils.configureSecurity(_req,  
-                this.sdkConfiguration.securitySource.getSecurity());
-        HTTPClient _client = this.sdkConfiguration.defaultClient;
-        HttpRequest _r = 
-            sdkConfiguration.hooks()
-               .beforeRequest(
-                  new BeforeRequestContextImpl(
-                      _baseUrl,
-                      "ListAuditControls", 
-                      Optional.of(List.of()), 
-                      _hookSecuritySource),
-                  _req.build());
-        HttpResponse<InputStream> _httpRes;
-        try {
-            _httpRes = _client.send(_r);
-            if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX", "5XX")) {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "ListAuditControls",
-                            Optional.of(List.of()),
-                            _hookSecuritySource),
-                        Optional.of(_httpRes),
-                        Optional.empty());
-            } else {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterSuccess(
-                        new AfterSuccessContextImpl(
-                            _baseUrl,
-                            "ListAuditControls",
-                            Optional.of(List.of()), 
-                            _hookSecuritySource),
-                         _httpRes);
-            }
-        } catch (Exception _e) {
-            _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "ListAuditControls",
-                            Optional.of(List.of()),
-                            _hookSecuritySource), 
-                        Optional.empty(),
-                        Optional.of(_e));
-        }
-        String _contentType = _httpRes
-            .headers()
-            .firstValue("Content-Type")
-            .orElse("application/octet-stream");
-        ListAuditControlsResponse.Builder _resBuilder = 
-            ListAuditControlsResponse
-                .builder()
-                .contentType(_contentType)
-                .statusCode(_httpRes.statusCode())
-                .rawResponse(_httpRes);
-
-        ListAuditControlsResponse _res = _resBuilder.build();
-        
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "200")) {
-            if (Utils.contentTypeMatches(_contentType, "application/json")) {
-                PaginatedResponseAuditorControl _out = Utils.mapper().readValue(
-                    Utils.toUtf8AndClose(_httpRes.body()),
-                    new TypeReference<PaginatedResponseAuditorControl>() {});
-                _res.withPaginatedResponseAuditorControl(Optional.ofNullable(_out));
-                return _res;
-            } else {
-                throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "Unexpected content-type received: " + _contentType, 
-                    Utils.extractByteArrayFromBody(_httpRes));
-            }
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "5XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        throw new APIException(
-            _httpRes, 
-            _httpRes.statusCode(), 
-            "Unexpected status code received: " + _httpRes.statusCode(), 
-            Utils.extractByteArrayFromBody(_httpRes));
+        RequestOperation<ListAuditControlsRequest, ListAuditControlsResponse> operation
+              = new ListAuditControlsOperation(sdkConfiguration);
+        return operation.handleResponse(operation.doRequest(request));
     }
-
-
 
     /**
      * Create a comment for audit evidence
@@ -926,7 +333,7 @@ public class Audits implements
      * @return The call builder
      */
     public CreateCommentForAuditEvidenceRequestBuilder createCommentForEvidence() {
-        return new CreateCommentForAuditEvidenceRequestBuilder(this);
+        return new CreateCommentForAuditEvidenceRequestBuilder(sdkConfiguration);
     }
 
     /**
@@ -941,8 +348,7 @@ public class Audits implements
      * @throws Exception if the API call fails
      */
     public CreateCommentForAuditEvidenceResponse createCommentForEvidence(
-            String auditId,
-            String auditEvidenceId,
+            String auditId, String auditEvidenceId,
             AddCommentInput addCommentInput) throws Exception {
         CreateCommentForAuditEvidenceRequest request =
             CreateCommentForAuditEvidenceRequest
@@ -951,131 +357,10 @@ public class Audits implements
                 .auditEvidenceId(auditEvidenceId)
                 .addCommentInput(addCommentInput)
                 .build();
-        
-        String _baseUrl = this.sdkConfiguration.serverUrl;
-        String _url = Utils.generateURL(
-                CreateCommentForAuditEvidenceRequest.class,
-                _baseUrl,
-                "/audits/{auditId}/evidence/{auditEvidenceId}/comments",
-                request, null);
-        
-        HTTPRequest _req = new HTTPRequest(_url, "POST");
-        Object _convertedRequest = Utils.convertToShape(
-                request, 
-                JsonShape.DEFAULT,
-                new TypeReference<Object>() {});
-        SerializedBody _serializedRequestBody = Utils.serializeRequestBody(
-                _convertedRequest, 
-                "addCommentInput",
-                "json",
-                false);
-        if (_serializedRequestBody == null) {
-            throw new Exception("Request body is required");
-        }
-        _req.setBody(Optional.ofNullable(_serializedRequestBody));
-        _req.addHeader("Accept", "application/json")
-            .addHeader("user-agent", 
-                SDKConfiguration.USER_AGENT);
-        
-        Optional<SecuritySource> _hookSecuritySource = this.sdkConfiguration.securitySource();
-        Utils.configureSecurity(_req,  
-                this.sdkConfiguration.securitySource.getSecurity());
-        HTTPClient _client = this.sdkConfiguration.defaultClient;
-        HttpRequest _r = 
-            sdkConfiguration.hooks()
-               .beforeRequest(
-                  new BeforeRequestContextImpl(
-                      _baseUrl,
-                      "CreateCommentForAuditEvidence", 
-                      Optional.of(List.of()), 
-                      _hookSecuritySource),
-                  _req.build());
-        HttpResponse<InputStream> _httpRes;
-        try {
-            _httpRes = _client.send(_r);
-            if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX", "5XX")) {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "CreateCommentForAuditEvidence",
-                            Optional.of(List.of()),
-                            _hookSecuritySource),
-                        Optional.of(_httpRes),
-                        Optional.empty());
-            } else {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterSuccess(
-                        new AfterSuccessContextImpl(
-                            _baseUrl,
-                            "CreateCommentForAuditEvidence",
-                            Optional.of(List.of()), 
-                            _hookSecuritySource),
-                         _httpRes);
-            }
-        } catch (Exception _e) {
-            _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "CreateCommentForAuditEvidence",
-                            Optional.of(List.of()),
-                            _hookSecuritySource), 
-                        Optional.empty(),
-                        Optional.of(_e));
-        }
-        String _contentType = _httpRes
-            .headers()
-            .firstValue("Content-Type")
-            .orElse("application/octet-stream");
-        CreateCommentForAuditEvidenceResponse.Builder _resBuilder = 
-            CreateCommentForAuditEvidenceResponse
-                .builder()
-                .contentType(_contentType)
-                .statusCode(_httpRes.statusCode())
-                .rawResponse(_httpRes);
-
-        CreateCommentForAuditEvidenceResponse _res = _resBuilder.build();
-        
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "200")) {
-            if (Utils.contentTypeMatches(_contentType, "application/json")) {
-                Comment _out = Utils.mapper().readValue(
-                    Utils.toUtf8AndClose(_httpRes.body()),
-                    new TypeReference<Comment>() {});
-                _res.withComment(Optional.ofNullable(_out));
-                return _res;
-            } else {
-                throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "Unexpected content-type received: " + _contentType, 
-                    Utils.extractByteArrayFromBody(_httpRes));
-            }
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "5XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        throw new APIException(
-            _httpRes, 
-            _httpRes.statusCode(), 
-            "Unexpected status code received: " + _httpRes.statusCode(), 
-            Utils.extractByteArrayFromBody(_httpRes));
+        RequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
+              = new CreateCommentForAuditEvidenceOperation(sdkConfiguration);
+        return operation.handleResponse(operation.doRequest(request));
     }
-
-
 
     /**
      * Update audit evidence
@@ -1085,7 +370,7 @@ public class Audits implements
      * @return The call builder
      */
     public UpdateAuditEvidenceRequestBuilder updateEvidence() {
-        return new UpdateAuditEvidenceRequestBuilder(this);
+        return new UpdateAuditEvidenceRequestBuilder(sdkConfiguration);
     }
 
     /**
@@ -1100,8 +385,7 @@ public class Audits implements
      * @throws Exception if the API call fails
      */
     public UpdateAuditEvidenceResponse updateEvidence(
-            String auditId,
-            String auditEvidenceId,
+            String auditId, String auditEvidenceId,
             AuditEvidenceUpdateInput auditEvidenceUpdateInput) throws Exception {
         UpdateAuditEvidenceRequest request =
             UpdateAuditEvidenceRequest
@@ -1110,131 +394,10 @@ public class Audits implements
                 .auditEvidenceId(auditEvidenceId)
                 .auditEvidenceUpdateInput(auditEvidenceUpdateInput)
                 .build();
-        
-        String _baseUrl = this.sdkConfiguration.serverUrl;
-        String _url = Utils.generateURL(
-                UpdateAuditEvidenceRequest.class,
-                _baseUrl,
-                "/audits/{auditId}/evidence/{auditEvidenceId}",
-                request, null);
-        
-        HTTPRequest _req = new HTTPRequest(_url, "PATCH");
-        Object _convertedRequest = Utils.convertToShape(
-                request, 
-                JsonShape.DEFAULT,
-                new TypeReference<Object>() {});
-        SerializedBody _serializedRequestBody = Utils.serializeRequestBody(
-                _convertedRequest, 
-                "auditEvidenceUpdateInput",
-                "json",
-                false);
-        if (_serializedRequestBody == null) {
-            throw new Exception("Request body is required");
-        }
-        _req.setBody(Optional.ofNullable(_serializedRequestBody));
-        _req.addHeader("Accept", "application/json")
-            .addHeader("user-agent", 
-                SDKConfiguration.USER_AGENT);
-        
-        Optional<SecuritySource> _hookSecuritySource = this.sdkConfiguration.securitySource();
-        Utils.configureSecurity(_req,  
-                this.sdkConfiguration.securitySource.getSecurity());
-        HTTPClient _client = this.sdkConfiguration.defaultClient;
-        HttpRequest _r = 
-            sdkConfiguration.hooks()
-               .beforeRequest(
-                  new BeforeRequestContextImpl(
-                      _baseUrl,
-                      "UpdateAuditEvidence", 
-                      Optional.of(List.of()), 
-                      _hookSecuritySource),
-                  _req.build());
-        HttpResponse<InputStream> _httpRes;
-        try {
-            _httpRes = _client.send(_r);
-            if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX", "5XX")) {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "UpdateAuditEvidence",
-                            Optional.of(List.of()),
-                            _hookSecuritySource),
-                        Optional.of(_httpRes),
-                        Optional.empty());
-            } else {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterSuccess(
-                        new AfterSuccessContextImpl(
-                            _baseUrl,
-                            "UpdateAuditEvidence",
-                            Optional.of(List.of()), 
-                            _hookSecuritySource),
-                         _httpRes);
-            }
-        } catch (Exception _e) {
-            _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "UpdateAuditEvidence",
-                            Optional.of(List.of()),
-                            _hookSecuritySource), 
-                        Optional.empty(),
-                        Optional.of(_e));
-        }
-        String _contentType = _httpRes
-            .headers()
-            .firstValue("Content-Type")
-            .orElse("application/octet-stream");
-        UpdateAuditEvidenceResponse.Builder _resBuilder = 
-            UpdateAuditEvidenceResponse
-                .builder()
-                .contentType(_contentType)
-                .statusCode(_httpRes.statusCode())
-                .rawResponse(_httpRes);
-
-        UpdateAuditEvidenceResponse _res = _resBuilder.build();
-        
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "200")) {
-            if (Utils.contentTypeMatches(_contentType, "application/json")) {
-                Evidence _out = Utils.mapper().readValue(
-                    Utils.toUtf8AndClose(_httpRes.body()),
-                    new TypeReference<Evidence>() {});
-                _res.withEvidence(Optional.ofNullable(_out));
-                return _res;
-            } else {
-                throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "Unexpected content-type received: " + _contentType, 
-                    Utils.extractByteArrayFromBody(_httpRes));
-            }
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "5XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        throw new APIException(
-            _httpRes, 
-            _httpRes.statusCode(), 
-            "Unexpected status code received: " + _httpRes.statusCode(), 
-            Utils.extractByteArrayFromBody(_httpRes));
+        RequestOperation<UpdateAuditEvidenceRequest, UpdateAuditEvidenceResponse> operation
+              = new UpdateAuditEvidenceOperation(sdkConfiguration);
+        return operation.handleResponse(operation.doRequest(request));
     }
-
-
 
     /**
      * Create a custom evidence request for an audit
@@ -1244,7 +407,7 @@ public class Audits implements
      * @return The call builder
      */
     public CreateCustomEvidenceRequestRequestBuilder createCustomEvidenceRequest() {
-        return new CreateCustomEvidenceRequestRequestBuilder(this);
+        return new CreateCustomEvidenceRequestRequestBuilder(sdkConfiguration);
     }
 
     /**
@@ -1257,140 +420,17 @@ public class Audits implements
      * @return The response from the API call
      * @throws Exception if the API call fails
      */
-    public CreateCustomEvidenceRequestResponse createCustomEvidenceRequest(
-            String auditId,
-            CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput) throws Exception {
+    public CreateCustomEvidenceRequestResponse createCustomEvidenceRequest(String auditId, CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput) throws Exception {
         CreateCustomEvidenceRequestRequest request =
             CreateCustomEvidenceRequestRequest
                 .builder()
                 .auditId(auditId)
                 .createCustomEvidenceRequestInput(createCustomEvidenceRequestInput)
                 .build();
-        
-        String _baseUrl = this.sdkConfiguration.serverUrl;
-        String _url = Utils.generateURL(
-                CreateCustomEvidenceRequestRequest.class,
-                _baseUrl,
-                "/audits/{auditId}/evidence/custom-evidence-requests",
-                request, null);
-        
-        HTTPRequest _req = new HTTPRequest(_url, "POST");
-        Object _convertedRequest = Utils.convertToShape(
-                request, 
-                JsonShape.DEFAULT,
-                new TypeReference<Object>() {});
-        SerializedBody _serializedRequestBody = Utils.serializeRequestBody(
-                _convertedRequest, 
-                "createCustomEvidenceRequestInput",
-                "json",
-                false);
-        if (_serializedRequestBody == null) {
-            throw new Exception("Request body is required");
-        }
-        _req.setBody(Optional.ofNullable(_serializedRequestBody));
-        _req.addHeader("Accept", "application/json")
-            .addHeader("user-agent", 
-                SDKConfiguration.USER_AGENT);
-        
-        Optional<SecuritySource> _hookSecuritySource = this.sdkConfiguration.securitySource();
-        Utils.configureSecurity(_req,  
-                this.sdkConfiguration.securitySource.getSecurity());
-        HTTPClient _client = this.sdkConfiguration.defaultClient;
-        HttpRequest _r = 
-            sdkConfiguration.hooks()
-               .beforeRequest(
-                  new BeforeRequestContextImpl(
-                      _baseUrl,
-                      "CreateCustomEvidenceRequest", 
-                      Optional.of(List.of()), 
-                      _hookSecuritySource),
-                  _req.build());
-        HttpResponse<InputStream> _httpRes;
-        try {
-            _httpRes = _client.send(_r);
-            if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX", "5XX")) {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "CreateCustomEvidenceRequest",
-                            Optional.of(List.of()),
-                            _hookSecuritySource),
-                        Optional.of(_httpRes),
-                        Optional.empty());
-            } else {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterSuccess(
-                        new AfterSuccessContextImpl(
-                            _baseUrl,
-                            "CreateCustomEvidenceRequest",
-                            Optional.of(List.of()), 
-                            _hookSecuritySource),
-                         _httpRes);
-            }
-        } catch (Exception _e) {
-            _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "CreateCustomEvidenceRequest",
-                            Optional.of(List.of()),
-                            _hookSecuritySource), 
-                        Optional.empty(),
-                        Optional.of(_e));
-        }
-        String _contentType = _httpRes
-            .headers()
-            .firstValue("Content-Type")
-            .orElse("application/octet-stream");
-        CreateCustomEvidenceRequestResponse.Builder _resBuilder = 
-            CreateCustomEvidenceRequestResponse
-                .builder()
-                .contentType(_contentType)
-                .statusCode(_httpRes.statusCode())
-                .rawResponse(_httpRes);
-
-        CreateCustomEvidenceRequestResponse _res = _resBuilder.build();
-        
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "200")) {
-            if (Utils.contentTypeMatches(_contentType, "application/json")) {
-                CustomEvidenceRequest _out = Utils.mapper().readValue(
-                    Utils.toUtf8AndClose(_httpRes.body()),
-                    new TypeReference<CustomEvidenceRequest>() {});
-                _res.withCustomEvidenceRequest(Optional.ofNullable(_out));
-                return _res;
-            } else {
-                throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "Unexpected content-type received: " + _contentType, 
-                    Utils.extractByteArrayFromBody(_httpRes));
-            }
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "5XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        throw new APIException(
-            _httpRes, 
-            _httpRes.statusCode(), 
-            "Unexpected status code received: " + _httpRes.statusCode(), 
-            Utils.extractByteArrayFromBody(_httpRes));
+        RequestOperation<CreateCustomEvidenceRequestRequest, CreateCustomEvidenceRequestResponse> operation
+              = new CreateCustomEvidenceRequestOperation(sdkConfiguration);
+        return operation.handleResponse(operation.doRequest(request));
     }
-
-
 
     /**
      * Create a custom control for an audit
@@ -1400,7 +440,7 @@ public class Audits implements
      * @return The call builder
      */
     public CreateCustomControlRequestBuilder createCustomControl() {
-        return new CreateCustomControlRequestBuilder(this);
+        return new CreateCustomControlRequestBuilder(sdkConfiguration);
     }
 
     /**
@@ -1413,137 +453,16 @@ public class Audits implements
      * @return The response from the API call
      * @throws Exception if the API call fails
      */
-    public CreateCustomControlResponse createCustomControl(
-            String auditId,
-            CreateCustomControlInput createCustomControlInput) throws Exception {
+    public CreateCustomControlResponse createCustomControl(String auditId, CreateCustomControlInput createCustomControlInput) throws Exception {
         CreateCustomControlRequest request =
             CreateCustomControlRequest
                 .builder()
                 .auditId(auditId)
                 .createCustomControlInput(createCustomControlInput)
                 .build();
-        
-        String _baseUrl = this.sdkConfiguration.serverUrl;
-        String _url = Utils.generateURL(
-                CreateCustomControlRequest.class,
-                _baseUrl,
-                "/audits/{auditId}/controls/custom-controls",
-                request, null);
-        
-        HTTPRequest _req = new HTTPRequest(_url, "POST");
-        Object _convertedRequest = Utils.convertToShape(
-                request, 
-                JsonShape.DEFAULT,
-                new TypeReference<Object>() {});
-        SerializedBody _serializedRequestBody = Utils.serializeRequestBody(
-                _convertedRequest, 
-                "createCustomControlInput",
-                "json",
-                false);
-        if (_serializedRequestBody == null) {
-            throw new Exception("Request body is required");
-        }
-        _req.setBody(Optional.ofNullable(_serializedRequestBody));
-        _req.addHeader("Accept", "application/json")
-            .addHeader("user-agent", 
-                SDKConfiguration.USER_AGENT);
-        
-        Optional<SecuritySource> _hookSecuritySource = this.sdkConfiguration.securitySource();
-        Utils.configureSecurity(_req,  
-                this.sdkConfiguration.securitySource.getSecurity());
-        HTTPClient _client = this.sdkConfiguration.defaultClient;
-        HttpRequest _r = 
-            sdkConfiguration.hooks()
-               .beforeRequest(
-                  new BeforeRequestContextImpl(
-                      _baseUrl,
-                      "CreateCustomControl", 
-                      Optional.of(List.of()), 
-                      _hookSecuritySource),
-                  _req.build());
-        HttpResponse<InputStream> _httpRes;
-        try {
-            _httpRes = _client.send(_r);
-            if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX", "5XX")) {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "CreateCustomControl",
-                            Optional.of(List.of()),
-                            _hookSecuritySource),
-                        Optional.of(_httpRes),
-                        Optional.empty());
-            } else {
-                _httpRes = sdkConfiguration.hooks()
-                    .afterSuccess(
-                        new AfterSuccessContextImpl(
-                            _baseUrl,
-                            "CreateCustomControl",
-                            Optional.of(List.of()), 
-                            _hookSecuritySource),
-                         _httpRes);
-            }
-        } catch (Exception _e) {
-            _httpRes = sdkConfiguration.hooks()
-                    .afterError(
-                        new AfterErrorContextImpl(
-                            _baseUrl,
-                            "CreateCustomControl",
-                            Optional.of(List.of()),
-                            _hookSecuritySource), 
-                        Optional.empty(),
-                        Optional.of(_e));
-        }
-        String _contentType = _httpRes
-            .headers()
-            .firstValue("Content-Type")
-            .orElse("application/octet-stream");
-        CreateCustomControlResponse.Builder _resBuilder = 
-            CreateCustomControlResponse
-                .builder()
-                .contentType(_contentType)
-                .statusCode(_httpRes.statusCode())
-                .rawResponse(_httpRes);
-
-        CreateCustomControlResponse _res = _resBuilder.build();
-        
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "201")) {
-            if (Utils.contentTypeMatches(_contentType, "application/json")) {
-                Control _out = Utils.mapper().readValue(
-                    Utils.toUtf8AndClose(_httpRes.body()),
-                    new TypeReference<Control>() {});
-                _res.withControl(Optional.ofNullable(_out));
-                return _res;
-            } else {
-                throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "Unexpected content-type received: " + _contentType, 
-                    Utils.extractByteArrayFromBody(_httpRes));
-            }
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "4XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        if (Utils.statusCodeMatches(_httpRes.statusCode(), "5XX")) {
-            // no content 
-            throw new APIException(
-                    _httpRes, 
-                    _httpRes.statusCode(), 
-                    "API error occurred", 
-                    Utils.extractByteArrayFromBody(_httpRes));
-        }
-        throw new APIException(
-            _httpRes, 
-            _httpRes.statusCode(), 
-            "Unexpected status code received: " + _httpRes.statusCode(), 
-            Utils.extractByteArrayFromBody(_httpRes));
+        RequestOperation<CreateCustomControlRequest, CreateCustomControlResponse> operation
+              = new CreateCustomControlOperation(sdkConfiguration);
+        return operation.handleResponse(operation.doRequest(request));
     }
 
 }

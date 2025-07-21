@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class Auditor {
 
@@ -96,9 +96,10 @@ public class Auditor {
         return familyName;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public Auditor withId(String id) {
         Utils.checkNotNull(id, "id");
@@ -142,7 +143,6 @@ public class Auditor {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -153,21 +153,18 @@ public class Auditor {
         }
         Auditor other = (Auditor) o;
         return 
-            Objects.deepEquals(this.id, other.id) &&
-            Objects.deepEquals(this.organizationId, other.organizationId) &&
-            Objects.deepEquals(this.email, other.email) &&
-            Objects.deepEquals(this.givenName, other.givenName) &&
-            Objects.deepEquals(this.familyName, other.familyName);
+            Utils.enhancedDeepEquals(this.id, other.id) &&
+            Utils.enhancedDeepEquals(this.organizationId, other.organizationId) &&
+            Utils.enhancedDeepEquals(this.email, other.email) &&
+            Utils.enhancedDeepEquals(this.givenName, other.givenName) &&
+            Utils.enhancedDeepEquals(this.familyName, other.familyName);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            id,
-            organizationId,
-            email,
-            givenName,
-            familyName);
+        return Utils.enhancedHash(
+            id, organizationId, email,
+            givenName, familyName);
     }
     
     @Override
@@ -179,28 +176,31 @@ public class Auditor {
                 "givenName", givenName,
                 "familyName", familyName);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String id;
- 
+
         private String organizationId;
- 
+
         private String email;
- 
+
         private String givenName;
- 
+
         private String familyName;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder id(String id) {
             Utils.checkNotNull(id, "id");
             this.id = id;
             return this;
         }
+
 
         /**
          * The unique identifier for the organization.
@@ -211,6 +211,7 @@ public class Auditor {
             return this;
         }
 
+
         /**
          * The email address of the auditor.
          */
@@ -219,6 +220,7 @@ public class Auditor {
             this.email = email;
             return this;
         }
+
 
         /**
          * The given name (first name) of the auditor.
@@ -229,6 +231,7 @@ public class Auditor {
             return this;
         }
 
+
         /**
          * The family name (last name) of the auditor.
          */
@@ -237,14 +240,13 @@ public class Auditor {
             this.familyName = familyName;
             return this;
         }
-        
+
         public Auditor build() {
+
             return new Auditor(
-                id,
-                organizationId,
-                email,
-                givenName,
-                familyName);
+                id, organizationId, email,
+                givenName, familyName);
         }
+
     }
 }

@@ -3,9 +3,14 @@
  */
 package com.vanta.vanta_auditor_api.models.operations;
 
+import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
+
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.vanta.vanta_auditor_api.SDKConfiguration;
+import com.vanta.vanta_auditor_api.operations.ListAuditsOperation;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.lang.Boolean;
 import java.lang.Exception;
 import java.lang.Integer;
 import java.lang.String;
@@ -20,10 +25,11 @@ public class ListAuditsRequestBuilder {
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
     private Optional<OffsetDateTime> changedSinceDate = Optional.empty();
-    private final SDKMethodInterfaces.MethodCallListAudits sdk;
+    private Optional<Boolean> isActiveAudit = Optional.empty();
+    private final SDKConfiguration sdkConfiguration;
 
-    public ListAuditsRequestBuilder(SDKMethodInterfaces.MethodCallListAudits sdk) {
-        this.sdk = sdk;
+    public ListAuditsRequestBuilder(SDKConfiguration sdkConfiguration) {
+        this.sdkConfiguration = sdkConfiguration;
     }
                 
     public ListAuditsRequestBuilder pageSize(int pageSize) {
@@ -61,15 +67,40 @@ public class ListAuditsRequestBuilder {
         this.changedSinceDate = changedSinceDate;
         return this;
     }
+                
+    public ListAuditsRequestBuilder isActiveAudit(boolean isActiveAudit) {
+        Utils.checkNotNull(isActiveAudit, "isActiveAudit");
+        this.isActiveAudit = Optional.of(isActiveAudit);
+        return this;
+    }
 
-    public ListAuditsResponse call() throws Exception {
+    public ListAuditsRequestBuilder isActiveAudit(Optional<Boolean> isActiveAudit) {
+        Utils.checkNotNull(isActiveAudit, "isActiveAudit");
+        this.isActiveAudit = isActiveAudit;
+        return this;
+    }
+
+
+    private ListAuditsRequest buildRequest() {
         if (pageSize == null) {
             pageSize = _SINGLETON_VALUE_PageSize.value();
         }
-        return sdk.list(
-            pageSize,
+
+        ListAuditsRequest request = new ListAuditsRequest(pageSize,
             pageCursor,
-            changedSinceDate);
+            changedSinceDate,
+            isActiveAudit);
+
+        return request;
+    }
+
+    public ListAuditsResponse call() throws Exception {
+        
+        RequestOperation<ListAuditsRequest, ListAuditsResponse> operation
+              = new ListAuditsOperation(sdkConfiguration);
+        ListAuditsRequest request = buildRequest();
+
+        return operation.handleResponse(operation.doRequest(request));
     }
 
     private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_PageSize =

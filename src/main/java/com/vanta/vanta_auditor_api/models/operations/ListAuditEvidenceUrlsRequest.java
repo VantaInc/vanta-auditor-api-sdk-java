@@ -12,19 +12,22 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
 import java.util.Optional;
+
 
 public class ListAuditEvidenceUrlsRequest {
 
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=auditId")
     private String auditId;
 
+
     @SpeakeasyMetadata("pathParam:style=simple,explode=false,name=auditEvidenceId")
     private String auditEvidenceId;
 
+
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=pageSize")
     private Optional<Integer> pageSize;
+
 
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=pageCursor")
     private Optional<String> pageCursor;
@@ -48,7 +51,8 @@ public class ListAuditEvidenceUrlsRequest {
     public ListAuditEvidenceUrlsRequest(
             String auditId,
             String auditEvidenceId) {
-        this(auditId, auditEvidenceId, Optional.empty(), Optional.empty());
+        this(auditId, auditEvidenceId, Optional.empty(),
+            Optional.empty());
     }
 
     @JsonIgnore
@@ -71,9 +75,10 @@ public class ListAuditEvidenceUrlsRequest {
         return pageCursor;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public ListAuditEvidenceUrlsRequest withAuditId(String auditId) {
         Utils.checkNotNull(auditId, "auditId");
@@ -93,6 +98,7 @@ public class ListAuditEvidenceUrlsRequest {
         return this;
     }
 
+
     public ListAuditEvidenceUrlsRequest withPageSize(Optional<Integer> pageSize) {
         Utils.checkNotNull(pageSize, "pageSize");
         this.pageSize = pageSize;
@@ -105,13 +111,13 @@ public class ListAuditEvidenceUrlsRequest {
         return this;
     }
 
+
     public ListAuditEvidenceUrlsRequest withPageCursor(Optional<String> pageCursor) {
         Utils.checkNotNull(pageCursor, "pageCursor");
         this.pageCursor = pageCursor;
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -122,18 +128,16 @@ public class ListAuditEvidenceUrlsRequest {
         }
         ListAuditEvidenceUrlsRequest other = (ListAuditEvidenceUrlsRequest) o;
         return 
-            Objects.deepEquals(this.auditId, other.auditId) &&
-            Objects.deepEquals(this.auditEvidenceId, other.auditEvidenceId) &&
-            Objects.deepEquals(this.pageSize, other.pageSize) &&
-            Objects.deepEquals(this.pageCursor, other.pageCursor);
+            Utils.enhancedDeepEquals(this.auditId, other.auditId) &&
+            Utils.enhancedDeepEquals(this.auditEvidenceId, other.auditEvidenceId) &&
+            Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
+            Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            auditId,
-            auditEvidenceId,
-            pageSize,
+        return Utils.enhancedHash(
+            auditId, auditEvidenceId, pageSize,
             pageCursor);
     }
     
@@ -145,20 +149,22 @@ public class ListAuditEvidenceUrlsRequest {
                 "pageSize", pageSize,
                 "pageCursor", pageCursor);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String auditId;
- 
+
         private String auditEvidenceId;
- 
+
         private Optional<Integer> pageSize;
- 
+
         private Optional<String> pageCursor = Optional.empty();
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder auditId(String auditId) {
             Utils.checkNotNull(auditId, "auditId");
@@ -166,11 +172,13 @@ public class ListAuditEvidenceUrlsRequest {
             return this;
         }
 
+
         public Builder auditEvidenceId(String auditEvidenceId) {
             Utils.checkNotNull(auditEvidenceId, "auditEvidenceId");
             this.auditEvidenceId = auditEvidenceId;
             return this;
         }
+
 
         public Builder pageSize(int pageSize) {
             Utils.checkNotNull(pageSize, "pageSize");
@@ -184,6 +192,7 @@ public class ListAuditEvidenceUrlsRequest {
             return this;
         }
 
+
         public Builder pageCursor(String pageCursor) {
             Utils.checkNotNull(pageCursor, "pageCursor");
             this.pageCursor = Optional.ofNullable(pageCursor);
@@ -195,17 +204,17 @@ public class ListAuditEvidenceUrlsRequest {
             this.pageCursor = pageCursor;
             return this;
         }
-        
+
         public ListAuditEvidenceUrlsRequest build() {
             if (pageSize == null) {
                 pageSize = _SINGLETON_VALUE_PageSize.value();
             }
+
             return new ListAuditEvidenceUrlsRequest(
-                auditId,
-                auditEvidenceId,
-                pageSize,
+                auditId, auditEvidenceId, pageSize,
                 pageCursor);
         }
+
 
         private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_PageSize =
                 new LazySingletonValue<>(

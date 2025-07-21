@@ -10,10 +10,9 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
-import java.util.Objects;
+
 
 public class AddCommentInput {
-
     /**
      * Text value of the comment
      */
@@ -69,9 +68,10 @@ public class AddCommentInput {
         return creationDate;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     /**
      * Text value of the comment
@@ -100,7 +100,6 @@ public class AddCommentInput {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -111,17 +110,15 @@ public class AddCommentInput {
         }
         AddCommentInput other = (AddCommentInput) o;
         return 
-            Objects.deepEquals(this.text, other.text) &&
-            Objects.deepEquals(this.email, other.email) &&
-            Objects.deepEquals(this.creationDate, other.creationDate);
+            Utils.enhancedDeepEquals(this.text, other.text) &&
+            Utils.enhancedDeepEquals(this.email, other.email) &&
+            Utils.enhancedDeepEquals(this.creationDate, other.creationDate);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            text,
-            email,
-            creationDate);
+        return Utils.enhancedHash(
+            text, email, creationDate);
     }
     
     @Override
@@ -131,18 +128,20 @@ public class AddCommentInput {
                 "email", email,
                 "creationDate", creationDate);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String text;
- 
+
         private String email;
- 
+
         private OffsetDateTime creationDate;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         /**
          * Text value of the comment
@@ -153,6 +152,7 @@ public class AddCommentInput {
             return this;
         }
 
+
         /**
          * Email of author. Must match an existing Vanta user and the user must exist under the Audit Firm who is making the API request
          */
@@ -162,6 +162,7 @@ public class AddCommentInput {
             return this;
         }
 
+
         /**
          * When the comment was created in the external system
          */
@@ -170,12 +171,12 @@ public class AddCommentInput {
             this.creationDate = creationDate;
             return this;
         }
-        
+
         public AddCommentInput build() {
+
             return new AddCommentInput(
-                text,
-                email,
-                creationDate);
+                text, email, creationDate);
         }
+
     }
 }

@@ -9,12 +9,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
-import java.util.Objects;
+
 
 public class CustomField {
 
     @JsonProperty("label")
     private String label;
+
 
     @JsonProperty("value")
     private Value value;
@@ -39,9 +40,10 @@ public class CustomField {
         return value;
     }
 
-    public final static Builder builder() {
+    public static Builder builder() {
         return new Builder();
-    }    
+    }
+
 
     public CustomField withLabel(String label) {
         Utils.checkNotNull(label, "label");
@@ -55,7 +57,6 @@ public class CustomField {
         return this;
     }
 
-    
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -66,15 +67,14 @@ public class CustomField {
         }
         CustomField other = (CustomField) o;
         return 
-            Objects.deepEquals(this.label, other.label) &&
-            Objects.deepEquals(this.value, other.value);
+            Utils.enhancedDeepEquals(this.label, other.label) &&
+            Utils.enhancedDeepEquals(this.value, other.value);
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(
-            label,
-            value);
+        return Utils.enhancedHash(
+            label, value);
     }
     
     @Override
@@ -83,16 +83,18 @@ public class CustomField {
                 "label", label,
                 "value", value);
     }
-    
+
+    @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
- 
+
         private String label;
- 
+
         private Value value;
-        
+
         private Builder() {
           // force use of static builder() method
         }
+
 
         public Builder label(String label) {
             Utils.checkNotNull(label, "label");
@@ -100,16 +102,18 @@ public class CustomField {
             return this;
         }
 
+
         public Builder value(Value value) {
             Utils.checkNotNull(value, "value");
             this.value = value;
             return this;
         }
-        
+
         public CustomField build() {
+
             return new CustomField(
-                label,
-                value);
+                label, value);
         }
+
     }
 }

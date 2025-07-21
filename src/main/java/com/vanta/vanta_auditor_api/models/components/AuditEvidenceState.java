@@ -19,7 +19,7 @@ public enum AuditEvidenceState {
     @JsonValue
     private final String value;
 
-    private AuditEvidenceState(String value) {
+    AuditEvidenceState(String value) {
         this.value = value;
     }
     
