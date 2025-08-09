@@ -13,6 +13,7 @@ Create an auditor in Vanta.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="CreateAuditor" method="post" path="/auditors" -->
 ```java
 package hello.world;
 

@@ -7,7 +7,7 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
-import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidenceOperation;
+import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidence;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
 import java.lang.String;
@@ -54,7 +54,7 @@ public class CreateCommentForAuditEvidenceRequestBuilder {
     public CreateCommentForAuditEvidenceResponse call() throws Exception {
         
         RequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
-              = new CreateCommentForAuditEvidenceOperation(sdkConfiguration);
+              = new CreateCommentForAuditEvidence.Sync(sdkConfiguration);
         CreateCommentForAuditEvidenceRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));
