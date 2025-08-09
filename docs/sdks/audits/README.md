@@ -21,6 +21,7 @@ Returns a paginated list of audits scoped to the audit firm.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="ListAudits" method="get" path="/audits" -->
 ```java
 package hello.world;
 
@@ -73,6 +74,7 @@ evidence is created or has a statusUpdatedAt field that is more recent than the 
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="ListAuditEvidenceUrls" method="get" path="/audits/{auditId}/evidence/{auditEvidenceId}/urls" -->
 ```java
 package hello.world;
 
@@ -126,6 +128,7 @@ Returns a paginated list of evidence for an audit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="ListAuditEvidence" method="get" path="/audits/{auditId}/evidence" -->
 ```java
 package hello.world;
 
@@ -178,6 +181,7 @@ Returns a paginated list of comments for an audit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="ListAuditComments" method="get" path="/audits/{auditId}/comments" -->
 ```java
 package hello.world;
 
@@ -230,6 +234,7 @@ Returns a paginated list of controls for an audit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="ListAuditControls" method="get" path="/audits/{auditId}/controls" -->
 ```java
 package hello.world;
 
@@ -281,6 +286,7 @@ Create a comment in Vanta for a piece of evidence.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="CreateCommentForAuditEvidence" method="post" path="/audits/{auditId}/evidence/{auditEvidenceId}/comments" -->
 ```java
 package hello.world;
 
@@ -339,6 +345,7 @@ Update audit evidence.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="UpdateAuditEvidence" method="patch" path="/audits/{auditId}/evidence/{auditEvidenceId}" -->
 ```java
 package hello.world;
 
@@ -393,6 +400,7 @@ Create a custom evidence request for an audit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="CreateCustomEvidenceRequest" method="post" path="/audits/{auditId}/evidence/custom-evidence-requests" -->
 ```java
 package hello.world;
 
@@ -456,6 +464,7 @@ Create a custom control for an audit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="CreateCustomControl" method="post" path="/audits/{auditId}/controls/custom-controls" -->
 ```java
 package hello.world;
 

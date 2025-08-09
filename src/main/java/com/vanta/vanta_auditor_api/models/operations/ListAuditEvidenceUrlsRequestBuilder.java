@@ -7,7 +7,7 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.vanta.vanta_auditor_api.SDKConfiguration;
-import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceUrlsOperation;
+import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceUrls;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
@@ -83,7 +83,7 @@ public class ListAuditEvidenceUrlsRequestBuilder {
     public ListAuditEvidenceUrlsResponse call() throws Exception {
         
         RequestOperation<ListAuditEvidenceUrlsRequest, ListAuditEvidenceUrlsResponse> operation
-              = new ListAuditEvidenceUrlsOperation(sdkConfiguration);
+              = new ListAuditEvidenceUrls.Sync(sdkConfiguration);
         ListAuditEvidenceUrlsRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

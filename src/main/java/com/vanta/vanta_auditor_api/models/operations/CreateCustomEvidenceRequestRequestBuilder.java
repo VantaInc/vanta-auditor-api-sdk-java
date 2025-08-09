@@ -7,7 +7,7 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomEvidenceRequestInput;
-import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequestOperation;
+import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequest;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
 import java.lang.String;
@@ -46,7 +46,7 @@ public class CreateCustomEvidenceRequestRequestBuilder {
     public CreateCustomEvidenceRequestResponse call() throws Exception {
         
         RequestOperation<CreateCustomEvidenceRequestRequest, CreateCustomEvidenceRequestResponse> operation
-              = new CreateCustomEvidenceRequestOperation(sdkConfiguration);
+              = new CreateCustomEvidenceRequest.Sync(sdkConfiguration);
         CreateCustomEvidenceRequestRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));
