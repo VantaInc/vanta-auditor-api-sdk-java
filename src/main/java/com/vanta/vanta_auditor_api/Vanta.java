@@ -4,6 +4,7 @@
 package com.vanta.vanta_auditor_api;
 
 import com.vanta.vanta_auditor_api.utils.HTTPClient;
+import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.Hook.SdkInitData;
 import com.vanta.vanta_auditor_api.utils.RetryConfig;
 import com.vanta.vanta_auditor_api.utils.SpeakeasyHTTPClient;
@@ -17,21 +18,22 @@ import java.util.function.Consumer;
  * Conduct an audit: The Auditor API lets audit firms conduct audits from a tool outside of Vanta. Unlock data syncing with Vanta through this API.
  */
 public class Vanta {
+    private static final Headers _headers = Headers.EMPTY;
 
 
     /**
      * SERVERS contains the list of server urls available to the SDK.
      */
     public static final String[] SERVERS = {
-        /**
+        /*
          * US Region API
          */
         "https://api.vanta.com/v1",
-        /**
+        /*
          * EU Region API
          */
         "https://api.eu.vanta.com/v1",
-        /**
+        /*
          * AUS Region API
          */
         "https://api.aus.vanta.com/v1",
@@ -54,6 +56,7 @@ public class Vanta {
     }
 
     private final SDKConfiguration sdkConfiguration;
+    private final AsyncVanta asyncSDK;
 
     /**
      * The Builder class allows the configuration of a new instance of the SDK.
@@ -176,7 +179,7 @@ public class Vanta {
             consumer.accept(sdkConfiguration.hooks());
             return this;    
         }
-        
+
         /**
          * Builds a new instance of the SDK.
          *
@@ -191,7 +194,7 @@ public class Vanta {
             return new Vanta(sdkConfiguration);
         }
     }
-    
+
     /**
      * Get a new instance of the SDK builder to configure a new instance of the SDK.
      *
@@ -201,7 +204,7 @@ public class Vanta {
         return new Builder();
     }
 
-    private Vanta(SDKConfiguration sdkConfiguration) {
+    public Vanta(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
         this.sdkConfiguration.initialize();
         this.audits = new Audits(sdkConfiguration);
@@ -212,5 +215,16 @@ public class Vanta {
                         this.sdkConfiguration.client()));
         this.sdkConfiguration.setServerUrl(data.baseUrl());
         this.sdkConfiguration.setClient(data.client());
+        this.asyncSDK = new AsyncVanta(this, sdkConfiguration);
     }
+
+    /**
+     * Switches to the async SDK.
+     * 
+     * @return The async SDK
+     */
+    public AsyncVanta async() {
+        return asyncSDK;
+    }
+
 }

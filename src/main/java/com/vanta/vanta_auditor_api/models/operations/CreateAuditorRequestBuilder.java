@@ -7,7 +7,8 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.AddAuditorInput;
-import com.vanta.vanta_auditor_api.operations.CreateAuditorOperation;
+import com.vanta.vanta_auditor_api.operations.CreateAuditor;
+import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
 
@@ -15,6 +16,7 @@ public class CreateAuditorRequestBuilder {
 
     private AddAuditorInput request;
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public CreateAuditorRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -29,7 +31,7 @@ public class CreateAuditorRequestBuilder {
     public CreateAuditorResponse call() throws Exception {
         
         RequestOperation<AddAuditorInput, CreateAuditorResponse> operation
-              = new CreateAuditorOperation(sdkConfiguration);
+              = new CreateAuditor.Sync(sdkConfiguration, _headers);
 
         return operation.handleResponse(operation.doRequest(request));
     }

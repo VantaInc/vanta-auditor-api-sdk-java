@@ -1,4 +1,4 @@
-speakeasyVersion: 1.583.0
+speakeasyVersion: 1.622.1
 sources:
     Conduct an audit:
         sourceNamespace: conduct-an-audit
@@ -6,7 +6,7 @@ sources:
         sourceBlobDigest: sha256:8fefc2fa168b537a6f137983f6366a1d8abe9ea0a01bc6d108c601431b922a5b
         tags:
             - latest
-            - speakeasy-sdk-regen-1752711959
+            - speakeasy-sdk-regen-1754439995
             - 1.0.0
 targets:
     vanta:
@@ -15,7 +15,7 @@ targets:
         sourceRevisionDigest: sha256:234b914b23cf5d74d33cd7077560a45c8cba13a211f3bd8344041648d8733c2d
         sourceBlobDigest: sha256:8fefc2fa168b537a6f137983f6366a1d8abe9ea0a01bc6d108c601431b922a5b
         codeSamplesNamespace: conduct-an-audit-java-code-samples
-        codeSamplesRevisionDigest: sha256:c37b408b3f4e67573812e3180585ed44685609283ecc89a119faafece26cadcc
+        codeSamplesRevisionDigest: sha256:8978f388ac1114cfcdd1b15a7fbf455f865fae74b8d45d74f145f7e4a350450b
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

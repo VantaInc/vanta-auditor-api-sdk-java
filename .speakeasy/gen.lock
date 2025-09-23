@@ -3,19 +3,19 @@ id: f42d74f5-5725-46fa-b13c-649b7ef895c3
 management:
   docChecksum: 32687d9ba29da014326cc097fdfff59d
   docVersion: 1.0.0
-  speakeasyVersion: 1.583.0
-  generationVersion: 2.658.3
-  releaseVersion: 0.3.0
-  configChecksum: 04772eab57280291f66f591afacc7c70
+  speakeasyVersion: 1.622.1
+  generationVersion: 2.709.0
+  releaseVersion: 0.4.0
+  configChecksum: 5cb1fe8ecce5ca4aec356784cddad41a
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   published: true
 features:
   java:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.1
-    core: 3.44.0
+    core: 3.50.0
     flattening: 2.81.1
-    globalSecurity: 2.83.0
+    globalSecurity: 2.83.1
     globalSecurityCallbacks: 0.1.0
     globalSecurityFlattening: 0.1.0
     globalServerURLs: 2.82.2
@@ -92,12 +92,24 @@ generatedFiles:
   - docs/sdks/auditors/README.md
   - docs/sdks/audits/README.md
   - docs/sdks/vanta/README.md
+  - docs/utils/Blob.md
   - gradle.properties
   - gradle/wrapper/gradle-wrapper.jar
   - gradle/wrapper/gradle-wrapper.properties
   - gradlew
   - gradlew.bat
+  - publishing.gradle
   - settings.gradle
+  - spring/vanta-auditor-api-spring-boot-autoconfigure/build.gradle
+  - spring/vanta-auditor-api-spring-boot-autoconfigure/src/main/java/com/vanta/vanta_auditor_api/ConditionalOnPropertyPrefix.java
+  - spring/vanta-auditor-api-spring-boot-autoconfigure/src/main/java/com/vanta/vanta_auditor_api/OnPropertyPrefixCondition.java
+  - spring/vanta-auditor-api-spring-boot-autoconfigure/src/main/java/com/vanta/vanta_auditor_api/VantaAuditorApiAutoConfig.java
+  - spring/vanta-auditor-api-spring-boot-autoconfigure/src/main/java/com/vanta/vanta_auditor_api/VantaAuditorApiAutoConfigProperties.java
+  - spring/vanta-auditor-api-spring-boot-autoconfigure/src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+  - spring/vanta-auditor-api-spring-boot-starter/build.gradle
+  - src/main/java/com/vanta/vanta_auditor_api/AsyncAuditors.java
+  - src/main/java/com/vanta/vanta_auditor_api/AsyncAudits.java
+  - src/main/java/com/vanta/vanta_auditor_api/AsyncVanta.java
   - src/main/java/com/vanta/vanta_auditor_api/Auditors.java
   - src/main/java/com/vanta/vanta_auditor_api/Audits.java
   - src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java
@@ -148,6 +160,17 @@ generatedFiles:
   - src/main/java/com/vanta/vanta_auditor_api/models/components/Value.java
   - src/main/java/com/vanta/vanta_auditor_api/models/errors/APIException.java
   - src/main/java/com/vanta/vanta_auditor_api/models/errors/AuthException.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/errors/UncheckedAPIException.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations//async/CreateAuditorRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations//async/CreateCommentForAuditEvidenceRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations//async/CreateCustomControlRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations//async/CreateCustomEvidenceRequestRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListAuditCommentsRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListAuditControlsRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListAuditEvidenceRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListAuditEvidenceUrlsRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListAuditsRequestBuilder.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations//async/UpdateAuditEvidenceRequestBuilder.java
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateAuditorRequestBuilder.java
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateAuditorResponse.java
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCommentForAuditEvidenceRequest.java
@@ -177,27 +200,42 @@ generatedFiles:
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/UpdateAuditEvidenceRequest.java
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/UpdateAuditEvidenceRequestBuilder.java
   - src/main/java/com/vanta/vanta_auditor_api/models/operations/UpdateAuditEvidenceResponse.java
-  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateAuditorOperation.java
-  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateCommentForAuditEvidenceOperation.java
-  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateCustomControlOperation.java
-  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateCustomEvidenceRequestOperation.java
-  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditCommentsOperation.java
-  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditControlsOperation.java
-  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditEvidenceOperation.java
-  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditEvidenceUrlsOperation.java
-  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditsOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/async/CreateAuditorResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/async/CreateCommentForAuditEvidenceResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/async/CreateCustomControlResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/async/CreateCustomEvidenceRequestResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListAuditCommentsResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListAuditControlsResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListAuditEvidenceResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListAuditEvidenceUrlsResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListAuditsResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/models/operations/async/UpdateAuditEvidenceResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateAuditor.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateCommentForAuditEvidence.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateCustomControl.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/CreateCustomEvidenceRequest.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditComments.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditControls.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditEvidence.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditEvidenceUrls.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/ListAudits.java
   - src/main/java/com/vanta/vanta_auditor_api/operations/Operations.java
-  - src/main/java/com/vanta/vanta_auditor_api/operations/UpdateAuditEvidenceOperation.java
+  - src/main/java/com/vanta/vanta_auditor_api/operations/UpdateAuditEvidence.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/AsyncHook.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/AsyncHooks.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/AsyncResponse.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/AsyncRetries.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/AsyncRetryableException.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/BackoffStrategy.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/BigDecimalString.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/BigIntegerString.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Blob.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/BlockingParser.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Constants.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/CopiableInputStream.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Deserializers.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/EventStream.java
-  - src/main/java/com/vanta/vanta_auditor_api/utils/EventStreamLineReader.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/EventStreamMessage.java
-  - src/main/java/com/vanta/vanta_auditor_api/utils/EventStreamReader.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Exceptions.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/FormMetadata.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Globals.java
@@ -205,8 +243,10 @@ generatedFiles:
   - src/main/java/com/vanta/vanta_auditor_api/utils/HTTPRequest.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/HasSecurity.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/HeaderMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Headers.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Helpers.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Hook.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/HookAdapters.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Hooks.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/JSON.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/LazySingletonValue.java
@@ -214,6 +254,7 @@ generatedFiles:
   - src/main/java/com/vanta/vanta_auditor_api/utils/Multipart.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/MultipartFormMetadata.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/NameValue.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/NonRetryableException.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/OneOfDeserializer.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Options.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/PathParamsMetadata.java
@@ -222,21 +263,27 @@ generatedFiles:
   - src/main/java/com/vanta/vanta_auditor_api/utils/QueryParameters.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/QueryParamsMetadata.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/RecordingClient.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/Reflections.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/RequestBody.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/RequestMetadata.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Response.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/ResponseWithBody.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Retries.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/RetryConfig.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/RetryableException.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Security.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/SecurityMetadata.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/SerializedBody.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/SessionManager.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/SpeakeasyHTTPClient.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/SpeakeasyMetadata.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/StreamingParser.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/TypedObject.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Types.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Utf8UrlEncoder.java
   - src/main/java/com/vanta/vanta_auditor_api/utils/Utils.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/reactive/EventStream.java
+  - src/main/java/com/vanta/vanta_auditor_api/utils/reactive/ReactiveUtils.java
 examples:
   ListAudits:
     Example 1:

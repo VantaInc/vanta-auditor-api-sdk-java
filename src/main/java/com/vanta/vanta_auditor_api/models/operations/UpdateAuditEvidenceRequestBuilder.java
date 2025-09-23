@@ -7,7 +7,8 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.AuditEvidenceUpdateInput;
-import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidenceOperation;
+import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidence;
+import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
 import java.lang.String;
@@ -18,6 +19,7 @@ public class UpdateAuditEvidenceRequestBuilder {
     private String auditEvidenceId;
     private AuditEvidenceUpdateInput auditEvidenceUpdateInput;
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public UpdateAuditEvidenceRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -54,7 +56,7 @@ public class UpdateAuditEvidenceRequestBuilder {
     public UpdateAuditEvidenceResponse call() throws Exception {
         
         RequestOperation<UpdateAuditEvidenceRequest, UpdateAuditEvidenceResponse> operation
-              = new UpdateAuditEvidenceOperation(sdkConfiguration);
+              = new UpdateAuditEvidence.Sync(sdkConfiguration, _headers);
         UpdateAuditEvidenceRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

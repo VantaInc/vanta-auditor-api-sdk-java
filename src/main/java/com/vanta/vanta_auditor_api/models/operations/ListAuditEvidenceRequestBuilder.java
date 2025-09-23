@@ -7,7 +7,8 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.vanta.vanta_auditor_api.SDKConfiguration;
-import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceOperation;
+import com.vanta.vanta_auditor_api.operations.ListAuditEvidence;
+import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Exception;
@@ -26,6 +27,7 @@ public class ListAuditEvidenceRequestBuilder {
     private Optional<String> pageCursor = Optional.empty();
     private Optional<OffsetDateTime> changedSinceDate = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public ListAuditEvidenceRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -90,7 +92,7 @@ public class ListAuditEvidenceRequestBuilder {
     public ListAuditEvidenceResponse call() throws Exception {
         
         RequestOperation<ListAuditEvidenceRequest, ListAuditEvidenceResponse> operation
-              = new ListAuditEvidenceOperation(sdkConfiguration);
+              = new ListAuditEvidence.Sync(sdkConfiguration, _headers);
         ListAuditEvidenceRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

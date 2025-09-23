@@ -8,3 +8,9 @@
  */
 
 rootProject.name = 'vanta-auditor-api'
+
+include 'vanta-auditor-api-spring-boot-autoconfigure'
+include 'vanta-auditor-api-spring-boot-starter'
+
+project(':vanta-auditor-api-spring-boot-autoconfigure').projectDir = file('spring/vanta-auditor-api-spring-boot-autoconfigure')
+project(':vanta-auditor-api-spring-boot-starter').projectDir = file('spring/vanta-auditor-api-spring-boot-starter')

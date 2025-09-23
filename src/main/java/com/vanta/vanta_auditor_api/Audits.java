@@ -36,15 +36,16 @@ import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceResponse;
-import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidenceOperation;
-import com.vanta.vanta_auditor_api.operations.CreateCustomControlOperation;
-import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequestOperation;
-import com.vanta.vanta_auditor_api.operations.ListAuditCommentsOperation;
-import com.vanta.vanta_auditor_api.operations.ListAuditControlsOperation;
-import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceOperation;
-import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceUrlsOperation;
-import com.vanta.vanta_auditor_api.operations.ListAuditsOperation;
-import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidenceOperation;
+import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidence;
+import com.vanta.vanta_auditor_api.operations.CreateCustomControl;
+import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequest;
+import com.vanta.vanta_auditor_api.operations.ListAuditComments;
+import com.vanta.vanta_auditor_api.operations.ListAuditControls;
+import com.vanta.vanta_auditor_api.operations.ListAuditEvidence;
+import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceUrls;
+import com.vanta.vanta_auditor_api.operations.ListAudits;
+import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidence;
+import com.vanta.vanta_auditor_api.utils.Headers;
 import java.lang.Boolean;
 import java.lang.Exception;
 import java.lang.Integer;
@@ -54,10 +55,22 @@ import java.util.Optional;
 
 
 public class Audits {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
+    private final AsyncAudits asyncSDK;
 
     Audits(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
+        this.asyncSDK = new AsyncAudits(this, sdkConfiguration);
+    }
+
+    /**
+     * Switches to the async SDK.
+     * 
+     * @return The async SDK
+     */
+    public AsyncAudits async() {
+        return asyncSDK;
     }
 
     /**
@@ -108,7 +121,7 @@ public class Audits {
                 .isActiveAudit(isActiveAudit)
                 .build();
         RequestOperation<ListAuditsRequest, ListAuditsResponse> operation
-              = new ListAuditsOperation(sdkConfiguration);
+              = new ListAudits.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -165,7 +178,7 @@ public class Audits {
                 .pageCursor(pageCursor)
                 .build();
         RequestOperation<ListAuditEvidenceUrlsRequest, ListAuditEvidenceUrlsResponse> operation
-              = new ListAuditEvidenceUrlsOperation(sdkConfiguration);
+              = new ListAuditEvidenceUrls.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -218,7 +231,7 @@ public class Audits {
                 .changedSinceDate(changedSinceDate)
                 .build();
         RequestOperation<ListAuditEvidenceRequest, ListAuditEvidenceResponse> operation
-              = new ListAuditEvidenceOperation(sdkConfiguration);
+              = new ListAuditEvidence.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -271,7 +284,7 @@ public class Audits {
                 .changedSinceDate(changedSinceDate)
                 .build();
         RequestOperation<ListAuditCommentsRequest, ListAuditCommentsResponse> operation
-              = new ListAuditCommentsOperation(sdkConfiguration);
+              = new ListAuditComments.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -321,7 +334,7 @@ public class Audits {
                 .pageCursor(pageCursor)
                 .build();
         RequestOperation<ListAuditControlsRequest, ListAuditControlsResponse> operation
-              = new ListAuditControlsOperation(sdkConfiguration);
+              = new ListAuditControls.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -358,7 +371,7 @@ public class Audits {
                 .addCommentInput(addCommentInput)
                 .build();
         RequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
-              = new CreateCommentForAuditEvidenceOperation(sdkConfiguration);
+              = new CreateCommentForAuditEvidence.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -395,7 +408,7 @@ public class Audits {
                 .auditEvidenceUpdateInput(auditEvidenceUpdateInput)
                 .build();
         RequestOperation<UpdateAuditEvidenceRequest, UpdateAuditEvidenceResponse> operation
-              = new UpdateAuditEvidenceOperation(sdkConfiguration);
+              = new UpdateAuditEvidence.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -428,7 +441,7 @@ public class Audits {
                 .createCustomEvidenceRequestInput(createCustomEvidenceRequestInput)
                 .build();
         RequestOperation<CreateCustomEvidenceRequestRequest, CreateCustomEvidenceRequestResponse> operation
-              = new CreateCustomEvidenceRequestOperation(sdkConfiguration);
+              = new CreateCustomEvidenceRequest.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -461,7 +474,7 @@ public class Audits {
                 .createCustomControlInput(createCustomControlInput)
                 .build();
         RequestOperation<CreateCustomControlRequest, CreateCustomControlResponse> operation
-              = new CreateCustomControlOperation(sdkConfiguration);
+              = new CreateCustomControl.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

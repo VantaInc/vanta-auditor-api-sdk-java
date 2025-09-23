@@ -16,24 +16,27 @@ generation:
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: true
+    hoistGlobalSecurity: true
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 java:
-  version: 0.3.0
+  version: 0.4.0
   additionalDependencies: []
   additionalPlugins: []
   artifactID: vanta-auditor-api
+  asyncMode: enabled
   baseErrorName: VantaError
   clientServerStatusCodesAsErrors: true
   companyEmail: sdk@vanta.com
   companyName: Vanta
   companyURL: www.vanta.com
   defaultErrorName: APIException
-  enableAsync: false
   enableCustomCodeRegions: false
+  enableStreamingUploads: false
   flattenGlobalSecurity: true
+  generateSpringBootStarter: true
   githubURL: github.com/VantaInc/vanta-auditor-api-sdk-java
   groupID: com.vanta
   imports:
