@@ -65,9 +65,17 @@ public class SmokeTest {
 
     private static String fetchAccessToken(String baseUrl, String clientId, String clientSecret)
             throws Exception {
+        // Vanta's OAuth requires an explicit `scope` parameter (per the spec's
+        // securitySchemes.oauth.flows.clientCredentials.scopes). v1 only exercises
+        // read endpoints under `audits`, so we request just `auditor-api.audit:read`.
+        // Add `auditor-api.auditor:read` when we add tests for `sdk.auditors().*`,
+        // and the `:write` variants when we add mutation tests.
+        String scope = "auditor-api.audit:read";
+
         String form = "grant_type=client_credentials"
             + "&client_id="     + URLEncoder.encode(clientId,     StandardCharsets.UTF_8)
-            + "&client_secret=" + URLEncoder.encode(clientSecret, StandardCharsets.UTF_8);
+            + "&client_secret=" + URLEncoder.encode(clientSecret, StandardCharsets.UTF_8)
+            + "&scope="         + URLEncoder.encode(scope,        StandardCharsets.UTF_8);
 
         HttpRequest req = HttpRequest.newBuilder()
             .uri(URI.create(baseUrl + "/oauth/token"))
