@@ -5,6 +5,11 @@ permissions:
 on:
   pull_request:
     branches: [main]
+    # Default types are [opened, synchronize, reopened], which do not fire on
+    # label changes. We need `labeled` / `unlabeled` so applying the `skip-smoke`
+    # label after the initial run re-evaluates the bypass gate — otherwise the
+    # label silently does nothing until someone pushes a new commit.
+    types: [opened, synchronize, reopened, labeled, unlabeled]
   workflow_dispatch: {}
 
 jobs:
