@@ -80,10 +80,20 @@ public class SmokeTest {
             .send(req, HttpResponse.BodyHandlers.ofString());
 
         if (resp.statusCode() != 200) {
-            // Response body deliberately suppressed — it can echo the client_id and on
-            // some error paths includes diagnostic info we don't want in CI logs.
+            // OAuth 2.0 error responses (RFC 6749 §5.2) contain {error, error_description}
+            // and never include the access_token or client_secret, so they're safe to log.
+            String detail = resp.body();
+            try {
+                JsonNode err = new ObjectMapper().readTree(resp.body());
+                if (err.has("error") || err.has("error_description")) {
+                    detail = "error=" + err.path("error").asText("?")
+                        + " error_description=" + err.path("error_description").asText("?");
+                }
+            } catch (Exception ignored) {
+                // body wasn't JSON — fall back to the raw string
+            }
             throw new AssertionError("OAuth token endpoint " + baseUrl
-                + "/oauth/token returned HTTP " + resp.statusCode() + " (body suppressed)");
+                + "/oauth/token returned HTTP " + resp.statusCode() + " — " + detail);
         }
 
         JsonNode body = new ObjectMapper().readTree(resp.body());
