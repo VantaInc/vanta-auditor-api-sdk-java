@@ -1,5 +1,13 @@
 # AuditEvidenceState
 
+## Example Usage
+
+```java
+import com.vanta.vanta_auditor_api.models.components.AuditEvidenceState;
+
+AuditEvidenceState value = AuditEvidenceState.ACCEPTED;
+```
+
 
 ## Values
 

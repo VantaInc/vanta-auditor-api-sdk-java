@@ -1,5 +1,13 @@
 # RecurrenceDuration
 
+## Example Usage
+
+```java
+import com.vanta.vanta_auditor_api.models.components.RecurrenceDuration;
+
+RecurrenceDuration value = RecurrenceDuration.P0_D;
+```
+
 
 ## Values
 
@@ -12,3 +20,4 @@
 | `P3_M` | P3M    |
 | `P6_M` | P6M    |
 | `P1_Y` | P1Y    |
+| `P2_Y` | P2Y    |

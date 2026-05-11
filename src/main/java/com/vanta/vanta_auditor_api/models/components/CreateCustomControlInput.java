@@ -56,7 +56,8 @@ public class CreateCustomControlInput {
     private JsonNullable<? extends List<FrameworkSection>> sections;
 
     /**
-     * The GDPR role of the control, which specifies whether the data is being "collected" or "processed". See the GdprRole enum for possible values.
+     * The GDPR role of the control, which specifies whether the data is being "collected" or "processed".
+     * See the GdprRole enum for possible values.
      * This field should only be included for controls that are to be mapped to the GDPR framework.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -145,7 +146,8 @@ public class CreateCustomControlInput {
     }
 
     /**
-     * The GDPR role of the control, which specifies whether the data is being "collected" or "processed". See the GdprRole enum for possible values.
+     * The GDPR role of the control, which specifies whether the data is being "collected" or "processed".
+     * See the GdprRole enum for possible values.
      * This field should only be included for controls that are to be mapped to the GDPR framework.
      */
     @SuppressWarnings("unchecked")
@@ -230,7 +232,8 @@ public class CreateCustomControlInput {
     }
 
     /**
-     * The GDPR role of the control, which specifies whether the data is being "collected" or "processed". See the GdprRole enum for possible values.
+     * The GDPR role of the control, which specifies whether the data is being "collected" or "processed".
+     * See the GdprRole enum for possible values.
      * This field should only be included for controls that are to be mapped to the GDPR framework.
      */
     public CreateCustomControlInput withRole(Role role) {
@@ -240,7 +243,8 @@ public class CreateCustomControlInput {
     }
 
     /**
-     * The GDPR role of the control, which specifies whether the data is being "collected" or "processed". See the GdprRole enum for possible values.
+     * The GDPR role of the control, which specifies whether the data is being "collected" or "processed".
+     * See the GdprRole enum for possible values.
      * This field should only be included for controls that are to be mapped to the GDPR framework.
      */
     public CreateCustomControlInput withRole(JsonNullable<? extends Role> role) {
@@ -386,7 +390,8 @@ public class CreateCustomControlInput {
 
 
         /**
-         * The GDPR role of the control, which specifies whether the data is being "collected" or "processed". See the GdprRole enum for possible values.
+         * The GDPR role of the control, which specifies whether the data is being "collected" or "processed".
+         * See the GdprRole enum for possible values.
          * This field should only be included for controls that are to be mapped to the GDPR framework.
          */
         public Builder role(Role role) {
@@ -396,7 +401,8 @@ public class CreateCustomControlInput {
         }
 
         /**
-         * The GDPR role of the control, which specifies whether the data is being "collected" or "processed". See the GdprRole enum for possible values.
+         * The GDPR role of the control, which specifies whether the data is being "collected" or "processed".
+         * See the GdprRole enum for possible values.
          * This field should only be included for controls that are to be mapped to the GDPR framework.
          */
         public Builder role(JsonNullable<? extends Role> role) {

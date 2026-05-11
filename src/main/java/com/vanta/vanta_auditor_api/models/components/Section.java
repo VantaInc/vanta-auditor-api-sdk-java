@@ -5,10 +5,14 @@ package com.vanta.vanta_auditor_api.models.components;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
+import java.util.Optional;
 
 
 public class Section {
@@ -24,14 +28,30 @@ public class Section {
     @JsonProperty("framework")
     private String framework;
 
+    /**
+     * The principle that groups this section, if any.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("principle")
+    private Optional<? extends Principle> principle;
+
     @JsonCreator
     public Section(
             @JsonProperty("name") String name,
-            @JsonProperty("framework") String framework) {
+            @JsonProperty("framework") String framework,
+            @JsonProperty("principle") Optional<? extends Principle> principle) {
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(framework, "framework");
+        Utils.checkNotNull(principle, "principle");
         this.name = name;
         this.framework = framework;
+        this.principle = principle;
+    }
+    
+    public Section(
+            String name,
+            String framework) {
+        this(name, framework, Optional.empty());
     }
 
     /**
@@ -48,6 +68,15 @@ public class Section {
     @JsonIgnore
     public String framework() {
         return framework;
+    }
+
+    /**
+     * The principle that groups this section, if any.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<Principle> principle() {
+        return (Optional<Principle>) principle;
     }
 
     public static Builder builder() {
@@ -73,6 +102,25 @@ public class Section {
         return this;
     }
 
+    /**
+     * The principle that groups this section, if any.
+     */
+    public Section withPrinciple(Principle principle) {
+        Utils.checkNotNull(principle, "principle");
+        this.principle = Optional.ofNullable(principle);
+        return this;
+    }
+
+
+    /**
+     * The principle that groups this section, if any.
+     */
+    public Section withPrinciple(Optional<? extends Principle> principle) {
+        Utils.checkNotNull(principle, "principle");
+        this.principle = principle;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -84,20 +132,22 @@ public class Section {
         Section other = (Section) o;
         return 
             Utils.enhancedDeepEquals(this.name, other.name) &&
-            Utils.enhancedDeepEquals(this.framework, other.framework);
+            Utils.enhancedDeepEquals(this.framework, other.framework) &&
+            Utils.enhancedDeepEquals(this.principle, other.principle);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            name, framework);
+            name, framework, principle);
     }
     
     @Override
     public String toString() {
         return Utils.toString(Section.class,
                 "name", name,
-                "framework", framework);
+                "framework", framework,
+                "principle", principle);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -106,6 +156,8 @@ public class Section {
         private String name;
 
         private String framework;
+
+        private Optional<? extends Principle> principle = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -131,10 +183,29 @@ public class Section {
             return this;
         }
 
+
+        /**
+         * The principle that groups this section, if any.
+         */
+        public Builder principle(Principle principle) {
+            Utils.checkNotNull(principle, "principle");
+            this.principle = Optional.ofNullable(principle);
+            return this;
+        }
+
+        /**
+         * The principle that groups this section, if any.
+         */
+        public Builder principle(Optional<? extends Principle> principle) {
+            Utils.checkNotNull(principle, "principle");
+            this.principle = principle;
+            return this;
+        }
+
         public Section build() {
 
             return new Section(
-                name, framework);
+                name, framework, principle);
         }
 
     }

@@ -12,6 +12,7 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -74,6 +75,20 @@ public class AuditorControl {
     private List<CustomField> customFields;
 
     /**
+     * When the control was created. Returns null for Vanta library controls.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("creationDate")
+    private Optional<OffsetDateTime> creationDate;
+
+    /**
+     * When the control was last modified. Returns null for Vanta library controls.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("modificationDate")
+    private Optional<OffsetDateTime> modificationDate;
+
+    /**
      * The report standard framework fulfilled by the control.
      */
     @JsonProperty("framework")
@@ -96,6 +111,8 @@ public class AuditorControl {
             @JsonProperty("owner") Optional<? extends Owner> owner,
             @JsonProperty("role") JsonNullable<String> role,
             @JsonProperty("customFields") List<CustomField> customFields,
+            @JsonProperty("creationDate") Optional<OffsetDateTime> creationDate,
+            @JsonProperty("modificationDate") Optional<OffsetDateTime> modificationDate,
             @JsonProperty("framework") String framework,
             @JsonProperty("sections") List<Section> sections) {
         Utils.checkNotNull(id, "id");
@@ -107,6 +124,8 @@ public class AuditorControl {
         Utils.checkNotNull(owner, "owner");
         Utils.checkNotNull(role, "role");
         Utils.checkNotNull(customFields, "customFields");
+        Utils.checkNotNull(creationDate, "creationDate");
+        Utils.checkNotNull(modificationDate, "modificationDate");
         Utils.checkNotNull(framework, "framework");
         Utils.checkNotNull(sections, "sections");
         this.id = id;
@@ -118,6 +137,8 @@ public class AuditorControl {
         this.owner = owner;
         this.role = role;
         this.customFields = customFields;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
         this.framework = framework;
         this.sections = sections;
     }
@@ -134,7 +155,8 @@ public class AuditorControl {
         this(id, Optional.empty(), name,
             description, source, domains,
             Optional.empty(), JsonNullable.undefined(), customFields,
-            framework, sections);
+            Optional.empty(), Optional.empty(), framework,
+            sections);
     }
 
     /**
@@ -205,6 +227,22 @@ public class AuditorControl {
     @JsonIgnore
     public List<CustomField> customFields() {
         return customFields;
+    }
+
+    /**
+     * When the control was created. Returns null for Vanta library controls.
+     */
+    @JsonIgnore
+    public Optional<OffsetDateTime> creationDate() {
+        return creationDate;
+    }
+
+    /**
+     * When the control was last modified. Returns null for Vanta library controls.
+     */
+    @JsonIgnore
+    public Optional<OffsetDateTime> modificationDate() {
+        return modificationDate;
     }
 
     /**
@@ -336,6 +374,44 @@ public class AuditorControl {
     }
 
     /**
+     * When the control was created. Returns null for Vanta library controls.
+     */
+    public AuditorControl withCreationDate(OffsetDateTime creationDate) {
+        Utils.checkNotNull(creationDate, "creationDate");
+        this.creationDate = Optional.ofNullable(creationDate);
+        return this;
+    }
+
+
+    /**
+     * When the control was created. Returns null for Vanta library controls.
+     */
+    public AuditorControl withCreationDate(Optional<OffsetDateTime> creationDate) {
+        Utils.checkNotNull(creationDate, "creationDate");
+        this.creationDate = creationDate;
+        return this;
+    }
+
+    /**
+     * When the control was last modified. Returns null for Vanta library controls.
+     */
+    public AuditorControl withModificationDate(OffsetDateTime modificationDate) {
+        Utils.checkNotNull(modificationDate, "modificationDate");
+        this.modificationDate = Optional.ofNullable(modificationDate);
+        return this;
+    }
+
+
+    /**
+     * When the control was last modified. Returns null for Vanta library controls.
+     */
+    public AuditorControl withModificationDate(Optional<OffsetDateTime> modificationDate) {
+        Utils.checkNotNull(modificationDate, "modificationDate");
+        this.modificationDate = modificationDate;
+        return this;
+    }
+
+    /**
      * The report standard framework fulfilled by the control.
      */
     public AuditorControl withFramework(String framework) {
@@ -372,6 +448,8 @@ public class AuditorControl {
             Utils.enhancedDeepEquals(this.owner, other.owner) &&
             Utils.enhancedDeepEquals(this.role, other.role) &&
             Utils.enhancedDeepEquals(this.customFields, other.customFields) &&
+            Utils.enhancedDeepEquals(this.creationDate, other.creationDate) &&
+            Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
             Utils.enhancedDeepEquals(this.framework, other.framework) &&
             Utils.enhancedDeepEquals(this.sections, other.sections);
     }
@@ -382,7 +460,8 @@ public class AuditorControl {
             id, externalId, name,
             description, source, domains,
             owner, role, customFields,
-            framework, sections);
+            creationDate, modificationDate, framework,
+            sections);
     }
     
     @Override
@@ -397,6 +476,8 @@ public class AuditorControl {
                 "owner", owner,
                 "role", role,
                 "customFields", customFields,
+                "creationDate", creationDate,
+                "modificationDate", modificationDate,
                 "framework", framework,
                 "sections", sections);
     }
@@ -421,6 +502,10 @@ public class AuditorControl {
         private JsonNullable<String> role = JsonNullable.undefined();
 
         private List<CustomField> customFields;
+
+        private Optional<OffsetDateTime> creationDate = Optional.empty();
+
+        private Optional<OffsetDateTime> modificationDate = Optional.empty();
 
         private String framework;
 
@@ -546,6 +631,44 @@ public class AuditorControl {
 
 
         /**
+         * When the control was created. Returns null for Vanta library controls.
+         */
+        public Builder creationDate(OffsetDateTime creationDate) {
+            Utils.checkNotNull(creationDate, "creationDate");
+            this.creationDate = Optional.ofNullable(creationDate);
+            return this;
+        }
+
+        /**
+         * When the control was created. Returns null for Vanta library controls.
+         */
+        public Builder creationDate(Optional<OffsetDateTime> creationDate) {
+            Utils.checkNotNull(creationDate, "creationDate");
+            this.creationDate = creationDate;
+            return this;
+        }
+
+
+        /**
+         * When the control was last modified. Returns null for Vanta library controls.
+         */
+        public Builder modificationDate(OffsetDateTime modificationDate) {
+            Utils.checkNotNull(modificationDate, "modificationDate");
+            this.modificationDate = Optional.ofNullable(modificationDate);
+            return this;
+        }
+
+        /**
+         * When the control was last modified. Returns null for Vanta library controls.
+         */
+        public Builder modificationDate(Optional<OffsetDateTime> modificationDate) {
+            Utils.checkNotNull(modificationDate, "modificationDate");
+            this.modificationDate = modificationDate;
+            return this;
+        }
+
+
+        /**
          * The report standard framework fulfilled by the control.
          */
         public Builder framework(String framework) {
@@ -570,7 +693,8 @@ public class AuditorControl {
                 id, externalId, name,
                 description, source, domains,
                 owner, role, customFields,
-                framework, sections);
+                creationDate, modificationDate, framework,
+                sections);
         }
 
     }

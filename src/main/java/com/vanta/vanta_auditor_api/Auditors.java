@@ -8,15 +8,27 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 import com.vanta.vanta_auditor_api.models.components.AddAuditorInput;
 import com.vanta.vanta_auditor_api.models.operations.CreateAuditorRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.CreateAuditorResponse;
-import com.vanta.vanta_auditor_api.operations.CreateAuditorOperation;
-import java.lang.Exception;
+import com.vanta.vanta_auditor_api.operations.CreateAuditor;
+import com.vanta.vanta_auditor_api.utils.Headers;
 
 
 public class Auditors {
+    private static final Headers _headers = Headers.EMPTY;
     private final SDKConfiguration sdkConfiguration;
+    private final AsyncAuditors asyncSDK;
 
     Auditors(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
+        this.asyncSDK = new AsyncAuditors(this, sdkConfiguration);
+    }
+
+    /**
+     * Switches to the async SDK.
+     * 
+     * @return The async SDK
+     */
+    public AsyncAuditors async() {
+        return asyncSDK;
     }
 
     /**
@@ -37,11 +49,11 @@ public class Auditors {
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
-     * @throws Exception if the API call fails
+     * @throws RuntimeException subclass if the API call fails
      */
-    public CreateAuditorResponse create(AddAuditorInput request) throws Exception {
+    public CreateAuditorResponse create(AddAuditorInput request) {
         RequestOperation<AddAuditorInput, CreateAuditorResponse> operation
-              = new CreateAuditorOperation(sdkConfiguration);
+              = new CreateAuditor.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

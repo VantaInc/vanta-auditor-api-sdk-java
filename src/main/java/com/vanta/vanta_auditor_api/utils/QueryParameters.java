@@ -3,16 +3,13 @@
  */
 package com.vanta.vanta_auditor_api.utils;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class QueryParameters {
     public static <T extends Object> List<QueryParameter> parseQueryParams(Class<T> type, T queryParams,
@@ -64,15 +61,15 @@ public class QueryParameters {
             }
         }
 
-        // include all global params in pathParams if not already present
+        // include all global params in query params if not already present
         if (globals != null) {
             Set<String> allParamNames = allParams.stream()
                 .map(QueryParameter::name)
                 .collect(Collectors.toSet());
             globals.queryParamsAsStream()
                 .filter(entry -> !allParamNames.contains(entry.getKey()))
-                .forEach(entry ->      
-                        allParams.add(QueryParameter.of(entry.getKey(), 
+                .forEach(entry ->
+                        allParams.add(QueryParameter.of(entry.getKey(),
                             entry.getValue(), false)));
         }
         
@@ -146,6 +143,11 @@ public class QueryParameters {
                     params.add(QueryParameter.of(queryParamsMetadata.name, Utils.valToString(value), queryParamsMetadata.allowReserved));
                     break;
                 }
+                Optional<?> unwrappedEnumValue = Reflections.getUnwrappedEnumValue(value.getClass(), value);
+                if (unwrappedEnumValue.isPresent()) {
+                    params.add(QueryParameter.of(queryParamsMetadata.name, Utils.valToString(unwrappedEnumValue.get()), queryParamsMetadata.allowReserved));
+                    break;
+                }
                 Field[] fields = value.getClass().getDeclaredFields();
 
                 List<String> items = new ArrayList<>();
@@ -213,6 +215,7 @@ public class QueryParameters {
                 if (!Utils.allowIntrospection(value.getClass())) {
                     throw new RuntimeException("DeepObject style only supports Map and Object types, not " + value.getClass());
                 }
+
                 Field[] fields = value.getClass().getDeclaredFields();
 
                 for (Field field : fields) {

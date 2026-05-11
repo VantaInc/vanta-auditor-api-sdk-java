@@ -13,27 +13,44 @@ generation:
     requestResponseComponentNamesFeb2024: true
     securityFeb2025: false
     sharedErrorComponentsApr2025: false
+    sharedNestedComponentsJan2026: false
+    nameOverrideFeb2026: false
   auth:
     oAuth2ClientCredentialsEnabled: true
     oAuth2PasswordEnabled: true
+    hoistGlobalSecurity: true
+  schemas:
+    allOfMergeStrategy: shallowMerge
+  requestBodyFieldName: ""
+  versioningStrategy: automatic
+  persistentEdits: {}
   tests:
     generateTests: true
     generateNewTests: false
     skipResponseBodyAssertions: false
 java:
-  version: 0.3.0
+  version: 0.4.0
   additionalDependencies: []
   additionalPlugins: []
   artifactID: vanta-auditor-api
+  asyncMode: enabled
   baseErrorName: VantaError
   clientServerStatusCodesAsErrors: true
   companyEmail: sdk@vanta.com
   companyName: Vanta
   companyURL: www.vanta.com
   defaultErrorName: APIException
-  enableAsync: false
   enableCustomCodeRegions: false
+  enableFormatting: false
+  enableSlf4jLogging: false
+  enableStreamingUploads: false
+  explicitDocImports: false
   flattenGlobalSecurity: true
+  forwardCompatibleEnumsByDefault: false
+  forwardCompatibleUnionsByDefault: "false"
+  generateOptionalUnionAccessors: false
+  generateSpringBootStarter: true
+  generateUnionDocs: false
   githubURL: github.com/VantaInc/vanta-auditor-api-sdk-java
   groupID: com.vanta
   imports:
@@ -44,6 +61,7 @@ java:
       operations: models/operations
       shared: models/components
       webhooks: models/webhooks
+  inferUnionDiscriminators: false
   inputModelSuffix: input
   languageVersion: 11
   license:
@@ -51,7 +69,13 @@ java:
     shortName: MIT
     url: https://mit-license.org/
   maxMethodParams: 4
+  multipartArrayFormat: legacy
   nullFriendlyParameters: false
+  operationScopedParams: true
   outputModelSuffix: output
+  prefixModeMethodNames: false
   projectName: openapi
+  respectTitlesForPrimitiveUnionMembers: false
+  showSetterGetterTypesInDocs: false
   templateVersion: v2
+  unionStrategy: populated-fields

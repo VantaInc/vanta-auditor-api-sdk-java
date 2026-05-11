@@ -12,6 +12,7 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import org.openapitools.jackson.nullable.JsonNullable;
@@ -73,6 +74,20 @@ public class Control {
     @JsonProperty("customFields")
     private List<CustomField> customFields;
 
+    /**
+     * When the control was created. Returns null for Vanta library controls.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("creationDate")
+    private Optional<OffsetDateTime> creationDate;
+
+    /**
+     * When the control was last modified. Returns null for Vanta library controls.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("modificationDate")
+    private Optional<OffsetDateTime> modificationDate;
+
     @JsonCreator
     public Control(
             @JsonProperty("id") String id,
@@ -83,7 +98,9 @@ public class Control {
             @JsonProperty("domains") List<String> domains,
             @JsonProperty("owner") Optional<? extends ControlOwner> owner,
             @JsonProperty("role") JsonNullable<String> role,
-            @JsonProperty("customFields") List<CustomField> customFields) {
+            @JsonProperty("customFields") List<CustomField> customFields,
+            @JsonProperty("creationDate") Optional<OffsetDateTime> creationDate,
+            @JsonProperty("modificationDate") Optional<OffsetDateTime> modificationDate) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(externalId, "externalId");
         Utils.checkNotNull(name, "name");
@@ -93,6 +110,8 @@ public class Control {
         Utils.checkNotNull(owner, "owner");
         Utils.checkNotNull(role, "role");
         Utils.checkNotNull(customFields, "customFields");
+        Utils.checkNotNull(creationDate, "creationDate");
+        Utils.checkNotNull(modificationDate, "modificationDate");
         this.id = id;
         this.externalId = externalId;
         this.name = name;
@@ -102,6 +121,8 @@ public class Control {
         this.owner = owner;
         this.role = role;
         this.customFields = customFields;
+        this.creationDate = creationDate;
+        this.modificationDate = modificationDate;
     }
     
     public Control(
@@ -113,7 +134,8 @@ public class Control {
             List<CustomField> customFields) {
         this(id, Optional.empty(), name,
             description, source, domains,
-            Optional.empty(), JsonNullable.undefined(), customFields);
+            Optional.empty(), JsonNullable.undefined(), customFields,
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -184,6 +206,22 @@ public class Control {
     @JsonIgnore
     public List<CustomField> customFields() {
         return customFields;
+    }
+
+    /**
+     * When the control was created. Returns null for Vanta library controls.
+     */
+    @JsonIgnore
+    public Optional<OffsetDateTime> creationDate() {
+        return creationDate;
+    }
+
+    /**
+     * When the control was last modified. Returns null for Vanta library controls.
+     */
+    @JsonIgnore
+    public Optional<OffsetDateTime> modificationDate() {
+        return modificationDate;
     }
 
     public static Builder builder() {
@@ -298,6 +336,44 @@ public class Control {
         return this;
     }
 
+    /**
+     * When the control was created. Returns null for Vanta library controls.
+     */
+    public Control withCreationDate(OffsetDateTime creationDate) {
+        Utils.checkNotNull(creationDate, "creationDate");
+        this.creationDate = Optional.ofNullable(creationDate);
+        return this;
+    }
+
+
+    /**
+     * When the control was created. Returns null for Vanta library controls.
+     */
+    public Control withCreationDate(Optional<OffsetDateTime> creationDate) {
+        Utils.checkNotNull(creationDate, "creationDate");
+        this.creationDate = creationDate;
+        return this;
+    }
+
+    /**
+     * When the control was last modified. Returns null for Vanta library controls.
+     */
+    public Control withModificationDate(OffsetDateTime modificationDate) {
+        Utils.checkNotNull(modificationDate, "modificationDate");
+        this.modificationDate = Optional.ofNullable(modificationDate);
+        return this;
+    }
+
+
+    /**
+     * When the control was last modified. Returns null for Vanta library controls.
+     */
+    public Control withModificationDate(Optional<OffsetDateTime> modificationDate) {
+        Utils.checkNotNull(modificationDate, "modificationDate");
+        this.modificationDate = modificationDate;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -316,7 +392,9 @@ public class Control {
             Utils.enhancedDeepEquals(this.domains, other.domains) &&
             Utils.enhancedDeepEquals(this.owner, other.owner) &&
             Utils.enhancedDeepEquals(this.role, other.role) &&
-            Utils.enhancedDeepEquals(this.customFields, other.customFields);
+            Utils.enhancedDeepEquals(this.customFields, other.customFields) &&
+            Utils.enhancedDeepEquals(this.creationDate, other.creationDate) &&
+            Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate);
     }
     
     @Override
@@ -324,7 +402,8 @@ public class Control {
         return Utils.enhancedHash(
             id, externalId, name,
             description, source, domains,
-            owner, role, customFields);
+            owner, role, customFields,
+            creationDate, modificationDate);
     }
     
     @Override
@@ -338,7 +417,9 @@ public class Control {
                 "domains", domains,
                 "owner", owner,
                 "role", role,
-                "customFields", customFields);
+                "customFields", customFields,
+                "creationDate", creationDate,
+                "modificationDate", modificationDate);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -361,6 +442,10 @@ public class Control {
         private JsonNullable<String> role = JsonNullable.undefined();
 
         private List<CustomField> customFields;
+
+        private Optional<OffsetDateTime> creationDate = Optional.empty();
+
+        private Optional<OffsetDateTime> modificationDate = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -480,12 +565,51 @@ public class Control {
             return this;
         }
 
+
+        /**
+         * When the control was created. Returns null for Vanta library controls.
+         */
+        public Builder creationDate(OffsetDateTime creationDate) {
+            Utils.checkNotNull(creationDate, "creationDate");
+            this.creationDate = Optional.ofNullable(creationDate);
+            return this;
+        }
+
+        /**
+         * When the control was created. Returns null for Vanta library controls.
+         */
+        public Builder creationDate(Optional<OffsetDateTime> creationDate) {
+            Utils.checkNotNull(creationDate, "creationDate");
+            this.creationDate = creationDate;
+            return this;
+        }
+
+
+        /**
+         * When the control was last modified. Returns null for Vanta library controls.
+         */
+        public Builder modificationDate(OffsetDateTime modificationDate) {
+            Utils.checkNotNull(modificationDate, "modificationDate");
+            this.modificationDate = Optional.ofNullable(modificationDate);
+            return this;
+        }
+
+        /**
+         * When the control was last modified. Returns null for Vanta library controls.
+         */
+        public Builder modificationDate(Optional<OffsetDateTime> modificationDate) {
+            Utils.checkNotNull(modificationDate, "modificationDate");
+            this.modificationDate = modificationDate;
+            return this;
+        }
+
         public Control build() {
 
             return new Control(
                 id, externalId, name,
                 description, source, domains,
-                owner, role, customFields);
+                owner, role, customFields,
+                creationDate, modificationDate);
         }
 
     }

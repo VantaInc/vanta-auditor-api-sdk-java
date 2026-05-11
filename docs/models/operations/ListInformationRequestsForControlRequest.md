@@ -1,0 +1,11 @@
+# ListInformationRequestsForControlRequest
+
+
+## Fields
+
+| Field                                                                                  | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `auditId`                                                                              | *String*                                                                               | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `controlId`                                                                            | *String*                                                                               | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `pageSize`                                                                             | *Optional\<Integer>*                                                                   | :heavy_minus_sign:                                                                     | Maximum number of information requests to return per page.                             |
+| `pageCursor`                                                                           | *Optional\<String>*                                                                    | :heavy_minus_sign:                                                                     | Pagination cursor from a previous response. Provide to fetch the next page of results. |

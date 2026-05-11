@@ -1,5 +1,13 @@
 # AuditorEnabledStateTransition
 
+## Example Usage
+
+```java
+import com.vanta.vanta_auditor_api.models.components.AuditorEnabledStateTransition;
+
+AuditorEnabledStateTransition value = AuditorEnabledStateTransition.ACCEPT;
+```
+
 
 ## Values
 

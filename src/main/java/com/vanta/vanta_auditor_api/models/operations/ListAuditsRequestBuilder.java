@@ -7,11 +7,11 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.vanta.vanta_auditor_api.SDKConfiguration;
-import com.vanta.vanta_auditor_api.operations.ListAuditsOperation;
+import com.vanta.vanta_auditor_api.operations.ListAudits;
+import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Boolean;
-import java.lang.Exception;
 import java.lang.Integer;
 import java.lang.String;
 import java.time.OffsetDateTime;
@@ -27,6 +27,7 @@ public class ListAuditsRequestBuilder {
     private Optional<OffsetDateTime> changedSinceDate = Optional.empty();
     private Optional<Boolean> isActiveAudit = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public ListAuditsRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -94,10 +95,10 @@ public class ListAuditsRequestBuilder {
         return request;
     }
 
-    public ListAuditsResponse call() throws Exception {
+    public ListAuditsResponse call() {
         
         RequestOperation<ListAuditsRequest, ListAuditsResponse> operation
-              = new ListAuditsOperation(sdkConfiguration);
+              = new ListAudits.Sync(sdkConfiguration, _headers);
         ListAuditsRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

@@ -1,26 +1,50 @@
 # Audits
-(*audits()*)
 
 ## Overview
 
 ### Available Operations
 
 * [list](#list) - List audits
-* [getEvidenceUrls](#getevidenceurls) - List audit evidence url
-* [listEvidence](#listevidence) - List audit evidence
+* [getAudit](#getaudit) - Get audit by ID
 * [listComments](#listcomments) - List audit comments
 * [listControls](#listcontrols) - List audit controls
-* [createCommentForEvidence](#createcommentforevidence) - Create a comment for audit evidence
-* [updateEvidence](#updateevidence) - Update audit evidence
-* [createCustomEvidenceRequest](#createcustomevidencerequest) - Create a custom evidence request for an audit
 * [createCustomControl](#createcustomcontrol) - Create a custom control for an audit
+* [listInformationRequestsForControl](#listinformationrequestsforcontrol) - List information requests linked to a control within an audit
+* [listEvidence](#listevidence) - List audit evidence
+* [createCustomEvidenceRequest](#createcustomevidencerequest) - Create a custom evidence request for an audit
+* [updateEvidence](#updateevidence) - Update audit evidence
+* [createCommentForEvidence](#createcommentforevidence) - Create a comment for audit evidence
+* [getEvidenceUrls](#getevidenceurls) - List audit evidence url
+* [getFrameworkCodes](#getframeworkcodes) - Get framework codes for an audit
+* [listInformationRequests](#listinformationrequests) - List information requests for an audit
+* [createInformationRequest](#createinformationrequest) - Create a new information request
+* [getInformationRequest](#getinformationrequest) - Get an information request by ID
+* [updateInformationRequest](#updateinformationrequest) - Update an information request for an audit
+* [deleteInformationRequest](#deleteinformationrequest) - Delete an information request for an audit
+* [acceptInformationRequestEvidence](#acceptinformationrequestevidence) - Accept evidence for an information request
+* [listInformationRequestActivity](#listinformationrequestactivity) - List information request activity
+* [listCommentsForInformationRequest](#listcommentsforinformationrequest) - List comments for an information request
+* [createCommentForInformationRequest](#createcommentforinformationrequest) - Create a comment for an information request
+* [updateCommentForInformationRequest](#updatecommentforinformationrequest) - Update a comment for an information request
+* [deleteCommentForInformationRequest](#deletecommentforinformationrequest) - Delete a comment for an information request
+* [listInformationRequestEvidence](#listinformationrequestevidence) - List evidence for an information request
+* [getInformationRequestTestSnapshotEvidenceDetail](#getinformationrequesttestsnapshotevidencedetail) - Get test snapshot detail for an evidence row
+* [flagInformationRequestEvidence](#flaginformationrequestevidence) - Flag evidence for an information request
+* [listAuditIssues](#listauditissues) - List snapshotted issues for an audit
+* [listAuditSnapshots](#listauditsnapshots) - List snapshotted issues for an audit
+* [shareInformationRequestList](#shareinformationrequestlist) - Share information request list with customer
 
 ## list
 
 Returns a paginated list of audits scoped to the audit firm.
 
+To identify IRL (Information Request List) audits, check for the presence of the
+`auditorRequestListMetadata` field. This field is only present for IRL-based audits
+and will be `undefined` for standard audits.
+
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="ListAudits" method="get" path="/audits" example="Example 1" -->
 ```java
 package hello.world;
 
@@ -41,7 +65,7 @@ public class Application {
                 .call();
 
         if (res.paginatedResponseAudit().isPresent()) {
-            // handle response
+            System.out.println(res.paginatedResponseAudit().get());
         }
     }
 }
@@ -66,18 +90,22 @@ public class Application {
 | -------------------------- | -------------------------- | -------------------------- |
 | models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
 
-## getEvidenceUrls
+## getAudit
 
-Returns a paginated list of evidence urls for an audit. This endpoint should be called whenever an
-evidence is created or has a statusUpdatedAt field that is more recent than the most recent polling event.
+Returns a single audit by ID, scoped to the audit firm.
+
+To identify IRL (Information Request List) audits, check for the presence of the
+`auditorRequestListMetadata` field. This field is only present for IRL-based audits
+and will be `undefined` for standard audits.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="GetAudit" method="get" path="/audits/{auditId}" example="Example 1" -->
 ```java
 package hello.world;
 
 import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.operations.ListAuditEvidenceUrlsResponse;
+import com.vanta.vanta_auditor_api.models.operations.GetAuditResponse;
 import java.lang.Exception;
 
 public class Application {
@@ -88,14 +116,12 @@ public class Application {
                 .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
-        ListAuditEvidenceUrlsResponse res = sdk.audits().getEvidenceUrls()
+        GetAuditResponse res = sdk.audits().getAudit()
                 .auditId("<id>")
-                .auditEvidenceId("<id>")
-                .pageSize(10)
                 .call();
 
-        if (res.paginatedResponseEvidenceUrl().isPresent()) {
-            // handle response
+        if (res.audit().isPresent()) {
+            System.out.println(res.audit().get());
         }
     }
 }
@@ -103,68 +129,13 @@ public class Application {
 
 ### Parameters
 
-| Parameter            | Type                 | Required             | Description          |
-| -------------------- | -------------------- | -------------------- | -------------------- |
-| `auditId`            | *String*             | :heavy_check_mark:   | N/A                  |
-| `auditEvidenceId`    | *String*             | :heavy_check_mark:   | N/A                  |
-| `pageSize`           | *Optional\<Integer>* | :heavy_minus_sign:   | N/A                  |
-| `pageCursor`         | *Optional\<String>*  | :heavy_minus_sign:   | N/A                  |
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | N/A                |
 
 ### Response
 
-**[ListAuditEvidenceUrlsResponse](../../models/operations/ListAuditEvidenceUrlsResponse.md)**
-
-### Errors
-
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
-
-## listEvidence
-
-Returns a paginated list of evidence for an audit.
-
-### Example Usage
-
-```java
-package hello.world;
-
-import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.operations.ListAuditEvidenceResponse;
-import java.lang.Exception;
-
-public class Application {
-
-    public static void main(String[] args) throws Exception {
-
-        Vanta sdk = Vanta.builder()
-                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
-            .build();
-
-        ListAuditEvidenceResponse res = sdk.audits().listEvidence()
-                .auditId("<id>")
-                .pageSize(10)
-                .call();
-
-        if (res.paginatedResponseEvidence().isPresent()) {
-            // handle response
-        }
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `auditId`                                                                                 | *String*                                                                                  | :heavy_check_mark:                                                                        | N/A                                                                                       |
-| `pageSize`                                                                                | *Optional\<Integer>*                                                                      | :heavy_minus_sign:                                                                        | N/A                                                                                       |
-| `pageCursor`                                                                              | *Optional\<String>*                                                                       | :heavy_minus_sign:                                                                        | N/A                                                                                       |
-| `changedSinceDate`                                                                        | [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html) | :heavy_minus_sign:                                                                        | Includes all audit evidence that have changed since changedSinceDate.                     |
-
-### Response
-
-**[ListAuditEvidenceResponse](../../models/operations/ListAuditEvidenceResponse.md)**
+**[GetAuditResponse](../../models/operations/GetAuditResponse.md)**
 
 ### Errors
 
@@ -178,6 +149,7 @@ Returns a paginated list of comments for an audit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="ListAuditComments" method="get" path="/audits/{auditId}/comments" example="Example 1" -->
 ```java
 package hello.world;
 
@@ -199,7 +171,7 @@ public class Application {
                 .call();
 
         if (res.paginatedResponseComment().isPresent()) {
-            // handle response
+            System.out.println(res.paginatedResponseComment().get());
         }
     }
 }
@@ -230,6 +202,7 @@ Returns a paginated list of controls for an audit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="ListAuditControls" method="get" path="/audits/{auditId}/controls" example="Example 1" -->
 ```java
 package hello.world;
 
@@ -251,7 +224,7 @@ public class Application {
                 .call();
 
         if (res.paginatedResponseAuditorControl().isPresent()) {
-            // handle response
+            System.out.println(res.paginatedResponseAuditorControl().get());
         }
     }
 }
@@ -275,20 +248,23 @@ public class Application {
 | -------------------------- | -------------------------- | -------------------------- |
 | models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
 
-## createCommentForEvidence
+## createCustomControl
 
-Create a comment in Vanta for a piece of evidence.
+Create a custom control for an audit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="CreateCustomControl" method="post" path="/audits/{auditId}/controls/custom-controls" example="Example 1" -->
 ```java
 package hello.world;
 
 import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
-import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceResponse;
+import com.vanta.vanta_auditor_api.models.components.ControlDomain;
+import com.vanta.vanta_auditor_api.models.components.CreateCustomControlInput;
+import com.vanta.vanta_auditor_api.models.operations.CreateCustomControlResponse;
 import java.lang.Exception;
 import java.time.OffsetDateTime;
+import java.util.Optional;
 
 public class Application {
 
@@ -298,72 +274,19 @@ public class Application {
                 .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
-        CreateCommentForAuditEvidenceResponse res = sdk.audits().createCommentForEvidence()
+        CreateCustomControlResponse res = sdk.audits().createCustomControl()
                 .auditId("<id>")
-                .auditEvidenceId("<id>")
-                .addCommentInput(AddCommentInput.builder()
-                    .text("<value>")
-                    .email("Carmen.Bogan@yahoo.com")
-                    .creationDate(OffsetDateTime.parse("2024-05-28T11:04:29.369Z"))
+                .createCustomControlInput(CreateCustomControlInput.builder()
+                    .externalId("<id>")
+                    .name(Optional.empty())
+                    .description("yet plus utter queasily what juvenile wound")
+                    .effectiveDate(OffsetDateTime.parse("2024-11-10T13:58:54.564Z"))
+                    .category(ControlDomain.CLOUD_SECURITY)
                     .build())
                 .call();
 
-        if (res.comment().isPresent()) {
-            // handle response
-        }
-    }
-}
-```
-
-### Parameters
-
-| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
-| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
-| `auditId`                                                     | *String*                                                      | :heavy_check_mark:                                            | N/A                                                           |
-| `auditEvidenceId`                                             | *String*                                                      | :heavy_check_mark:                                            | N/A                                                           |
-| `addCommentInput`                                             | [AddCommentInput](../../models/components/AddCommentInput.md) | :heavy_check_mark:                                            | N/A                                                           |
-
-### Response
-
-**[CreateCommentForAuditEvidenceResponse](../../models/operations/CreateCommentForAuditEvidenceResponse.md)**
-
-### Errors
-
-| Error Type                 | Status Code                | Content Type               |
-| -------------------------- | -------------------------- | -------------------------- |
-| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
-
-## updateEvidence
-
-Update audit evidence.
-
-### Example Usage
-
-```java
-package hello.world;
-
-import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.components.AuditEvidenceUpdateInput;
-import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceResponse;
-import java.lang.Exception;
-
-public class Application {
-
-    public static void main(String[] args) throws Exception {
-
-        Vanta sdk = Vanta.builder()
-                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
-            .build();
-
-        UpdateAuditEvidenceResponse res = sdk.audits().updateEvidence()
-                .auditId("<id>")
-                .auditEvidenceId("<id>")
-                .auditEvidenceUpdateInput(AuditEvidenceUpdateInput.builder()
-                    .build())
-                .call();
-
-        if (res.evidence().isPresent()) {
-            // handle response
+        if (res.control().isPresent()) {
+            System.out.println(res.control().get());
         }
     }
 }
@@ -374,12 +297,134 @@ public class Application {
 | Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | `auditId`                                                                       | *String*                                                                        | :heavy_check_mark:                                                              | N/A                                                                             |
-| `auditEvidenceId`                                                               | *String*                                                                        | :heavy_check_mark:                                                              | N/A                                                                             |
-| `auditEvidenceUpdateInput`                                                      | [AuditEvidenceUpdateInput](../../models/components/AuditEvidenceUpdateInput.md) | :heavy_check_mark:                                                              | N/A                                                                             |
+| `createCustomControlInput`                                                      | [CreateCustomControlInput](../../models/components/CreateCustomControlInput.md) | :heavy_check_mark:                                                              | N/A                                                                             |
 
 ### Response
 
-**[UpdateAuditEvidenceResponse](../../models/operations/UpdateAuditEvidenceResponse.md)**
+**[CreateCustomControlResponse](../../models/operations/CreateCustomControlResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listInformationRequestsForControl
+
+Returns a paginated list of active information requests linked to a specific
+control within an IRL audit. An information request is linked to a control
+either via its framework codes (`criteriaIds`) or via a direct association
+(`additionalControlIds`).
+
+Soft-deleted information requests are not included in the response. To
+synchronize deletions, use `GET /audits/{auditId}/information-requests`,
+which supports `changedSinceDate` and includes soft-deleted records.
+
+Returns 404 when the control is not part of the audit. Returns an empty page
+when the control is part of the audit but has no active IRLs linked to it.
+
+Pagination usage:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage` to see if more data exists
+3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+4. Repeat until `hasNextPage` is false
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListInformationRequestsForControl" method="get" path="/audits/{auditId}/controls/{controlId}/information-requests" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsForControlResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListInformationRequestsForControlResponse res = sdk.audits().listInformationRequestsForControl()
+                .auditId("<id>")
+                .controlId("<id>")
+                .pageSize(10)
+                .call();
+
+        if (res.paginatedResponseInformationRequest().isPresent()) {
+            System.out.println(res.paginatedResponseInformationRequest().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            |
+| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| `auditId`                                                                              | *String*                                                                               | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `controlId`                                                                            | *String*                                                                               | :heavy_check_mark:                                                                     | N/A                                                                                    |
+| `pageSize`                                                                             | *Optional\<Integer>*                                                                   | :heavy_minus_sign:                                                                     | Maximum number of information requests to return per page.                             |
+| `pageCursor`                                                                           | *Optional\<String>*                                                                    | :heavy_minus_sign:                                                                     | Pagination cursor from a previous response. Provide to fetch the next page of results. |
+
+### Response
+
+**[ListInformationRequestsForControlResponse](../../models/operations/ListInformationRequestsForControlResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listEvidence
+
+Returns a paginated list of evidence for an audit.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListAuditEvidence" method="get" path="/audits/{auditId}/evidence" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditEvidenceResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListAuditEvidenceResponse res = sdk.audits().listEvidence()
+                .auditId("<id>")
+                .pageSize(10)
+                .call();
+
+        if (res.paginatedResponseEvidence().isPresent()) {
+            System.out.println(res.paginatedResponseEvidence().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `auditId`                                                                                 | *String*                                                                                  | :heavy_check_mark:                                                                        | N/A                                                                                       |
+| `pageSize`                                                                                | *Optional\<Integer>*                                                                      | :heavy_minus_sign:                                                                        | N/A                                                                                       |
+| `pageCursor`                                                                              | *Optional\<String>*                                                                       | :heavy_minus_sign:                                                                        | N/A                                                                                       |
+| `changedSinceDate`                                                                        | [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html) | :heavy_minus_sign:                                                                        | Includes all audit evidence that have changed since changedSinceDate.                     |
+
+### Response
+
+**[ListAuditEvidenceResponse](../../models/operations/ListAuditEvidenceResponse.md)**
 
 ### Errors
 
@@ -393,6 +438,7 @@ Create a custom evidence request for an audit.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="CreateCustomEvidenceRequest" method="post" path="/audits/{auditId}/evidence/custom-evidence-requests" example="Example 1" -->
 ```java
 package hello.world;
 
@@ -427,7 +473,7 @@ public class Application {
                 .call();
 
         if (res.customEvidenceRequest().isPresent()) {
-            // handle response
+            System.out.println(res.customEvidenceRequest().get());
         }
     }
 }
@@ -450,22 +496,20 @@ public class Application {
 | -------------------------- | -------------------------- | -------------------------- |
 | models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
 
-## createCustomControl
+## updateEvidence
 
-Create a custom control for an audit.
+Update audit evidence.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="UpdateAuditEvidence" method="patch" path="/audits/{auditId}/evidence/{auditEvidenceId}" example="Example 1" -->
 ```java
 package hello.world;
 
 import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.components.ControlDomain;
-import com.vanta.vanta_auditor_api.models.components.CreateCustomControlInput;
-import com.vanta.vanta_auditor_api.models.operations.CreateCustomControlResponse;
+import com.vanta.vanta_auditor_api.models.components.AuditEvidenceUpdateInput;
+import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceResponse;
 import java.lang.Exception;
-import java.time.OffsetDateTime;
-import java.util.Optional;
 
 public class Application {
 
@@ -475,19 +519,15 @@ public class Application {
                 .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
-        CreateCustomControlResponse res = sdk.audits().createCustomControl()
+        UpdateAuditEvidenceResponse res = sdk.audits().updateEvidence()
                 .auditId("<id>")
-                .createCustomControlInput(CreateCustomControlInput.builder()
-                    .externalId("<id>")
-                    .name(Optional.empty())
-                    .description("yet plus utter queasily what juvenile wound")
-                    .effectiveDate(OffsetDateTime.parse("2024-11-10T13:58:54.564Z"))
-                    .category(ControlDomain.CLOUD_SECURITY)
+                .auditEvidenceId("<id>")
+                .auditEvidenceUpdateInput(AuditEvidenceUpdateInput.builder()
                     .build())
                 .call();
 
-        if (res.control().isPresent()) {
-            // handle response
+        if (res.evidence().isPresent()) {
+            System.out.println(res.evidence().get());
         }
     }
 }
@@ -498,11 +538,1298 @@ public class Application {
 | Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
 | `auditId`                                                                       | *String*                                                                        | :heavy_check_mark:                                                              | N/A                                                                             |
-| `createCustomControlInput`                                                      | [CreateCustomControlInput](../../models/components/CreateCustomControlInput.md) | :heavy_check_mark:                                                              | N/A                                                                             |
+| `auditEvidenceId`                                                               | *String*                                                                        | :heavy_check_mark:                                                              | N/A                                                                             |
+| `auditEvidenceUpdateInput`                                                      | [AuditEvidenceUpdateInput](../../models/components/AuditEvidenceUpdateInput.md) | :heavy_check_mark:                                                              | N/A                                                                             |
 
 ### Response
 
-**[CreateCustomControlResponse](../../models/operations/CreateCustomControlResponse.md)**
+**[UpdateAuditEvidenceResponse](../../models/operations/UpdateAuditEvidenceResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## createCommentForEvidence
+
+Create a comment in Vanta for a piece of evidence.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="CreateCommentForAuditEvidence" method="post" path="/audits/{auditId}/evidence/{auditEvidenceId}/comments" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
+import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceResponse;
+import java.lang.Exception;
+import java.time.OffsetDateTime;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        CreateCommentForAuditEvidenceResponse res = sdk.audits().createCommentForEvidence()
+                .auditId("<id>")
+                .auditEvidenceId("<id>")
+                .addCommentInput(AddCommentInput.builder()
+                    .text("<value>")
+                    .email("Carmen.Bogan@yahoo.com")
+                    .creationDate(OffsetDateTime.parse("2024-05-28T11:04:29.369Z"))
+                    .build())
+                .call();
+
+        if (res.comment().isPresent()) {
+            System.out.println(res.comment().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
+| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
+| `auditId`                                                     | *String*                                                      | :heavy_check_mark:                                            | N/A                                                           |
+| `auditEvidenceId`                                             | *String*                                                      | :heavy_check_mark:                                            | N/A                                                           |
+| `addCommentInput`                                             | [AddCommentInput](../../models/components/AddCommentInput.md) | :heavy_check_mark:                                            | N/A                                                           |
+
+### Response
+
+**[CreateCommentForAuditEvidenceResponse](../../models/operations/CreateCommentForAuditEvidenceResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## getEvidenceUrls
+
+Returns a paginated list of evidence urls for an audit. This endpoint should be called whenever an
+evidence is created or has a statusUpdatedAt field that is more recent than the most recent polling event.
+
+Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted", "Flagged", or "NA".
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListAuditEvidenceUrls" method="get" path="/audits/{auditId}/evidence/{auditEvidenceId}/urls" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditEvidenceUrlsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListAuditEvidenceUrlsResponse res = sdk.audits().getEvidenceUrls()
+                .auditId("<id>")
+                .auditEvidenceId("<id>")
+                .pageSize(10)
+                .call();
+
+        if (res.paginatedResponseEvidenceUrl().isPresent()) {
+            System.out.println(res.paginatedResponseEvidenceUrl().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter            | Type                 | Required             | Description          |
+| -------------------- | -------------------- | -------------------- | -------------------- |
+| `auditId`            | *String*             | :heavy_check_mark:   | N/A                  |
+| `auditEvidenceId`    | *String*             | :heavy_check_mark:   | N/A                  |
+| `pageSize`           | *Optional\<Integer>* | :heavy_minus_sign:   | N/A                  |
+| `pageCursor`         | *Optional\<String>*  | :heavy_minus_sign:   | N/A                  |
+
+### Response
+
+**[ListAuditEvidenceUrlsResponse](../../models/operations/ListAuditEvidenceUrlsResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## getFrameworkCodes
+
+Retrieves all valid framework codes for the specified audit. This endpoint helps users discover which framework codes are available for creating and updating information requests for this audit.
+
+Use this endpoint to:
+- Discover available framework codes before creating information requests
+- Validate framework codes against the audit's framework
+- Get context about what framework codes are available for the audit type
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="GetFrameworkCodes" method="get" path="/audits/{auditId}/framework-codes" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.GetFrameworkCodesResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        GetFrameworkCodesResponse res = sdk.audits().getFrameworkCodes()
+                .auditId("<id>")
+                .call();
+
+        if (res.frameworkCodes().isPresent()) {
+            System.out.println(res.frameworkCodes().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | N/A                |
+
+### Response
+
+**[GetFrameworkCodesResponse](../../models/operations/GetFrameworkCodesResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listInformationRequests
+
+Retrieves a paginated list of all information requests for an audit, enabling
+external audit management systems to display and track evidence requests.
+
+This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+Clients should check the `deletionDate` field to identify and handle deleted records
+appropriately in their systems.
+
+This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+allowing efficient polling for changes without retrieving the entire dataset.
+
+Pagination usage:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage` to see if more data exists
+3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+4. Repeat until `hasNextPage` is false
+
+Delta sync usage:
+1. Store the timestamp of your last sync
+2. Pass that timestamp as `changedSinceDate`
+3. Only requests created, modified, or deleted since that timestamp are returned
+4. Process updates and soft-deletes by checking the `deletionDate` field
+5. Update your last sync timestamp to the current time
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListInformationRequests" method="get" path="/audits/{auditId}/information-requests" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListInformationRequestsResponse res = sdk.audits().listInformationRequests()
+                .auditId("<id>")
+                .pageSize(10)
+                .call();
+
+        if (res.paginatedResponseInformationRequest().isPresent()) {
+            System.out.println(res.paginatedResponseInformationRequest().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                                                                   | Type                                                                                                                                                                        | Required                                                                                                                                                                    | Description                                                                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                                                                                                   | *String*                                                                                                                                                                    | :heavy_check_mark:                                                                                                                                                          | N/A                                                                                                                                                                         |
+| `pageSize`                                                                                                                                                                  | *Optional\<Integer>*                                                                                                                                                        | :heavy_minus_sign:                                                                                                                                                          | Maximum number of information requests to return per page.                                                                                                                  |
+| `pageCursor`                                                                                                                                                                | *Optional\<String>*                                                                                                                                                         | :heavy_minus_sign:                                                                                                                                                          | Pagination cursor from a previous response. Provide to fetch the next page of results.                                                                                      |
+| `changedSinceDate`                                                                                                                                                          | [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html)                                                                                   | :heavy_minus_sign:                                                                                                                                                          | Includes all information requests that have changed since changedSinceDate.<br/>Considers creationDate, modificationDate, and deletionDate timestamps when determining changes. |
+
+### Response
+
+**[ListInformationRequestsResponse](../../models/operations/ListInformationRequestsResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## createInformationRequest
+
+Creates a new information request for an audit during audit setup or as requirements evolve.
+
+After creating all information requests, use POST /audits/{auditId}/share-information-request-list
+to make them visible to the customer organization. Until shared, requests remain in draft state
+visible only to auditors.
+
+New requests are created in an initial state indicating evidence is needed. The status
+progresses through the workflow: initial state → awaiting review → approved or flagged.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="CreateInformationRequest" method="post" path="/audits/{auditId}/information-requests" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.CreateInformationRequestInput;
+import com.vanta.vanta_auditor_api.models.components.InformationRequestType;
+import com.vanta.vanta_auditor_api.models.operations.CreateInformationRequestResponse;
+import java.lang.Exception;
+import java.util.List;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        CreateInformationRequestResponse res = sdk.audits().createInformationRequest()
+                .auditId("<id>")
+                .createInformationRequestInput(CreateInformationRequestInput.builder()
+                    .uniqueId("<id>")
+                    .title("<value>")
+                    .requestType(InformationRequestType.SAMPLE)
+                    .frameworkCodes(List.of())
+                    .build())
+                .call();
+
+        if (res.informationRequest().isPresent()) {
+            System.out.println(res.informationRequest().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `auditId`                                                                                 | *String*                                                                                  | :heavy_check_mark:                                                                        | N/A                                                                                       |
+| `createInformationRequestInput`                                                           | [CreateInformationRequestInput](../../models/components/CreateInformationRequestInput.md) | :heavy_check_mark:                                                                        | N/A                                                                                       |
+
+### Response
+
+**[CreateInformationRequestResponse](../../models/operations/CreateInformationRequestResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## getInformationRequest
+
+Retrieves a single information request by its ID for an audit, allowing external
+audit management systems to fetch the latest state of a specific request without
+paginating through the full list.
+
+Soft-deleted records (where `deletionDate !== null`) are included in the response.
+Clients should check `deletionDate` to determine whether the request has been deleted.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="GetInformationRequest" method="get" path="/audits/{auditId}/information-requests/{requestId}" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        GetInformationRequestResponse res = sdk.audits().getInformationRequest()
+                .auditId("<id>")
+                .requestId("<id>")
+                .call();
+
+        if (res.informationRequest().isPresent()) {
+            System.out.println(res.informationRequest().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | N/A                |
+| `requestId`        | *String*           | :heavy_check_mark: | N/A                |
+
+### Response
+
+**[GetInformationRequestResponse](../../models/operations/GetInformationRequestResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## updateInformationRequest
+
+Updates an existing information request for an audit, allowing modification of request
+details as audit requirements evolve. Supports partial updates where only specified
+fields are changed; omitted fields remain unchanged.
+
+Common use cases:
+- Updating due dates as audit timelines shift
+- Refining descriptions to clarify requirements
+- Adjusting request type
+
+Note: The `modificationDate` is automatically updated to the current timestamp
+when any field is changed.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="UpdateInformationRequest" method="patch" path="/audits/{auditId}/information-requests/{requestId}" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.PartialUpdateInformationRequest;
+import com.vanta.vanta_auditor_api.models.operations.UpdateInformationRequestResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        UpdateInformationRequestResponse res = sdk.audits().updateInformationRequest()
+                .auditId("<id>")
+                .requestId("<id>")
+                .partialUpdateInformationRequest(PartialUpdateInformationRequest.builder()
+                    .build())
+                .call();
+
+        if (res.informationRequest().isPresent()) {
+            System.out.println(res.informationRequest().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   |
+| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                     | *String*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `requestId`                                                                                   | *String*                                                                                      | :heavy_check_mark:                                                                            | N/A                                                                                           |
+| `partialUpdateInformationRequest`                                                             | [PartialUpdateInformationRequest](../../models/components/PartialUpdateInformationRequest.md) | :heavy_check_mark:                                                                            | N/A                                                                                           |
+
+### Response
+
+**[UpdateInformationRequestResponse](../../models/operations/UpdateInformationRequestResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## deleteInformationRequest
+
+Deletes an information request for an audit. This performs a soft delete, marking
+the request as deleted (setting `deletionDate`) while preserving it in the system
+for audit history and compliance tracking.
+
+Soft deletion allows:
+- Maintaining complete audit trail of all requests ever created
+- Retrieving deleted requests via `changedSinceDate` for synchronization
+
+After deletion:
+- The request will not appear in normal list responses (without `changedSinceDate`)
+- The request's `deletionDate` field will be populated
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="DeleteInformationRequest" method="delete" path="/audits/{auditId}/information-requests/{requestId}" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.DeleteInformationRequestResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        DeleteInformationRequestResponse res = sdk.audits().deleteInformationRequest()
+                .auditId("<id>")
+                .requestId("<id>")
+                .call();
+
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | N/A                |
+| `requestId`        | *String*           | :heavy_check_mark: | N/A                |
+
+### Response
+
+**[DeleteInformationRequestResponse](../../models/operations/DeleteInformationRequestResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## acceptInformationRequestEvidence
+
+Accepts evidence for an information request, confirming that all submitted evidence
+meets audit requirements. This action changes the request's approvalStatus to
+an approved state and creates an activity log entry.
+
+Acceptance workflow:
+1. Auditor reviews submitted evidence
+2. If evidence is satisfactory, auditor calls this endpoint
+3. Request status changes to approved state and is considered complete for this audit cycle
+
+Use this endpoint when:
+- All required evidence has been submitted
+- Evidence quality meets audit standards
+- Evidence addresses all specified framework codes
+- No additional information is needed
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="AcceptInformationRequestEvidence" method="post" path="/audits/{auditId}/information-requests/{requestId}/accept-evidence" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.AcceptInformationRequestEvidenceInput;
+import com.vanta.vanta_auditor_api.models.operations.AcceptInformationRequestEvidenceResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        AcceptInformationRequestEvidenceResponse res = sdk.audits().acceptInformationRequestEvidence()
+                .auditId("<id>")
+                .requestId("<id>")
+                .acceptInformationRequestEvidenceInput(AcceptInformationRequestEvidenceInput.builder()
+                    .auditorEmail("<value>")
+                    .build())
+                .call();
+
+        if (res.informationRequest().isPresent()) {
+            System.out.println(res.informationRequest().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                 | Type                                                                                                      | Required                                                                                                  | Description                                                                                               |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                                 | *String*                                                                                                  | :heavy_check_mark:                                                                                        | N/A                                                                                                       |
+| `requestId`                                                                                               | *String*                                                                                                  | :heavy_check_mark:                                                                                        | N/A                                                                                                       |
+| `acceptInformationRequestEvidenceInput`                                                                   | [AcceptInformationRequestEvidenceInput](../../models/components/AcceptInformationRequestEvidenceInput.md) | :heavy_check_mark:                                                                                        | N/A                                                                                                       |
+
+### Response
+
+**[AcceptInformationRequestEvidenceResponse](../../models/operations/AcceptInformationRequestEvidenceResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listInformationRequestActivity
+
+Retrieves a paginated list of activity logs for an information request, providing
+a complete audit trail of all changes and actions.
+
+This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+allowing efficient polling for changes without retrieving the entire dataset.
+
+Pagination usage:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage` to see if more data exists
+3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+4. Repeat until `hasNextPage` is false
+
+Delta sync usage:
+1. Store the timestamp of your last sync
+2. Pass that timestamp as `changedSinceDate`
+3. Only activity created since that timestamp is returned
+4. Process updates to track all changes to the information request
+5. Update your last sync timestamp to the current time
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListInformationRequestActivity" method="get" path="/audits/{auditId}/information-requests/{requestId}/activity" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestActivityRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestActivityResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListInformationRequestActivityRequest req = ListInformationRequestActivityRequest.builder()
+                .auditId("<id>")
+                .requestId("<id>")
+                .build();
+
+        ListInformationRequestActivityResponse res = sdk.audits().listInformationRequestActivity()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseInformationRequestActivityLog().isPresent()) {
+            System.out.println(res.paginatedResponseInformationRequestActivityLog().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                 | Type                                                                                                      | Required                                                                                                  | Description                                                                                               |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                 | [ListInformationRequestActivityRequest](../../models/operations/ListInformationRequestActivityRequest.md) | :heavy_check_mark:                                                                                        | The request object to use for the request.                                                                |
+
+### Response
+
+**[ListInformationRequestActivityResponse](../../models/operations/ListInformationRequestActivityResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listCommentsForInformationRequest
+
+Retrieves a paginated list of comments for an information request, enabling
+auditors to view communication history and collaborate with customers.
+
+This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+Clients should check the `deletionDate` field to identify and handle deleted records
+appropriately in their systems.
+
+This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+allowing efficient polling for changes without retrieving the entire dataset.
+
+Pagination usage:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage` to see if more data exists
+3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+4. Repeat until `hasNextPage` is false
+
+Delta sync usage:
+1. Store the timestamp of your last sync
+2. Pass that timestamp as `changedSinceDate`
+3. Only comments created, modified, or deleted since that timestamp are returned
+4. Process updates, including soft-deletes (deletionDate !== null)
+5. Update your last sync timestamp to the current time
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListCommentsForInformationRequest" method="get" path="/audits/{auditId}/information-requests/{requestId}/comments" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListCommentsForInformationRequestRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListCommentsForInformationRequestResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListCommentsForInformationRequestRequest req = ListCommentsForInformationRequestRequest.builder()
+                .auditId("<id>")
+                .requestId("<id>")
+                .build();
+
+        ListCommentsForInformationRequestResponse res = sdk.audits().listCommentsForInformationRequest()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseInformationRequestComment().isPresent()) {
+            System.out.println(res.paginatedResponseInformationRequestComment().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                       | Type                                                                                                            | Required                                                                                                        | Description                                                                                                     |
+| --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                       | [ListCommentsForInformationRequestRequest](../../models/operations/ListCommentsForInformationRequestRequest.md) | :heavy_check_mark:                                                                                              | The request object to use for the request.                                                                      |
+
+### Response
+
+**[ListCommentsForInformationRequestResponse](../../models/operations/ListCommentsForInformationRequestResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## createCommentForInformationRequest
+
+Creates a new comment for an information request. The comment author must be an auditor
+in the audit firm making the request. The comment will be associated with the information
+request and visible to all authorized users.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="CreateCommentForInformationRequest" method="post" path="/audits/{auditId}/information-requests/{requestId}/comments" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.AddInformationRequestCommentInput;
+import com.vanta.vanta_auditor_api.models.operations.CreateCommentForInformationRequestResponse;
+import java.lang.Exception;
+import java.time.OffsetDateTime;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        CreateCommentForInformationRequestResponse res = sdk.audits().createCommentForInformationRequest()
+                .auditId("<id>")
+                .requestId("<id>")
+                .addInformationRequestCommentInput(AddInformationRequestCommentInput.builder()
+                    .text("<value>")
+                    .email("Daryl.Bartell38@gmail.com")
+                    .creationDate(OffsetDateTime.parse("2024-06-25T05:04:31.105Z"))
+                    .build())
+                .call();
+
+        if (res.informationRequestComment().isPresent()) {
+            System.out.println(res.informationRequestComment().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                         | *String*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
+| `requestId`                                                                                       | *String*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
+| `addInformationRequestCommentInput`                                                               | [AddInformationRequestCommentInput](../../models/components/AddInformationRequestCommentInput.md) | :heavy_check_mark:                                                                                | N/A                                                                                               |
+
+### Response
+
+**[CreateCommentForInformationRequestResponse](../../models/operations/CreateCommentForInformationRequestResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## updateCommentForInformationRequest
+
+Updates an existing comment for an information request. Only the original author
+of the comment can update it. The author is identified by their email address,
+which must match the email of the user who created the comment.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="UpdateCommentForInformationRequest" method="patch" path="/audits/{auditId}/information-requests/{requestId}/comments/{commentId}" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.UpdateInformationRequestCommentInput;
+import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForInformationRequestResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        UpdateCommentForInformationRequestResponse res = sdk.audits().updateCommentForInformationRequest()
+                .auditId("<id>")
+                .requestId("<id>")
+                .commentId("<id>")
+                .updateInformationRequestCommentInput(UpdateInformationRequestCommentInput.builder()
+                    .text("<value>")
+                    .email("Gerald_Gusikowski36@yahoo.com")
+                    .build())
+                .call();
+
+        if (res.informationRequestComment().isPresent()) {
+            System.out.println(res.informationRequestComment().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                               | Type                                                                                                    | Required                                                                                                | Description                                                                                             |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                               | *String*                                                                                                | :heavy_check_mark:                                                                                      | N/A                                                                                                     |
+| `requestId`                                                                                             | *String*                                                                                                | :heavy_check_mark:                                                                                      | N/A                                                                                                     |
+| `commentId`                                                                                             | *String*                                                                                                | :heavy_check_mark:                                                                                      | N/A                                                                                                     |
+| `updateInformationRequestCommentInput`                                                                  | [UpdateInformationRequestCommentInput](../../models/components/UpdateInformationRequestCommentInput.md) | :heavy_check_mark:                                                                                      | N/A                                                                                                     |
+
+### Response
+
+**[UpdateCommentForInformationRequestResponse](../../models/operations/UpdateCommentForInformationRequestResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## deleteCommentForInformationRequest
+
+Deletes an existing comment for an information request. Only the original author
+of the comment can delete it. The author is identified by their email address,
+which must match the email of the user who created the comment.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="DeleteCommentForInformationRequest" method="delete" path="/audits/{auditId}/information-requests/{requestId}/comments/{commentId}" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.DeleteInformationRequestCommentInput;
+import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForInformationRequestResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        DeleteCommentForInformationRequestResponse res = sdk.audits().deleteCommentForInformationRequest()
+                .auditId("<id>")
+                .requestId("<id>")
+                .commentId("<id>")
+                .deleteInformationRequestCommentInput(DeleteInformationRequestCommentInput.builder()
+                    .email("Ole.Adams@gmail.com")
+                    .build())
+                .call();
+
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                               | Type                                                                                                    | Required                                                                                                | Description                                                                                             |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                               | *String*                                                                                                | :heavy_check_mark:                                                                                      | N/A                                                                                                     |
+| `requestId`                                                                                             | *String*                                                                                                | :heavy_check_mark:                                                                                      | N/A                                                                                                     |
+| `commentId`                                                                                             | *String*                                                                                                | :heavy_check_mark:                                                                                      | N/A                                                                                                     |
+| `deleteInformationRequestCommentInput`                                                                  | [DeleteInformationRequestCommentInput](../../models/components/DeleteInformationRequestCommentInput.md) | :heavy_check_mark:                                                                                      | N/A                                                                                                     |
+
+### Response
+
+**[DeleteCommentForInformationRequestResponse](../../models/operations/DeleteCommentForInformationRequestResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listInformationRequestEvidence
+
+Retrieves a paginated list of all evidence attached to an information request,
+enabling auditors to review evidence submitted by customers.
+
+This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+Clients should check the `deletionDate` field to identify and handle deleted records
+appropriately in their systems.
+
+This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+allowing efficient polling for changes without retrieving the entire dataset.
+
+Pagination usage:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage` to see if more data exists
+3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+4. Repeat until `hasNextPage` is false
+
+Delta sync usage:
+1. Store the timestamp of your last sync
+2. Pass that timestamp as `changedSinceDate`
+3. Only evidence created, modified, shared, or deleted since that timestamp is returned
+4. Process updates, including soft-deletes (deletionDate !== null)
+5. Update your last sync timestamp to the current time
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListInformationRequestEvidence" method="get" path="/audits/{auditId}/information-requests/{requestId}/evidence" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListInformationRequestEvidenceRequest req = ListInformationRequestEvidenceRequest.builder()
+                .auditId("<id>")
+                .requestId("<id>")
+                .build();
+
+        ListInformationRequestEvidenceResponse res = sdk.audits().listInformationRequestEvidence()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseInformationRequestEvidence().isPresent()) {
+            System.out.println(res.paginatedResponseInformationRequestEvidence().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                 | Type                                                                                                      | Required                                                                                                  | Description                                                                                               |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                 | [ListInformationRequestEvidenceRequest](../../models/operations/ListInformationRequestEvidenceRequest.md) | :heavy_check_mark:                                                                                        | The request object to use for the request.                                                                |
+
+### Response
+
+**[ListInformationRequestEvidenceResponse](../../models/operations/ListInformationRequestEvidenceResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## getInformationRequestTestSnapshotEvidenceDetail
+
+Retrieves the rich detail for a single VANTA_TEST_SNAPSHOT evidence row
+attached to an information request. The response includes test-level
+metadata (description, integrations, SLA) and the raw test data captured
+at snapshot time, presented as a uniform array of rows regardless of
+whether the snapshot is structured or unstructured.
+
+For structured snapshots, the array contains one row per resource the
+test ran against; each row carries `resourceId`, `resourceType`, and the
+raw JSON for that resource.
+
+For unstructured snapshots, the array contains a single row with
+`resourceId` and `resourceType` set to `null` and `rawJson` containing
+the entire test-run JSON blob.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="GetInformationRequestTestSnapshotEvidenceDetail" method="get" path="/audits/{auditId}/information-requests/{requestId}/evidence/{evidenceId}/test-snapshot" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSnapshotEvidenceDetailResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        GetInformationRequestTestSnapshotEvidenceDetailResponse res = sdk.audits().getInformationRequestTestSnapshotEvidenceDetail()
+                .auditId("<id>")
+                .requestId("<id>")
+                .evidenceId("<id>")
+                .call();
+
+        if (res.vantaTestSnapshotEvidenceDetail().isPresent()) {
+            System.out.println(res.vantaTestSnapshotEvidenceDetail().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | N/A                |
+| `requestId`        | *String*           | :heavy_check_mark: | N/A                |
+| `evidenceId`       | *String*           | :heavy_check_mark: | N/A                |
+
+### Response
+
+**[GetInformationRequestTestSnapshotEvidenceDetailResponse](../../models/operations/GetInformationRequestTestSnapshotEvidenceDetailResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## flagInformationRequestEvidence
+
+Flags evidence for an information request when it doesn't meet audit requirements,
+marking issues that need to be addressed before approval. This action changes the
+request's approvalStatus to a flagged state and creates an activity log entry.
+
+Flagging workflow:
+1. Auditor reviews submitted evidence
+2. If issues are found, auditor calls this endpoint with detailed reason
+3. Request status changes to flagged state
+4. Customer is notified and can see the reason in activity logs
+5. Customer addresses issues and updates evidence
+6. When ready, customer changes status back to awaiting review
+7. Auditor reviews again and either flags again or accepts
+
+The `reason` field should clearly explain what's missing or incorrect so the
+customer knows exactly what to fix. This reason is visible to the customer
+and appears in the activity log.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="FlagInformationRequestEvidence" method="post" path="/audits/{auditId}/information-requests/{requestId}/flag-evidence" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.FlagInformationRequestEvidenceInput;
+import com.vanta.vanta_auditor_api.models.operations.FlagInformationRequestEvidenceResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        FlagInformationRequestEvidenceResponse res = sdk.audits().flagInformationRequestEvidence()
+                .auditId("<id>")
+                .requestId("<id>")
+                .flagInformationRequestEvidenceInput(FlagInformationRequestEvidenceInput.builder()
+                    .auditorEmail("<value>")
+                    .reason("<value>")
+                    .build())
+                .call();
+
+        if (res.informationRequest().isPresent()) {
+            System.out.println(res.informationRequest().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                             | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                             | *String*                                                                                              | :heavy_check_mark:                                                                                    | N/A                                                                                                   |
+| `requestId`                                                                                           | *String*                                                                                              | :heavy_check_mark:                                                                                    | N/A                                                                                                   |
+| `flagInformationRequestEvidenceInput`                                                                 | [FlagInformationRequestEvidenceInput](../../models/components/FlagInformationRequestEvidenceInput.md) | :heavy_check_mark:                                                                                    | N/A                                                                                                   |
+
+### Response
+
+**[FlagInformationRequestEvidenceResponse](../../models/operations/FlagInformationRequestEvidenceResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listAuditIssues
+
+Retrieves a list of all issues that have been shared with an audit.
+
+The issues returned are immutable, point-in-time snapshots; there may be duplicates of issues that have been snapshotted at different times.
+The GET /audits/{auditId}/issues/snapshots endpoint can be used to retrieve metadata about the snapshots that issues belong to.
+Issues represent compliance findings from a variety of sources that need to be tracked and remediated.
+
+Supports filtering by:
+- `search`: full text search across issue title and description
+- `snapshotId`: filtering to a specific snapshot or snapshots, which represent point-in-time captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs and metadata.
+
+Results are sorted by issue creation date in descending order (newest first).
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListAuditIssues" method="get" path="/audits/{auditId}/issues/items" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditIssuesRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditIssuesResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListAuditIssuesRequest req = ListAuditIssuesRequest.builder()
+                .auditId("<id>")
+                .build();
+
+        ListAuditIssuesResponse res = sdk.audits().listAuditIssues()
+                .request(req)
+                .call();
+
+        if (res.paginatedIssueSnapshotItemsResponse().isPresent()) {
+            System.out.println(res.paginatedIssueSnapshotItemsResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `request`                                                                   | [ListAuditIssuesRequest](../../models/operations/ListAuditIssuesRequest.md) | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+
+### Response
+
+**[ListAuditIssuesResponse](../../models/operations/ListAuditIssuesResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listAuditSnapshots
+
+Retrieves a list of snapshots that have been shared with an audit.
+
+The snapshots returned contain metadata about point-in-time captures of issues for an audit.
+This data can be used to filter down the list of issues to specific snapshots when querying the GET /audits/{auditId}/issues/items endpoint.
+
+Supports filtering by:
+- `search`: full text search across snapshot title and description
+
+Results are sorted by snapshot creation date in descending order (newest first).
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListAuditSnapshots" method="get" path="/audits/{auditId}/issues/snapshots" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditSnapshotsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListAuditSnapshotsResponse res = sdk.audits().listAuditSnapshots()
+                .auditId("<id>")
+                .pageSize(10)
+                .call();
+
+        if (res.paginatedIssueSnapshotMetadataResponse().isPresent()) {
+            System.out.println(res.paginatedIssueSnapshotMetadataResponse().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                   | Type                                                        | Required                                                    | Description                                                 |
+| ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- | ----------------------------------------------------------- |
+| `auditId`                                                   | *String*                                                    | :heavy_check_mark:                                          | The audit ID                                                |
+| `pageSize`                                                  | *Optional\<Integer>*                                        | :heavy_minus_sign:                                          | Maximum number of results per page (1-100, default 10)      |
+| `pageCursor`                                                | *Optional\<String>*                                         | :heavy_minus_sign:                                          | Pagination cursor from previous response                    |
+| `search`                                                    | *Optional\<String>*                                         | :heavy_minus_sign:                                          | Search term for filtering by snapshot title and description |
+
+### Response
+
+**[ListAuditSnapshotsResponse](../../models/operations/ListAuditSnapshotsResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## shareInformationRequestList
+
+Shares the current information request list for an audit with the customer organization,
+making it visible in their portal. This action allows the customer to see all information
+requests that have been created for their audit. Only IRL audits are supported.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ShareInformationRequestList" method="post" path="/audits/{auditId}/share-information-request-list" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ShareInformationRequestListResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ShareInformationRequestListResponse res = sdk.audits().shareInformationRequestList()
+                .auditId("<id>")
+                .call();
+
+        if (res.audit().isPresent()) {
+            System.out.println(res.audit().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | N/A                |
+
+### Response
+
+**[ShareInformationRequestListResponse](../../models/operations/ShareInformationRequestListResponse.md)**
 
 ### Errors
 

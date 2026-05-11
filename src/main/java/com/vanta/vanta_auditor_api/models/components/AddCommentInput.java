@@ -20,7 +20,8 @@ public class AddCommentInput {
     private String text;
 
     /**
-     * Email of author. Must match an existing Vanta user and the user must exist under the Audit Firm who is making the API request
+     * Email of author. Must match an existing Vanta user and the user must exist under the Audit Firm who
+     * is making the API request
      */
     @JsonProperty("email")
     private String email;
@@ -53,7 +54,8 @@ public class AddCommentInput {
     }
 
     /**
-     * Email of author. Must match an existing Vanta user and the user must exist under the Audit Firm who is making the API request
+     * Email of author. Must match an existing Vanta user and the user must exist under the Audit Firm who
+     * is making the API request
      */
     @JsonIgnore
     public String email() {
@@ -83,7 +85,8 @@ public class AddCommentInput {
     }
 
     /**
-     * Email of author. Must match an existing Vanta user and the user must exist under the Audit Firm who is making the API request
+     * Email of author. Must match an existing Vanta user and the user must exist under the Audit Firm who
+     * is making the API request
      */
     public AddCommentInput withEmail(String email) {
         Utils.checkNotNull(email, "email");
@@ -154,7 +157,8 @@ public class AddCommentInput {
 
 
         /**
-         * Email of author. Must match an existing Vanta user and the user must exist under the Audit Firm who is making the API request
+         * Email of author. Must match an existing Vanta user and the user must exist under the Audit Firm who
+         * is making the API request
          */
         public Builder email(String email) {
             Utils.checkNotNull(email, "email");
