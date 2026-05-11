@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 11
+    options.encoding = 'UTF-8'
+}
+
+dependencies {
+    // Substituted to the local SDK via includeBuild('..') in settings.gradle.
+    testImplementation 'com.vanta:vanta-auditor-api'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.18.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+}
+
+test {
+    useJUnitPlatform()
+
+    // Pass the SMOKE_* env vars through as system properties so the test reads a
+    // single source. Empty string when unset; SmokeTest treats blank as "skip all".
+    // The API base URL is deliberately NOT a secret — SmokeTest derives it from
+    // Vanta.SERVERS to avoid drift between OAuth host and SDK host.
+    ['SMOKE_OAUTH_CLIENT_ID',
+     'SMOKE_OAUTH_CLIENT_SECRET',
+     'SMOKE_AUDIT_ID'].each { name ->
+        systemProperty name, System.getenv(name) ?: ''
+    }
+
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+        exceptionFormat 'full'
+        showStandardStreams = false   // never true in CI — Speakeasy debug logs would leak headers
+    }
+}

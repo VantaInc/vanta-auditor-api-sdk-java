@@ -1,0 +1,12 @@
+rootProject.name = 'smoke-test'
+
+// Run as a standalone Gradle build that pulls the SDK in as a composite build.
+// Done this way (instead of as a subproject of the parent) because the parent's
+// settings.gradle is in Speakeasy's generatedFiles list — any `include 'smoke-test'`
+// added to it would be clobbered on the next regen, and the smoke test would
+// silently fall out of CI.
+includeBuild('..') {
+    dependencySubstitution {
+        substitute module('com.vanta:vanta-auditor-api') using project(':')
+    }
+}

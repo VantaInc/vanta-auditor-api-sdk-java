@@ -1,0 +1,70 @@
+name: Smoke Test
+permissions:
+  contents: read
+  pull-requests: read
+on:
+  pull_request:
+    branches: [main]
+    # Default types are [opened, synchronize, reopened], which do not fire on
+    # label changes. We need `labeled` / `unlabeled` so applying the `skip-smoke`
+    # label after the initial run re-evaluates the bypass gate — otherwise the
+    # label silently does nothing until someone pushes a new commit.
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+  workflow_dispatch: {}
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      # Branch-protection requires this job to pass. When the PR carries the
+      # `skip-smoke` label the job still runs to satisfy the required status,
+      # but exits immediately with success. The label is documented in
+      # SMOKE_TEST.md — apply it only when the failure is upstream spec/server-side
+      # and the fix is tracked elsewhere.
+      - name: Check for skip-smoke label
+        id: skip
+        if: github.event_name == 'pull_request'
+        run: |
+          labels='${{ toJson(github.event.pull_request.labels.*.name) }}'
+          if echo "$labels" | grep -q '"skip-smoke"'; then
+            echo "Smoke test bypassed via 'skip-smoke' label."
+            echo "Tracking issue must be linked in the PR description."
+            echo "skipped=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skipped=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.skip.outputs.skipped != 'true'
+
+      - name: Set up Java
+        if: steps.skip.outputs.skipped != 'true'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 11
+
+      - name: Cache Gradle
+        if: steps.skip.outputs.skipped != 'true'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle', '**/gradle-wrapper.properties') }}
+
+      - name: Run smoke test
+        if: steps.skip.outputs.skipped != 'true'
+        env:
+          SMOKE_OAUTH_CLIENT_ID:     ${{ secrets.SMOKE_OAUTH_CLIENT_ID }}
+          SMOKE_OAUTH_CLIENT_SECRET: ${{ secrets.SMOKE_OAUTH_CLIENT_SECRET }}
+          SMOKE_AUDIT_ID:            ${{ secrets.SMOKE_AUDIT_ID }}
+        run: ./gradlew --project-dir smoke-test test --no-daemon --info
+
+      - name: Upload test report
+        if: always() && steps.skip.outputs.skipped != 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: smoke-test-report
+          path: smoke-test/build/reports/tests/test
+          if-no-files-found: ignore
