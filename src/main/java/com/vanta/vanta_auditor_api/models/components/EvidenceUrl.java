@@ -5,11 +5,14 @@ package com.vanta.vanta_auditor_api.models.components;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 
 public class EvidenceUrl {
@@ -37,20 +40,39 @@ public class EvidenceUrl {
     @JsonProperty("isDownloadable")
     private boolean isDownloadable;
 
+    /**
+     * MIME type of the evidence file (e.g., "application/pdf", "image/png")
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("mimeType")
+    private Optional<String> mimeType;
+
     @JsonCreator
     public EvidenceUrl(
             @JsonProperty("id") String id,
             @JsonProperty("url") String url,
             @JsonProperty("filename") String filename,
-            @JsonProperty("isDownloadable") boolean isDownloadable) {
+            @JsonProperty("isDownloadable") boolean isDownloadable,
+            @JsonProperty("mimeType") Optional<String> mimeType) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(url, "url");
         Utils.checkNotNull(filename, "filename");
         Utils.checkNotNull(isDownloadable, "isDownloadable");
+        Utils.checkNotNull(mimeType, "mimeType");
         this.id = id;
         this.url = url;
         this.filename = filename;
         this.isDownloadable = isDownloadable;
+        this.mimeType = mimeType;
+    }
+    
+    public EvidenceUrl(
+            String id,
+            String url,
+            String filename,
+            boolean isDownloadable) {
+        this(id, url, filename,
+            isDownloadable, Optional.empty());
     }
 
     /**
@@ -83,6 +105,14 @@ public class EvidenceUrl {
     @JsonIgnore
     public boolean isDownloadable() {
         return isDownloadable;
+    }
+
+    /**
+     * MIME type of the evidence file (e.g., "application/pdf", "image/png")
+     */
+    @JsonIgnore
+    public Optional<String> mimeType() {
+        return mimeType;
     }
 
     public static Builder builder() {
@@ -126,6 +156,25 @@ public class EvidenceUrl {
         return this;
     }
 
+    /**
+     * MIME type of the evidence file (e.g., "application/pdf", "image/png")
+     */
+    public EvidenceUrl withMimeType(String mimeType) {
+        Utils.checkNotNull(mimeType, "mimeType");
+        this.mimeType = Optional.ofNullable(mimeType);
+        return this;
+    }
+
+
+    /**
+     * MIME type of the evidence file (e.g., "application/pdf", "image/png")
+     */
+    public EvidenceUrl withMimeType(Optional<String> mimeType) {
+        Utils.checkNotNull(mimeType, "mimeType");
+        this.mimeType = mimeType;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -139,14 +188,15 @@ public class EvidenceUrl {
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.url, other.url) &&
             Utils.enhancedDeepEquals(this.filename, other.filename) &&
-            Utils.enhancedDeepEquals(this.isDownloadable, other.isDownloadable);
+            Utils.enhancedDeepEquals(this.isDownloadable, other.isDownloadable) &&
+            Utils.enhancedDeepEquals(this.mimeType, other.mimeType);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             id, url, filename,
-            isDownloadable);
+            isDownloadable, mimeType);
     }
     
     @Override
@@ -155,7 +205,8 @@ public class EvidenceUrl {
                 "id", id,
                 "url", url,
                 "filename", filename,
-                "isDownloadable", isDownloadable);
+                "isDownloadable", isDownloadable,
+                "mimeType", mimeType);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -168,6 +219,8 @@ public class EvidenceUrl {
         private String filename;
 
         private Boolean isDownloadable;
+
+        private Optional<String> mimeType = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -213,11 +266,30 @@ public class EvidenceUrl {
             return this;
         }
 
+
+        /**
+         * MIME type of the evidence file (e.g., "application/pdf", "image/png")
+         */
+        public Builder mimeType(String mimeType) {
+            Utils.checkNotNull(mimeType, "mimeType");
+            this.mimeType = Optional.ofNullable(mimeType);
+            return this;
+        }
+
+        /**
+         * MIME type of the evidence file (e.g., "application/pdf", "image/png")
+         */
+        public Builder mimeType(Optional<String> mimeType) {
+            Utils.checkNotNull(mimeType, "mimeType");
+            this.mimeType = mimeType;
+            return this;
+        }
+
         public EvidenceUrl build() {
 
             return new EvidenceUrl(
                 id, url, filename,
-                isDownloadable);
+                isDownloadable, mimeType);
         }
 
     }

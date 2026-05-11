@@ -1,5 +1,13 @@
 # FrameworkId
 
+## Example Usage
+
+```java
+import com.vanta.vanta_auditor_api.models.components.FrameworkId;
+
+FrameworkId value = FrameworkId.AU_E8;
+```
+
 
 ## Values
 

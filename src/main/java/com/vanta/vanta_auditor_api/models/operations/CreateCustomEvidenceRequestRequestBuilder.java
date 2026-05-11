@@ -7,9 +7,9 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomEvidenceRequestInput;
-import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequestOperation;
+import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequest;
+import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.Utils;
-import java.lang.Exception;
 import java.lang.String;
 
 public class CreateCustomEvidenceRequestRequestBuilder {
@@ -17,6 +17,7 @@ public class CreateCustomEvidenceRequestRequestBuilder {
     private String auditId;
     private CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput;
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public CreateCustomEvidenceRequestRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -43,10 +44,10 @@ public class CreateCustomEvidenceRequestRequestBuilder {
         return request;
     }
 
-    public CreateCustomEvidenceRequestResponse call() throws Exception {
+    public CreateCustomEvidenceRequestResponse call() {
         
         RequestOperation<CreateCustomEvidenceRequestRequest, CreateCustomEvidenceRequestResponse> operation
-              = new CreateCustomEvidenceRequestOperation(sdkConfiguration);
+              = new CreateCustomEvidenceRequest.Sync(sdkConfiguration, _headers);
         CreateCustomEvidenceRequestRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

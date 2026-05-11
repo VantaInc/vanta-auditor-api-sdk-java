@@ -19,7 +19,7 @@ import java.lang.SuppressWarnings;
 public class FrameworkSectionFrameworkId {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private FrameworkSectionFrameworkId(TypedObject value) {
         this.value = value;
@@ -27,12 +27,12 @@ public class FrameworkSectionFrameworkId {
 
     public static FrameworkSectionFrameworkId of(FrameworkId value) {
         Utils.checkNotNull(value, "value");
-        return new FrameworkSectionFrameworkId(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<FrameworkId>(){}));
+        return new FrameworkSectionFrameworkId(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static FrameworkSectionFrameworkId of(String value) {
         Utils.checkNotNull(value, "value");
-        return new FrameworkSectionFrameworkId(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
+        return new FrameworkSectionFrameworkId(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -55,7 +55,7 @@ public class FrameworkSectionFrameworkId {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -66,7 +66,7 @@ public class FrameworkSectionFrameworkId {
             return false;
         }
         FrameworkSectionFrameworkId other = (FrameworkSectionFrameworkId) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -79,8 +79,8 @@ public class FrameworkSectionFrameworkId {
 
         public _Deserializer() {
             super(FrameworkSectionFrameworkId.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<FrameworkId>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<FrameworkId>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -89,6 +89,6 @@ public class FrameworkSectionFrameworkId {
         return Utils.toString(FrameworkSectionFrameworkId.class,
                 "value", value);
     }
- 
+
 }
 

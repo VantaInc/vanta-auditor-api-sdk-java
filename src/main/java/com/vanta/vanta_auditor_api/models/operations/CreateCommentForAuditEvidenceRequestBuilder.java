@@ -7,9 +7,9 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
-import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidenceOperation;
+import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidence;
+import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.Utils;
-import java.lang.Exception;
 import java.lang.String;
 
 public class CreateCommentForAuditEvidenceRequestBuilder {
@@ -18,6 +18,7 @@ public class CreateCommentForAuditEvidenceRequestBuilder {
     private String auditEvidenceId;
     private AddCommentInput addCommentInput;
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public CreateCommentForAuditEvidenceRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -51,10 +52,10 @@ public class CreateCommentForAuditEvidenceRequestBuilder {
         return request;
     }
 
-    public CreateCommentForAuditEvidenceResponse call() throws Exception {
+    public CreateCommentForAuditEvidenceResponse call() {
         
         RequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
-              = new CreateCommentForAuditEvidenceOperation(sdkConfiguration);
+              = new CreateCommentForAuditEvidence.Sync(sdkConfiguration, _headers);
         CreateCommentForAuditEvidenceRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

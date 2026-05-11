@@ -3,7 +3,8 @@
 package hello.world;
 
 import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
+import com.vanta.vanta_auditor_api.models.components.AddAuditorInput;
+import com.vanta.vanta_auditor_api.models.operations.CreateAuditorResponse;
 import java.lang.Exception;
 
 public class Application {
@@ -14,12 +15,18 @@ public class Application {
                 .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
-        ListAuditsResponse res = sdk.audits().list()
-                .pageSize(10)
+        AddAuditorInput req = AddAuditorInput.builder()
+                .email("Genesis_Kunze87@yahoo.com")
+                .givenName("<value>")
+                .familyName("<value>")
+                .build();
+
+        CreateAuditorResponse res = sdk.auditors().create()
+                .request(req)
                 .call();
 
-        if (res.paginatedResponseAudit().isPresent()) {
-            // handle response
+        if (res.auditor().isPresent()) {
+            System.out.println(res.auditor().get());
         }
     }
 }

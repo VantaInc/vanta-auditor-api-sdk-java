@@ -7,10 +7,10 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.vanta.vanta_auditor_api.SDKConfiguration;
-import com.vanta.vanta_auditor_api.operations.ListAuditCommentsOperation;
+import com.vanta.vanta_auditor_api.operations.ListAuditComments;
+import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
-import java.lang.Exception;
 import java.lang.Integer;
 import java.lang.String;
 import java.time.OffsetDateTime;
@@ -26,6 +26,7 @@ public class ListAuditCommentsRequestBuilder {
     private Optional<String> pageCursor = Optional.empty();
     private Optional<OffsetDateTime> changedSinceDate = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public ListAuditCommentsRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -87,10 +88,10 @@ public class ListAuditCommentsRequestBuilder {
         return request;
     }
 
-    public ListAuditCommentsResponse call() throws Exception {
+    public ListAuditCommentsResponse call() {
         
         RequestOperation<ListAuditCommentsRequest, ListAuditCommentsResponse> operation
-              = new ListAuditCommentsOperation(sdkConfiguration);
+              = new ListAuditComments.Sync(sdkConfiguration, _headers);
         ListAuditCommentsRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

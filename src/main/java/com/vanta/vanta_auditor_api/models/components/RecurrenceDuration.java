@@ -15,7 +15,8 @@ public enum RecurrenceDuration {
     P1_M("P1M"),
     P3_M("P3M"),
     P6_M("P6M"),
-    P1_Y("P1Y");
+    P1_Y("P1Y"),
+    P2_Y("P2Y");
 
     @JsonValue
     private final String value;

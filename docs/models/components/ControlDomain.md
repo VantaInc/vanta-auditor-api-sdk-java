@@ -1,5 +1,13 @@
 # ControlDomain
 
+## Example Usage
+
+```java
+import com.vanta.vanta_auditor_api.models.components.ControlDomain;
+
+ControlDomain value = ControlDomain.ARTIFICIAL_AND_AUTONOMOUSTECHNOLOGY;
+```
+
 
 ## Values
 

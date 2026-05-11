@@ -55,11 +55,22 @@ public class Comment {
     private Optional<OffsetDateTime> deletionDate;
 
     /**
-     * The email of the comment author. This acts as a unique identifier to map users between Vanta and external systems.
+     * The email of the comment author. This acts as a unique identifier to map users between Vanta and
+     * external systems.
      */
     @JsonInclude(Include.ALWAYS)
     @JsonProperty("email")
     private Optional<String> email;
+
+    /**
+     * Human-readable display name of the comment author.
+     * Null if the author's name is not available (e.g., user was deleted).
+     * This enables correct author attribution in integrations where users cannot
+     * be reliably matched across systems by email alone.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("authorName")
+    private Optional<String> authorName;
 
     @JsonCreator
     public Comment(
@@ -69,7 +80,8 @@ public class Comment {
             @JsonProperty("creationDate") OffsetDateTime creationDate,
             @JsonProperty("modificationDate") Optional<OffsetDateTime> modificationDate,
             @JsonProperty("deletionDate") Optional<OffsetDateTime> deletionDate,
-            @JsonProperty("email") Optional<String> email) {
+            @JsonProperty("email") Optional<String> email,
+            @JsonProperty("authorName") Optional<String> authorName) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(auditEvidenceId, "auditEvidenceId");
         Utils.checkNotNull(text, "text");
@@ -77,6 +89,7 @@ public class Comment {
         Utils.checkNotNull(modificationDate, "modificationDate");
         Utils.checkNotNull(deletionDate, "deletionDate");
         Utils.checkNotNull(email, "email");
+        Utils.checkNotNull(authorName, "authorName");
         this.id = id;
         this.auditEvidenceId = auditEvidenceId;
         this.text = text;
@@ -84,6 +97,7 @@ public class Comment {
         this.modificationDate = modificationDate;
         this.deletionDate = deletionDate;
         this.email = email;
+        this.authorName = authorName;
     }
     
     public Comment(
@@ -93,7 +107,7 @@ public class Comment {
             OffsetDateTime creationDate) {
         this(id, auditEvidenceId, text,
             creationDate, Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -145,11 +159,23 @@ public class Comment {
     }
 
     /**
-     * The email of the comment author. This acts as a unique identifier to map users between Vanta and external systems.
+     * The email of the comment author. This acts as a unique identifier to map users between Vanta and
+     * external systems.
      */
     @JsonIgnore
     public Optional<String> email() {
         return email;
+    }
+
+    /**
+     * Human-readable display name of the comment author.
+     * Null if the author's name is not available (e.g., user was deleted).
+     * This enables correct author attribution in integrations where users cannot
+     * be reliably matched across systems by email alone.
+     */
+    @JsonIgnore
+    public Optional<String> authorName() {
+        return authorName;
     }
 
     public static Builder builder() {
@@ -232,7 +258,8 @@ public class Comment {
     }
 
     /**
-     * The email of the comment author. This acts as a unique identifier to map users between Vanta and external systems.
+     * The email of the comment author. This acts as a unique identifier to map users between Vanta and
+     * external systems.
      */
     public Comment withEmail(String email) {
         Utils.checkNotNull(email, "email");
@@ -242,11 +269,37 @@ public class Comment {
 
 
     /**
-     * The email of the comment author. This acts as a unique identifier to map users between Vanta and external systems.
+     * The email of the comment author. This acts as a unique identifier to map users between Vanta and
+     * external systems.
      */
     public Comment withEmail(Optional<String> email) {
         Utils.checkNotNull(email, "email");
         this.email = email;
+        return this;
+    }
+
+    /**
+     * Human-readable display name of the comment author.
+     * Null if the author's name is not available (e.g., user was deleted).
+     * This enables correct author attribution in integrations where users cannot
+     * be reliably matched across systems by email alone.
+     */
+    public Comment withAuthorName(String authorName) {
+        Utils.checkNotNull(authorName, "authorName");
+        this.authorName = Optional.ofNullable(authorName);
+        return this;
+    }
+
+
+    /**
+     * Human-readable display name of the comment author.
+     * Null if the author's name is not available (e.g., user was deleted).
+     * This enables correct author attribution in integrations where users cannot
+     * be reliably matched across systems by email alone.
+     */
+    public Comment withAuthorName(Optional<String> authorName) {
+        Utils.checkNotNull(authorName, "authorName");
+        this.authorName = authorName;
         return this;
     }
 
@@ -266,7 +319,8 @@ public class Comment {
             Utils.enhancedDeepEquals(this.creationDate, other.creationDate) &&
             Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
             Utils.enhancedDeepEquals(this.deletionDate, other.deletionDate) &&
-            Utils.enhancedDeepEquals(this.email, other.email);
+            Utils.enhancedDeepEquals(this.email, other.email) &&
+            Utils.enhancedDeepEquals(this.authorName, other.authorName);
     }
     
     @Override
@@ -274,7 +328,7 @@ public class Comment {
         return Utils.enhancedHash(
             id, auditEvidenceId, text,
             creationDate, modificationDate, deletionDate,
-            email);
+            email, authorName);
     }
     
     @Override
@@ -286,7 +340,8 @@ public class Comment {
                 "creationDate", creationDate,
                 "modificationDate", modificationDate,
                 "deletionDate", deletionDate,
-                "email", email);
+                "email", email,
+                "authorName", authorName);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -305,6 +360,8 @@ public class Comment {
         private Optional<OffsetDateTime> deletionDate = Optional.empty();
 
         private Optional<String> email = Optional.empty();
+
+        private Optional<String> authorName = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -390,7 +447,8 @@ public class Comment {
 
 
         /**
-         * The email of the comment author. This acts as a unique identifier to map users between Vanta and external systems.
+         * The email of the comment author. This acts as a unique identifier to map users between Vanta and
+         * external systems.
          */
         public Builder email(String email) {
             Utils.checkNotNull(email, "email");
@@ -399,11 +457,37 @@ public class Comment {
         }
 
         /**
-         * The email of the comment author. This acts as a unique identifier to map users between Vanta and external systems.
+         * The email of the comment author. This acts as a unique identifier to map users between Vanta and
+         * external systems.
          */
         public Builder email(Optional<String> email) {
             Utils.checkNotNull(email, "email");
             this.email = email;
+            return this;
+        }
+
+
+        /**
+         * Human-readable display name of the comment author.
+         * Null if the author's name is not available (e.g., user was deleted).
+         * This enables correct author attribution in integrations where users cannot
+         * be reliably matched across systems by email alone.
+         */
+        public Builder authorName(String authorName) {
+            Utils.checkNotNull(authorName, "authorName");
+            this.authorName = Optional.ofNullable(authorName);
+            return this;
+        }
+
+        /**
+         * Human-readable display name of the comment author.
+         * Null if the author's name is not available (e.g., user was deleted).
+         * This enables correct author attribution in integrations where users cannot
+         * be reliably matched across systems by email alone.
+         */
+        public Builder authorName(Optional<String> authorName) {
+            Utils.checkNotNull(authorName, "authorName");
+            this.authorName = authorName;
             return this;
         }
 
@@ -412,7 +496,7 @@ public class Comment {
             return new Comment(
                 id, auditEvidenceId, text,
                 creationDate, modificationDate, deletionDate,
-                email);
+                email, authorName);
         }
 
     }

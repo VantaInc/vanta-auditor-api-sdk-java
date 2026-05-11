@@ -20,7 +20,7 @@ import java.util.List;
 public class Value {
 
     @JsonValue
-    private TypedObject value;
+    private final TypedObject value;
     
     private Value(TypedObject value) {
         this.value = value;
@@ -28,12 +28,12 @@ public class Value {
 
     public static Value of(String value) {
         Utils.checkNotNull(value, "value");
-        return new Value(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<String>(){}));
+        return new Value(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
 
     public static Value of(List<String> value) {
         Utils.checkNotNull(value, "value");
-        return new Value(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<List<String>>(){}));
+        return new Value(TypedObject.of(value, JsonShape.DEFAULT, new TypeReference<>(){}));
     }
     
     /**
@@ -56,7 +56,7 @@ public class Value {
      **/ 
     public java.lang.Object value() {
         return value.value();
-    }    
+    }
     
     @Override
     public boolean equals(java.lang.Object o) {
@@ -67,7 +67,7 @@ public class Value {
             return false;
         }
         Value other = (Value) o;
-        return Utils.enhancedDeepEquals(this.value.value(), other.value.value()); 
+        return Utils.enhancedDeepEquals(this.value.value(), other.value.value());
     }
     
     @Override
@@ -80,8 +80,8 @@ public class Value {
 
         public _Deserializer() {
             super(Value.class, false,
-                  TypeReferenceWithShape.of(new TypeReference<List<String>>() {}, JsonShape.DEFAULT),
-                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT));
+                  TypeReferenceWithShape.of(new TypeReference<String>() {}, JsonShape.DEFAULT),
+                  TypeReferenceWithShape.of(new TypeReference<List<String>>() {}, JsonShape.DEFAULT));
         }
     }
     
@@ -90,6 +90,6 @@ public class Value {
         return Utils.toString(Value.class,
                 "value", value);
     }
- 
+
 }
 

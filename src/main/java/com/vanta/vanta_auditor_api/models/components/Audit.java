@@ -12,6 +12,7 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Boolean;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -69,6 +70,13 @@ public class Audit {
     private String framework;
 
     /**
+     * The display name for the audit. Returns the custom audit name if set,
+     * otherwise returns the framework name.
+     */
+    @JsonProperty("displayName")
+    private String displayName;
+
+    /**
      * Emails of auditors with access to audit
      */
     @JsonProperty("allowAuditorEmails")
@@ -111,6 +119,15 @@ public class Audit {
     @JsonProperty("auditFocus")
     private AuditFocus auditFocus;
 
+    /**
+     * Metadata about the auditor request list. This field is only present for IRL (Information
+     * Request List) based audits and will be undefined for standard audits. Use the presence
+     * of this field to differentiate between IRL and non-IRL audits.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("auditorRequestListMetadata")
+    private Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata;
+
     @JsonCreator
     public Audit(
             @JsonProperty("id") String id,
@@ -121,13 +138,15 @@ public class Audit {
             @JsonProperty("auditEndDate") OffsetDateTime auditEndDate,
             @JsonProperty("earlyAccessStartsAt") Optional<OffsetDateTime> earlyAccessStartsAt,
             @JsonProperty("framework") String framework,
+            @JsonProperty("displayName") String displayName,
             @JsonProperty("allowAuditorEmails") List<String> allowAuditorEmails,
             @JsonProperty("allowAllAuditors") boolean allowAllAuditors,
             @JsonProperty("deletionDate") Optional<OffsetDateTime> deletionDate,
             @JsonProperty("creationDate") OffsetDateTime creationDate,
             @JsonProperty("modificationDate") Optional<OffsetDateTime> modificationDate,
             @JsonProperty("completionDate") Optional<OffsetDateTime> completionDate,
-            @JsonProperty("auditFocus") AuditFocus auditFocus) {
+            @JsonProperty("auditFocus") AuditFocus auditFocus,
+            @JsonProperty("auditorRequestListMetadata") Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(customerOrganizationName, "customerOrganizationName");
         Utils.checkNotNull(customerDisplayName, "customerDisplayName");
@@ -136,6 +155,7 @@ public class Audit {
         Utils.checkNotNull(auditEndDate, "auditEndDate");
         Utils.checkNotNull(earlyAccessStartsAt, "earlyAccessStartsAt");
         Utils.checkNotNull(framework, "framework");
+        Utils.checkNotNull(displayName, "displayName");
         Utils.checkNotNull(allowAuditorEmails, "allowAuditorEmails");
         Utils.checkNotNull(allowAllAuditors, "allowAllAuditors");
         Utils.checkNotNull(deletionDate, "deletionDate");
@@ -143,6 +163,7 @@ public class Audit {
         Utils.checkNotNull(modificationDate, "modificationDate");
         Utils.checkNotNull(completionDate, "completionDate");
         Utils.checkNotNull(auditFocus, "auditFocus");
+        Utils.checkNotNull(auditorRequestListMetadata, "auditorRequestListMetadata");
         this.id = id;
         this.customerOrganizationName = customerOrganizationName;
         this.customerDisplayName = customerDisplayName;
@@ -151,6 +172,7 @@ public class Audit {
         this.auditEndDate = auditEndDate;
         this.earlyAccessStartsAt = earlyAccessStartsAt;
         this.framework = framework;
+        this.displayName = displayName;
         this.allowAuditorEmails = allowAuditorEmails;
         this.allowAllAuditors = allowAllAuditors;
         this.deletionDate = deletionDate;
@@ -158,6 +180,7 @@ public class Audit {
         this.modificationDate = modificationDate;
         this.completionDate = completionDate;
         this.auditFocus = auditFocus;
+        this.auditorRequestListMetadata = auditorRequestListMetadata;
     }
     
     public Audit(
@@ -167,15 +190,17 @@ public class Audit {
             OffsetDateTime auditStartDate,
             OffsetDateTime auditEndDate,
             String framework,
+            String displayName,
             List<String> allowAuditorEmails,
             boolean allowAllAuditors,
             OffsetDateTime creationDate,
             AuditFocus auditFocus) {
         this(id, customerOrganizationName, Optional.empty(),
             customerOrganizationId, auditStartDate, auditEndDate,
-            Optional.empty(), framework, allowAuditorEmails,
-            allowAllAuditors, Optional.empty(), creationDate,
-            Optional.empty(), Optional.empty(), auditFocus);
+            Optional.empty(), framework, displayName,
+            allowAuditorEmails, allowAllAuditors, Optional.empty(),
+            creationDate, Optional.empty(), Optional.empty(),
+            auditFocus, Optional.empty());
     }
 
     /**
@@ -243,6 +268,15 @@ public class Audit {
     }
 
     /**
+     * The display name for the audit. Returns the custom audit name if set,
+     * otherwise returns the framework name.
+     */
+    @JsonIgnore
+    public String displayName() {
+        return displayName;
+    }
+
+    /**
      * Emails of auditors with access to audit
      */
     @JsonIgnore
@@ -293,6 +327,17 @@ public class Audit {
     @JsonIgnore
     public AuditFocus auditFocus() {
         return auditFocus;
+    }
+
+    /**
+     * Metadata about the auditor request list. This field is only present for IRL (Information
+     * Request List) based audits and will be undefined for standard audits. Use the presence
+     * of this field to differentiate between IRL and non-IRL audits.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<AuditorRequestListMetadata> auditorRequestListMetadata() {
+        return (Optional<AuditorRequestListMetadata>) auditorRequestListMetadata;
     }
 
     public static Builder builder() {
@@ -393,6 +438,16 @@ public class Audit {
     }
 
     /**
+     * The display name for the audit. Returns the custom audit name if set,
+     * otherwise returns the framework name.
+     */
+    public Audit withDisplayName(String displayName) {
+        Utils.checkNotNull(displayName, "displayName");
+        this.displayName = displayName;
+        return this;
+    }
+
+    /**
      * Emails of auditors with access to audit
      */
     public Audit withAllowAuditorEmails(List<String> allowAuditorEmails) {
@@ -482,6 +537,29 @@ public class Audit {
         return this;
     }
 
+    /**
+     * Metadata about the auditor request list. This field is only present for IRL (Information
+     * Request List) based audits and will be undefined for standard audits. Use the presence
+     * of this field to differentiate between IRL and non-IRL audits.
+     */
+    public Audit withAuditorRequestListMetadata(AuditorRequestListMetadata auditorRequestListMetadata) {
+        Utils.checkNotNull(auditorRequestListMetadata, "auditorRequestListMetadata");
+        this.auditorRequestListMetadata = Optional.ofNullable(auditorRequestListMetadata);
+        return this;
+    }
+
+
+    /**
+     * Metadata about the auditor request list. This field is only present for IRL (Information
+     * Request List) based audits and will be undefined for standard audits. Use the presence
+     * of this field to differentiate between IRL and non-IRL audits.
+     */
+    public Audit withAuditorRequestListMetadata(Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata) {
+        Utils.checkNotNull(auditorRequestListMetadata, "auditorRequestListMetadata");
+        this.auditorRequestListMetadata = auditorRequestListMetadata;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -500,13 +578,15 @@ public class Audit {
             Utils.enhancedDeepEquals(this.auditEndDate, other.auditEndDate) &&
             Utils.enhancedDeepEquals(this.earlyAccessStartsAt, other.earlyAccessStartsAt) &&
             Utils.enhancedDeepEquals(this.framework, other.framework) &&
+            Utils.enhancedDeepEquals(this.displayName, other.displayName) &&
             Utils.enhancedDeepEquals(this.allowAuditorEmails, other.allowAuditorEmails) &&
             Utils.enhancedDeepEquals(this.allowAllAuditors, other.allowAllAuditors) &&
             Utils.enhancedDeepEquals(this.deletionDate, other.deletionDate) &&
             Utils.enhancedDeepEquals(this.creationDate, other.creationDate) &&
             Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
             Utils.enhancedDeepEquals(this.completionDate, other.completionDate) &&
-            Utils.enhancedDeepEquals(this.auditFocus, other.auditFocus);
+            Utils.enhancedDeepEquals(this.auditFocus, other.auditFocus) &&
+            Utils.enhancedDeepEquals(this.auditorRequestListMetadata, other.auditorRequestListMetadata);
     }
     
     @Override
@@ -514,9 +594,10 @@ public class Audit {
         return Utils.enhancedHash(
             id, customerOrganizationName, customerDisplayName,
             customerOrganizationId, auditStartDate, auditEndDate,
-            earlyAccessStartsAt, framework, allowAuditorEmails,
-            allowAllAuditors, deletionDate, creationDate,
-            modificationDate, completionDate, auditFocus);
+            earlyAccessStartsAt, framework, displayName,
+            allowAuditorEmails, allowAllAuditors, deletionDate,
+            creationDate, modificationDate, completionDate,
+            auditFocus, auditorRequestListMetadata);
     }
     
     @Override
@@ -530,13 +611,15 @@ public class Audit {
                 "auditEndDate", auditEndDate,
                 "earlyAccessStartsAt", earlyAccessStartsAt,
                 "framework", framework,
+                "displayName", displayName,
                 "allowAuditorEmails", allowAuditorEmails,
                 "allowAllAuditors", allowAllAuditors,
                 "deletionDate", deletionDate,
                 "creationDate", creationDate,
                 "modificationDate", modificationDate,
                 "completionDate", completionDate,
-                "auditFocus", auditFocus);
+                "auditFocus", auditFocus,
+                "auditorRequestListMetadata", auditorRequestListMetadata);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -558,6 +641,8 @@ public class Audit {
 
         private String framework;
 
+        private String displayName;
+
         private List<String> allowAuditorEmails;
 
         private Boolean allowAllAuditors;
@@ -571,6 +656,8 @@ public class Audit {
         private Optional<OffsetDateTime> completionDate = Optional.empty();
 
         private AuditFocus auditFocus;
+
+        private Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -676,6 +763,17 @@ public class Audit {
 
 
         /**
+         * The display name for the audit. Returns the custom audit name if set,
+         * otherwise returns the framework name.
+         */
+        public Builder displayName(String displayName) {
+            Utils.checkNotNull(displayName, "displayName");
+            this.displayName = displayName;
+            return this;
+        }
+
+
+        /**
          * Emails of auditors with access to audit
          */
         public Builder allowAuditorEmails(List<String> allowAuditorEmails) {
@@ -768,14 +866,38 @@ public class Audit {
             return this;
         }
 
+
+        /**
+         * Metadata about the auditor request list. This field is only present for IRL (Information
+         * Request List) based audits and will be undefined for standard audits. Use the presence
+         * of this field to differentiate between IRL and non-IRL audits.
+         */
+        public Builder auditorRequestListMetadata(AuditorRequestListMetadata auditorRequestListMetadata) {
+            Utils.checkNotNull(auditorRequestListMetadata, "auditorRequestListMetadata");
+            this.auditorRequestListMetadata = Optional.ofNullable(auditorRequestListMetadata);
+            return this;
+        }
+
+        /**
+         * Metadata about the auditor request list. This field is only present for IRL (Information
+         * Request List) based audits and will be undefined for standard audits. Use the presence
+         * of this field to differentiate between IRL and non-IRL audits.
+         */
+        public Builder auditorRequestListMetadata(Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata) {
+            Utils.checkNotNull(auditorRequestListMetadata, "auditorRequestListMetadata");
+            this.auditorRequestListMetadata = auditorRequestListMetadata;
+            return this;
+        }
+
         public Audit build() {
 
             return new Audit(
                 id, customerOrganizationName, customerDisplayName,
                 customerOrganizationId, auditStartDate, auditEndDate,
-                earlyAccessStartsAt, framework, allowAuditorEmails,
-                allowAllAuditors, deletionDate, creationDate,
-                modificationDate, completionDate, auditFocus);
+                earlyAccessStartsAt, framework, displayName,
+                allowAuditorEmails, allowAllAuditors, deletionDate,
+                creationDate, modificationDate, completionDate,
+                auditFocus, auditorRequestListMetadata);
         }
 
     }

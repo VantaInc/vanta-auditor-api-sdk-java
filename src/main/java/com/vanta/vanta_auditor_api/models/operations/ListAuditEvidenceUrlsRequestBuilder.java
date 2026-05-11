@@ -7,10 +7,10 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.vanta.vanta_auditor_api.SDKConfiguration;
-import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceUrlsOperation;
+import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceUrls;
+import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
-import java.lang.Exception;
 import java.lang.Integer;
 import java.lang.String;
 import java.util.Optional;
@@ -25,6 +25,7 @@ public class ListAuditEvidenceUrlsRequestBuilder {
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
+    private final Headers _headers = new Headers(); 
 
     public ListAuditEvidenceUrlsRequestBuilder(SDKConfiguration sdkConfiguration) {
         this.sdkConfiguration = sdkConfiguration;
@@ -80,10 +81,10 @@ public class ListAuditEvidenceUrlsRequestBuilder {
         return request;
     }
 
-    public ListAuditEvidenceUrlsResponse call() throws Exception {
+    public ListAuditEvidenceUrlsResponse call() {
         
         RequestOperation<ListAuditEvidenceUrlsRequest, ListAuditEvidenceUrlsResponse> operation
-              = new ListAuditEvidenceUrlsOperation(sdkConfiguration);
+              = new ListAuditEvidenceUrls.Sync(sdkConfiguration, _headers);
         ListAuditEvidenceUrlsRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

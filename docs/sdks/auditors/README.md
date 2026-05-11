@@ -1,5 +1,4 @@
 # Auditors
-(*auditors()*)
 
 ## Overview
 
@@ -13,6 +12,7 @@ Create an auditor in Vanta.
 
 ### Example Usage
 
+<!-- UsageSnippet language="java" operationID="CreateAuditor" method="post" path="/auditors" example="Example 1" -->
 ```java
 package hello.world;
 
@@ -40,7 +40,7 @@ public class Application {
                 .call();
 
         if (res.auditor().isPresent()) {
-            // handle response
+            System.out.println(res.auditor().get());
         }
     }
 }
