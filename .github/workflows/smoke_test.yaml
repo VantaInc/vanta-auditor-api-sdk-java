@@ -54,7 +54,6 @@ jobs:
           SMOKE_OAUTH_CLIENT_ID:     ${{ secrets.SMOKE_OAUTH_CLIENT_ID }}
           SMOKE_OAUTH_CLIENT_SECRET: ${{ secrets.SMOKE_OAUTH_CLIENT_SECRET }}
           SMOKE_AUDIT_ID:            ${{ secrets.SMOKE_AUDIT_ID }}
-          SMOKE_API_BASE_URL:        ${{ secrets.SMOKE_API_BASE_URL }}
         run: ./gradlew --project-dir smoke-test test --no-daemon --info
 
       - name: Upload test report

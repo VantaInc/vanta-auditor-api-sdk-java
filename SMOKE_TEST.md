@@ -37,7 +37,11 @@ GitHub Actions secrets, set at the repo level on both
 - `SMOKE_OAUTH_CLIENT_ID`
 - `SMOKE_OAUTH_CLIENT_SECRET`
 - `SMOKE_AUDIT_ID`
-- `SMOKE_API_BASE_URL`
+
+The smoke test derives the API host (both for OAuth and for SDK calls) from
+the SDK's own `Vanta.SERVERS` array, so there is no `SMOKE_API_BASE_URL`
+secret — keeping it out avoids the class of bug where the OAuth host and the
+SDK host drift apart.
 
 The OAuth client secret is **one-time-display**; if it's lost, the only path
 is to create a new OAuth client in the demo account and update the secret.
@@ -72,7 +76,6 @@ endpoint that *does* have data (e.g. `listAudits`) still fails red.
 export SMOKE_OAUTH_CLIENT_ID=...
 export SMOKE_OAUTH_CLIENT_SECRET=...
 export SMOKE_AUDIT_ID=6a01f08107cb79d9ad9645cb
-export SMOKE_API_BASE_URL=https://api.vanta.com
 ./gradlew --project-dir smoke-test test
 ```
 

@@ -22,6 +22,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
@@ -42,16 +43,30 @@ public class SmokeTest {
 
     @BeforeAll
     static void setup() throws Exception {
-        String clientId     = require("SMOKE_OAUTH_CLIENT_ID");
+        String clientId = require("SMOKE_OAUTH_CLIENT_ID");
         String clientSecret = require("SMOKE_OAUTH_CLIENT_SECRET");
-        auditId             = require("SMOKE_AUDIT_ID");
-        String apiBaseUrl   = require("SMOKE_API_BASE_URL");
+        auditId = require("SMOKE_AUDIT_ID");
 
-        String accessToken = fetchAccessToken(apiBaseUrl, clientId, clientSecret);
+        // Single source of truth for the Vanta Commercial host: the SDK's own SERVERS
+        // array, which Speakeasy regenerates from the spec. OAuth and the SDK API
+        // calls use the SAME host — OAuth at /oauth/token, SDK at /v1/* — so deriving
+        // both from one place eliminates the class of drift where someone updates one
+        // and not the other.
+        String sdkServerUrl = Arrays.stream(Vanta.SERVERS)
+            .filter(s -> s.contains("api.vanta.com"))
+            .findFirst()
+            .orElseThrow(() -> new IllegalStateException(
+                "Vanta.SERVERS contains no Commercial entry — got "
+                    + Arrays.toString(Vanta.SERVERS)
+                    + ". An overlay regression broke the server list; the smoke test "
+                    + "can't run until the SDK is regenerated correctly."));
+        String oauthBaseUrl = sdkServerUrl.replaceAll("/v[0-9]+$", "");
+
+        String accessToken = fetchAccessToken(oauthBaseUrl, clientId, clientSecret);
 
         sdk = Vanta.builder()
             .bearerAuth(accessToken)
-            .serverIndex(0)
+            .serverURL(sdkServerUrl)
             // Intentionally do NOT call .enableDebugLogging(true) — it writes request
             // and response detail to stdout and would surface in CI logs.
             .build();
