@@ -17,7 +17,7 @@ TestRunStatus value = TestRunStatus.NA;
 | ------------- | ------------- |
 | `NA`          | NA            |
 | `IN_PROGRESS` | IN_PROGRESS   |
-| `PASS`        | PASS          |
 | `FAIL`        | FAIL          |
+| `PASS`        | PASS          |
 | `INVALID`     | INVALID       |
 | `DISABLED`    | DISABLED      |
