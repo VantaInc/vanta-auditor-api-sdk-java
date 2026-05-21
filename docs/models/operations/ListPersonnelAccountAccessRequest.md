@@ -1,0 +1,13 @@
+# ListPersonnelAccountAccessRequest
+
+
+## Fields
+
+| Field                                                                            | Type                                                                             | Required                                                                         | Description                                                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| `auditId`                                                                        | *String*                                                                         | :heavy_check_mark:                                                               | The audit ID                                                                     |
+| `serviceId`                                                                      | *String*                                                                         | :heavy_check_mark:                                                               | The service ID from the /services endpoint                                       |
+| `pageSize`                                                                       | *Optional\<Integer>*                                                             | :heavy_minus_sign:                                                               | Maximum number of results per page (1-100, default 10)                           |
+| `pageCursor`                                                                     | *Optional\<String>*                                                              | :heavy_minus_sign:                                                               | Pagination cursor from previous response                                         |
+| `search`                                                                         | *Optional\<String>*                                                              | :heavy_minus_sign:                                                               | Search term for filtering by account name or email                               |
+| `status`                                                                         | [Optional\<AccountAccessStatus>](../../models/components/AccountAccessStatus.md) | :heavy_minus_sign:                                                               | Filter by account status                                                         |

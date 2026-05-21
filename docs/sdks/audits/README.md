@@ -6,6 +6,7 @@
 
 * [list](#list) - List audits
 * [getAudit](#getaudit) - Get audit by ID
+* [listCodeChanges](#listcodechanges) - List code changes for an audit
 * [listComments](#listcomments) - List audit comments
 * [listControls](#listcontrols) - List audit controls
 * [createCustomControl](#createcustomcontrol) - Create a custom control for an audit
@@ -32,6 +33,13 @@
 * [flagInformationRequestEvidence](#flaginformationrequestevidence) - Flag evidence for an information request
 * [listAuditIssues](#listauditissues) - List snapshotted issues for an audit
 * [listAuditSnapshots](#listauditsnapshots) - List snapshotted issues for an audit
+* [listVendors](#listvendors) - List vendors for an audit
+* [listAccountAccessServices](#listaccountaccessservices) - List account access services for an audit
+* [listPersonnelAccountAccess](#listpersonnelaccountaccess) - List account access records for an audit
+* [listPersonnelGroups](#listpersonnelgroups) - List groups for an audit
+* [listPersonnelPeople](#listpersonnelpeople) - List people for an audit
+* [listRiskSnapshots](#listrisksnapshots) - List risk snapshots for an audit
+* [listAuditRisks](#listauditrisks) - List risks for an audit
 * [shareInformationRequestList](#shareinformationrequestlist) - Share information request list with customer
 
 ## list
@@ -136,6 +144,76 @@ public class Application {
 ### Response
 
 **[GetAuditResponse](../../models/operations/GetAuditResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listCodeChanges
+
+Retrieves code changes population data for an audit.
+
+This endpoint provides access to code change records (pull requests)
+visible to auditors during an audit engagement.
+
+Supports filtering by:
+- `search`: Searches code change titles and repository names (case-insensitive)
+- `sourcesMatchesAny`: Filters by version control source (accepted values: github, gitlab, bitbucket, azuredevops)
+- `startDate` / `endDate`: Filters by the closed date range
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+Results are sorted by closed date (newest first). This sort order is
+fixed and cannot be customized via query parameters.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListCodeChanges" method="get" path="/audits/{auditId}/assets/code-changes" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListCodeChangesRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListCodeChangesResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListCodeChangesRequest req = ListCodeChangesRequest.builder()
+                .auditId("<id>")
+                .build();
+
+        ListCodeChangesResponse res = sdk.audits().listCodeChanges()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseCodeChange().isPresent()) {
+            System.out.println(res.paginatedResponseCodeChange().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `request`                                                                   | [ListCodeChangesRequest](../../models/operations/ListCodeChangesRequest.md) | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+
+### Response
+
+**[ListCodeChangesResponse](../../models/operations/ListCodeChangesResponse.md)**
 
 ### Errors
 
@@ -1663,7 +1741,9 @@ Supports filtering by:
 - `search`: full text search across issue title and description
 - `snapshotId`: filtering to a specific snapshot or snapshots, which represent point-in-time captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs and metadata.
 
-Results are sorted by issue creation date in descending order (newest first).
+Results are sorted by issue creation date in descending order (newest first) by default.
+Use `orderBy` and `orderDirection` to customize sorting.
+Sort parameters must remain consistent across paginated requests.
 
 Uses cursor-based pagination. To paginate:
 1. Make initial request with desired `pageSize`
@@ -1779,6 +1859,527 @@ public class Application {
 ### Response
 
 **[ListAuditSnapshotsResponse](../../models/operations/ListAuditSnapshotsResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listVendors
+
+Retrieves vendor population data for an audit.
+
+This endpoint provides access to vendor records visible to auditors
+during an audit engagement.
+
+Supports filtering by:
+- `search`: Searches vendor names (case-insensitive)
+- `vendorStatusesMatchesAny`: Filters by vendor status (ACTIVE, ARCHIVED, IN_PROCUREMENT)
+- `inherentRiskMatchesAny`: Filters by inherent risk level
+
+Results are sorted by name (ascending) by default.
+Use `orderBy` and `orderDirection` to customize sorting.
+Sort parameters must remain consistent across paginated requests.
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListVendors" method="get" path="/audits/{auditId}/managed-vendors" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListVendorsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListVendorsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListVendorsRequest req = ListVendorsRequest.builder()
+                .auditId("<id>")
+                .build();
+
+        ListVendorsResponse res = sdk.audits().listVendors()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseAuditVendor().isPresent()) {
+            System.out.println(res.paginatedResponseAuditVendor().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `request`                                                           | [ListVendorsRequest](../../models/operations/ListVendorsRequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
+
+### Response
+
+**[ListVendorsResponse](../../models/operations/ListVendorsResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listAccountAccessServices
+
+Retrieves connected account access services for an audit.
+
+Returns the list of identity providers and access integrations (such as
+Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
+organization and provide account access data for personnel.
+
+These integrations are used to verify user access and identity management
+during an audit engagement.
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+Results are returned in connection order. Sort order is not guaranteed
+and cannot be customized via query parameters.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListAccountAccessServices" method="get" path="/audits/{auditId}/personnel/account-access/services" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListAccountAccessServicesResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListAccountAccessServicesResponse res = sdk.audits().listAccountAccessServices()
+                .auditId("<id>")
+                .pageSize(10)
+                .call();
+
+        if (res.paginatedResponseAccountAccessService().isPresent()) {
+            System.out.println(res.paginatedResponseAccountAccessService().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                              | Type                                                   | Required                                               | Description                                            |
+| ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |
+| `auditId`                                              | *String*                                               | :heavy_check_mark:                                     | The audit ID                                           |
+| `pageSize`                                             | *Optional\<Integer>*                                   | :heavy_minus_sign:                                     | Maximum number of results per page (1-100, default 10) |
+| `pageCursor`                                           | *Optional\<String>*                                    | :heavy_minus_sign:                                     | Pagination cursor from previous response               |
+
+### Response
+
+**[ListAccountAccessServicesResponse](../../models/operations/ListAccountAccessServicesResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listPersonnelAccountAccess
+
+Retrieves account access population data for an audit.
+
+This endpoint provides access to account access records visible to auditors
+during an audit engagement. Account access data comes from various sources:
+
+- **IDP Services** (Identity Providers): Okta, Azure AD, Google Workspace, OneLogin, PingOne
+
+  - Returns user accounts from identity providers
+  - Supports filtering by search and status
+
+- **Role Grants Services**: GCP, Azure (when role grants are enabled)
+
+  - Returns accounts with role-based access grants
+  - Supports filtering by search and status
+
+- **First-Party Account Services**: AWS, Oracle Cloud, Azure (when not using role grants), etc.
+
+  - Returns cloud provider account access records
+  - Supports filtering by search and status
+
+- **Received Account Services**: External applications (Jira, GitHub, Slack, etc.)
+
+  - Returns user accounts from third-party integrations
+  - Supports filtering by search and status
+
+
+Supports filtering by:
+- `search`: Searches account names/emails (case-insensitive)
+- `status`: Filters by account status
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+The default sort order depends on the service type:
+- Identity provider services (e.g. Okta, Azure AD): sorted by email, ascending
+- Cloud provider services (e.g. AWS, GCP): sorted by account name, ascending
+- Role grant services: sorted by account name, ascending
+- Third-party application services (e.g. GitHub, Jira): sorted by account name, ascending
+
+Sort order cannot be customized via query parameters.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListPersonnelAccountAccess" method="get" path="/audits/{auditId}/personnel/account-access/{serviceId}" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListPersonnelAccountAccessRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListPersonnelAccountAccessResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListPersonnelAccountAccessRequest req = ListPersonnelAccountAccessRequest.builder()
+                .auditId("<id>")
+                .serviceId("<id>")
+                .build();
+
+        ListPersonnelAccountAccessResponse res = sdk.audits().listPersonnelAccountAccess()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseAccountAccess().isPresent()) {
+            System.out.println(res.paginatedResponseAccountAccess().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `request`                                                                                         | [ListPersonnelAccountAccessRequest](../../models/operations/ListPersonnelAccountAccessRequest.md) | :heavy_check_mark:                                                                                | The request object to use for the request.                                                        |
+
+### Response
+
+**[ListPersonnelAccountAccessResponse](../../models/operations/ListPersonnelAccountAccessResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listPersonnelGroups
+
+Retrieves groups population data for an audit.
+
+This endpoint provides access to the group records visible to auditors
+during an audit engagement. Groups represent organizational units that
+contain people, either imported from an identity provider (IDP) or
+created manually in Vanta.
+
+Only Controlled Audit View (CAV) audits are supported. Full Audit
+View audits are rejected with 403.
+
+Supports filtering by:
+- `search`: Searches group names (case-insensitive)
+- `sourcesMatchesAny`: Filters by IDP source service names
+
+Results are sorted by name (ascending) by default.
+Use `orderBy` and `orderDirection` to customize sorting.
+Sort parameters must remain consistent across paginated requests.
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListPersonnelGroups" method="get" path="/audits/{auditId}/personnel/groups" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListPersonnelGroupsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListPersonnelGroupsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListPersonnelGroupsRequest req = ListPersonnelGroupsRequest.builder()
+                .auditId("<id>")
+                .build();
+
+        ListPersonnelGroupsResponse res = sdk.audits().listPersonnelGroups()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponsePersonnelGroup().isPresent()) {
+            System.out.println(res.paginatedResponsePersonnelGroup().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [ListPersonnelGroupsRequest](../../models/operations/ListPersonnelGroupsRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[ListPersonnelGroupsResponse](../../models/operations/ListPersonnelGroupsResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listPersonnelPeople
+
+Retrieves people population data for an audit.
+
+This endpoint provides access to the people records visible to auditors
+during an audit engagement. Only Controlled Audit View (CAV) audits
+are supported. Full Audit View audits are rejected with 403.
+
+Supports filtering by:
+- `search`: Searches names and email addresses
+- `status`: Filters by employment status
+- `groupsMatchesAny`: Filter people by group/role IDs
+
+Results are sorted by name (ascending) by default.
+Use `orderBy` and `orderDirection` to customize sorting.
+Sort parameters must remain consistent across paginated requests.
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListPersonnelPeople" method="get" path="/audits/{auditId}/personnel/people" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListPersonnelPeopleRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListPersonnelPeopleResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListPersonnelPeopleRequest req = ListPersonnelPeopleRequest.builder()
+                .auditId("<id>")
+                .build();
+
+        ListPersonnelPeopleResponse res = sdk.audits().listPersonnelPeople()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponsePersonnelPerson().isPresent()) {
+            System.out.println(res.paginatedResponsePersonnelPerson().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [ListPersonnelPeopleRequest](../../models/operations/ListPersonnelPeopleRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[ListPersonnelPeopleResponse](../../models/operations/ListPersonnelPeopleResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listRiskSnapshots
+
+Returns a paginated list of risk assessment snapshots available for an audit.
+
+Risk snapshots capture the state of an organization's risk register at a
+point in time. Each snapshot has an `id` that can be used with the
+`/audits/{auditId}/risks` endpoint to retrieve the individual risk
+scenarios within that snapshot.
+
+Results are sorted by creation date (newest first). This sort order is
+fixed and cannot be customized via query parameters. Only snapshots
+that are shared with auditors are included.
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListRiskSnapshots" method="get" path="/audits/{auditId}/risks/snapshots" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListRiskSnapshotsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListRiskSnapshotsResponse res = sdk.audits().listRiskSnapshots()
+                .auditId("<id>")
+                .pageSize(10)
+                .call();
+
+        if (res.paginatedResponseRiskSnapshot().isPresent()) {
+            System.out.println(res.paginatedResponseRiskSnapshot().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                              | Type                                                   | Required                                               | Description                                            |
+| ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ | ------------------------------------------------------ |
+| `auditId`                                              | *String*                                               | :heavy_check_mark:                                     | The audit ID                                           |
+| `pageSize`                                             | *Optional\<Integer>*                                   | :heavy_minus_sign:                                     | Maximum number of results per page (1-100, default 10) |
+| `pageCursor`                                           | *Optional\<String>*                                    | :heavy_minus_sign:                                     | Pagination cursor from previous response               |
+
+### Response
+
+**[ListRiskSnapshotsResponse](../../models/operations/ListRiskSnapshotsResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listAuditRisks
+
+Retrieves risk population data for an audit.
+
+This endpoint provides access to the risk records visible to auditors
+during an audit engagement. Risk data is scoped to a specific risk
+assessment snapshot identified by the `snapshotId` parameter.
+
+Only Controlled Audit View (CAV) audits are supported. Full Audit
+View audits are rejected with 403.
+
+Supports filtering by:
+- `search`: Searches risk scenario descriptions (case-insensitive)
+
+Results are sorted by identified date (newest first) by default.
+Use `orderBy` and `orderDirection` to customize sorting.
+Sort parameters must remain consistent across paginated requests.
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListAuditRisks" method="get" path="/audits/{auditId}/risks/{snapshotId}" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditRisksRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditRisksResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListAuditRisksRequest req = ListAuditRisksRequest.builder()
+                .auditId("<id>")
+                .snapshotId("<id>")
+                .build();
+
+        ListAuditRisksResponse res = sdk.audits().listAuditRisks()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseAuditRisk().isPresent()) {
+            System.out.println(res.paginatedResponseAuditRisk().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [ListAuditRisksRequest](../../models/operations/ListAuditRisksRequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+
+### Response
+
+**[ListAuditRisksResponse](../../models/operations/ListAuditRisksResponse.md)**
 
 ### Errors
 

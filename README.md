@@ -49,7 +49,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'com.vanta:vanta-auditor-api:0.4.1'
+implementation 'com.vanta:vanta-auditor-api:0.4.2'
 ```
 
 Maven:
@@ -57,7 +57,7 @@ Maven:
 <dependency>
     <groupId>com.vanta</groupId>
     <artifactId>vanta-auditor-api</artifactId>
-    <version>0.4.1</version>
+    <version>0.4.2</version>
 </dependency>
 ```
 
@@ -290,6 +290,7 @@ public class Application {
 
 * [list](docs/sdks/audits/README.md#list) - List audits
 * [getAudit](docs/sdks/audits/README.md#getaudit) - Get audit by ID
+* [listCodeChanges](docs/sdks/audits/README.md#listcodechanges) - List code changes for an audit
 * [listComments](docs/sdks/audits/README.md#listcomments) - List audit comments
 * [listControls](docs/sdks/audits/README.md#listcontrols) - List audit controls
 * [createCustomControl](docs/sdks/audits/README.md#createcustomcontrol) - Create a custom control for an audit
@@ -316,6 +317,13 @@ public class Application {
 * [flagInformationRequestEvidence](docs/sdks/audits/README.md#flaginformationrequestevidence) - Flag evidence for an information request
 * [listAuditIssues](docs/sdks/audits/README.md#listauditissues) - List snapshotted issues for an audit
 * [listAuditSnapshots](docs/sdks/audits/README.md#listauditsnapshots) - List snapshotted issues for an audit
+* [listVendors](docs/sdks/audits/README.md#listvendors) - List vendors for an audit
+* [listAccountAccessServices](docs/sdks/audits/README.md#listaccountaccessservices) - List account access services for an audit
+* [listPersonnelAccountAccess](docs/sdks/audits/README.md#listpersonnelaccountaccess) - List account access records for an audit
+* [listPersonnelGroups](docs/sdks/audits/README.md#listpersonnelgroups) - List groups for an audit
+* [listPersonnelPeople](docs/sdks/audits/README.md#listpersonnelpeople) - List people for an audit
+* [listRiskSnapshots](docs/sdks/audits/README.md#listrisksnapshots) - List risk snapshots for an audit
+* [listAuditRisks](docs/sdks/audits/README.md#listauditrisks) - List risks for an audit
 * [shareInformationRequestList](docs/sdks/audits/README.md#shareinformationrequestlist) - Share information request list with customer
 
 </details>
