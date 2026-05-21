@@ -6,6 +6,8 @@ package com.vanta.vanta_auditor_api.models.operations;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.vanta.vanta_auditor_api.models.components.IssueSnapshotItemOrderBy;
+import com.vanta.vanta_auditor_api.models.components.OrderDirection;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.SpeakeasyMetadata;
 import com.vanta.vanta_auditor_api.utils.Utils;
@@ -48,29 +50,48 @@ public class ListAuditIssuesRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=snapshotIdMatchesAny")
     private Optional<? extends List<String>> snapshotIdMatchesAny;
 
+    /**
+     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=orderBy")
+    private Optional<? extends IssueSnapshotItemOrderBy> orderBy;
+
+    /**
+     * Sort direction: "asc" or "desc". Default: "desc"
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=orderDirection")
+    private Optional<? extends OrderDirection> orderDirection;
+
     @JsonCreator
     public ListAuditIssuesRequest(
             String auditId,
             Optional<Integer> pageSize,
             Optional<String> pageCursor,
             Optional<String> search,
-            Optional<? extends List<String>> snapshotIdMatchesAny) {
+            Optional<? extends List<String>> snapshotIdMatchesAny,
+            Optional<? extends IssueSnapshotItemOrderBy> orderBy,
+            Optional<? extends OrderDirection> orderDirection) {
         Utils.checkNotNull(auditId, "auditId");
         Utils.checkNotNull(pageSize, "pageSize");
         Utils.checkNotNull(pageCursor, "pageCursor");
         Utils.checkNotNull(search, "search");
         Utils.checkNotNull(snapshotIdMatchesAny, "snapshotIdMatchesAny");
+        Utils.checkNotNull(orderBy, "orderBy");
+        Utils.checkNotNull(orderDirection, "orderDirection");
         this.auditId = auditId;
         this.pageSize = pageSize;
         this.pageCursor = pageCursor;
         this.search = search;
         this.snapshotIdMatchesAny = snapshotIdMatchesAny;
+        this.orderBy = orderBy;
+        this.orderDirection = orderDirection;
     }
     
     public ListAuditIssuesRequest(
             String auditId) {
         this(auditId, Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     /**
@@ -112,6 +133,24 @@ public class ListAuditIssuesRequest {
     @JsonIgnore
     public Optional<List<String>> snapshotIdMatchesAny() {
         return (Optional<List<String>>) snapshotIdMatchesAny;
+    }
+
+    /**
+     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<IssueSnapshotItemOrderBy> orderBy() {
+        return (Optional<IssueSnapshotItemOrderBy>) orderBy;
+    }
+
+    /**
+     * Sort direction: "asc" or "desc". Default: "desc"
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<OrderDirection> orderDirection() {
+        return (Optional<OrderDirection>) orderDirection;
     }
 
     public static Builder builder() {
@@ -204,6 +243,44 @@ public class ListAuditIssuesRequest {
         return this;
     }
 
+    /**
+     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+     */
+    public ListAuditIssuesRequest withOrderBy(IssueSnapshotItemOrderBy orderBy) {
+        Utils.checkNotNull(orderBy, "orderBy");
+        this.orderBy = Optional.ofNullable(orderBy);
+        return this;
+    }
+
+
+    /**
+     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+     */
+    public ListAuditIssuesRequest withOrderBy(Optional<? extends IssueSnapshotItemOrderBy> orderBy) {
+        Utils.checkNotNull(orderBy, "orderBy");
+        this.orderBy = orderBy;
+        return this;
+    }
+
+    /**
+     * Sort direction: "asc" or "desc". Default: "desc"
+     */
+    public ListAuditIssuesRequest withOrderDirection(OrderDirection orderDirection) {
+        Utils.checkNotNull(orderDirection, "orderDirection");
+        this.orderDirection = Optional.ofNullable(orderDirection);
+        return this;
+    }
+
+
+    /**
+     * Sort direction: "asc" or "desc". Default: "desc"
+     */
+    public ListAuditIssuesRequest withOrderDirection(Optional<? extends OrderDirection> orderDirection) {
+        Utils.checkNotNull(orderDirection, "orderDirection");
+        this.orderDirection = orderDirection;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -218,14 +295,17 @@ public class ListAuditIssuesRequest {
             Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
             Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor) &&
             Utils.enhancedDeepEquals(this.search, other.search) &&
-            Utils.enhancedDeepEquals(this.snapshotIdMatchesAny, other.snapshotIdMatchesAny);
+            Utils.enhancedDeepEquals(this.snapshotIdMatchesAny, other.snapshotIdMatchesAny) &&
+            Utils.enhancedDeepEquals(this.orderBy, other.orderBy) &&
+            Utils.enhancedDeepEquals(this.orderDirection, other.orderDirection);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             auditId, pageSize, pageCursor,
-            search, snapshotIdMatchesAny);
+            search, snapshotIdMatchesAny, orderBy,
+            orderDirection);
     }
     
     @Override
@@ -235,7 +315,9 @@ public class ListAuditIssuesRequest {
                 "pageSize", pageSize,
                 "pageCursor", pageCursor,
                 "search", search,
-                "snapshotIdMatchesAny", snapshotIdMatchesAny);
+                "snapshotIdMatchesAny", snapshotIdMatchesAny,
+                "orderBy", orderBy,
+                "orderDirection", orderDirection);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -250,6 +332,10 @@ public class ListAuditIssuesRequest {
         private Optional<String> search = Optional.empty();
 
         private Optional<? extends List<String>> snapshotIdMatchesAny = Optional.empty();
+
+        private Optional<? extends IssueSnapshotItemOrderBy> orderBy = Optional.empty();
+
+        private Optional<? extends OrderDirection> orderDirection = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -341,6 +427,44 @@ public class ListAuditIssuesRequest {
             return this;
         }
 
+
+        /**
+         * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+         */
+        public Builder orderBy(IssueSnapshotItemOrderBy orderBy) {
+            Utils.checkNotNull(orderBy, "orderBy");
+            this.orderBy = Optional.ofNullable(orderBy);
+            return this;
+        }
+
+        /**
+         * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+         */
+        public Builder orderBy(Optional<? extends IssueSnapshotItemOrderBy> orderBy) {
+            Utils.checkNotNull(orderBy, "orderBy");
+            this.orderBy = orderBy;
+            return this;
+        }
+
+
+        /**
+         * Sort direction: "asc" or "desc". Default: "desc"
+         */
+        public Builder orderDirection(OrderDirection orderDirection) {
+            Utils.checkNotNull(orderDirection, "orderDirection");
+            this.orderDirection = Optional.ofNullable(orderDirection);
+            return this;
+        }
+
+        /**
+         * Sort direction: "asc" or "desc". Default: "desc"
+         */
+        public Builder orderDirection(Optional<? extends OrderDirection> orderDirection) {
+            Utils.checkNotNull(orderDirection, "orderDirection");
+            this.orderDirection = orderDirection;
+            return this;
+        }
+
         public ListAuditIssuesRequest build() {
             if (pageSize == null) {
                 pageSize = _SINGLETON_VALUE_PageSize.value();
@@ -348,7 +472,8 @@ public class ListAuditIssuesRequest {
 
             return new ListAuditIssuesRequest(
                 auditId, pageSize, pageCursor,
-                search, snapshotIdMatchesAny);
+                search, snapshotIdMatchesAny, orderBy,
+                orderDirection);
         }
 
 

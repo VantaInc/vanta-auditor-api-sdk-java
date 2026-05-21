@@ -1,24 +1,24 @@
 lockVersion: 2.0.0
 id: f42d74f5-5725-46fa-b13c-649b7ef895c3
 management:
-  docChecksum: dd0258af79e60d0ad49ab3c5c09f7b04
+  docChecksum: f3bdd6d71cca5d3ee5f8ade7b15f5bc0
   docVersion: 1.0.0
-  speakeasyVersion: 1.763.1
-  generationVersion: 2.884.4
-  releaseVersion: 0.4.1
-  configChecksum: 511301a49802b7050a03fc229196c755
+  speakeasyVersion: 1.763.4
+  generationVersion: 2.884.11
+  releaseVersion: 0.4.2
+  configChecksum: a24de471ca737c0a4edcd7d1d1fcac48
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   installationURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java
   published: true
 persistentEdits:
-  generation_id: 7dfe0b34-601a-4d26-b146-f42dad95b22a
-  pristine_commit_hash: c3b6208f27b4ce82acc7f87b313e6dd06312bd57
-  pristine_tree_hash: eb18481528d96f4550fa46ce7728e55153b975d1
+  generation_id: 47eb702f-1a87-43cc-b583-fc4bbc1f9c25
+  pristine_commit_hash: e2833c893b782ae5ad1f69af27b03f490fbae5be
+  pristine_tree_hash: 144b585af165349e51035e2926d5cc0081f8650d
 features:
   java:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.3
-    core: 3.55.24
+    core: 3.55.25
     flattening: 2.81.1
     globalSecurity: 2.83.4
     globalSecurityCallbacks: 0.1.0
@@ -27,7 +27,7 @@ features:
     nameOverrides: 2.81.5
     nullables: 0.1.0
     sdkHooks: 1.2.0
-    unions: 0.3.5
+    unions: 0.3.6
 trackedFiles:
   .gitattributes:
     id: 24139dae6567
@@ -45,6 +45,18 @@ trackedFiles:
     id: cfb82d8652de
     last_write_checksum: sha1:334e7ed917fd70ad0a3e6f33a3f2c73582adecb4
     pristine_git_object: 5b064061d28ca08dc92592629a84da60912ce879
+  docs/models/components/AccountAccess.md:
+    id: c5ea8a0be50b
+    last_write_checksum: sha1:692743261eba63e0f079162eb37feb21833ba511
+    pristine_git_object: 424efaf1149f033174035619966549d8c30d0046
+  docs/models/components/AccountAccessService.md:
+    id: 7e43a4d68c5a
+    last_write_checksum: sha1:0bb8f6c7cde8eb215778ee9f76ea3eeb56b0661a
+    pristine_git_object: 17d7a4af4f8018f8b007b037b850e8d93f1bcd9c
+  docs/models/components/AccountAccessStatus.md:
+    id: a939ffd3af0b
+    last_write_checksum: sha1:d3846f76d87d79c0c6a246692f95c61258aa7f1c
+    pristine_git_object: 7137fe3629453c0e8d5cb2ca13e3c1435d40bbd4
   docs/models/components/AddAuditorInput.md:
     id: f767fc623ede
     last_write_checksum: sha1:c7a0b62f5a627097f0b180973032422c2f16a25f
@@ -61,6 +73,10 @@ trackedFiles:
     id: 29ce3786ec00
     last_write_checksum: sha1:03a9ad9df5cfd6d2241d2bed3deec1777c1a146f
     pristine_git_object: 137b9e3617df45c4863c4b8611f80a5bd74688b5
+  docs/models/components/ApiCodeChangeSource.md:
+    id: b7ae4165e19f
+    last_write_checksum: sha1:fd662a745be2276a9c87cc2833e357b9ad6a8a65
+    pristine_git_object: e15233ea31b913bcdb3d70b3bbd6c7e4e373000a
   docs/models/components/Audit.md:
     id: e4a55898fa16
     last_write_checksum: sha1:7060a839b146ee1a5326792363b1cc8fe07bcf6d
@@ -81,6 +97,30 @@ trackedFiles:
     id: 411034368ce2
     last_write_checksum: sha1:5998da336d80e44bee14ac3ddd144dcb6545710c
     pristine_git_object: 2a17af3362218b12a863b0f27f3709697876ce3c
+  docs/models/components/AuditRisk.md:
+    id: 8f01127ce5f6
+    last_write_checksum: sha1:771d5d66f214f1fc470026666a55472a4270d907
+    pristine_git_object: 1875b6ee41949660d234c80f1665fd12d8c649d0
+  docs/models/components/AuditRiskCia.md:
+    id: 1daa691d7892
+    last_write_checksum: sha1:729eed1164c65e40e309693b5066f406b453bd9a
+    pristine_git_object: 6486fdc872e9c70f22a1e3e9d1eb242f7d3766be
+  docs/models/components/AuditRiskOwner.md:
+    id: d0de09b75aa6
+    last_write_checksum: sha1:69102f4d225ccce1bc9f9696a60db31db4f79b3a
+    pristine_git_object: 5f34594955e094c06537ecf2bedd2cece208cd87
+  docs/models/components/AuditVendor.md:
+    id: 8cb5fd130140
+    last_write_checksum: sha1:169f6ee52ca4dac9c91a78c30c1be33a929492e6
+    pristine_git_object: b30a02661c1dd8dc4085b14dfba883a483e1ad11
+  docs/models/components/AuditVendorRiskLevel.md:
+    id: 4d43361238eb
+    last_write_checksum: sha1:04a1450fe6f059eb3148299444a13a0399342893
+    pristine_git_object: 680bd6e56ac599648aca2eaccff36462f5cbcb91
+  docs/models/components/AuditVendorStatus.md:
+    id: d59039eec2af
+    last_write_checksum: sha1:b151e9006b1e640053e0fd8e995b9523e1d478ae
+    pristine_git_object: 1490c9723a6be408232ef03e4e0f1992c665d8e7
   docs/models/components/Auditor.md:
     id: 0f9334b6d184
     last_write_checksum: sha1:366104173fb13620e7565139645b870b2688108e
@@ -97,10 +137,18 @@ trackedFiles:
     id: f73c91f9b548
     last_write_checksum: sha1:128bd6184680d0864792ef54e7c4eed747fa7c10
     pristine_git_object: 51cb2dce4eded1da0ac470eef20549989292805f
+  docs/models/components/BackgroundChecks.md:
+    id: 76ee9211da83
+    last_write_checksum: sha1:41957d12ec9ff289ea074a6906acfb0d68e96ada
+    pristine_git_object: 3d83a83c0d6d36a17a6f053b79b53f4827df21e8
   docs/models/components/Cadence.md:
     id: 37cf09feac1c
     last_write_checksum: sha1:002195cac46a44f50fd86c645f79b2a7306260e1
     pristine_git_object: 3b0017adb416c45d74d5a2a8c5d3935fca2f4934
+  docs/models/components/CodeChange.md:
+    id: a6e8fdb960de
+    last_write_checksum: sha1:fb80715b6290a5fa7d1ef9d1a13d90b7dee30746
+    pristine_git_object: 16fe64cc8522728c9aad77deee76fb5ca7c4eeca
   docs/models/components/Comment.md:
     id: d45e3e587112
     last_write_checksum: sha1:7a4917534816db5588468a7116ade521adee9e93
@@ -145,10 +193,30 @@ trackedFiles:
     id: c1f1cedb3c5a
     last_write_checksum: sha1:02462c053257f41e2b6f7c1172966c7a8c774100
     pristine_git_object: a1faf70333a5cad178657a94f0e0be31ba302654
+  docs/models/components/CustomOffboarding.md:
+    id: 15f20889d2b9
+    last_write_checksum: sha1:29fca6ad54d62312d2691e0d15a04ab750769d38
+    pristine_git_object: 6303010302811d75ababf35b0c4ec8da1d8baf2a
+  docs/models/components/CustomOnboarding.md:
+    id: 85daa3814733
+    last_write_checksum: sha1:a995c65e4908f032ebb7eb9f31a016745073bec9
+    pristine_git_object: b7693211699ea030c231240364a94f849a1a5288
+  docs/models/components/DataAgreements.md:
+    id: 17041bd943bf
+    last_write_checksum: sha1:57264c63474c918f0fc2c96967b29e8d714a0d72
+    pristine_git_object: 495aec3296c5668e3b6f0ef87bb5ff3d1797c824
   docs/models/components/DeleteInformationRequestCommentInput.md:
     id: 0128940e411b
     last_write_checksum: sha1:d5e414c408d51da50c47b69e0cd5f282b17071e0
     pristine_git_object: 27b98b5793ab26ef22a5369682019d90b7f04f9b
+  docs/models/components/DeviceMonitoring.md:
+    id: e2914ce7f231
+    last_write_checksum: sha1:77562b4db975f54aa48791e7054d5c29f74614d0
+    pristine_git_object: ddd06374f9b6e574ca75890d91a25c35b09622c4
+  docs/models/components/EmploymentStatus.md:
+    id: ce77cdbe50a3
+    last_write_checksum: sha1:1c9a3dc1a8837240a20e270a07a2c381b0942105
+    pristine_git_object: 0a4fe372469b47516e2c974d16d5b517c70a9410
   docs/models/components/Evidence.md:
     id: 7dbcddea3c5c
     last_write_checksum: sha1:0214eb0b058f63308a1c2b404d50c4e6a983d147
@@ -185,6 +253,14 @@ trackedFiles:
     id: 07b66126385c
     last_write_checksum: sha1:f1305928a88b299577a379c61c3f5b7d2f934bdd
     pristine_git_object: 7d6357cbd8c50a911e40f356e888a012d2c989cd
+  docs/models/components/GroupOrderBy.md:
+    id: 19c4f675bbc1
+    last_write_checksum: sha1:6c56b3bee322d6ee3332a215cfc4ee292c569310
+    pristine_git_object: a3524d921995d231eaf9fd1b5199ca646539ec61
+  docs/models/components/Groups.md:
+    id: 24a77eec8bca
+    last_write_checksum: sha1:d61c63cc8aed3ad7d29e67c6115a8f7e8978cb1c
+    pristine_git_object: 9bb93e4dfc387061026170d128c1cf069af6e7f3
   docs/models/components/InformationRequest.md:
     id: 470109d2da90
     last_write_checksum: sha1:577d147cd0707b89edb589e44b3468863ca53c81
@@ -233,6 +309,10 @@ trackedFiles:
     id: 32e706e025a0
     last_write_checksum: sha1:8541fb3134a7ca9aaa0202c69b9436e359a0eb00
     pristine_git_object: 0408087c85096ed7a8c5f2e0acdfd4f674a3acbb
+  docs/models/components/IssueSnapshotItemOrderBy.md:
+    id: 9413f6b22cfe
+    last_write_checksum: sha1:c1f745f5a1919a762dbaeb0bff9c6e5916ae0d6d
+    pristine_git_object: a855fcdab5f10f8ad5f97a989409e40aef77e859
   docs/models/components/IssueSnapshotMetadata.md:
     id: 40555b9015df
     last_write_checksum: sha1:f8d89be8c5478c1f0aad621293ca22e57bcbc863
@@ -265,6 +345,10 @@ trackedFiles:
     id: d3f531a81437
     last_write_checksum: sha1:004eeb2eb3c8763a6ddf7168cb1969d11f253eb4
     pristine_git_object: cc889adfa5327b9f2efed3eddf7bda18453f77a6
+  docs/models/components/OrderDirection.md:
+    id: 4a4d5c87f137
+    last_write_checksum: sha1:e05fa63b0b2ca4d97d6409bb1e409b093a495b8b
+    pristine_git_object: 7f065f6e70cd0510a4e3d53f4f1877e10d0f88f5
   docs/models/components/Owner.md:
     id: 9524038396b5
     last_write_checksum: sha1:ccb2fa96b8604f4897818d5347f97a8848d07777
@@ -297,10 +381,42 @@ trackedFiles:
     id: b7436bc6d16a
     last_write_checksum: sha1:47d956544912f476f85e50c21f145a0d49f4f603
     pristine_git_object: 038cc5de60d73f9e96921c9a2a79758cf2a12a3f
+  docs/models/components/PaginatedResponseAccountAccess.md:
+    id: c7cb46d35bb7
+    last_write_checksum: sha1:f532df17340a89d3dc5a934e5f09ed64335b7603
+    pristine_git_object: 4cba5033fbcbb3c6e7241527b1ecdd417eea8ade
+  docs/models/components/PaginatedResponseAccountAccessResults.md:
+    id: 3c4130df9dd0
+    last_write_checksum: sha1:d9255430e9f168bb4fe16874f035486891699ffd
+    pristine_git_object: 80aa41dbfa2350638416758a33bb8a3bbcdd0bdf
+  docs/models/components/PaginatedResponseAccountAccessService.md:
+    id: d4578185c0d7
+    last_write_checksum: sha1:a154423d3136911d8a35e47fbd6574c5216ea83b
+    pristine_git_object: e0065a7a0efeb4fb68fe6f0a376329772f27f25d
+  docs/models/components/PaginatedResponseAccountAccessServiceResults.md:
+    id: e53bcbbaacbe
+    last_write_checksum: sha1:593c9ec87f00613dbd8c4d872d4f7d5af31f0afd
+    pristine_git_object: bb8cb28999cd9a8a31d37d8cffb31cb3ec3ed2de
   docs/models/components/PaginatedResponseAudit.md:
     id: 13d2cc0ef2cd
     last_write_checksum: sha1:b906f9e33e6d54b3c8eb5b9c870a69434d1ee785
     pristine_git_object: 2fcf8f80774dfaccc0f9e3f2be99aa0cac4baba2
+  docs/models/components/PaginatedResponseAuditRisk.md:
+    id: 167e6858f034
+    last_write_checksum: sha1:8a6184852bfa6a1f6e3a2f5c17c9d087e6983ba9
+    pristine_git_object: 61d7ce9ad050717039c7547f438411e3fc17197a
+  docs/models/components/PaginatedResponseAuditRiskResults.md:
+    id: c0bb88fbe2d1
+    last_write_checksum: sha1:74d1eab47b2832fe62c152c12a2bef0b74ee8b0d
+    pristine_git_object: 228ba91555fc22234a9ee1b3ce98208fcc5060e7
+  docs/models/components/PaginatedResponseAuditVendor.md:
+    id: 700c9e0bd4ff
+    last_write_checksum: sha1:2d11f293f61120550971631f54b82ebbba595f73
+    pristine_git_object: 6492f17cdd1866f817eac9ae93c23197faeb0724
+  docs/models/components/PaginatedResponseAuditVendorResults.md:
+    id: 1bcfa52353bf
+    last_write_checksum: sha1:35c7392ff6d31f5c272545ae05daa13ab675dbb9
+    pristine_git_object: f7b39847e2b67dad6d963ccfc57baf6893975e5e
   docs/models/components/PaginatedResponseAuditorControl.md:
     id: eb2c5c43bb5e
     last_write_checksum: sha1:725cb9fcdd728420d291c355decec1a54aa8574c
@@ -309,6 +425,14 @@ trackedFiles:
     id: 54c65532236b
     last_write_checksum: sha1:2d96776a9939acd1a6b75662a0cd903e93525cf1
     pristine_git_object: e9a2093df083f1cc418aa66444f55563b8ade989
+  docs/models/components/PaginatedResponseCodeChange.md:
+    id: 49174d1ae903
+    last_write_checksum: sha1:5d47b9d15e52db44fc154ec7c601835b0d971579
+    pristine_git_object: 218ef4d2673d8830edd76a534b0f8c9cabad4d66
+  docs/models/components/PaginatedResponseCodeChangeResults.md:
+    id: 0502cdf5505e
+    last_write_checksum: sha1:7ca5df310ec6504e1415e3ccb06925a368bfbde3
+    pristine_git_object: 03c46fa9e86c04d462e2e41a71d9b433d77df22f
   docs/models/components/PaginatedResponseComment.md:
     id: 755b40584af3
     last_write_checksum: sha1:c0374f2590f23ea75d582114e327a9273158363d
@@ -365,10 +489,66 @@ trackedFiles:
     id: a107f9e9f4af
     last_write_checksum: sha1:8010a10d52b69355bf987355fd5f911f53d28f5a
     pristine_git_object: cbd402643125e8865ecd1172cbd1cebc628b686a
+  docs/models/components/PaginatedResponsePersonnelGroup.md:
+    id: 1f893ced9bef
+    last_write_checksum: sha1:6c4b0ac47f50f5d680f77673ed6f34eb8c2d25aa
+    pristine_git_object: 11ac34ef4e977b238986da6b53b83698c2c01fe5
+  docs/models/components/PaginatedResponsePersonnelGroupResults.md:
+    id: ccf44955d762
+    last_write_checksum: sha1:91a59b60952fe9168a453a84e601abb7b645d5c2
+    pristine_git_object: 681bdeef43d505e9bfa9d793b30fe95820f3305d
+  docs/models/components/PaginatedResponsePersonnelPerson.md:
+    id: 6aad98a21492
+    last_write_checksum: sha1:1571937471fdec1435707b615342bbad62631e0e
+    pristine_git_object: 3ab238afc6a481ebaaa5d1e6006b28a8a4f4c174
+  docs/models/components/PaginatedResponsePersonnelPersonResults.md:
+    id: 6996fdf6ebde
+    last_write_checksum: sha1:ec44e032bbb6e47d8eee1cb0033d5c48b660b733
+    pristine_git_object: 49aa33d0281c72f8e5513c10bdd644745bb15ea1
+  docs/models/components/PaginatedResponseRiskSnapshot.md:
+    id: 3c1cff352f0c
+    last_write_checksum: sha1:c91ed3194f81de19dd28aa3d94dff64e55e22f09
+    pristine_git_object: eacf4274e0e6bd46fb764d859a795edf186778c7
+  docs/models/components/PaginatedResponseRiskSnapshotResults.md:
+    id: 3d338c400157
+    last_write_checksum: sha1:fe6f583eb86a56bb0d0b16718bb6a8382bba40c5
+    pristine_git_object: c31e3905e24558844680a89c24962a36ad9f3014
   docs/models/components/PartialUpdateInformationRequest.md:
     id: 520dbd7fe7ef
     last_write_checksum: sha1:1b545581865b63c6fad5cba3766b70a92ded111d
     pristine_git_object: 86897412de162c08f493a354e3cad5f43de6a8a6
+  docs/models/components/PeopleEmploymentStatus.md:
+    id: b139d4f3be79
+    last_write_checksum: sha1:916941137fb3f5a784111dce0d1eb1d5fb0c2441
+    pristine_git_object: 13bd87fc025a11493beb055ccac0c2e4097dd6e9
+  docs/models/components/PeopleOrderBy.md:
+    id: 57d7823d2fa0
+    last_write_checksum: sha1:e01e41c8b0dc14292b1295c04a239db6fb55c49d
+    pristine_git_object: 51b3273f3ee27c50acbcc7480596f8fe8da029e0
+  docs/models/components/PeopleSecurityTaskStatus.md:
+    id: 1647249876ea
+    last_write_checksum: sha1:b686c881b2ad91f2dd703b204785d58eb11e8f35
+    pristine_git_object: 223787ce173d674cf9d0c60bd10875ca9d9c65a9
+  docs/models/components/PeopleTaskStatus.md:
+    id: 553a1defa850
+    last_write_checksum: sha1:b73454839aff898c7a0c1db96c28db1726c3e210
+    pristine_git_object: 7baa8cb8f95942783c8a5bd9dbfc9f0886c2e341
+  docs/models/components/PersonnelGroup.md:
+    id: 3294b8f46910
+    last_write_checksum: sha1:3cd1242c4c2345a8d7f4bdb45e20900b47f4d51c
+    pristine_git_object: b3ac9540ec498f2c6105c738012bb561497a1b3e
+  docs/models/components/PersonnelGroupTask.md:
+    id: 3cf4752a3390
+    last_write_checksum: sha1:854fc8818287a40391df840ccba1c71989fa8942
+    pristine_git_object: 198cda56bb4fb8c4c1867ff77d159f0fda2a4643
+  docs/models/components/PersonnelPerson.md:
+    id: a573de89b03b
+    last_write_checksum: sha1:811b3c94741d64f815940ab61b1b38d12cb0c324
+    pristine_git_object: 7a092326405ead84c7919ab720faa1991e7fa72f
+  docs/models/components/Policies.md:
+    id: e9a045a3e6ed
+    last_write_checksum: sha1:ea41f639409fb8c28429aae34d97caf624b90114
+    pristine_git_object: ae93f4bd2a2498edb63bc6aac927f4bffae76c9a
   docs/models/components/Principle.md:
     id: 2333a8b78648
     last_write_checksum: sha1:00b916b66a6b8a15cc08ecd47813f5f3a4181652
@@ -377,10 +557,26 @@ trackedFiles:
     id: f6d022f6786a
     last_write_checksum: sha1:a891676bc27cb086437eefd40bd7bec17327d305
     pristine_git_object: 7ebb8651bae26931cb445897d8cbad9998f119de
+  docs/models/components/ResidualRisk.md:
+    id: 546806d76ae7
+    last_write_checksum: sha1:d109da47da35ef683c8611acfc60f6e3b5d80751
+    pristine_git_object: 483469bca479e7aa67d32562aac5e9171ac06a15
   docs/models/components/Results.md:
     id: 1a859def686b
     last_write_checksum: sha1:e47d739392ab7572cd298522d106e5ad09fbd9e6
     pristine_git_object: 4c525d9da2647d8f2701a820081015b3906c436f
+  docs/models/components/ReviewStatus.md:
+    id: 95c74c633c88
+    last_write_checksum: sha1:08ae04174553d58e7e7b2862ae261ade80d11c34
+    pristine_git_object: 4f9971035340d5dd142ed76fca11a924c08bf917
+  docs/models/components/RiskOrderBy.md:
+    id: d8d6e184d0fa
+    last_write_checksum: sha1:356867646d340f5aca691ae1a021d6509b041ca4
+    pristine_git_object: e2e80744cdd3ad492c99791f0614fe94239c64e4
+  docs/models/components/RiskSnapshot.md:
+    id: 334fbaee9e0a
+    last_write_checksum: sha1:33857187e8a29ff6aba92b1fb63ee920769d7b6d
+    pristine_git_object: 8fd0112a98b80787381b3c072ea69875d3ffacd3
   docs/models/components/Role.md:
     id: c89eff3746a7
     last_write_checksum: sha1:cd8daee093544dfc03d6a74e719d19cb59d38032
@@ -401,14 +597,34 @@ trackedFiles:
     id: e3df20e11c70
     last_write_checksum: sha1:88d16bb808c4cb827b73195ea167641b030bf90b
     pristine_git_object: 71ef91180f24723b2a0dd07909f56490aaa9881b
+  docs/models/components/Source.md:
+    id: 851a72141717
+    last_write_checksum: sha1:6d95c6afa87dd8e55f5ee510cc71abf347d7a66f
+    pristine_git_object: d0c969c19259f2635afc7b0eefdad73dc66aa202
   docs/models/components/StatusUpdate.md:
     id: b67cb98dcbf0
     last_write_checksum: sha1:c9366350bd4bc57e4d4dcdce02a29b30a4f2c411
     pristine_git_object: ac224ae2023f84f071fd051eb6614f2f0fe0d42c
+  docs/models/components/TaskStatus.md:
+    id: 8267c2c59753
+    last_write_checksum: sha1:4efe94c9cd564471f3db30649d90b1a27bdee8ef
+    pristine_git_object: dbf8cdc19e9c3518fd5abb78979de68654b76072
   docs/models/components/TestRunStatus.md:
     id: 01e529dd418f
     last_write_checksum: sha1:6f040132e741327619ddad1fc89433edf14befe5
     pristine_git_object: f6c28ee5c2489e07045941a44de7453ce62a84e4
+  docs/models/components/Trainings.md:
+    id: 870434c62289
+    last_write_checksum: sha1:2e6f7d21382554fbfd483dcd25d3405568449653
+    pristine_git_object: eacc20bb6a81ab9b56b7cb34e2e503689cfef6ef
+  docs/models/components/Treatment.md:
+    id: 40eaf05a9809
+    last_write_checksum: sha1:a8cd95d84fb70ac2a909b6e53adb6f5aba2f4ba3
+    pristine_git_object: a9bcb16782b4bb9096cec440ded30a7a4ba474c5
+  docs/models/components/TreatmentStatus.md:
+    id: 4c62203902d7
+    last_write_checksum: sha1:70c52b56036e80738d3115be7529f060a4f79e00
+    pristine_git_object: a396e877e973e6739cb04d2cbd2e7a0167b3a953
   docs/models/components/Two.md:
     id: d40a2aa6dcb3
     last_write_checksum: sha1:f633c75f97145d864718e792b407efa2a15029aa
@@ -485,6 +701,10 @@ trackedFiles:
     id: 923d978565be
     last_write_checksum: sha1:df17cb210e4346fcd71bd461c09d8be1b2b768ed
     pristine_git_object: 13e974d01ecc9c53f21654ad7b8a2b73f47bcf8c
+  docs/models/components/VendorOrderBy.md:
+    id: 3750f88d189d
+    last_write_checksum: sha1:0c11c4a57e9c58db8bf20cc389cb5e75cd32aa49
+    pristine_git_object: 9fda32e5e50d77297ffa0da8bc42f3a07ccbfe6e
   docs/models/operations/AcceptInformationRequestEvidenceRequest.md:
     id: 983ffee8854e
     last_write_checksum: sha1:23a5526ef053e22264a33ce66649014c3bba05c3
@@ -593,6 +813,14 @@ trackedFiles:
     id: 411bbbf72c73
     last_write_checksum: sha1:6a7950ac930e893440c0f985503af3fbfe6d4233
     pristine_git_object: 888df24c531907482613e7826b5bcca0c569e73b
+  docs/models/operations/ListAccountAccessServicesRequest.md:
+    id: 21f52646ac8e
+    last_write_checksum: sha1:936c0c83f90c96e41aa837e1ec1800279c0a522b
+    pristine_git_object: 3576e0d0fb67b8df9fe66a44ca82d40d19dd6e91
+  docs/models/operations/ListAccountAccessServicesResponse.md:
+    id: 831b9e5d0b09
+    last_write_checksum: sha1:328d408669e8dd6876951c68318cf03810da04be
+    pristine_git_object: 9e8f901b7c67924888feb436dc4e26613703320d
   docs/models/operations/ListAuditCommentsRequest.md:
     id: afe74981cfd1
     last_write_checksum: sha1:896ba987c42afc7b6a7456d2ab28cbf19a58ae44
@@ -627,12 +855,20 @@ trackedFiles:
     pristine_git_object: 5353bc381d3ac98e74bcbb5e51a28526fc74e5c1
   docs/models/operations/ListAuditIssuesRequest.md:
     id: aa94d5ca0b5d
-    last_write_checksum: sha1:72686d1c6ee649c3e50e47b5d38b4efbacafacf5
-    pristine_git_object: a489266b053ad2bd28b2f5f2406168e1485f271c
+    last_write_checksum: sha1:0aec44a8fc3dbf4782d3bee8e656d37acc52e57d
+    pristine_git_object: 5b30ea54b41cc5ba27240deaf35f98c2c21a2b1a
   docs/models/operations/ListAuditIssuesResponse.md:
     id: 931e76ec17e9
     last_write_checksum: sha1:3c71f63b729578a7121913c2fe5c12f7cafd448d
     pristine_git_object: fe5d4c20dfea1709c5be65f27a1afbffc2d4fc76
+  docs/models/operations/ListAuditRisksRequest.md:
+    id: 8b422add8047
+    last_write_checksum: sha1:9aa2b286bbd5df2621e049209966ed0059df5961
+    pristine_git_object: f1146c655437aa14bf63b64512fcb2580ba37cd7
+  docs/models/operations/ListAuditRisksResponse.md:
+    id: 939127eb107f
+    last_write_checksum: sha1:d70fad4eceb9c57c67068dc9ae90c369f2e76005
+    pristine_git_object: ba44fee9493357fd95dabdb3278806dd1c4d9c85
   docs/models/operations/ListAuditSnapshotsRequest.md:
     id: 32ad26316a23
     last_write_checksum: sha1:fdab8064b073bbd2f929c4a67e83d662f4753fab
@@ -649,6 +885,14 @@ trackedFiles:
     id: 09179ea4780f
     last_write_checksum: sha1:5f860d4d73428f6913154c2c5b9351cb48c9da0f
     pristine_git_object: 2f7ae2af39a1a352a82b4b807cf7544ad93624be
+  docs/models/operations/ListCodeChangesRequest.md:
+    id: d9a0d46593b5
+    last_write_checksum: sha1:e950719d39747d66edf087e639b1abb8ac8fa57a
+    pristine_git_object: f1cc16f2be31979b9e97cc33c17a6ffc1fa75069
+  docs/models/operations/ListCodeChangesResponse.md:
+    id: 69ca1406b01b
+    last_write_checksum: sha1:5cd610d4e8cba3a6279600dc38bdfd2653232197
+    pristine_git_object: 24a0c3de8bcb8774d4dc73e49511291722b9f7d9
   docs/models/operations/ListCommentsForInformationRequestRequest.md:
     id: 031aec1802fe
     last_write_checksum: sha1:b865900a796cdf054974761d25183b8644c5aafe
@@ -689,6 +933,46 @@ trackedFiles:
     id: f12439c42421
     last_write_checksum: sha1:0fa2af758234efa1181fbf196d19c7ef9cc6f024
     pristine_git_object: 1207fa0b910ac5f02ca76e95f88798d4bca4a180
+  docs/models/operations/ListPersonnelAccountAccessRequest.md:
+    id: d733b2c7bfb5
+    last_write_checksum: sha1:6734ca616697b9aeb9c349e28a59b22647c7b87d
+    pristine_git_object: 8788642a34bb6bb8e3953f51b90e386c94e8ebd6
+  docs/models/operations/ListPersonnelAccountAccessResponse.md:
+    id: d96f1d991e9f
+    last_write_checksum: sha1:c1da9aa0b49c72bcdbaf782c348e8f3276a8a82d
+    pristine_git_object: 47dce67da6ef5abfd304b4ab512992a1aba676f2
+  docs/models/operations/ListPersonnelGroupsRequest.md:
+    id: 286ef9a65e60
+    last_write_checksum: sha1:4a8928d948b5c0b928a737c7c52d581a355fcf65
+    pristine_git_object: 6e6e9e6c4c2a62544123e9a64a60ec9d9e7d944a
+  docs/models/operations/ListPersonnelGroupsResponse.md:
+    id: e06724796be8
+    last_write_checksum: sha1:fda19de125b5a053e32e1512dd8e4979bc3353a1
+    pristine_git_object: 718d05cb3ce69e0b18ab56a55741ad12b08e5c68
+  docs/models/operations/ListPersonnelPeopleRequest.md:
+    id: 1c93c0ae946b
+    last_write_checksum: sha1:e82ed2c706a45c45272bc72383b159223e7bf3eb
+    pristine_git_object: 9f1443dc5beb7b1ce744353daa5630999714c591
+  docs/models/operations/ListPersonnelPeopleResponse.md:
+    id: b4204fc978b4
+    last_write_checksum: sha1:de04769b60be698866f715db729b1bdfe64a8628
+    pristine_git_object: 4249005af1fd7901e464bef5c2ae4511eaba685f
+  docs/models/operations/ListRiskSnapshotsRequest.md:
+    id: 2bc61e7fa0c4
+    last_write_checksum: sha1:06999c65ef1a10102dc58fa04b4e66c60f1f217e
+    pristine_git_object: 00c47a02f1910e8e5c4764b06e66077039e21892
+  docs/models/operations/ListRiskSnapshotsResponse.md:
+    id: 3be44cc8e8ee
+    last_write_checksum: sha1:6bb4e8b1495c87b3434b1d36980d736b880c30f2
+    pristine_git_object: e6602e7a2e6e9e94d54785a167d4505eb54480d4
+  docs/models/operations/ListVendorsRequest.md:
+    id: c350ceeafdcc
+    last_write_checksum: sha1:cbdd230731dfb431d33a6a06f82a43ebaa5f4fbf
+    pristine_git_object: 912dfb9e5943fe20a534dbfbe8a510d795568338
+  docs/models/operations/ListVendorsResponse.md:
+    id: 6978184b4537
+    last_write_checksum: sha1:d6bf4549f0579ed6664e197d16a060a946397b12
+    pristine_git_object: a87b51da52233cc4073b8f9d6c55f628a4fc9660
   docs/models/operations/ShareInformationRequestListRequest.md:
     id: ff023c0c5645
     last_write_checksum: sha1:b67c21c5d804a1289f103457bc2b2f5938171e0f
@@ -727,16 +1011,16 @@ trackedFiles:
     pristine_git_object: 45235728d6a6a6a03ff4dec9664daf4738729787
   docs/sdks/audits/README.md:
     id: b976aa226e19
-    last_write_checksum: sha1:d25c27866f89c590cd83fd14230e52362ad58ace
-    pristine_git_object: dc847453889d1b50732c788ca998fd57074b1f5e
+    last_write_checksum: sha1:7a371cbfeb14bcfb88b4f85a83926de903696c10
+    pristine_git_object: 76c1200f1646f5fcb9497a75b26c6d90a576dcb3
   docs/utils/Blob.md:
     id: 3d9a7c4ad67a
     last_write_checksum: sha1:46ba9a381c8983c4a89c495fbca109cc66851754
     pristine_git_object: de7d1b163d5926363b94e775645373b750f65b30
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:0f547a8530b00c2791b1b2f55c3a82cbddf398a4
-    pristine_git_object: 599c83457a152e7ba4e09b0cbcc4bace56616e82
+    last_write_checksum: sha1:5201b00231d2d2fc49b9c87b14b8bc3ed53b19e3
+    pristine_git_object: 206bda0dae014faf045f74275336345f0d1eb1fc
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -795,8 +1079,8 @@ trackedFiles:
     pristine_git_object: 24e9ed003da5d72c5a6fc74b63fc8bd32d91c171
   src/main/java/com/vanta/vanta_auditor_api/AsyncAudits.java:
     id: 2d0875e33c27
-    last_write_checksum: sha1:bbe42b9e2f6fed5d35d0d4cb342f1cec2e29c20a
-    pristine_git_object: 289145c5db3ec23c34d77d4fa819c0c9deb5a6e9
+    last_write_checksum: sha1:9a38385db2964c3524db3c659fbea3ccdc07d44f
+    pristine_git_object: 5210cdde7ad18f02cfbc45e71c14958ec2e6b16b
   src/main/java/com/vanta/vanta_auditor_api/AsyncVanta.java:
     id: b47385b1c356
     last_write_checksum: sha1:883518392f570199c37a5f9005cddce689f136ce
@@ -807,12 +1091,12 @@ trackedFiles:
     pristine_git_object: 7143a696671f213eecddf6967721a53cabb602fe
   src/main/java/com/vanta/vanta_auditor_api/Audits.java:
     id: 0ee418adaca4
-    last_write_checksum: sha1:8fc2ed5999bead67198d080042915cc098900f0b
-    pristine_git_object: 72ea8a907232a69d26cc1f7f0ecb6960010d8a14
+    last_write_checksum: sha1:f22fdc4ea06c449bbfe504685f6ae5d4d4674ed1
+    pristine_git_object: 35b972733a07640bb444e42a24e3a4f2775c7fef
   src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java:
     id: ce55360c720c
-    last_write_checksum: sha1:0d8375dd94cbb0abcfd6a90aeb3b9528b6c5d93e
-    pristine_git_object: 84b5cfb32230e195816747f7bbed243ef3610c13
+    last_write_checksum: sha1:7b26aa4e0796c09373aa56fddf44de50841f735a
+    pristine_git_object: 31e7210661e4c1c55c1794466ff92feb97bf64e7
   src/main/java/com/vanta/vanta_auditor_api/SecuritySource.java:
     id: 18c0da44b51f
     last_write_checksum: sha1:55dc5f4240c7317c9a5a4080b6e17dc1b6fdd403
@@ -825,6 +1109,18 @@ trackedFiles:
     id: b27a7b0b692a
     last_write_checksum: sha1:4c2e9f2f78fd8aeec46212aecf1bfb4114a5194a
     pristine_git_object: 4266f8c5e98a7822f0f6d3f6d34d438316a3dd53
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AccountAccess.java:
+    id: 3c87024bcf61
+    last_write_checksum: sha1:a80231d0872ed201425d7f574174202c00a76c99
+    pristine_git_object: aa5c542ce3a5e3eccfba2b7bcf680b856336558a
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AccountAccessService.java:
+    id: c74185fdbb75
+    last_write_checksum: sha1:f446a7fc67bd182c50c96d26cd594f9136374156
+    pristine_git_object: c2c64bf164cf406e87912d3dfb5950adc206694e
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AccountAccessStatus.java:
+    id: 95eb15af76f7
+    last_write_checksum: sha1:0ec8c6f042ab0c8f5ea058db3611cab4ac2abd02
+    pristine_git_object: b9cf8a50f34655411deb78da2879b0f606d12a12
   src/main/java/com/vanta/vanta_auditor_api/models/components/AddAuditorInput.java:
     id: 7e8f9d910514
     last_write_checksum: sha1:0f8a13f01d09efe5630168fe240f93d4f9dd73b8
@@ -841,6 +1137,10 @@ trackedFiles:
     id: ae5b250644d3
     last_write_checksum: sha1:371ded3eb616c2aece9f39e5764e73d4fa8cd056
     pristine_git_object: e61e4239b7ffe3bb11b64f44d484a698e0117c3e
+  src/main/java/com/vanta/vanta_auditor_api/models/components/ApiCodeChangeSource.java:
+    id: d13eab3e3c77
+    last_write_checksum: sha1:22e93c7e8c2d941bbd8ee09907e86f60c946a68c
+    pristine_git_object: 356dc34ed2be41d2a906fb41155e9941f56a72a9
   src/main/java/com/vanta/vanta_auditor_api/models/components/Audit.java:
     id: 1a12e3b13579
     last_write_checksum: sha1:7c2d9de8862317abdbd6cedebd7746b4b4f378b9
@@ -861,6 +1161,30 @@ trackedFiles:
     id: c70e38d794d7
     last_write_checksum: sha1:3ed21d40a2817c903c59da73dc71d5e91628648e
     pristine_git_object: 8637e2030e42be441ccd62ae7844798295cb76dd
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AuditRisk.java:
+    id: afc39efc9854
+    last_write_checksum: sha1:7e8bf31dabc59999359c17803204d4b4e8ed2276
+    pristine_git_object: f7decd7bb10a9188d84dd92f1fbe90d5d148521b
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AuditRiskCia.java:
+    id: 4e9041a01473
+    last_write_checksum: sha1:000e8f7d752ce7afa85a32aea7ebacee13e9c02b
+    pristine_git_object: fd45bb60257f92fd79beaf16d3ff8ae256346e27
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AuditRiskOwner.java:
+    id: 710be2b3f189
+    last_write_checksum: sha1:ab0b9b8977aaff4f30b80d7f86e006728c75d08c
+    pristine_git_object: c67ecc16985baf5c0a4319fe6cf634aed262eb93
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AuditVendor.java:
+    id: 76c14206c671
+    last_write_checksum: sha1:ef0fbba271d53ef2f6294963a7fd3e305c539a0e
+    pristine_git_object: 302e83b7c01cd1924fb9c362211f54f7e2ab53af
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AuditVendorRiskLevel.java:
+    id: 932fa4deda72
+    last_write_checksum: sha1:3599c4accffc999e260bffd31b02b974ae14b091
+    pristine_git_object: b71640a7ed81e1de08e11afe0ff4d7cc65fa94a1
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AuditVendorStatus.java:
+    id: 31ece0dd0e7b
+    last_write_checksum: sha1:d5b5b9520f9f251769d5432ebe9fd695d885ca87
+    pristine_git_object: 5780896d4ae85673886e59fc4c8fff6930853eb1
   src/main/java/com/vanta/vanta_auditor_api/models/components/Auditor.java:
     id: a919532816db
     last_write_checksum: sha1:1420bf43f5d236eec388fdac1a04c20df7882ad4
@@ -877,10 +1201,18 @@ trackedFiles:
     id: b8e1f91a33f3
     last_write_checksum: sha1:8d44c774a93bf1f84c749129b054c2fe638e193e
     pristine_git_object: 7352dac7de4a4ed58907d81d3652f8c38c342d35
+  src/main/java/com/vanta/vanta_auditor_api/models/components/BackgroundChecks.java:
+    id: 55326ce05a7f
+    last_write_checksum: sha1:206793c500ad8017232c91ffd34391b375e35ffa
+    pristine_git_object: 5defcc5dd42fca3a43fc7029308290a5dc7d0c99
   src/main/java/com/vanta/vanta_auditor_api/models/components/Cadence.java:
     id: 912091e65009
     last_write_checksum: sha1:8da5969763acc533fd8166bf74667607ae852d9c
     pristine_git_object: a482234df4cab631312edc7779490b326d73d9d0
+  src/main/java/com/vanta/vanta_auditor_api/models/components/CodeChange.java:
+    id: 37e38dd1a980
+    last_write_checksum: sha1:e08f505f11dd9f049d257d08cf3aff06b24e79fc
+    pristine_git_object: b42d0eb0f8f8e2f68d79462ed75a2ba4192f68f6
   src/main/java/com/vanta/vanta_auditor_api/models/components/Comment.java:
     id: 14ee4c7d20c4
     last_write_checksum: sha1:e53f185efb9dd80e9dd735ab2bda21be2ad04b55
@@ -925,10 +1257,30 @@ trackedFiles:
     id: 202d9b5ffdc0
     last_write_checksum: sha1:1564bd942461a0982c1f4aed5abc3fa25ec41fe1
     pristine_git_object: 7c478b2e5bc126b460da3073ea06cdae54f35f6c
+  src/main/java/com/vanta/vanta_auditor_api/models/components/CustomOffboarding.java:
+    id: 4b6a14594fe6
+    last_write_checksum: sha1:a5f79f8cf444027815da0777e2b22107e8316eaa
+    pristine_git_object: 7f9295208731415aa5017cc4487802628e32340e
+  src/main/java/com/vanta/vanta_auditor_api/models/components/CustomOnboarding.java:
+    id: 888940d59eaf
+    last_write_checksum: sha1:c36aa426fd777d03152e1388dc2eed786c93634b
+    pristine_git_object: b6eaba308957a632936dc5e3bfe6cc8d703d0782
+  src/main/java/com/vanta/vanta_auditor_api/models/components/DataAgreements.java:
+    id: b0436dd2be3f
+    last_write_checksum: sha1:ab9bfc45efdbfd30d4dde457581b9c23eb8ce5f5
+    pristine_git_object: 605db157b73c3a442206299d09e945ff9c236222
   src/main/java/com/vanta/vanta_auditor_api/models/components/DeleteInformationRequestCommentInput.java:
     id: 3469ceefcfaa
     last_write_checksum: sha1:df3e936e0c96a520fa0cdc74f4859cb9a9b7efb0
     pristine_git_object: 415d9828236b625673ca8bab4ddad8fab767e355
+  src/main/java/com/vanta/vanta_auditor_api/models/components/DeviceMonitoring.java:
+    id: 25e64b5007b6
+    last_write_checksum: sha1:db7537294ce8eb898ac39fe362e41bedaf3e4132
+    pristine_git_object: 0fb28c4223a96dadcd0b52ad71fc5ab3b5fd5794
+  src/main/java/com/vanta/vanta_auditor_api/models/components/EmploymentStatus.java:
+    id: 23e0ce7e2d09
+    last_write_checksum: sha1:639142db4d4893b0d9f88876f221e0741564e20a
+    pristine_git_object: 32bc1379d4dd0986f131558e0fa55049242f5297
   src/main/java/com/vanta/vanta_auditor_api/models/components/Evidence.java:
     id: 303a892bf8b6
     last_write_checksum: sha1:da5bb869a8d7a16bd8e6f3030529ad771cb1a7aa
@@ -965,6 +1317,14 @@ trackedFiles:
     id: cd24fe93d4ac
     last_write_checksum: sha1:f27a2be93550adf2a107388eb9dfab864cf64768
     pristine_git_object: 5a1161edfbb0e508e8e29fea87ddee86e1209059
+  src/main/java/com/vanta/vanta_auditor_api/models/components/GroupOrderBy.java:
+    id: 4b376336d351
+    last_write_checksum: sha1:c42a1bc648058e349357c2c5bd0d2614e7b32e0d
+    pristine_git_object: 21b0ab30e90e5b00a6a281fb5a3eb5fdad1bbfaf
+  src/main/java/com/vanta/vanta_auditor_api/models/components/Groups.java:
+    id: 217478829f13
+    last_write_checksum: sha1:674762c28be4f791ba494869567b1bd80b5e1647
+    pristine_git_object: 6bee16d60c3a0353416c2c511fdaeb15086d9f6c
   src/main/java/com/vanta/vanta_auditor_api/models/components/InformationRequest.java:
     id: f4893ae2ac96
     last_write_checksum: sha1:4122d7feafde230d698ca3e18bdc7b00963eb697
@@ -1013,6 +1373,10 @@ trackedFiles:
     id: 6e6ea8619347
     last_write_checksum: sha1:7acd965abd6def92d043d770cbd50f534242d51a
     pristine_git_object: c7e99cb75076b7201247c112650b1ea94d3c5135
+  src/main/java/com/vanta/vanta_auditor_api/models/components/IssueSnapshotItemOrderBy.java:
+    id: 7c05ef6d21fd
+    last_write_checksum: sha1:5869376ed825c3a481c7aea75fd4e8797f88272f
+    pristine_git_object: bd60ef108f865739e3d51d2b933f5919622c658f
   src/main/java/com/vanta/vanta_auditor_api/models/components/IssueSnapshotMetadata.java:
     id: e38b6ce1599c
     last_write_checksum: sha1:5b9516c24b1c1223a85be61d272a85d44ecc2078
@@ -1045,6 +1409,10 @@ trackedFiles:
     id: f9928b18e718
     last_write_checksum: sha1:677d4d2f5293895d7915f1fa461d5095a71e214d
     pristine_git_object: f37f96c1d66cdd8324f0588e9bec734c5e5e1e72
+  src/main/java/com/vanta/vanta_auditor_api/models/components/OrderDirection.java:
+    id: dfefce190ea9
+    last_write_checksum: sha1:31e34a93ab8790c44f9bb5a9e120299987bb6c3c
+    pristine_git_object: 7348564980d4e49d5fb308f6bd6996610582260e
   src/main/java/com/vanta/vanta_auditor_api/models/components/Owner.java:
     id: 62b9f5a7dec0
     last_write_checksum: sha1:91da0894a98281beda111a7654f048b0f1f9e5fa
@@ -1077,10 +1445,42 @@ trackedFiles:
     id: 1ae60b8ba3c3
     last_write_checksum: sha1:5ad77206a977890916c05ec3d811ff2479326103
     pristine_git_object: 4144214da0157ee1ad8237c19669abe7d61a098a
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAccountAccess.java:
+    id: 1e22a117fffe
+    last_write_checksum: sha1:8f44c5cd916a97e6c6fc574de99575ce23c5a242
+    pristine_git_object: 4851440a2f036210c129f9f424a4c9c3b41b7b51
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAccountAccessResults.java:
+    id: a48760f2da81
+    last_write_checksum: sha1:de75e340637dea8ccdd3809e64eb7ab225da4c5a
+    pristine_git_object: 6574cf4961b19de4f93811a527484cbb905308b1
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAccountAccessService.java:
+    id: ea1be1b3d130
+    last_write_checksum: sha1:3c379eeac50b49ef71cb7120613df12b643c26ff
+    pristine_git_object: cdfa847b4b2a3fda8a6195d85b6d95a3692cf884
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAccountAccessServiceResults.java:
+    id: 8606fc5a93bf
+    last_write_checksum: sha1:7dc146c5e0bc02ddc8cb57db65da265b2f10ee9a
+    pristine_git_object: aa0bbe74d85c312f61496f3f360efd5e10707425
   src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAudit.java:
     id: b7e851daa566
     last_write_checksum: sha1:dcf866da6708cd9253464b7ebd12da7ec36fbc90
     pristine_git_object: b5d933273d50be4b6322dabd028fc6c3a2110688
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAuditRisk.java:
+    id: af231fb964d7
+    last_write_checksum: sha1:4e54a251f0a98d37059a6ad6efd29fa1a3828707
+    pristine_git_object: b3641729f248acd4c816246576465abec8e45d5f
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAuditRiskResults.java:
+    id: 6bc57dc13773
+    last_write_checksum: sha1:58a2fa670fdaf60449338a98e550e97d6b5edfca
+    pristine_git_object: 9aa67387ffaa6de65c5cfc733a917c56f69336c5
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAuditVendor.java:
+    id: 17821180f2b1
+    last_write_checksum: sha1:775bbc152b53586567fa662755bc6cb9e7ee4237
+    pristine_git_object: cf96e286fa9e989da3a967a04791f0f16f2166ca
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAuditVendorResults.java:
+    id: 417a10ebd6be
+    last_write_checksum: sha1:00ccc3a21a5b07d78627bab0d989508f9d36ec2f
+    pristine_git_object: e76de8cef14bc82ed0b74b0919bf60cc35ac1441
   src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseAuditorControl.java:
     id: 3148defed0d0
     last_write_checksum: sha1:79cc6730274b0032ed787faa3693075d23e6a905
@@ -1089,6 +1489,14 @@ trackedFiles:
     id: cde862f1d382
     last_write_checksum: sha1:7d3124152b398137264fac47b3b74d30365e960e
     pristine_git_object: 7a9bf53903e0f6f492237db90ad2e6d8a4440453
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseCodeChange.java:
+    id: 09aaddb54913
+    last_write_checksum: sha1:cd649bcbd976015bcc6bebee8b375119f3bdc072
+    pristine_git_object: b35bc389f711ceef56724128ea77a7be34c901e6
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseCodeChangeResults.java:
+    id: ac9155af4d32
+    last_write_checksum: sha1:ddd4f8626d724a0a176030a131c99cab951148fe
+    pristine_git_object: 3946f1e03c817f30e0223b01be114b768a461079
   src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseComment.java:
     id: f026b4a6900c
     last_write_checksum: sha1:6624af325928b86bd1bf5da0cba73d3a17e403b7
@@ -1145,10 +1553,66 @@ trackedFiles:
     id: 04b5faa88074
     last_write_checksum: sha1:e5b56ee1e7966338df8e53ceba44a23ee44d6580
     pristine_git_object: 3262f6e198c7ff1ea466763d080012465c3d0cc5
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponsePersonnelGroup.java:
+    id: 518d64e1c41e
+    last_write_checksum: sha1:07355de421740852c2849b5b8360774559f98d29
+    pristine_git_object: d7ad566b35f4072ba6e08df04910de1838cbd339
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponsePersonnelGroupResults.java:
+    id: 2f5701ff9a9e
+    last_write_checksum: sha1:ab2b5eb4b08838e8f5af9312d43cecca15b1b838
+    pristine_git_object: 9ae0fd8bba86d346d70d8622dea77a23e7f5b160
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponsePersonnelPerson.java:
+    id: a985e6b46a4a
+    last_write_checksum: sha1:3265b692c6b99388d2c33d737c964f90e671f560
+    pristine_git_object: e6a1bd22c4b64a91d76f523ace4ccfa2550cb6f4
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponsePersonnelPersonResults.java:
+    id: efe81593fe77
+    last_write_checksum: sha1:b52e6d0895464b97170bd634a2a7333e5b0b6879
+    pristine_git_object: e269ea06dfcd161548d95b263e25f754ac0603a9
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseRiskSnapshot.java:
+    id: 2027c2593025
+    last_write_checksum: sha1:5413cd9ac9ae8c0d9ee884e2bd6868fbdc0681ca
+    pristine_git_object: 1e2730b3e68791a75ff512b92bfb3d086f53cd25
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PaginatedResponseRiskSnapshotResults.java:
+    id: e96009ff6912
+    last_write_checksum: sha1:5ab2a2a46d2266ca3837cd8f3684f263a1ab5cab
+    pristine_git_object: 5d34e7879ca519f4e8317ba56e8cd3f7d04c7a40
   src/main/java/com/vanta/vanta_auditor_api/models/components/PartialUpdateInformationRequest.java:
     id: 56d6c4e83321
     last_write_checksum: sha1:587f9daa65ade2434d3acef23ed6bf91a86ebf85
     pristine_git_object: b43441fa26f1886b3d678d816d2f8bc4e5134e8f
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PeopleEmploymentStatus.java:
+    id: bb5aed39013a
+    last_write_checksum: sha1:97fed9a8fbd980c5f89e16d724a1e1b2fa054068
+    pristine_git_object: bdb1e82a3bd69edd14ed85f2c25f3bdb75f97907
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PeopleOrderBy.java:
+    id: c4c900644efd
+    last_write_checksum: sha1:1742c391eb71ea8f0cda0225c48a95a136a0c5c0
+    pristine_git_object: 004f3b79d08c3fee763ddd4d625196fe1adc59dc
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PeopleSecurityTaskStatus.java:
+    id: 51fb6ce16fe7
+    last_write_checksum: sha1:a75ae6f8d34a447d7534060e0b8ece2377fb0a40
+    pristine_git_object: b6f5679b33338350118bedf4432a700be04c0beb
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PeopleTaskStatus.java:
+    id: c979d1155c55
+    last_write_checksum: sha1:f904d35bf0644ce5fab40cae5dc0e52aec6d6515
+    pristine_git_object: 8f7f16bdbb090b475fce8cdea2fee07110279348
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PersonnelGroup.java:
+    id: d5b7853ee38e
+    last_write_checksum: sha1:b3099594eb50ac33553987bff41cb02b8f33e710
+    pristine_git_object: df5b831ab917a467ca9ed1b97a44956503e05ec9
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PersonnelGroupTask.java:
+    id: 8bd26c3d324b
+    last_write_checksum: sha1:23ca076e2a6f44915582c035507bee09b8c0c324
+    pristine_git_object: 461eaa6a6644205d22d96de2f94777354bc58fee
+  src/main/java/com/vanta/vanta_auditor_api/models/components/PersonnelPerson.java:
+    id: d2b8ef96adfe
+    last_write_checksum: sha1:42149f7ce7811d99a67f2952b5de0ae0745a06a7
+    pristine_git_object: 13231946eeeedf09090e69752be50b3330634629
+  src/main/java/com/vanta/vanta_auditor_api/models/components/Policies.java:
+    id: 6b7febd845e8
+    last_write_checksum: sha1:278ed99eddb78b0acd37cacb6036cb92a9e0d676
+    pristine_git_object: 4e76aea50aed7d2627de5214d98bec982325a720
   src/main/java/com/vanta/vanta_auditor_api/models/components/Principle.java:
     id: 1cf07a9d5da2
     last_write_checksum: sha1:32a78c74d8e9548c4250f27f5d48870a6b25ef18
@@ -1157,10 +1621,26 @@ trackedFiles:
     id: d55b1d3db823
     last_write_checksum: sha1:75d63a561e2642cd1e054f4c9b3de33390433d9a
     pristine_git_object: b4c16c5d0632684a5aa54841ea947578c28a9ecb
+  src/main/java/com/vanta/vanta_auditor_api/models/components/ResidualRisk.java:
+    id: c985d8e550d9
+    last_write_checksum: sha1:7f55b83e97f5e7763bd2884147db4d77096c7fd7
+    pristine_git_object: 3592aa76baf882d9a5a39c7830e84c67c1878a12
   src/main/java/com/vanta/vanta_auditor_api/models/components/Results.java:
     id: b1a619df3981
     last_write_checksum: sha1:04a90ceae3c7d9c9d7e559f73b4687c93798afc0
     pristine_git_object: 39be932092c368d76fcff9e9d1d1890599a8a312
+  src/main/java/com/vanta/vanta_auditor_api/models/components/ReviewStatus.java:
+    id: e6581fd8bb36
+    last_write_checksum: sha1:ac150c8eb6eefdc1e97925266fad2001907bba03
+    pristine_git_object: 2d3f1367727ebf0fdc040b554f70060c860ca678
+  src/main/java/com/vanta/vanta_auditor_api/models/components/RiskOrderBy.java:
+    id: 7bd8a835daf2
+    last_write_checksum: sha1:a7f99a684fef99e8ced0a6ad7429257256db054f
+    pristine_git_object: c8894f2a5daf1782f48aa3fe0ca0a6d5be6c2cf4
+  src/main/java/com/vanta/vanta_auditor_api/models/components/RiskSnapshot.java:
+    id: 25fcec0e2ff7
+    last_write_checksum: sha1:b4b6f4fbee4f71589939b70d320e2be73765286d
+    pristine_git_object: 347572d078b2e4bf69d13cf6b4ee5906b5483e8e
   src/main/java/com/vanta/vanta_auditor_api/models/components/Role.java:
     id: 3857784a73f1
     last_write_checksum: sha1:7da78b71bdd786839c8dd1b9ba1245da9ded531d
@@ -1181,14 +1661,34 @@ trackedFiles:
     id: 2fcfe386a740
     last_write_checksum: sha1:60d8eca5cf140c9204ea48a897ffb3e481ecf14b
     pristine_git_object: 901b30ad2c5d9ce21f444e934bf161fe8232f698
+  src/main/java/com/vanta/vanta_auditor_api/models/components/Source.java:
+    id: 26b50d49605a
+    last_write_checksum: sha1:38b4f5569755e04c694f6e29fc7adea710de9f0a
+    pristine_git_object: f26ca5f2ba099c26dd8387b4193f6bae663bac87
   src/main/java/com/vanta/vanta_auditor_api/models/components/StatusUpdate.java:
     id: 9c6c71fa24e6
     last_write_checksum: sha1:df838bca4546ef48b0530136598d19c090be03bb
     pristine_git_object: f3c249aabe2cd232efee460e4587b7ebb7becf62
+  src/main/java/com/vanta/vanta_auditor_api/models/components/TaskStatus.java:
+    id: 1c5f8bd4942a
+    last_write_checksum: sha1:6ff23d6c29457926f697cb6c49af000ef9a848ac
+    pristine_git_object: bbaf3bde9b558861e8799728e731d2c68f56cd9a
   src/main/java/com/vanta/vanta_auditor_api/models/components/TestRunStatus.java:
     id: cda5810ae9d7
     last_write_checksum: sha1:de56bdfb127d72e08258eb23a57e133fdbc96ed1
     pristine_git_object: 3336234cbeace595eaa25147ba40b6c56ac0502d
+  src/main/java/com/vanta/vanta_auditor_api/models/components/Trainings.java:
+    id: e5512bab6f52
+    last_write_checksum: sha1:0f773958defc2dfe959ee65228f67719354ddaa7
+    pristine_git_object: 81d0a6b461a1981cb821fc2d3cd609dcb3d923e9
+  src/main/java/com/vanta/vanta_auditor_api/models/components/Treatment.java:
+    id: 92015102c63b
+    last_write_checksum: sha1:0a6d4fb05f253ba0b96e5ef39ea5cbefdeb66593
+    pristine_git_object: dddc9a017586f90d377f4007d691e5bcb12e4a67
+  src/main/java/com/vanta/vanta_auditor_api/models/components/TreatmentStatus.java:
+    id: d64ff0abc46e
+    last_write_checksum: sha1:39bb925fd865e331c7a966ac001540ed318706b8
+    pristine_git_object: b6f969afc309f85b4b4a12fb0b246cb0c3d73115
   src/main/java/com/vanta/vanta_auditor_api/models/components/Two.java:
     id: 11682f08429a
     last_write_checksum: sha1:9dd347b66fb0b6feb434369dba9ab3d90aeaad25
@@ -1265,6 +1765,10 @@ trackedFiles:
     id: 90713a15d9bb
     last_write_checksum: sha1:4eed2eb4fb9d700bdcea959be76e22582e659c36
     pristine_git_object: 3cf24cdfb9bcef66ae1fad1665f900384b33d7e1
+  src/main/java/com/vanta/vanta_auditor_api/models/components/VendorOrderBy.java:
+    id: 3e50c78aa0fb
+    last_write_checksum: sha1:226157ef345602a750204c7693aa8d4fc09d8f64
+    pristine_git_object: 80078ea1eef273d5899ef0f9e78d0f34450d3db9
   src/main/java/com/vanta/vanta_auditor_api/models/errors/APIException.java:
     id: 4b9f3c45d186
     last_write_checksum: sha1:9c1dc5eed433ce2408b02ee95353e5b6be2cfb91
@@ -1337,6 +1841,10 @@ trackedFiles:
   : id: 8b1a2d13e0ea
     last_write_checksum: sha1:53fc0dc2b62478874a0eb5517481d1c2f435d001
     pristine_git_object: f15789e8db4311193f1ddd80725a4bd1ebd4f5b6
+  src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListAccountAccessServicesRequestBuilder.java:
+    id: b0a24d16e2e6
+    last_write_checksum: sha1:079103875506fcaeeb546a784c3be952ee87aa61
+    pristine_git_object: f3fe496297d139780ff023844b86f7ac1ad277d6
   src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListAuditCommentsRequestBuilder.java:
     id: 3e45f59789e0
     last_write_checksum: sha1:9c91da18af2d35b85927f211ae5e350533c33d6d
@@ -1357,6 +1865,10 @@ trackedFiles:
     id: b4aff32d8416
     last_write_checksum: sha1:ca9ea35b187dd717ab0048b1223505bff63d93ed
     pristine_git_object: f6709769a7ca6b6d340f3b454c92a6a2cce8e935
+  src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListAuditRisksRequestBuilder.java:
+    id: 4160bc264099
+    last_write_checksum: sha1:e8d5e6a174024125148551a295bc4abcce4cbd32
+    pristine_git_object: a6472dc2ba0998981df238b46580e07b66209eb2
   src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListAuditSnapshotsRequestBuilder.java:
     id: 7dd7b9db06e4
     last_write_checksum: sha1:a4a7cb857c4cd76b69f80dfeeb73c784bfffd3b5
@@ -1365,6 +1877,10 @@ trackedFiles:
     id: 92a36699f10f
     last_write_checksum: sha1:48d630c3e79b6790792dfbeb164f5bc293490248
     pristine_git_object: 554d4a11f46ae74f346e6f811f40d1af6ffc4a96
+  src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListCodeChangesRequestBuilder.java:
+    id: cd42bb79ed1d
+    last_write_checksum: sha1:7ce5da4acf1825ae04a69c4787ab748a7cff4971
+    pristine_git_object: 93b7ec8682f25793581b00223e5c74e0f0960d48
   src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListCommentsForInformationRequestRequestBuilder.java:
     id: 850930c2cc1b
     last_write_checksum: sha1:36e04f9e48ee895b137cffc266b990d6f9c22ed0
@@ -1385,6 +1901,26 @@ trackedFiles:
     id: ebbcd59cb776
     last_write_checksum: sha1:c8910ceb1e04b1673baa6c73f09fface65f246a0
     pristine_git_object: 3ddd2e3dfa44e441e2d98b7741b6ff29a28cbd20
+  src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListPersonnelAccountAccessRequestBuilder.java:
+    id: 13f4c9311bb1
+    last_write_checksum: sha1:1e5e1e492a80d7e820ea29b093234db62c39fb79
+    pristine_git_object: ed38bfacbfb0a73ec3fbae0b69adfecee4912569
+  src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListPersonnelGroupsRequestBuilder.java:
+    id: b5c78c69b95b
+    last_write_checksum: sha1:2fc9e662fb6ebcb3f6e73663fcd772eb5a507f58
+    pristine_git_object: 75f617ae4df6e7e3904add6ec015b3c582f0ede7
+  src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListPersonnelPeopleRequestBuilder.java:
+    id: a7a40185a8ed
+    last_write_checksum: sha1:aa3e7907422055a414b2de9353280eac2de8e13b
+    pristine_git_object: b594d459d218f262e0022b083d9cff53a94e5dc2
+  src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListRiskSnapshotsRequestBuilder.java:
+    id: d72f38c5379d
+    last_write_checksum: sha1:48402bfa2bbb277f11fad6e2b707df382520375b
+    pristine_git_object: 0ca400f6ec661d523d810e5894bd7a0c4e514466
+  src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ListVendorsRequestBuilder.java:
+    id: d104a46e536f
+    last_write_checksum: sha1:eb8e1b5c375d44102f22aad82e73875f46a69cda
+    pristine_git_object: 0bd7c5133c93bbbac166947106779e412199215f
   src/main/java/com/vanta/vanta_auditor_api/models/operations//async/ShareInformationRequestListRequestBuilder.java:
     id: c5b611b61f9e
     last_write_checksum: sha1:fbb15537725b95e4dc0be9e74e8f4a204489bde6
@@ -1565,6 +2101,18 @@ trackedFiles:
     id: b920ee5fa5ed
     last_write_checksum: sha1:99bb6f436b991e57e569cf37cbbd9daa4ac31eb7
     pristine_git_object: f108009dfef83d639196a6050431b5e7c7ae311d
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAccountAccessServicesRequest.java:
+    id: 83a45e90c1e1
+    last_write_checksum: sha1:8392d88ed01f64a22eb81f3f952b495a3268f3fd
+    pristine_git_object: 0bddaba91332740535e281d5d468f3c5818348e7
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAccountAccessServicesRequestBuilder.java:
+    id: a004b6ad0d9f
+    last_write_checksum: sha1:97f7138fdc58bdca75d9d9c7fbdb8f369c94ab67
+    pristine_git_object: 3acad8d1980c7420de43fd81f3cdf0127665daf9
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAccountAccessServicesResponse.java:
+    id: b52497eef0ac
+    last_write_checksum: sha1:fae4ff3f7b7a612a9953cc30715b74f8982c713e
+    pristine_git_object: c2a67a6ffa2392959b9657859220d87d28e35a02
   src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditCommentsRequest.java:
     id: 5c3100de435c
     last_write_checksum: sha1:12ed0323245029db22ac154f67d03cc2734fc20d
@@ -1615,8 +2163,8 @@ trackedFiles:
     pristine_git_object: 5a4bcca2292a0c6e3640fb02e57a212415f43d3f
   src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditIssuesRequest.java:
     id: 593444c844a0
-    last_write_checksum: sha1:30489c8aed7278ccc9d1bd318caf7280dc5135f2
-    pristine_git_object: 63209e907e8cd6ed6fe9212205c08a387c9bbf80
+    last_write_checksum: sha1:88d15cb42fe963743261589735ad3f701c7f6ee0
+    pristine_git_object: d8b296315b42482a202a15e061ce2f1926d74a14
   src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditIssuesRequestBuilder.java:
     id: 7fbc9de1d048
     last_write_checksum: sha1:f5b2fe5a026b43d827d3d60e01ac61e48e42024b
@@ -1625,6 +2173,18 @@ trackedFiles:
     id: 809df66e48b6
     last_write_checksum: sha1:292b4684d882d2de73ab359e9799dd17d28dc0c0
     pristine_git_object: 3415b443db933ac70d1683f9627ba6fd8f5462df
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditRisksRequest.java:
+    id: 78a202f78f96
+    last_write_checksum: sha1:16780f3ff60c04857921866b9e0d8b2fbed06ba0
+    pristine_git_object: b58f2c09fd006d86e89a5038c15dca5a496378e0
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditRisksRequestBuilder.java:
+    id: 9b5009a4e65a
+    last_write_checksum: sha1:561d14098c6b864fe25098f821b535f40de5c4cb
+    pristine_git_object: 94492e1a73b884c47185b896b4c91919fb82dc13
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditRisksResponse.java:
+    id: e115f65cb889
+    last_write_checksum: sha1:0e394936922e8bfd84372b13ee84cba952b11240
+    pristine_git_object: da07656fd36953dd5463893308a5d6e0c7cb674f
   src/main/java/com/vanta/vanta_auditor_api/models/operations/ListAuditSnapshotsRequest.java:
     id: 3d1ba767aa4e
     last_write_checksum: sha1:351f2f2190be081d5b04b09f0b8e57b11fe51e39
@@ -1649,6 +2209,18 @@ trackedFiles:
     id: 824e54830c93
     last_write_checksum: sha1:781c9496c418ca621312da05e6721fd29bc3c667
     pristine_git_object: 0d56a38d31f8e20648542a73fc48d7c16ed0218d
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListCodeChangesRequest.java:
+    id: 4570ae06c673
+    last_write_checksum: sha1:c355e8c5c28e93be4d8251f1e389430b3ff1644a
+    pristine_git_object: 28874418e1659441cf11691fc3b1b4b293ef9113
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListCodeChangesRequestBuilder.java:
+    id: a31c59ecc6d7
+    last_write_checksum: sha1:69125a580628d00e2ceefa7970fe6925d6b703b3
+    pristine_git_object: df0926f6933c1385a3c9c06f17a126458c10e054
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListCodeChangesResponse.java:
+    id: 9fa5acbbb41b
+    last_write_checksum: sha1:b3a322caa8b22171310951edb34f01639f3cfb98
+    pristine_git_object: 5e7b29007217c887474120dfe0b1cf0f7f29fa40
   src/main/java/com/vanta/vanta_auditor_api/models/operations/ListCommentsForInformationRequestRequest.java:
     id: 8be81f15cf87
     last_write_checksum: sha1:09335f189ff19a4a92b1a4364c0b66c3bcd5445d
@@ -1709,6 +2281,66 @@ trackedFiles:
     id: 8e4249c55061
     last_write_checksum: sha1:55ef7a0d466b277c53f8983d834796053b96aea1
     pristine_git_object: b3334b378bd8c5a7d199955382917c3081fc9470
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListPersonnelAccountAccessRequest.java:
+    id: b0819cb0e118
+    last_write_checksum: sha1:9cbf1f34e3532d3b2d5d9445437ed690476ff45c
+    pristine_git_object: 1c19eccbcfad5ac61485b1210e95541ceef58a43
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListPersonnelAccountAccessRequestBuilder.java:
+    id: 62fc9c76a466
+    last_write_checksum: sha1:4e6d67a2769b047e688b0ce0aab3689605e421ad
+    pristine_git_object: 38569446614a3fdc970ab449e5f9271ab2a53833
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListPersonnelAccountAccessResponse.java:
+    id: 2f0196caea5a
+    last_write_checksum: sha1:10a9d08efae957daecba13e0275f63e38174bd8d
+    pristine_git_object: a2c14ebcb902d10e9036ac3425de9ed091ad57ba
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListPersonnelGroupsRequest.java:
+    id: a24c6466fa8b
+    last_write_checksum: sha1:d517369ca0c0a71e2ae820875bbb9542970f9206
+    pristine_git_object: 721500517b151c52d986ffcd7b4b4b3254cd3777
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListPersonnelGroupsRequestBuilder.java:
+    id: bf9769b79add
+    last_write_checksum: sha1:e883206bd65c71472fab1ee213e494afd016e74d
+    pristine_git_object: 1478b7c9b78830471287909a0e76eb25d5e61d57
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListPersonnelGroupsResponse.java:
+    id: c32e0ae28f15
+    last_write_checksum: sha1:759ddc3eb9e25710aa93f875249b1ea7ada1bdc9
+    pristine_git_object: ec04a8782075f8c9ef64de58d6ef542661d21c51
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListPersonnelPeopleRequest.java:
+    id: 3e69c43c1299
+    last_write_checksum: sha1:32835df03bfcfae927c21f9239e1c8d4e09ba297
+    pristine_git_object: 5032fd5ed5fa8874661f07e5729e13966f7fbfb8
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListPersonnelPeopleRequestBuilder.java:
+    id: e19ddc6b194d
+    last_write_checksum: sha1:b7616ce9c13d614b98325e914a6555baddef4e7f
+    pristine_git_object: 40def26a2d1ec7d4b4c7ccf7e622cf73e00cb324
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListPersonnelPeopleResponse.java:
+    id: b8510d570647
+    last_write_checksum: sha1:57ed504e35b6e3c1f6f5b311a2be6c04cb5ea91f
+    pristine_git_object: 2e418dc25f41111d28735e488bb5bf298dce54ef
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListRiskSnapshotsRequest.java:
+    id: 401512066baf
+    last_write_checksum: sha1:2817d3f68e985f72ab23cd2b7f4016ba9c6c2c3d
+    pristine_git_object: 9ccd5841e8bb3c47ea71331b4732bf68ba4a8d92
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListRiskSnapshotsRequestBuilder.java:
+    id: 234a3ef5dca2
+    last_write_checksum: sha1:9700482837e0ea15bb6af3c06d846a06bab441a5
+    pristine_git_object: 9d5a8f66a196bf576f1247ed0300f16fd672dc49
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListRiskSnapshotsResponse.java:
+    id: 8776511d0e8c
+    last_write_checksum: sha1:5ec1cc1bf2630cce206b0c050663822be6073cc8
+    pristine_git_object: cd63f92a5d75cd196a1cc65bcc0751645d31d196
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListVendorsRequest.java:
+    id: 7b8947bb6968
+    last_write_checksum: sha1:c21adb2add08488ceec5e64a49edee5dce466663
+    pristine_git_object: 476111aad42c238b16b8dd55370f8fa75bf01187
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListVendorsRequestBuilder.java:
+    id: 7a5f0590215a
+    last_write_checksum: sha1:003eeb8f959d62cf0186694d189dd29f57cf709b
+    pristine_git_object: cae7692fa565c4759e71ab54ad167767994d9167
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/ListVendorsResponse.java:
+    id: 68b5d1771b6e
+    last_write_checksum: sha1:edb58ef10afff879549880d65b9163f4a5d59fe0
+    pristine_git_object: 04617585e632b74859823dcdf67bb964b53d7708
   src/main/java/com/vanta/vanta_auditor_api/models/operations/ShareInformationRequestListRequest.java:
     id: e9d29cda639b
     last_write_checksum: sha1:c337c6b2092bf4b054d49ed6a876924b00674e89
@@ -1813,6 +2445,10 @@ trackedFiles:
     id: 60c897e3b6a4
     last_write_checksum: sha1:fcd873a833bfb8218849abc70db921505a634e8d
     pristine_git_object: 47e7836d9c1d6728b2a6df961f21fb266fc5d632
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListAccountAccessServicesResponse.java:
+    id: 30862139daa5
+    last_write_checksum: sha1:a578c3c5d7917113db306c174c0e5bde95891546
+    pristine_git_object: f2debad6b225aa7f023b73060d970374f4e6187c
   src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListAuditCommentsResponse.java:
     id: 33e25a3f4417
     last_write_checksum: sha1:623685e86bb521a64a43072880541336b96958bc
@@ -1833,6 +2469,10 @@ trackedFiles:
     id: 4063b630f9fd
     last_write_checksum: sha1:1d4dd61d3a0a4a8890e3d3f429299d978b356294
     pristine_git_object: 27f9c0f830020ca793b9e0965968cd38fa6e3559
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListAuditRisksResponse.java:
+    id: 2813adfba434
+    last_write_checksum: sha1:98d1f186f8c38723fff3b9174438d82e2221d4f1
+    pristine_git_object: 7c56eed42af8ba830e5717936c5c5eccda53a581
   src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListAuditSnapshotsResponse.java:
     id: bd346218b2a6
     last_write_checksum: sha1:fe47756ad5d3d7ec7b3ec282eb8cee24b2bc25eb
@@ -1841,6 +2481,10 @@ trackedFiles:
     id: 25b060c922ac
     last_write_checksum: sha1:628cbb37ed6ddcf8c6abd89d6ea64fd5adf9b8d1
     pristine_git_object: 64ef970f6e20e310eecc0af65c6d94d9792c3585
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListCodeChangesResponse.java:
+    id: 30eeb5c47498
+    last_write_checksum: sha1:ba9417b46cba4c7837bf64ea1b4e23eb543b74fc
+    pristine_git_object: f539cff84a07bcd25ff8f961080b99cdf31eefdc
   src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListCommentsForInformationRequestResponse.java:
     id: 6266f625ebee
     last_write_checksum: sha1:c021cb25c451b1ce3c7df0a27ddff956edc74866
@@ -1861,6 +2505,26 @@ trackedFiles:
     id: c5959ea1e289
     last_write_checksum: sha1:aad785795034e3c4173bf88be52cef98b15672c9
     pristine_git_object: 38e2afb113c6489243d189bd67cbd493dd1824e4
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListPersonnelAccountAccessResponse.java:
+    id: 08417de9674e
+    last_write_checksum: sha1:d14e76b654a9a30519513913560077ac79288d05
+    pristine_git_object: 32781c032276389bcbbbf5ef01b73588a7dc5973
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListPersonnelGroupsResponse.java:
+    id: 7473aa2447f1
+    last_write_checksum: sha1:768df72d043e4b00084c1204eb98ebbdc073a2a6
+    pristine_git_object: cebc590140f06538f73608dbaff03ae842f278d2
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListPersonnelPeopleResponse.java:
+    id: 7c28e06247d5
+    last_write_checksum: sha1:0f8ca73b95300af4b8252f8b964fc4292f6eae3b
+    pristine_git_object: 238d3b34d552c447c5ed72f145ac1b01cb93932e
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListRiskSnapshotsResponse.java:
+    id: df33a48b0909
+    last_write_checksum: sha1:4bdee44d73cfb6d77efcc727a4fac95eb56c6bcf
+    pristine_git_object: c310ec553e5e08f5437c59d0c442fc69ebaff524
+  src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ListVendorsResponse.java:
+    id: bcedfae6de4e
+    last_write_checksum: sha1:c02342df5ef9f08ce9b8ee4aa972281c207d708f
+    pristine_git_object: 8b4e82414843658e718f0a56bfef026ff60fa35e
   src/main/java/com/vanta/vanta_auditor_api/models/operations/async/ShareInformationRequestListResponse.java:
     id: 6cb22c53af64
     last_write_checksum: sha1:ae74b43a357f2c65179ef116a872ef76e1787d93
@@ -1933,6 +2597,10 @@ trackedFiles:
     id: daee43a58943
     last_write_checksum: sha1:a68f6008357ddb1518221daca0d71a45e1d1c67a
     pristine_git_object: 9be5173af49fbb5a5aa6e118caf5643daac4ea74
+  src/main/java/com/vanta/vanta_auditor_api/operations/ListAccountAccessServices.java:
+    id: ad7f41c1742b
+    last_write_checksum: sha1:b3c36ab72ab431f4fb1f864050d743a9e4cc2bb0
+    pristine_git_object: b29056119faf0b4a5cf030502764a2077173404e
   src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditComments.java:
     id: 5e4f45941077
     last_write_checksum: sha1:1116bc40a9eea9a767657172eee0942ce7ad60f3
@@ -1953,6 +2621,10 @@ trackedFiles:
     id: 5ff328d0c895
     last_write_checksum: sha1:b09c159955686106ed7e228777342eae427d4fac
     pristine_git_object: cfe29a5c7a7a293e5e826fb74ccc7375bab53986
+  src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditRisks.java:
+    id: e30d18c58ce1
+    last_write_checksum: sha1:286af6ebc40b91895031ae6f56bc375a2a50b672
+    pristine_git_object: 480d0c524f2c1ea27cb3602fb369d718ccb0b5b4
   src/main/java/com/vanta/vanta_auditor_api/operations/ListAuditSnapshots.java:
     id: 9b055dc64640
     last_write_checksum: sha1:ae8962dc560f2c56b3db60496182b384fd1277d8
@@ -1961,6 +2633,10 @@ trackedFiles:
     id: fb5d761af62e
     last_write_checksum: sha1:e6cd452045444e7f68ae0d9404756ccae35e1206
     pristine_git_object: 99cfa6e8e12c2a8331240829ff455c71dddc01af
+  src/main/java/com/vanta/vanta_auditor_api/operations/ListCodeChanges.java:
+    id: 10181f5b68a2
+    last_write_checksum: sha1:252584bdffd5aad96683a2968a839bab1f0777b8
+    pristine_git_object: 2546be9cd23465543dc6b7035f8386fa29ff2202
   src/main/java/com/vanta/vanta_auditor_api/operations/ListCommentsForInformationRequest.java:
     id: 0ea328883d33
     last_write_checksum: sha1:a0b82860290a42e2ba24e5535a6a68101d7226f1
@@ -1981,6 +2657,26 @@ trackedFiles:
     id: 4ed25ca868c6
     last_write_checksum: sha1:fd588db2b32a735830de66114141cd6da965c9cd
     pristine_git_object: a7f96dcb1a3737567e2f8bcf1d5b5ac374e360b2
+  src/main/java/com/vanta/vanta_auditor_api/operations/ListPersonnelAccountAccess.java:
+    id: ac70ede4226c
+    last_write_checksum: sha1:aee285fecca4e22861a22880db8917456196230a
+    pristine_git_object: c5edbf0b847f3ebc193fb37d6eaff7afbc31c68d
+  src/main/java/com/vanta/vanta_auditor_api/operations/ListPersonnelGroups.java:
+    id: 3ea420c9680d
+    last_write_checksum: sha1:2e36d83333b352e7372466ca65c8316df1a54d7b
+    pristine_git_object: 27b561af2bd1efc4232bb57051e235b8fd8beee7
+  src/main/java/com/vanta/vanta_auditor_api/operations/ListPersonnelPeople.java:
+    id: a76f594688d7
+    last_write_checksum: sha1:694de650c55cfc5f4334cbcb7a20e5d90ceee8a6
+    pristine_git_object: 854d8822a454cc441528b0d7c94a8d6e8b6bb9f0
+  src/main/java/com/vanta/vanta_auditor_api/operations/ListRiskSnapshots.java:
+    id: 3f4780bc5777
+    last_write_checksum: sha1:f73c536cadc84b22c334f273d5062b6d2af784ce
+    pristine_git_object: 5536a0e0b176a380bdebbaa7c24bbdd83fd58842
+  src/main/java/com/vanta/vanta_auditor_api/operations/ListVendors.java:
+    id: 831a12c6b031
+    last_write_checksum: sha1:d5d5a328fb7cfa9c800d98e394c6016ae855dee3
+    pristine_git_object: 0dcc2a1e577763f94d953c28fd6cf42ad7741c88
   src/main/java/com/vanta/vanta_auditor_api/operations/Operations.java:
     id: 4b60f72e90f6
     last_write_checksum: sha1:b992e0d19ef36562f54679b28f422c0b242e0567
@@ -2143,8 +2839,8 @@ trackedFiles:
     pristine_git_object: 447c25330130fe8d343439a7d29c9e3728361969
   src/main/java/com/vanta/vanta_auditor_api/utils/OneOfDeserializer.java:
     id: c97c28c025a2
-    last_write_checksum: sha1:f3a8fb208f6b502de9d87eb272a4ddb6a54af25d
-    pristine_git_object: 9f1a74dbe427fe0ecbb08207f8dd0f4195217458
+    last_write_checksum: sha1:23a4f72aa5b2b9061837afee3d049da47693d61c
+    pristine_git_object: 52c7fdd2928bc4bbf16145e00ae58d9039b01a07
   src/main/java/com/vanta/vanta_auditor_api/utils/Options.java:
     id: a43f41e380d9
     last_write_checksum: sha1:acd44b7c4af13de6eea192ee04a08df78fac312c
@@ -2566,6 +3262,88 @@ examples:
       responses:
         "200":
           application/json: {"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56.000Z", "auditEndDate": "2024-03-14T21:25:56.000Z", "earlyAccessStartsAt": "2024-03-07T21:25:56.000Z", "framework": "SOC 2 Type II", "displayName": "Q1 2024 SOC 2 Audit", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": "2024-03-07T21:25:56.000Z", "creationDate": "2024-03-07T21:25:56.000Z", "modificationDate": "2024-03-07T21:25:56.000Z", "completionDate": "2024-03-07T21:25:56.000Z", "auditFocus": "EXTERNAL", "auditorRequestListMetadata": {"requestsSharedWithCustomer": "2024-03-07T21:25:56.000Z"}}
+  ListCodeChanges:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "code_change_12345", "codeChange": "fix-auth-bug", "identifier": "101", "service": "github", "repository": "vanta/obsidian", "openedAt": "2025-01-25T14:30:00.000Z", "closedAt": "2025-03-25T14:30:00.000Z"}], "pageInfo": {"endCursor": "code_change_12345", "hasNextPage": true, "hasPreviousPage": false, "startCursor": "code_change_12345"}}}
+  ListVendors:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "5f2c939a52855e725c8d5824", "name": "Acme Corp", "inherentRisk": "HIGH", "status": "ACTIVE", "findings": 3, "lastReviewedCompleted": "2025-01-15T10:00:00.000Z", "nextSecurityReviewDueDate": "2025-07-15T10:00:00.000Z", "vendorCategory": "SaaS", "residualRisk": "HIGH", "dataAgreements": {"total": 2, "complete": 1}}], "pageInfo": {"endCursor": "5f2c939a52855e725c8d5824", "hasNextPage": true, "hasPreviousPage": false, "startCursor": "5f2c939a52855e725c8d5824"}}}
+  ListAccountAccessServices:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "68d17609e79bc56dbe798eac", "credentialDisplayName": "Okta - Production", "service": "okta", "subAccountId": null}], "pageInfo": {"endCursor": null, "hasNextPage": false, "hasPreviousPage": false, "startCursor": null}}}
+  ListPersonnelAccountAccess:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+          serviceId: "<id>"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "5f2c939a52855e725c8d5824", "accountName": "john.doe@example.com", "owner": "John Doe", "role": ["Admin"], "status": "ACTIVE", "mfa": true, "createdDate": "2024-01-15T10:30:00.000Z", "deactivatedDate": null}], "pageInfo": {"endCursor": null, "hasNextPage": false, "hasPreviousPage": false, "startCursor": null}}}
+  ListPersonnelGroups:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "5f2c939a52855e725c8d5824", "name": "Engineering", "members": 42, "source": "Okta", "tasks": [{"name": "Security Training"}, {"name": "Policy Acceptance"}], "tasksLastUpdated": "2024-06-15T10:30:00.000Z", "pointOfContact": "Jane Doe"}], "pageInfo": {"endCursor": "5f2c939a52855e725c8d5824", "hasNextPage": true, "hasPreviousPage": false, "startCursor": "5f2c939a52855e725c8d5824"}}}
+  ListPersonnelPeople:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "person_12345", "name": "John Doe", "email": "john.doe@example.com", "jobTitle": "Software Engineer", "employmentStatus": "CURRENTLY_EMPLOYED", "startDate": "2021-01-15", "endDate": null, "groups": [{"name": "Engineering"}, {"name": "Admin"}], "source": {"mainSource": "Okta", "supplementarySource": "Google Workspace"}, "taskStatus": {"status": "SECURITY_TASKS_COMPLETE", "dueDate": "2024-03-15", "completionDate": "2024-01-20", "numTasksCompleted": null, "numTasksOverdue": null, "numTasksDueSoon": null}, "lastReminded": "2024-01-15", "policies": {"status": "SECURITY_TASKS_COMPLETE", "dueDate": "2024-03-15", "completionDate": "2024-01-20"}, "trainings": {"status": "SECURITY_TASKS_COMPLETE", "dueDate": "2024-03-15", "completionDate": "2024-01-20"}, "backgroundChecks": {"status": "SECURITY_TASKS_COMPLETE", "dueDate": "2024-03-15", "completionDate": "2024-01-20"}, "deviceMonitoring": {"status": "SECURITY_TASKS_COMPLETE", "dueDate": "2024-03-15", "completionDate": "2024-01-20"}, "customOnboarding": {"status": "SECURITY_TASKS_COMPLETE", "dueDate": "2024-03-15", "completionDate": "2024-01-20"}, "customOffboarding": {"status": "SECURITY_TASKS_COMPLETE", "dueDate": "2024-03-15", "completionDate": "2024-01-20"}}], "pageInfo": {"endCursor": "person_12345", "hasNextPage": true, "hasPreviousPage": false, "startCursor": "person_12345"}}}
+  ListRiskSnapshots:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "507f1f77bcf86cd799439011", "createdAt": "2024-08-15T14:30:00.000Z"}], "pageInfo": {"endCursor": "507f1f77bcf86cd799439011", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "507f1f77bcf86cd799439011"}}}
+  ListAuditRisks:
+    Example 1:
+      parameters:
+        path:
+          auditId: "<id>"
+          snapshotId: "<id>"
+        query:
+          pageSize: 10
+      responses:
+        "200":
+          application/json: {"results": {"data": [{"id": "5f2c939a52855e725c8d5824", "riskId": "RISK-001", "riskScenario": "Unauthorized access to production database", "likelihood": 4, "impact": 5, "inherentRisk": 20, "treatment": "MITIGATE", "treatmentStatus": "IN_PROGRESS", "residualRisk": 6, "reviewStatus": "APPROVED", "owner": {"displayName": "Jane Doe", "imageUrl": "https://app.vanta.com/avatar.png"}, "categories": ["Cryptography", "Privacy"], "ciaCategories": ["CONFIDENTIALITY", "INTEGRITY"], "linkedControlIds": ["control-1", "control-2"], "identified": "2023-01-15T10:00:00.000Z"}], "pageInfo": {"endCursor": "5f2c939a52855e725c8d5824", "hasNextPage": true, "hasPreviousPage": false, "startCursor": "5f2c939a52855e725c8d5824"}}}
 examplesVersion: 1.0.2
 generatedTests: {}
 generatedFiles:

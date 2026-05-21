@@ -29,18 +29,26 @@ import com.vanta.vanta_auditor_api.models.operations.GetAuditRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetFrameworkCodesRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSnapshotEvidenceDetailRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListAccountAccessServicesRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditCommentsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditControlsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditEvidenceUrlsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditIssuesRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditRisksRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditSnapshotsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListCodeChangesRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListCommentsForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestActivityRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListPersonnelAccountAccessRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListPersonnelGroupsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListPersonnelPeopleRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListRiskSnapshotsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListVendorsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ShareInformationRequestListRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForInformationRequestRequest;
@@ -71,6 +79,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequest
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestTestSnapshotEvidenceDetailResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListAccountAccessServicesRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListAccountAccessServicesResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditCommentsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditCommentsResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditControlsRequestBuilder;
@@ -81,10 +91,14 @@ import com.vanta.vanta_auditor_api.models.operations.async.ListAuditEvidenceUrls
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditEvidenceUrlsResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditIssuesRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditIssuesResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListAuditRisksRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListAuditRisksResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditSnapshotsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditSnapshotsResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditsResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListCodeChangesRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListCodeChangesResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListCommentsForInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListCommentsForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestActivityRequestBuilder;
@@ -95,6 +109,16 @@ import com.vanta.vanta_auditor_api.models.operations.async.ListInformationReques
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestsForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestsResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelAccountAccessRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelAccountAccessResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelGroupsRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelGroupsResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelPeopleRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelPeopleResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListRiskSnapshotsRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListRiskSnapshotsResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListVendorsRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListVendorsResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ShareInformationRequestListRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ShareInformationRequestListResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateAuditEvidenceRequestBuilder;
@@ -116,18 +140,26 @@ import com.vanta.vanta_auditor_api.operations.GetAudit;
 import com.vanta.vanta_auditor_api.operations.GetFrameworkCodes;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequest;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequestTestSnapshotEvidenceDetail;
+import com.vanta.vanta_auditor_api.operations.ListAccountAccessServices;
 import com.vanta.vanta_auditor_api.operations.ListAuditComments;
 import com.vanta.vanta_auditor_api.operations.ListAuditControls;
 import com.vanta.vanta_auditor_api.operations.ListAuditEvidence;
 import com.vanta.vanta_auditor_api.operations.ListAuditEvidenceUrls;
 import com.vanta.vanta_auditor_api.operations.ListAuditIssues;
+import com.vanta.vanta_auditor_api.operations.ListAuditRisks;
 import com.vanta.vanta_auditor_api.operations.ListAuditSnapshots;
 import com.vanta.vanta_auditor_api.operations.ListAudits;
+import com.vanta.vanta_auditor_api.operations.ListCodeChanges;
 import com.vanta.vanta_auditor_api.operations.ListCommentsForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestActivity;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequests;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestsForControl;
+import com.vanta.vanta_auditor_api.operations.ListPersonnelAccountAccess;
+import com.vanta.vanta_auditor_api.operations.ListPersonnelGroups;
+import com.vanta.vanta_auditor_api.operations.ListPersonnelPeople;
+import com.vanta.vanta_auditor_api.operations.ListRiskSnapshots;
+import com.vanta.vanta_auditor_api.operations.ListVendors;
 import com.vanta.vanta_auditor_api.operations.ShareInformationRequestList;
 import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidence;
 import com.vanta.vanta_auditor_api.operations.UpdateCommentForInformationRequest;
@@ -261,6 +293,67 @@ public class AsyncAudits {
                 .build();
         AsyncRequestOperation<GetAuditRequest, GetAuditResponse> operation
               = new GetAudit.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List code changes for an audit
+     * 
+     * <p>Retrieves code changes population data for an audit.
+     * 
+     * <p>This endpoint provides access to code change records (pull requests)
+     * visible to auditors during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches code change titles and repository names (case-insensitive)
+     * - `sourcesMatchesAny`: Filters by version control source (accepted values: github, gitlab,
+     * bitbucket, azuredevops)
+     * - `startDate` / `endDate`: Filters by the closed date range
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are sorted by closed date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters.
+     * 
+     * @return The async call builder
+     */
+    public ListCodeChangesRequestBuilder listCodeChanges() {
+        return new ListCodeChangesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List code changes for an audit
+     * 
+     * <p>Retrieves code changes population data for an audit.
+     * 
+     * <p>This endpoint provides access to code change records (pull requests)
+     * visible to auditors during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches code change titles and repository names (case-insensitive)
+     * - `sourcesMatchesAny`: Filters by version control source (accepted values: github, gitlab,
+     * bitbucket, azuredevops)
+     * - `startDate` / `endDate`: Filters by the closed date range
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are sorted by closed date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListCodeChangesResponse>} - The async response
+     */
+    public CompletableFuture<ListCodeChangesResponse> listCodeChanges(ListCodeChangesRequest request) {
+        AsyncRequestOperation<ListCodeChangesRequest, ListCodeChangesResponse> operation
+              = new ListCodeChanges.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1661,7 +1754,9 @@ public class AsyncAudits {
      * captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs
      * and metadata.
      * 
-     * <p>Results are sorted by issue creation date in descending order (newest first).
+     * <p>Results are sorted by issue creation date in descending order (newest first) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
      * 
      * <p>Uses cursor-based pagination. To paginate:
      * 1. Make initial request with desired `pageSize`
@@ -1692,7 +1787,9 @@ public class AsyncAudits {
      * captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs
      * and metadata.
      * 
-     * <p>Results are sorted by issue creation date in descending order (newest first).
+     * <p>Results are sorted by issue creation date in descending order (newest first) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
      * 
      * <p>Uses cursor-based pagination. To paginate:
      * 1. Make initial request with desired `pageSize`
@@ -1801,6 +1898,558 @@ public class AsyncAudits {
                 .build();
         AsyncRequestOperation<ListAuditSnapshotsRequest, ListAuditSnapshotsResponse> operation
               = new ListAuditSnapshots.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List vendors for an audit
+     * 
+     * <p>Retrieves vendor population data for an audit.
+     * 
+     * <p>This endpoint provides access to vendor records visible to auditors
+     * during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches vendor names (case-insensitive)
+     * - `vendorStatusesMatchesAny`: Filters by vendor status (ACTIVE, ARCHIVED, IN_PROCUREMENT)
+     * - `inherentRiskMatchesAny`: Filters by inherent risk level
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @return The async call builder
+     */
+    public ListVendorsRequestBuilder listVendors() {
+        return new ListVendorsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List vendors for an audit
+     * 
+     * <p>Retrieves vendor population data for an audit.
+     * 
+     * <p>This endpoint provides access to vendor records visible to auditors
+     * during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches vendor names (case-insensitive)
+     * - `vendorStatusesMatchesAny`: Filters by vendor status (ACTIVE, ARCHIVED, IN_PROCUREMENT)
+     * - `inherentRiskMatchesAny`: Filters by inherent risk level
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListVendorsResponse>} - The async response
+     */
+    public CompletableFuture<ListVendorsResponse> listVendors(ListVendorsRequest request) {
+        AsyncRequestOperation<ListVendorsRequest, ListVendorsResponse> operation
+              = new ListVendors.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List account access services for an audit
+     * 
+     * <p>Retrieves connected account access services for an audit.
+     * 
+     * <p>Returns the list of identity providers and access integrations (such as
+     * Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
+     * organization and provide account access data for personnel.
+     * 
+     * <p>These integrations are used to verify user access and identity management
+     * during an audit engagement.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are returned in connection order. Sort order is not guaranteed
+     * and cannot be customized via query parameters.
+     * 
+     * @return The async call builder
+     */
+    public ListAccountAccessServicesRequestBuilder listAccountAccessServices() {
+        return new ListAccountAccessServicesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List account access services for an audit
+     * 
+     * <p>Retrieves connected account access services for an audit.
+     * 
+     * <p>Returns the list of identity providers and access integrations (such as
+     * Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
+     * organization and provide account access data for personnel.
+     * 
+     * <p>These integrations are used to verify user access and identity management
+     * during an audit engagement.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are returned in connection order. Sort order is not guaranteed
+     * and cannot be customized via query parameters.
+     * 
+     * @param auditId The audit ID
+     * @return {@code CompletableFuture<ListAccountAccessServicesResponse>} - The async response
+     */
+    public CompletableFuture<ListAccountAccessServicesResponse> listAccountAccessServices(String auditId) {
+        return listAccountAccessServices(auditId, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * List account access services for an audit
+     * 
+     * <p>Retrieves connected account access services for an audit.
+     * 
+     * <p>Returns the list of identity providers and access integrations (such as
+     * Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
+     * organization and provide account access data for personnel.
+     * 
+     * <p>These integrations are used to verify user access and identity management
+     * during an audit engagement.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are returned in connection order. Sort order is not guaranteed
+     * and cannot be customized via query parameters.
+     * 
+     * @param auditId The audit ID
+     * @param pageSize Maximum number of results per page (1-100, default 10)
+     * @param pageCursor Pagination cursor from previous response
+     * @return {@code CompletableFuture<ListAccountAccessServicesResponse>} - The async response
+     */
+    public CompletableFuture<ListAccountAccessServicesResponse> listAccountAccessServices(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor) {
+        ListAccountAccessServicesRequest request =
+            ListAccountAccessServicesRequest
+                .builder()
+                .auditId(auditId)
+                .pageSize(pageSize)
+                .pageCursor(pageCursor)
+                .build();
+        AsyncRequestOperation<ListAccountAccessServicesRequest, ListAccountAccessServicesResponse> operation
+              = new ListAccountAccessServices.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List account access records for an audit
+     * 
+     * <p>Retrieves account access population data for an audit.
+     * 
+     * <p>This endpoint provides access to account access records visible to auditors
+     * during an audit engagement. Account access data comes from various sources:
+     * 
+     * <p>- **IDP Services** (Identity Providers): Okta, Azure AD, Google Workspace, OneLogin, PingOne
+     * 
+     * <p>- Returns user accounts from identity providers
+     * - Supports filtering by search and status
+     * 
+     * <p>- **Role Grants Services**: GCP, Azure (when role grants are enabled)
+     * 
+     * <p>- Returns accounts with role-based access grants
+     * - Supports filtering by search and status
+     * 
+     * <p>- **First-Party Account Services**: AWS, Oracle Cloud, Azure (when not using role grants), etc.
+     * 
+     * <p>- Returns cloud provider account access records
+     * - Supports filtering by search and status
+     * 
+     * <p>- **Received Account Services**: External applications (Jira, GitHub, Slack, etc.)
+     * 
+     * <p>- Returns user accounts from third-party integrations
+     * - Supports filtering by search and status
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches account names/emails (case-insensitive)
+     * - `status`: Filters by account status
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>The default sort order depends on the service type:
+     * - Identity provider services (e.g. Okta, Azure AD): sorted by email, ascending
+     * - Cloud provider services (e.g. AWS, GCP): sorted by account name, ascending
+     * - Role grant services: sorted by account name, ascending
+     * - Third-party application services (e.g. GitHub, Jira): sorted by account name, ascending
+     * 
+     * <p>Sort order cannot be customized via query parameters.
+     * 
+     * @return The async call builder
+     */
+    public ListPersonnelAccountAccessRequestBuilder listPersonnelAccountAccess() {
+        return new ListPersonnelAccountAccessRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List account access records for an audit
+     * 
+     * <p>Retrieves account access population data for an audit.
+     * 
+     * <p>This endpoint provides access to account access records visible to auditors
+     * during an audit engagement. Account access data comes from various sources:
+     * 
+     * <p>- **IDP Services** (Identity Providers): Okta, Azure AD, Google Workspace, OneLogin, PingOne
+     * 
+     * <p>- Returns user accounts from identity providers
+     * - Supports filtering by search and status
+     * 
+     * <p>- **Role Grants Services**: GCP, Azure (when role grants are enabled)
+     * 
+     * <p>- Returns accounts with role-based access grants
+     * - Supports filtering by search and status
+     * 
+     * <p>- **First-Party Account Services**: AWS, Oracle Cloud, Azure (when not using role grants), etc.
+     * 
+     * <p>- Returns cloud provider account access records
+     * - Supports filtering by search and status
+     * 
+     * <p>- **Received Account Services**: External applications (Jira, GitHub, Slack, etc.)
+     * 
+     * <p>- Returns user accounts from third-party integrations
+     * - Supports filtering by search and status
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches account names/emails (case-insensitive)
+     * - `status`: Filters by account status
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>The default sort order depends on the service type:
+     * - Identity provider services (e.g. Okta, Azure AD): sorted by email, ascending
+     * - Cloud provider services (e.g. AWS, GCP): sorted by account name, ascending
+     * - Role grant services: sorted by account name, ascending
+     * - Third-party application services (e.g. GitHub, Jira): sorted by account name, ascending
+     * 
+     * <p>Sort order cannot be customized via query parameters.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListPersonnelAccountAccessResponse>} - The async response
+     */
+    public CompletableFuture<ListPersonnelAccountAccessResponse> listPersonnelAccountAccess(ListPersonnelAccountAccessRequest request) {
+        AsyncRequestOperation<ListPersonnelAccountAccessRequest, ListPersonnelAccountAccessResponse> operation
+              = new ListPersonnelAccountAccess.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List groups for an audit
+     * 
+     * <p>Retrieves groups population data for an audit.
+     * 
+     * <p>This endpoint provides access to the group records visible to auditors
+     * during an audit engagement. Groups represent organizational units that
+     * contain people, either imported from an identity provider (IDP) or
+     * created manually in Vanta.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit
+     * View audits are rejected with 403.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches group names (case-insensitive)
+     * - `sourcesMatchesAny`: Filters by IDP source service names
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @return The async call builder
+     */
+    public ListPersonnelGroupsRequestBuilder listPersonnelGroups() {
+        return new ListPersonnelGroupsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List groups for an audit
+     * 
+     * <p>Retrieves groups population data for an audit.
+     * 
+     * <p>This endpoint provides access to the group records visible to auditors
+     * during an audit engagement. Groups represent organizational units that
+     * contain people, either imported from an identity provider (IDP) or
+     * created manually in Vanta.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit
+     * View audits are rejected with 403.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches group names (case-insensitive)
+     * - `sourcesMatchesAny`: Filters by IDP source service names
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListPersonnelGroupsResponse>} - The async response
+     */
+    public CompletableFuture<ListPersonnelGroupsResponse> listPersonnelGroups(ListPersonnelGroupsRequest request) {
+        AsyncRequestOperation<ListPersonnelGroupsRequest, ListPersonnelGroupsResponse> operation
+              = new ListPersonnelGroups.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List people for an audit
+     * 
+     * <p>Retrieves people population data for an audit.
+     * 
+     * <p>This endpoint provides access to the people records visible to auditors
+     * during an audit engagement. Only Controlled Audit View (CAV) audits
+     * are supported. Full Audit View audits are rejected with 403.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches names and email addresses
+     * - `status`: Filters by employment status
+     * - `groupsMatchesAny`: Filter people by group/role IDs
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @return The async call builder
+     */
+    public ListPersonnelPeopleRequestBuilder listPersonnelPeople() {
+        return new ListPersonnelPeopleRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List people for an audit
+     * 
+     * <p>Retrieves people population data for an audit.
+     * 
+     * <p>This endpoint provides access to the people records visible to auditors
+     * during an audit engagement. Only Controlled Audit View (CAV) audits
+     * are supported. Full Audit View audits are rejected with 403.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches names and email addresses
+     * - `status`: Filters by employment status
+     * - `groupsMatchesAny`: Filter people by group/role IDs
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListPersonnelPeopleResponse>} - The async response
+     */
+    public CompletableFuture<ListPersonnelPeopleResponse> listPersonnelPeople(ListPersonnelPeopleRequest request) {
+        AsyncRequestOperation<ListPersonnelPeopleRequest, ListPersonnelPeopleResponse> operation
+              = new ListPersonnelPeople.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List risk snapshots for an audit
+     * 
+     * <p>Returns a paginated list of risk assessment snapshots available for an audit.
+     * 
+     * <p>Risk snapshots capture the state of an organization's risk register at a
+     * point in time. Each snapshot has an `id` that can be used with the
+     * `/audits/{auditId}/risks` endpoint to retrieve the individual risk
+     * scenarios within that snapshot.
+     * 
+     * <p>Results are sorted by creation date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters. Only snapshots
+     * that are shared with auditors are included.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @return The async call builder
+     */
+    public ListRiskSnapshotsRequestBuilder listRiskSnapshots() {
+        return new ListRiskSnapshotsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List risk snapshots for an audit
+     * 
+     * <p>Returns a paginated list of risk assessment snapshots available for an audit.
+     * 
+     * <p>Risk snapshots capture the state of an organization's risk register at a
+     * point in time. Each snapshot has an `id` that can be used with the
+     * `/audits/{auditId}/risks` endpoint to retrieve the individual risk
+     * scenarios within that snapshot.
+     * 
+     * <p>Results are sorted by creation date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters. Only snapshots
+     * that are shared with auditors are included.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @param auditId The audit ID
+     * @return {@code CompletableFuture<ListRiskSnapshotsResponse>} - The async response
+     */
+    public CompletableFuture<ListRiskSnapshotsResponse> listRiskSnapshots(String auditId) {
+        return listRiskSnapshots(auditId, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * List risk snapshots for an audit
+     * 
+     * <p>Returns a paginated list of risk assessment snapshots available for an audit.
+     * 
+     * <p>Risk snapshots capture the state of an organization's risk register at a
+     * point in time. Each snapshot has an `id` that can be used with the
+     * `/audits/{auditId}/risks` endpoint to retrieve the individual risk
+     * scenarios within that snapshot.
+     * 
+     * <p>Results are sorted by creation date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters. Only snapshots
+     * that are shared with auditors are included.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @param auditId The audit ID
+     * @param pageSize Maximum number of results per page (1-100, default 10)
+     * @param pageCursor Pagination cursor from previous response
+     * @return {@code CompletableFuture<ListRiskSnapshotsResponse>} - The async response
+     */
+    public CompletableFuture<ListRiskSnapshotsResponse> listRiskSnapshots(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor) {
+        ListRiskSnapshotsRequest request =
+            ListRiskSnapshotsRequest
+                .builder()
+                .auditId(auditId)
+                .pageSize(pageSize)
+                .pageCursor(pageCursor)
+                .build();
+        AsyncRequestOperation<ListRiskSnapshotsRequest, ListRiskSnapshotsResponse> operation
+              = new ListRiskSnapshots.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List risks for an audit
+     * 
+     * <p>Retrieves risk population data for an audit.
+     * 
+     * <p>This endpoint provides access to the risk records visible to auditors
+     * during an audit engagement. Risk data is scoped to a specific risk
+     * assessment snapshot identified by the `snapshotId` parameter.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit
+     * View audits are rejected with 403.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches risk scenario descriptions (case-insensitive)
+     * 
+     * <p>Results are sorted by identified date (newest first) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @return The async call builder
+     */
+    public ListAuditRisksRequestBuilder listAuditRisks() {
+        return new ListAuditRisksRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List risks for an audit
+     * 
+     * <p>Retrieves risk population data for an audit.
+     * 
+     * <p>This endpoint provides access to the risk records visible to auditors
+     * during an audit engagement. Risk data is scoped to a specific risk
+     * assessment snapshot identified by the `snapshotId` parameter.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit
+     * View audits are rejected with 403.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches risk scenario descriptions (case-insensitive)
+     * 
+     * <p>Results are sorted by identified date (newest first) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListAuditRisksResponse>} - The async response
+     */
+    public CompletableFuture<ListAuditRisksResponse> listAuditRisks(ListAuditRisksRequest request) {
+        AsyncRequestOperation<ListAuditRisksRequest, ListAuditRisksResponse> operation
+              = new ListAuditRisks.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
