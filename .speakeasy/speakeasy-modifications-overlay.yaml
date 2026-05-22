@@ -73,20 +73,6 @@ actions:
       after: sdk.audits.list()
       created_at: 1736516640306
 
-  # Removing extranous endpoints
-  - target: $["paths"]["/audits/{auditId}/vendors"]
-    remove: true
-  - target: $["paths"]["/audits/{auditId}/monitored-computers"]
-    remove: true
-  - target: $["paths"]["/audits/{auditId}/people"]
-    remove: true
-  - target: $["paths"]["/audits/{auditId}/vulnerability-remediations"]
-    remove: true
-  - target: $["paths"]["/audits/{auditId}/vulnerabilities"]
-    remove: true
-  - target: $["paths"]["/audits/{auditId}/vulnerable-assets"]
-    remove: true
-
   # Replacing the servers with the new ones
   - target: $["servers"][*]
     remove: true
