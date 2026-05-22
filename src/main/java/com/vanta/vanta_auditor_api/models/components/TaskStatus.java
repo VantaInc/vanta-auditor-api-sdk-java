@@ -3,416 +3,44 @@
  */
 package com.vanta.vanta_auditor_api.models.components;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.vanta.vanta_auditor_api.utils.Utils;
-import java.lang.Double;
-import java.lang.Override;
+import com.fasterxml.jackson.annotation.JsonValue;
 import java.lang.String;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
  * TaskStatus
  * 
- * <p>Overall task status information, or null if not available.
- * Full Audit View only - omitted in Controlled Audit View.
+ * <p>The status of a task.
+ * - COMPLETE: The task has been completed.
+ * - DUE_SOON: The task is due soon.
+ * - OVERDUE: The task is overdue.
+ * - NONE: The task is not assigned.
  */
-public class TaskStatus {
-    /**
-     * Overall user task status.
-     */
-    @JsonProperty("status")
-    private PeopleTaskStatus status;
+public enum TaskStatus {
+    COMPLETE("COMPLETE"),
+    DUE_SOON("DUE_SOON"),
+    OVERDUE("OVERDUE"),
+    NONE("NONE");
 
-    /**
-     * Due date for the earliest incomplete task in ISO 8601 format, or null if none.
-     */
-    @JsonInclude(Include.ALWAYS)
-    @JsonProperty("dueDate")
-    private Optional<String> dueDate;
+    @JsonValue
+    private final String value;
 
-    /**
-     * Completion date when all tasks are complete in ISO 8601 format, or null if incomplete.
-     */
-    @JsonInclude(Include.ALWAYS)
-    @JsonProperty("completionDate")
-    private Optional<String> completionDate;
-
-    /**
-     * Count of completed tasks, or null if not available.
-     */
-    @JsonInclude(Include.ALWAYS)
-    @JsonProperty("numTasksCompleted")
-    private Optional<Double> numTasksCompleted;
-
-    /**
-     * Count of overdue tasks, or null if not available.
-     */
-    @JsonInclude(Include.ALWAYS)
-    @JsonProperty("numTasksOverdue")
-    private Optional<Double> numTasksOverdue;
-
-    /**
-     * Count of tasks due soon, or null if not available.
-     */
-    @JsonInclude(Include.ALWAYS)
-    @JsonProperty("numTasksDueSoon")
-    private Optional<Double> numTasksDueSoon;
-
-    @JsonCreator
-    public TaskStatus(
-            @JsonProperty("status") PeopleTaskStatus status,
-            @JsonProperty("dueDate") Optional<String> dueDate,
-            @JsonProperty("completionDate") Optional<String> completionDate,
-            @JsonProperty("numTasksCompleted") Optional<Double> numTasksCompleted,
-            @JsonProperty("numTasksOverdue") Optional<Double> numTasksOverdue,
-            @JsonProperty("numTasksDueSoon") Optional<Double> numTasksDueSoon) {
-        Utils.checkNotNull(status, "status");
-        Utils.checkNotNull(dueDate, "dueDate");
-        Utils.checkNotNull(completionDate, "completionDate");
-        Utils.checkNotNull(numTasksCompleted, "numTasksCompleted");
-        Utils.checkNotNull(numTasksOverdue, "numTasksOverdue");
-        Utils.checkNotNull(numTasksDueSoon, "numTasksDueSoon");
-        this.status = status;
-        this.dueDate = dueDate;
-        this.completionDate = completionDate;
-        this.numTasksCompleted = numTasksCompleted;
-        this.numTasksOverdue = numTasksOverdue;
-        this.numTasksDueSoon = numTasksDueSoon;
+    TaskStatus(String value) {
+        this.value = value;
     }
     
-    public TaskStatus(
-            PeopleTaskStatus status) {
-        this(status, Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty());
-    }
-
-    /**
-     * Overall user task status.
-     */
-    @JsonIgnore
-    public PeopleTaskStatus status() {
-        return status;
-    }
-
-    /**
-     * Due date for the earliest incomplete task in ISO 8601 format, or null if none.
-     */
-    @JsonIgnore
-    public Optional<String> dueDate() {
-        return dueDate;
-    }
-
-    /**
-     * Completion date when all tasks are complete in ISO 8601 format, or null if incomplete.
-     */
-    @JsonIgnore
-    public Optional<String> completionDate() {
-        return completionDate;
-    }
-
-    /**
-     * Count of completed tasks, or null if not available.
-     */
-    @JsonIgnore
-    public Optional<Double> numTasksCompleted() {
-        return numTasksCompleted;
-    }
-
-    /**
-     * Count of overdue tasks, or null if not available.
-     */
-    @JsonIgnore
-    public Optional<Double> numTasksOverdue() {
-        return numTasksOverdue;
-    }
-
-    /**
-     * Count of tasks due soon, or null if not available.
-     */
-    @JsonIgnore
-    public Optional<Double> numTasksDueSoon() {
-        return numTasksDueSoon;
-    }
-
-    public static Builder builder() {
-        return new Builder();
-    }
-
-
-    /**
-     * Overall user task status.
-     */
-    public TaskStatus withStatus(PeopleTaskStatus status) {
-        Utils.checkNotNull(status, "status");
-        this.status = status;
-        return this;
-    }
-
-    /**
-     * Due date for the earliest incomplete task in ISO 8601 format, or null if none.
-     */
-    public TaskStatus withDueDate(String dueDate) {
-        Utils.checkNotNull(dueDate, "dueDate");
-        this.dueDate = Optional.ofNullable(dueDate);
-        return this;
-    }
-
-
-    /**
-     * Due date for the earliest incomplete task in ISO 8601 format, or null if none.
-     */
-    public TaskStatus withDueDate(Optional<String> dueDate) {
-        Utils.checkNotNull(dueDate, "dueDate");
-        this.dueDate = dueDate;
-        return this;
-    }
-
-    /**
-     * Completion date when all tasks are complete in ISO 8601 format, or null if incomplete.
-     */
-    public TaskStatus withCompletionDate(String completionDate) {
-        Utils.checkNotNull(completionDate, "completionDate");
-        this.completionDate = Optional.ofNullable(completionDate);
-        return this;
-    }
-
-
-    /**
-     * Completion date when all tasks are complete in ISO 8601 format, or null if incomplete.
-     */
-    public TaskStatus withCompletionDate(Optional<String> completionDate) {
-        Utils.checkNotNull(completionDate, "completionDate");
-        this.completionDate = completionDate;
-        return this;
-    }
-
-    /**
-     * Count of completed tasks, or null if not available.
-     */
-    public TaskStatus withNumTasksCompleted(double numTasksCompleted) {
-        Utils.checkNotNull(numTasksCompleted, "numTasksCompleted");
-        this.numTasksCompleted = Optional.ofNullable(numTasksCompleted);
-        return this;
-    }
-
-
-    /**
-     * Count of completed tasks, or null if not available.
-     */
-    public TaskStatus withNumTasksCompleted(Optional<Double> numTasksCompleted) {
-        Utils.checkNotNull(numTasksCompleted, "numTasksCompleted");
-        this.numTasksCompleted = numTasksCompleted;
-        return this;
-    }
-
-    /**
-     * Count of overdue tasks, or null if not available.
-     */
-    public TaskStatus withNumTasksOverdue(double numTasksOverdue) {
-        Utils.checkNotNull(numTasksOverdue, "numTasksOverdue");
-        this.numTasksOverdue = Optional.ofNullable(numTasksOverdue);
-        return this;
-    }
-
-
-    /**
-     * Count of overdue tasks, or null if not available.
-     */
-    public TaskStatus withNumTasksOverdue(Optional<Double> numTasksOverdue) {
-        Utils.checkNotNull(numTasksOverdue, "numTasksOverdue");
-        this.numTasksOverdue = numTasksOverdue;
-        return this;
-    }
-
-    /**
-     * Count of tasks due soon, or null if not available.
-     */
-    public TaskStatus withNumTasksDueSoon(double numTasksDueSoon) {
-        Utils.checkNotNull(numTasksDueSoon, "numTasksDueSoon");
-        this.numTasksDueSoon = Optional.ofNullable(numTasksDueSoon);
-        return this;
-    }
-
-
-    /**
-     * Count of tasks due soon, or null if not available.
-     */
-    public TaskStatus withNumTasksDueSoon(Optional<Double> numTasksDueSoon) {
-        Utils.checkNotNull(numTasksDueSoon, "numTasksDueSoon");
-        this.numTasksDueSoon = numTasksDueSoon;
-        return this;
-    }
-
-    @Override
-    public boolean equals(java.lang.Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        TaskStatus other = (TaskStatus) o;
-        return 
-            Utils.enhancedDeepEquals(this.status, other.status) &&
-            Utils.enhancedDeepEquals(this.dueDate, other.dueDate) &&
-            Utils.enhancedDeepEquals(this.completionDate, other.completionDate) &&
-            Utils.enhancedDeepEquals(this.numTasksCompleted, other.numTasksCompleted) &&
-            Utils.enhancedDeepEquals(this.numTasksOverdue, other.numTasksOverdue) &&
-            Utils.enhancedDeepEquals(this.numTasksDueSoon, other.numTasksDueSoon);
+    public String value() {
+        return value;
     }
     
-    @Override
-    public int hashCode() {
-        return Utils.enhancedHash(
-            status, dueDate, completionDate,
-            numTasksCompleted, numTasksOverdue, numTasksDueSoon);
-    }
-    
-    @Override
-    public String toString() {
-        return Utils.toString(TaskStatus.class,
-                "status", status,
-                "dueDate", dueDate,
-                "completionDate", completionDate,
-                "numTasksCompleted", numTasksCompleted,
-                "numTasksOverdue", numTasksOverdue,
-                "numTasksDueSoon", numTasksDueSoon);
-    }
-
-    @SuppressWarnings("UnusedReturnValue")
-    public final static class Builder {
-
-        private PeopleTaskStatus status;
-
-        private Optional<String> dueDate = Optional.empty();
-
-        private Optional<String> completionDate = Optional.empty();
-
-        private Optional<Double> numTasksCompleted = Optional.empty();
-
-        private Optional<Double> numTasksOverdue = Optional.empty();
-
-        private Optional<Double> numTasksDueSoon = Optional.empty();
-
-        private Builder() {
-          // force use of static builder() method
+    public static Optional<TaskStatus> fromValue(String value) {
+        for (TaskStatus o: TaskStatus.values()) {
+            if (Objects.deepEquals(o.value, value)) {
+                return Optional.of(o);
+            }
         }
-
-
-        /**
-         * Overall user task status.
-         */
-        public Builder status(PeopleTaskStatus status) {
-            Utils.checkNotNull(status, "status");
-            this.status = status;
-            return this;
-        }
-
-
-        /**
-         * Due date for the earliest incomplete task in ISO 8601 format, or null if none.
-         */
-        public Builder dueDate(String dueDate) {
-            Utils.checkNotNull(dueDate, "dueDate");
-            this.dueDate = Optional.ofNullable(dueDate);
-            return this;
-        }
-
-        /**
-         * Due date for the earliest incomplete task in ISO 8601 format, or null if none.
-         */
-        public Builder dueDate(Optional<String> dueDate) {
-            Utils.checkNotNull(dueDate, "dueDate");
-            this.dueDate = dueDate;
-            return this;
-        }
-
-
-        /**
-         * Completion date when all tasks are complete in ISO 8601 format, or null if incomplete.
-         */
-        public Builder completionDate(String completionDate) {
-            Utils.checkNotNull(completionDate, "completionDate");
-            this.completionDate = Optional.ofNullable(completionDate);
-            return this;
-        }
-
-        /**
-         * Completion date when all tasks are complete in ISO 8601 format, or null if incomplete.
-         */
-        public Builder completionDate(Optional<String> completionDate) {
-            Utils.checkNotNull(completionDate, "completionDate");
-            this.completionDate = completionDate;
-            return this;
-        }
-
-
-        /**
-         * Count of completed tasks, or null if not available.
-         */
-        public Builder numTasksCompleted(double numTasksCompleted) {
-            Utils.checkNotNull(numTasksCompleted, "numTasksCompleted");
-            this.numTasksCompleted = Optional.ofNullable(numTasksCompleted);
-            return this;
-        }
-
-        /**
-         * Count of completed tasks, or null if not available.
-         */
-        public Builder numTasksCompleted(Optional<Double> numTasksCompleted) {
-            Utils.checkNotNull(numTasksCompleted, "numTasksCompleted");
-            this.numTasksCompleted = numTasksCompleted;
-            return this;
-        }
-
-
-        /**
-         * Count of overdue tasks, or null if not available.
-         */
-        public Builder numTasksOverdue(double numTasksOverdue) {
-            Utils.checkNotNull(numTasksOverdue, "numTasksOverdue");
-            this.numTasksOverdue = Optional.ofNullable(numTasksOverdue);
-            return this;
-        }
-
-        /**
-         * Count of overdue tasks, or null if not available.
-         */
-        public Builder numTasksOverdue(Optional<Double> numTasksOverdue) {
-            Utils.checkNotNull(numTasksOverdue, "numTasksOverdue");
-            this.numTasksOverdue = numTasksOverdue;
-            return this;
-        }
-
-
-        /**
-         * Count of tasks due soon, or null if not available.
-         */
-        public Builder numTasksDueSoon(double numTasksDueSoon) {
-            Utils.checkNotNull(numTasksDueSoon, "numTasksDueSoon");
-            this.numTasksDueSoon = Optional.ofNullable(numTasksDueSoon);
-            return this;
-        }
-
-        /**
-         * Count of tasks due soon, or null if not available.
-         */
-        public Builder numTasksDueSoon(Optional<Double> numTasksDueSoon) {
-            Utils.checkNotNull(numTasksDueSoon, "numTasksDueSoon");
-            this.numTasksDueSoon = numTasksDueSoon;
-            return this;
-        }
-
-        public TaskStatus build() {
-
-            return new TaskStatus(
-                status, dueDate, completionDate,
-                numTasksCompleted, numTasksOverdue, numTasksDueSoon);
-        }
-
+        return Optional.empty();
     }
 }
+

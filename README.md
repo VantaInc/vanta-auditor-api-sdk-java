@@ -49,7 +49,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'com.vanta:vanta-auditor-api:0.4.2'
+implementation 'com.vanta:vanta-auditor-api:0.4.3'
 ```
 
 Maven:
@@ -57,7 +57,7 @@ Maven:
 <dependency>
     <groupId>com.vanta</groupId>
     <artifactId>vanta-auditor-api</artifactId>
-    <version>0.4.2</version>
+    <version>0.4.3</version>
 </dependency>
 ```
 
@@ -318,6 +318,8 @@ public class Application {
 * [listAuditIssues](docs/sdks/audits/README.md#listauditissues) - List snapshotted issues for an audit
 * [listAuditSnapshots](docs/sdks/audits/README.md#listauditsnapshots) - List snapshotted issues for an audit
 * [listVendors](docs/sdks/audits/README.md#listvendors) - List vendors for an audit
+* [listMonitoredComputersInAuditScope](docs/sdks/audits/README.md#listmonitoredcomputersinauditscope) - List monitored computers
+* [listPeopleInAuditScope](docs/sdks/audits/README.md#listpeopleinauditscope) - List of people who are in scope for this audit
 * [listAccountAccessServices](docs/sdks/audits/README.md#listaccountaccessservices) - List account access services for an audit
 * [listPersonnelAccountAccess](docs/sdks/audits/README.md#listpersonnelaccountaccess) - List account access records for an audit
 * [listPersonnelGroups](docs/sdks/audits/README.md#listpersonnelgroups) - List groups for an audit
@@ -325,6 +327,10 @@ public class Application {
 * [listRiskSnapshots](docs/sdks/audits/README.md#listrisksnapshots) - List risk snapshots for an audit
 * [listAuditRisks](docs/sdks/audits/README.md#listauditrisks) - List risks for an audit
 * [shareInformationRequestList](docs/sdks/audits/README.md#shareinformationrequestlist) - Share information request list with customer
+* [listVendorsInAuditScope](docs/sdks/audits/README.md#listvendorsinauditscope) - List of vendors who are in scope for this audit
+* [listVulnerabilities](docs/sdks/audits/README.md#listvulnerabilities) - List vulnerabilities within the scope of a given audit
+* [listVulnerabilityRemediationsInAuditScope](docs/sdks/audits/README.md#listvulnerabilityremediationsinauditscope) - List vulnerability remediations that are in scope for this audit
+* [getVulnerableAssets](docs/sdks/audits/README.md#getvulnerableassets) - List assets associated with vulnerabilities
 
 </details>
 <!-- End Available Resources and Operations [operations] -->

@@ -9,6 +9,7 @@ import com.vanta.vanta_auditor_api.models.components.AcceptInformationRequestEvi
 import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
 import com.vanta.vanta_auditor_api.models.components.AddInformationRequestCommentInput;
 import com.vanta.vanta_auditor_api.models.components.AuditEvidenceUpdateInput;
+import com.vanta.vanta_auditor_api.models.components.ComputerStatusFilter;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomControlInput;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomEvidenceRequestInput;
 import com.vanta.vanta_auditor_api.models.components.CreateInformationRequestInput;
@@ -29,6 +30,7 @@ import com.vanta.vanta_auditor_api.models.operations.GetAuditRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetFrameworkCodesRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSnapshotEvidenceDetailRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetVulnerableAssetsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAccountAccessServicesRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditCommentsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditControlsRequest;
@@ -44,11 +46,16 @@ import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestActiv
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListMonitoredComputersInAuditScopeRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListPeopleInAuditScopeRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListPersonnelAccountAccessRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListPersonnelGroupsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListPersonnelPeopleRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListRiskSnapshotsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListVendorsInAuditScopeRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListVendorsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListVulnerabilitiesRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListVulnerabilityRemediationsInAuditScopeRequest;
 import com.vanta.vanta_auditor_api.models.operations.ShareInformationRequestListRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForInformationRequestRequest;
@@ -79,6 +86,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequest
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestTestSnapshotEvidenceDetailResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.GetVulnerableAssetsRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.GetVulnerableAssetsResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAccountAccessServicesRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAccountAccessServicesResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditCommentsRequestBuilder;
@@ -109,6 +118,10 @@ import com.vanta.vanta_auditor_api.models.operations.async.ListInformationReques
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestsForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestsResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListMonitoredComputersInAuditScopeRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListMonitoredComputersInAuditScopeResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListPeopleInAuditScopeRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListPeopleInAuditScopeResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelAccountAccessRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelAccountAccessResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelGroupsRequestBuilder;
@@ -117,8 +130,14 @@ import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelPeopleRe
 import com.vanta.vanta_auditor_api.models.operations.async.ListPersonnelPeopleResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListRiskSnapshotsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListRiskSnapshotsResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListVendorsInAuditScopeRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListVendorsInAuditScopeResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListVendorsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListVendorsResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListVulnerabilitiesRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListVulnerabilitiesResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListVulnerabilityRemediationsInAuditScopeRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListVulnerabilityRemediationsInAuditScopeResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ShareInformationRequestListRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ShareInformationRequestListResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateAuditEvidenceRequestBuilder;
@@ -140,6 +159,7 @@ import com.vanta.vanta_auditor_api.operations.GetAudit;
 import com.vanta.vanta_auditor_api.operations.GetFrameworkCodes;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequest;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequestTestSnapshotEvidenceDetail;
+import com.vanta.vanta_auditor_api.operations.GetVulnerableAssets;
 import com.vanta.vanta_auditor_api.operations.ListAccountAccessServices;
 import com.vanta.vanta_auditor_api.operations.ListAuditComments;
 import com.vanta.vanta_auditor_api.operations.ListAuditControls;
@@ -155,11 +175,16 @@ import com.vanta.vanta_auditor_api.operations.ListInformationRequestActivity;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequests;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestsForControl;
+import com.vanta.vanta_auditor_api.operations.ListMonitoredComputersInAuditScope;
+import com.vanta.vanta_auditor_api.operations.ListPeopleInAuditScope;
 import com.vanta.vanta_auditor_api.operations.ListPersonnelAccountAccess;
 import com.vanta.vanta_auditor_api.operations.ListPersonnelGroups;
 import com.vanta.vanta_auditor_api.operations.ListPersonnelPeople;
 import com.vanta.vanta_auditor_api.operations.ListRiskSnapshots;
 import com.vanta.vanta_auditor_api.operations.ListVendors;
+import com.vanta.vanta_auditor_api.operations.ListVendorsInAuditScope;
+import com.vanta.vanta_auditor_api.operations.ListVulnerabilities;
+import com.vanta.vanta_auditor_api.operations.ListVulnerabilityRemediationsInAuditScope;
 import com.vanta.vanta_auditor_api.operations.ShareInformationRequestList;
 import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidence;
 import com.vanta.vanta_auditor_api.operations.UpdateCommentForInformationRequest;
@@ -169,6 +194,7 @@ import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -1965,6 +1991,93 @@ public class AsyncAudits {
 
 
     /**
+     * List monitored computers
+     * 
+     * <p>Returns a list of computers monitored by an MDM (with an integration built
+     * by Vanta) or by the Vanta Agent. Currently this list does not include
+     * resources from partner or customer-built integrations.
+     * 
+     * @return The async call builder
+     */
+    public ListMonitoredComputersInAuditScopeRequestBuilder listMonitoredComputersInAuditScope() {
+        return new ListMonitoredComputersInAuditScopeRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List monitored computers
+     * 
+     * <p>Returns a list of computers monitored by an MDM (with an integration built
+     * by Vanta) or by the Vanta Agent. Currently this list does not include
+     * resources from partner or customer-built integrations.
+     * 
+     * @param auditId 
+     * @return {@code CompletableFuture<ListMonitoredComputersInAuditScopeResponse>} - The async response
+     */
+    public CompletableFuture<ListMonitoredComputersInAuditScopeResponse> listMonitoredComputersInAuditScope(String auditId) {
+        return listMonitoredComputersInAuditScope(
+                auditId, Optional.empty(), Optional.empty(),
+                Optional.empty());
+    }
+
+    /**
+     * List monitored computers
+     * 
+     * <p>Returns a list of computers monitored by an MDM (with an integration built
+     * by Vanta) or by the Vanta Agent. Currently this list does not include
+     * resources from partner or customer-built integrations.
+     * 
+     * @param auditId 
+     * @param pageSize 
+     * @param pageCursor 
+     * @param complianceStatusFilterMatchesAny Filters for monitored computers matching any status declared in the filter.
+     * @return {@code CompletableFuture<ListMonitoredComputersInAuditScopeResponse>} - The async response
+     */
+    public CompletableFuture<ListMonitoredComputersInAuditScopeResponse> listMonitoredComputersInAuditScope(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<? extends List<ComputerStatusFilter>> complianceStatusFilterMatchesAny) {
+        ListMonitoredComputersInAuditScopeRequest request =
+            ListMonitoredComputersInAuditScopeRequest
+                .builder()
+                .auditId(auditId)
+                .pageSize(pageSize)
+                .pageCursor(pageCursor)
+                .complianceStatusFilterMatchesAny(complianceStatusFilterMatchesAny)
+                .build();
+        AsyncRequestOperation<ListMonitoredComputersInAuditScopeRequest, ListMonitoredComputersInAuditScopeResponse> operation
+              = new ListMonitoredComputersInAuditScope.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List of people who are in scope for this audit
+     * 
+     * <p>Returns a list of people who are in scope for this audit.
+     * 
+     * @return The async call builder
+     */
+    public ListPeopleInAuditScopeRequestBuilder listPeopleInAuditScope() {
+        return new ListPeopleInAuditScopeRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List of people who are in scope for this audit
+     * 
+     * <p>Returns a list of people who are in scope for this audit.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListPeopleInAuditScopeResponse>} - The async response
+     */
+    public CompletableFuture<ListPeopleInAuditScopeResponse> listPeopleInAuditScope(ListPeopleInAuditScopeRequest request) {
+        AsyncRequestOperation<ListPeopleInAuditScopeRequest, ListPeopleInAuditScopeResponse> operation
+              = new ListPeopleInAuditScope.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
      * List account access services for an audit
      * 
      * <p>Retrieves connected account access services for an audit.
@@ -2486,6 +2599,137 @@ public class AsyncAudits {
                 .build();
         AsyncRequestOperation<ShareInformationRequestListRequest, ShareInformationRequestListResponse> operation
               = new ShareInformationRequestList.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List of vendors who are in scope for this audit
+     * 
+     * <p>Returns a list of vendors who are in scope for this audit.
+     * 
+     * @return The async call builder
+     */
+    public ListVendorsInAuditScopeRequestBuilder listVendorsInAuditScope() {
+        return new ListVendorsInAuditScopeRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List of vendors who are in scope for this audit
+     * 
+     * <p>Returns a list of vendors who are in scope for this audit.
+     * 
+     * @param auditId 
+     * @return {@code CompletableFuture<ListVendorsInAuditScopeResponse>} - The async response
+     */
+    public CompletableFuture<ListVendorsInAuditScopeResponse> listVendorsInAuditScope(String auditId) {
+        return listVendorsInAuditScope(auditId, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * List of vendors who are in scope for this audit
+     * 
+     * <p>Returns a list of vendors who are in scope for this audit.
+     * 
+     * @param auditId 
+     * @param pageSize 
+     * @param pageCursor 
+     * @return {@code CompletableFuture<ListVendorsInAuditScopeResponse>} - The async response
+     */
+    public CompletableFuture<ListVendorsInAuditScopeResponse> listVendorsInAuditScope(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor) {
+        ListVendorsInAuditScopeRequest request =
+            ListVendorsInAuditScopeRequest
+                .builder()
+                .auditId(auditId)
+                .pageSize(pageSize)
+                .pageCursor(pageCursor)
+                .build();
+        AsyncRequestOperation<ListVendorsInAuditScopeRequest, ListVendorsInAuditScopeResponse> operation
+              = new ListVendorsInAuditScope.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List vulnerabilities within the scope of a given audit
+     * 
+     * <p>List all vulnerabilities based on selected filters.
+     * 
+     * @return The async call builder
+     */
+    public ListVulnerabilitiesRequestBuilder listVulnerabilities() {
+        return new ListVulnerabilitiesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List vulnerabilities within the scope of a given audit
+     * 
+     * <p>List all vulnerabilities based on selected filters.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListVulnerabilitiesResponse>} - The async response
+     */
+    public CompletableFuture<ListVulnerabilitiesResponse> listVulnerabilities(ListVulnerabilitiesRequest request) {
+        AsyncRequestOperation<ListVulnerabilitiesRequest, ListVulnerabilitiesResponse> operation
+              = new ListVulnerabilities.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List vulnerability remediations that are in scope for this audit
+     * 
+     * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
+     * 
+     * @return The async call builder
+     */
+    public ListVulnerabilityRemediationsInAuditScopeRequestBuilder listVulnerabilityRemediationsInAuditScope() {
+        return new ListVulnerabilityRemediationsInAuditScopeRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List vulnerability remediations that are in scope for this audit
+     * 
+     * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListVulnerabilityRemediationsInAuditScopeResponse>} - The async response
+     */
+    public CompletableFuture<ListVulnerabilityRemediationsInAuditScopeResponse> listVulnerabilityRemediationsInAuditScope(ListVulnerabilityRemediationsInAuditScopeRequest request) {
+        AsyncRequestOperation<ListVulnerabilityRemediationsInAuditScopeRequest, ListVulnerabilityRemediationsInAuditScopeResponse> operation
+              = new ListVulnerabilityRemediationsInAuditScope.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List assets associated with vulnerabilities
+     * 
+     * <p>List assets that Vanta monitors that are associated with vulnerabilities.
+     * 
+     * @return The async call builder
+     */
+    public GetVulnerableAssetsRequestBuilder getVulnerableAssets() {
+        return new GetVulnerableAssetsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List assets associated with vulnerabilities
+     * 
+     * <p>List assets that Vanta monitors that are associated with vulnerabilities.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetVulnerableAssetsResponse>} - The async response
+     */
+    public CompletableFuture<GetVulnerableAssetsResponse> getVulnerableAssets(GetVulnerableAssetsRequest request) {
+        AsyncRequestOperation<GetVulnerableAssetsRequest, GetVulnerableAssetsResponse> operation
+              = new GetVulnerableAssets.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

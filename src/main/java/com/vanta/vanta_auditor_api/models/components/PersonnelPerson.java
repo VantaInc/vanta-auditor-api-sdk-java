@@ -57,7 +57,7 @@ public class PersonnelPerson {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("employmentStatus")
-    private JsonNullable<? extends EmploymentStatus> employmentStatus;
+    private JsonNullable<? extends PersonnelPersonEmploymentStatus> employmentStatus;
 
     /**
      * Start date in ISO 8601 format (YYYY-MM-DD), or null if not available.
@@ -97,7 +97,7 @@ public class PersonnelPerson {
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("taskStatus")
-    private JsonNullable<? extends TaskStatus> taskStatus;
+    private JsonNullable<? extends PersonnelPersonTaskStatus> taskStatus;
 
     /**
      * Last date user was sent an onboarding reminder email in ISO 8601 format, or null if never reminded.
@@ -161,12 +161,12 @@ public class PersonnelPerson {
             @JsonProperty("name") String name,
             @JsonProperty("email") String email,
             @JsonProperty("jobTitle") JsonNullable<String> jobTitle,
-            @JsonProperty("employmentStatus") JsonNullable<? extends EmploymentStatus> employmentStatus,
+            @JsonProperty("employmentStatus") JsonNullable<? extends PersonnelPersonEmploymentStatus> employmentStatus,
             @JsonProperty("startDate") JsonNullable<String> startDate,
             @JsonProperty("endDate") JsonNullable<String> endDate,
             @JsonProperty("groups") Optional<? extends List<Groups>> groups,
             @JsonProperty("source") JsonNullable<? extends Source> source,
-            @JsonProperty("taskStatus") JsonNullable<? extends TaskStatus> taskStatus,
+            @JsonProperty("taskStatus") JsonNullable<? extends PersonnelPersonTaskStatus> taskStatus,
             @JsonProperty("lastReminded") JsonNullable<String> lastReminded,
             @JsonProperty("policies") JsonNullable<? extends Policies> policies,
             @JsonProperty("trainings") JsonNullable<? extends Trainings> trainings,
@@ -259,8 +259,8 @@ public class PersonnelPerson {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public JsonNullable<EmploymentStatus> employmentStatus() {
-        return (JsonNullable<EmploymentStatus>) employmentStatus;
+    public JsonNullable<PersonnelPersonEmploymentStatus> employmentStatus() {
+        return (JsonNullable<PersonnelPersonEmploymentStatus>) employmentStatus;
     }
 
     /**
@@ -307,8 +307,8 @@ public class PersonnelPerson {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public JsonNullable<TaskStatus> taskStatus() {
-        return (JsonNullable<TaskStatus>) taskStatus;
+    public JsonNullable<PersonnelPersonTaskStatus> taskStatus() {
+        return (JsonNullable<PersonnelPersonTaskStatus>) taskStatus;
     }
 
     /**
@@ -433,7 +433,7 @@ public class PersonnelPerson {
     /**
      * Employment status, or null if not available.
      */
-    public PersonnelPerson withEmploymentStatus(EmploymentStatus employmentStatus) {
+    public PersonnelPerson withEmploymentStatus(PersonnelPersonEmploymentStatus employmentStatus) {
         Utils.checkNotNull(employmentStatus, "employmentStatus");
         this.employmentStatus = JsonNullable.of(employmentStatus);
         return this;
@@ -442,7 +442,7 @@ public class PersonnelPerson {
     /**
      * Employment status, or null if not available.
      */
-    public PersonnelPerson withEmploymentStatus(JsonNullable<? extends EmploymentStatus> employmentStatus) {
+    public PersonnelPerson withEmploymentStatus(JsonNullable<? extends PersonnelPersonEmploymentStatus> employmentStatus) {
         Utils.checkNotNull(employmentStatus, "employmentStatus");
         this.employmentStatus = employmentStatus;
         return this;
@@ -533,7 +533,7 @@ public class PersonnelPerson {
      * Overall task status information, or null if not available.
      * Full Audit View only - omitted in Controlled Audit View.
      */
-    public PersonnelPerson withTaskStatus(TaskStatus taskStatus) {
+    public PersonnelPerson withTaskStatus(PersonnelPersonTaskStatus taskStatus) {
         Utils.checkNotNull(taskStatus, "taskStatus");
         this.taskStatus = JsonNullable.of(taskStatus);
         return this;
@@ -543,7 +543,7 @@ public class PersonnelPerson {
      * Overall task status information, or null if not available.
      * Full Audit View only - omitted in Controlled Audit View.
      */
-    public PersonnelPerson withTaskStatus(JsonNullable<? extends TaskStatus> taskStatus) {
+    public PersonnelPerson withTaskStatus(JsonNullable<? extends PersonnelPersonTaskStatus> taskStatus) {
         Utils.checkNotNull(taskStatus, "taskStatus");
         this.taskStatus = taskStatus;
         return this;
@@ -762,7 +762,7 @@ public class PersonnelPerson {
 
         private JsonNullable<String> jobTitle = JsonNullable.undefined();
 
-        private JsonNullable<? extends EmploymentStatus> employmentStatus = JsonNullable.undefined();
+        private JsonNullable<? extends PersonnelPersonEmploymentStatus> employmentStatus = JsonNullable.undefined();
 
         private JsonNullable<String> startDate = JsonNullable.undefined();
 
@@ -772,7 +772,7 @@ public class PersonnelPerson {
 
         private JsonNullable<? extends Source> source = JsonNullable.undefined();
 
-        private JsonNullable<? extends TaskStatus> taskStatus = JsonNullable.undefined();
+        private JsonNullable<? extends PersonnelPersonTaskStatus> taskStatus = JsonNullable.undefined();
 
         private JsonNullable<String> lastReminded = JsonNullable.undefined();
 
@@ -845,7 +845,7 @@ public class PersonnelPerson {
         /**
          * Employment status, or null if not available.
          */
-        public Builder employmentStatus(EmploymentStatus employmentStatus) {
+        public Builder employmentStatus(PersonnelPersonEmploymentStatus employmentStatus) {
             Utils.checkNotNull(employmentStatus, "employmentStatus");
             this.employmentStatus = JsonNullable.of(employmentStatus);
             return this;
@@ -854,7 +854,7 @@ public class PersonnelPerson {
         /**
          * Employment status, or null if not available.
          */
-        public Builder employmentStatus(JsonNullable<? extends EmploymentStatus> employmentStatus) {
+        public Builder employmentStatus(JsonNullable<? extends PersonnelPersonEmploymentStatus> employmentStatus) {
             Utils.checkNotNull(employmentStatus, "employmentStatus");
             this.employmentStatus = employmentStatus;
             return this;
@@ -949,7 +949,7 @@ public class PersonnelPerson {
          * Overall task status information, or null if not available.
          * Full Audit View only - omitted in Controlled Audit View.
          */
-        public Builder taskStatus(TaskStatus taskStatus) {
+        public Builder taskStatus(PersonnelPersonTaskStatus taskStatus) {
             Utils.checkNotNull(taskStatus, "taskStatus");
             this.taskStatus = JsonNullable.of(taskStatus);
             return this;
@@ -959,7 +959,7 @@ public class PersonnelPerson {
          * Overall task status information, or null if not available.
          * Full Audit View only - omitted in Controlled Audit View.
          */
-        public Builder taskStatus(JsonNullable<? extends TaskStatus> taskStatus) {
+        public Builder taskStatus(JsonNullable<? extends PersonnelPersonTaskStatus> taskStatus) {
             Utils.checkNotNull(taskStatus, "taskStatus");
             this.taskStatus = taskStatus;
             return this;

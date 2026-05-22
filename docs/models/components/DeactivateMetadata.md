@@ -1,0 +1,14 @@
+# DeactivateMetadata
+
+Metadata for the deactivation of the vulnerability.
+
+
+## Fields
+
+| Field                                                                                     | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `isVulnDeactivatedIndefinitely`                                                           | *boolean*                                                                                 | :heavy_check_mark:                                                                        | Whether the vulnerability is deactivated indefinitely.                                    |
+| `deactivatedUntilDate`                                                                    | [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html) | :heavy_check_mark:                                                                        | Date when the vulnerability will be reactivated.                                          |
+| `deactivationReason`                                                                      | *String*                                                                                  | :heavy_check_mark:                                                                        | Reason for deactivating the vulnerability.                                                |
+| `deactivatedOnDate`                                                                       | [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html) | :heavy_check_mark:                                                                        | Date when the vulnerability was deactivated.                                              |
+| `deactivatedBy`                                                                           | *String*                                                                                  | :heavy_check_mark:                                                                        | Identifier of the user who deactivated the vulnerability.                                 |
