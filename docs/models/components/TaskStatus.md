@@ -1,16 +1,25 @@
 # TaskStatus
 
-Overall task status information, or null if not available.
-Full Audit View only - omitted in Controlled Audit View.
+The status of a task.
+- COMPLETE: The task has been completed.
+- DUE_SOON: The task is due soon.
+- OVERDUE: The task is overdue.
+- NONE: The task is not assigned.
+
+## Example Usage
+
+```java
+import com.vanta.vanta_auditor_api.models.components.TaskStatus;
+
+TaskStatus value = TaskStatus.COMPLETE;
+```
 
 
-## Fields
+## Values
 
-| Field                                                                                  | Type                                                                                   | Required                                                                               | Description                                                                            | Example                                                                                |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `status`                                                                               | [PeopleTaskStatus](../../models/components/PeopleTaskStatus.md)                        | :heavy_check_mark:                                                                     | Overall user task status.                                                              |                                                                                        |
-| `dueDate`                                                                              | *Optional\<String>*                                                                    | :heavy_check_mark:                                                                     | Due date for the earliest incomplete task in ISO 8601 format, or null if none.         | 2024-03-15                                                                             |
-| `completionDate`                                                                       | *Optional\<String>*                                                                    | :heavy_check_mark:                                                                     | Completion date when all tasks are complete in ISO 8601 format, or null if incomplete. | 2024-01-20                                                                             |
-| `numTasksCompleted`                                                                    | *Optional\<Double>*                                                                    | :heavy_check_mark:                                                                     | Count of completed tasks, or null if not available.                                    | 5                                                                                      |
-| `numTasksOverdue`                                                                      | *Optional\<Double>*                                                                    | :heavy_check_mark:                                                                     | Count of overdue tasks, or null if not available.                                      | 2                                                                                      |
-| `numTasksDueSoon`                                                                      | *Optional\<Double>*                                                                    | :heavy_check_mark:                                                                     | Count of tasks due soon, or null if not available.                                     | 1                                                                                      |
+| Name       | Value      |
+| ---------- | ---------- |
+| `COMPLETE` | COMPLETE   |
+| `DUE_SOON` | DUE_SOON   |
+| `OVERDUE`  | OVERDUE    |
+| `NONE`     | NONE       |

@@ -1,23 +1,27 @@
 # EmploymentStatus
 
-Employment status, or null if not available.
+The employment status of a person:
+- UPCOMING: The person is not yet employed and will start employment in the future.
+- CURRENT: The person is currently employed.
+- ON_LEAVE: The person is on leave.
+- INACTIVE: The person's employment is inactive.
+- FORMER: The person was previously employed.
 
 ## Example Usage
 
 ```java
 import com.vanta.vanta_auditor_api.models.components.EmploymentStatus;
 
-EmploymentStatus value = EmploymentStatus.CURRENTLY_EMPLOYED;
+EmploymentStatus value = EmploymentStatus.UPCOMING;
 ```
 
 
 ## Values
 
-| Name                  | Value                 |
-| --------------------- | --------------------- |
-| `CURRENTLY_EMPLOYED`  | CURRENTLY_EMPLOYED    |
-| `INACTIVE_EMPLOYEE`   | INACTIVE_EMPLOYEE     |
-| `NOT_PEOPLE`          | NOT_PEOPLE            |
-| `ON_LEAVE`            | ON_LEAVE              |
-| `PREVIOUSLY_EMPLOYED` | PREVIOUSLY_EMPLOYED   |
-| `UPCOMING_EMPLOYEE`   | UPCOMING_EMPLOYEE     |
+| Name       | Value      |
+| ---------- | ---------- |
+| `UPCOMING` | UPCOMING   |
+| `CURRENT`  | CURRENT    |
+| `ON_LEAVE` | ON_LEAVE   |
+| `INACTIVE` | INACTIVE   |
+| `FORMER`   | FORMER     |

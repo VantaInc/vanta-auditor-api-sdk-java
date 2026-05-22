@@ -11,15 +11,19 @@ import java.util.Optional;
 /**
  * EmploymentStatus
  * 
- * <p>Employment status, or null if not available.
+ * <p>The employment status of a person:
+ * - UPCOMING: The person is not yet employed and will start employment in the future.
+ * - CURRENT: The person is currently employed.
+ * - ON_LEAVE: The person is on leave.
+ * - INACTIVE: The person's employment is inactive.
+ * - FORMER: The person was previously employed.
  */
 public enum EmploymentStatus {
-    CURRENTLY_EMPLOYED("CURRENTLY_EMPLOYED"),
-    INACTIVE_EMPLOYEE("INACTIVE_EMPLOYEE"),
-    NOT_PEOPLE("NOT_PEOPLE"),
+    UPCOMING("UPCOMING"),
+    CURRENT("CURRENT"),
     ON_LEAVE("ON_LEAVE"),
-    PREVIOUSLY_EMPLOYED("PREVIOUSLY_EMPLOYED"),
-    UPCOMING_EMPLOYEE("UPCOMING_EMPLOYEE");
+    INACTIVE("INACTIVE"),
+    FORMER("FORMER");
 
     @JsonValue
     private final String value;

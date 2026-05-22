@@ -34,6 +34,8 @@
 * [listAuditIssues](#listauditissues) - List snapshotted issues for an audit
 * [listAuditSnapshots](#listauditsnapshots) - List snapshotted issues for an audit
 * [listVendors](#listvendors) - List vendors for an audit
+* [listMonitoredComputersInAuditScope](#listmonitoredcomputersinauditscope) - List monitored computers
+* [listPeopleInAuditScope](#listpeopleinauditscope) - List of people who are in scope for this audit
 * [listAccountAccessServices](#listaccountaccessservices) - List account access services for an audit
 * [listPersonnelAccountAccess](#listpersonnelaccountaccess) - List account access records for an audit
 * [listPersonnelGroups](#listpersonnelgroups) - List groups for an audit
@@ -41,6 +43,10 @@
 * [listRiskSnapshots](#listrisksnapshots) - List risk snapshots for an audit
 * [listAuditRisks](#listauditrisks) - List risks for an audit
 * [shareInformationRequestList](#shareinformationrequestlist) - Share information request list with customer
+* [listVendorsInAuditScope](#listvendorsinauditscope) - List of vendors who are in scope for this audit
+* [listVulnerabilities](#listvulnerabilities) - List vulnerabilities within the scope of a given audit
+* [listVulnerabilityRemediationsInAuditScope](#listvulnerabilityremediationsinauditscope) - List vulnerability remediations that are in scope for this audit
+* [getVulnerableAssets](#getvulnerableassets) - List assets associated with vulnerabilities
 
 ## list
 
@@ -1937,6 +1943,115 @@ public class Application {
 | -------------------------- | -------------------------- | -------------------------- |
 | models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
 
+## listMonitoredComputersInAuditScope
+
+Returns a list of computers monitored by an MDM (with an integration built
+by Vanta) or by the Vanta Agent. Currently this list does not include
+resources from partner or customer-built integrations.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListMonitoredComputersInAuditScope" method="get" path="/audits/{auditId}/monitored-computers" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListMonitoredComputersInAuditScopeResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListMonitoredComputersInAuditScopeResponse res = sdk.audits().listMonitoredComputersInAuditScope()
+                .auditId("<id>")
+                .pageSize(10)
+                .call();
+
+        if (res.paginatedResponseMonitoredComputer().isPresent()) {
+            System.out.println(res.paginatedResponseMonitoredComputer().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `auditId`                                                                      | *String*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `pageSize`                                                                     | *Optional\<Integer>*                                                           | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `pageCursor`                                                                   | *Optional\<String>*                                                            | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `complianceStatusFilterMatchesAny`                                             | List\<[ComputerStatusFilter](../../models/components/ComputerStatusFilter.md)> | :heavy_minus_sign:                                                             | Filters for monitored computers matching any status declared in the filter.    |
+
+### Response
+
+**[ListMonitoredComputersInAuditScopeResponse](../../models/operations/ListMonitoredComputersInAuditScopeResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listPeopleInAuditScope
+
+Returns a list of people who are in scope for this audit.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListPeopleInAuditScope" method="get" path="/audits/{auditId}/people" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListPeopleInAuditScopeRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListPeopleInAuditScopeResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListPeopleInAuditScopeRequest req = ListPeopleInAuditScopeRequest.builder()
+                .auditId("<id>")
+                .build();
+
+        ListPeopleInAuditScopeResponse res = sdk.audits().listPeopleInAuditScope()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponsePerson().isPresent()) {
+            System.out.println(res.paginatedResponsePerson().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [ListPeopleInAuditScopeRequest](../../models/operations/ListPeopleInAuditScopeRequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+
+### Response
+
+**[ListPeopleInAuditScopeResponse](../../models/operations/ListPeopleInAuditScopeResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
 ## listAccountAccessServices
 
 Retrieves connected account access services for an audit.
@@ -2431,6 +2546,220 @@ public class Application {
 ### Response
 
 **[ShareInformationRequestListResponse](../../models/operations/ShareInformationRequestListResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listVendorsInAuditScope
+
+Returns a list of vendors who are in scope for this audit.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListVendorsInAuditScope" method="get" path="/audits/{auditId}/vendors" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListVendorsInAuditScopeResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListVendorsInAuditScopeResponse res = sdk.audits().listVendorsInAuditScope()
+                .auditId("<id>")
+                .pageSize(10)
+                .call();
+
+        if (res.paginatedResponseVendor().isPresent()) {
+            System.out.println(res.paginatedResponseVendor().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter            | Type                 | Required             | Description          |
+| -------------------- | -------------------- | -------------------- | -------------------- |
+| `auditId`            | *String*             | :heavy_check_mark:   | N/A                  |
+| `pageSize`           | *Optional\<Integer>* | :heavy_minus_sign:   | N/A                  |
+| `pageCursor`         | *Optional\<String>*  | :heavy_minus_sign:   | N/A                  |
+
+### Response
+
+**[ListVendorsInAuditScopeResponse](../../models/operations/ListVendorsInAuditScopeResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listVulnerabilities
+
+List all vulnerabilities based on selected filters.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListVulnerabilities" method="get" path="/audits/{auditId}/vulnerabilities" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListVulnerabilitiesRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListVulnerabilitiesResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListVulnerabilitiesRequest req = ListVulnerabilitiesRequest.builder()
+                .auditId("<id>")
+                .build();
+
+        ListVulnerabilitiesResponse res = sdk.audits().listVulnerabilities()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseAuditorApiVulnerability().isPresent()) {
+            System.out.println(res.paginatedResponseAuditorApiVulnerability().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [ListVulnerabilitiesRequest](../../models/operations/ListVulnerabilitiesRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[ListVulnerabilitiesResponse](../../models/operations/ListVulnerabilitiesResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listVulnerabilityRemediationsInAuditScope
+
+List all vulnerability remediations based on selected filters that are in scope for this audit.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListVulnerabilityRemediationsInAuditScope" method="get" path="/audits/{auditId}/vulnerability-remediations" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListVulnerabilityRemediationsInAuditScopeRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListVulnerabilityRemediationsInAuditScopeResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListVulnerabilityRemediationsInAuditScopeRequest req = ListVulnerabilityRemediationsInAuditScopeRequest.builder()
+                .auditId("<id>")
+                .build();
+
+        ListVulnerabilityRemediationsInAuditScopeResponse res = sdk.audits().listVulnerabilityRemediationsInAuditScope()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseVulnerabilityRemediation().isPresent()) {
+            System.out.println(res.paginatedResponseVulnerabilityRemediation().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                       | Type                                                                                                                            | Required                                                                                                                        | Description                                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                                       | [ListVulnerabilityRemediationsInAuditScopeRequest](../../models/operations/ListVulnerabilityRemediationsInAuditScopeRequest.md) | :heavy_check_mark:                                                                                                              | The request object to use for the request.                                                                                      |
+
+### Response
+
+**[ListVulnerabilityRemediationsInAuditScopeResponse](../../models/operations/ListVulnerabilityRemediationsInAuditScopeResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## getVulnerableAssets
+
+List assets that Vanta monitors that are associated with vulnerabilities.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="GetVulnerableAssets" method="get" path="/audits/{auditId}/vulnerable-assets" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.GetVulnerableAssetsRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetVulnerableAssetsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        GetVulnerableAssetsRequest req = GetVulnerableAssetsRequest.builder()
+                .auditId("<id>")
+                .build();
+
+        GetVulnerableAssetsResponse res = sdk.audits().getVulnerableAssets()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseVulnerableAsset().isPresent()) {
+            System.out.println(res.paginatedResponseVulnerableAsset().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [GetVulnerableAssetsRequest](../../models/operations/GetVulnerableAssetsRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+
+### Response
+
+**[GetVulnerableAssetsResponse](../../models/operations/GetVulnerableAssetsResponse.md)**
 
 ### Errors
 

@@ -1,0 +1,11 @@
+# ListMonitoredComputersInAuditScopeRequest
+
+
+## Fields
+
+| Field                                                                          | Type                                                                           | Required                                                                       | Description                                                                    |
+| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
+| `auditId`                                                                      | *String*                                                                       | :heavy_check_mark:                                                             | N/A                                                                            |
+| `pageSize`                                                                     | *Optional\<Integer>*                                                           | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `pageCursor`                                                                   | *Optional\<String>*                                                            | :heavy_minus_sign:                                                             | N/A                                                                            |
+| `complianceStatusFilterMatchesAny`                                             | List\<[ComputerStatusFilter](../../models/components/ComputerStatusFilter.md)> | :heavy_minus_sign:                                                             | Filters for monitored computers matching any status declared in the filter.    |
