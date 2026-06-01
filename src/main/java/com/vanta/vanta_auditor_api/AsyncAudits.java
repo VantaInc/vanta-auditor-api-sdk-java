@@ -191,6 +191,7 @@ import com.vanta.vanta_auditor_api.operations.UpdateCommentForInformationRequest
 import com.vanta.vanta_auditor_api.operations.UpdateInformationRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import java.lang.Boolean;
+import java.lang.Deprecated;
 import java.lang.Integer;
 import java.lang.String;
 import java.time.OffsetDateTime;
@@ -1997,8 +1998,12 @@ public class AsyncAudits {
      * by Vanta) or by the Vanta Agent. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListMonitoredComputersInAuditScopeRequestBuilder listMonitoredComputersInAuditScope() {
         return new ListMonitoredComputersInAuditScopeRequestBuilder(sdkConfiguration);
     }
@@ -2010,9 +2015,13 @@ public class AsyncAudits {
      * by Vanta) or by the Vanta Agent. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param auditId 
      * @return {@code CompletableFuture<ListMonitoredComputersInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public CompletableFuture<ListMonitoredComputersInAuditScopeResponse> listMonitoredComputersInAuditScope(String auditId) {
         return listMonitoredComputersInAuditScope(
                 auditId, Optional.empty(), Optional.empty(),
@@ -2026,12 +2035,16 @@ public class AsyncAudits {
      * by Vanta) or by the Vanta Agent. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param auditId 
      * @param pageSize 
      * @param pageCursor 
      * @param complianceStatusFilterMatchesAny Filters for monitored computers matching any status declared in the filter.
      * @return {@code CompletableFuture<ListMonitoredComputersInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public CompletableFuture<ListMonitoredComputersInAuditScopeResponse> listMonitoredComputersInAuditScope(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor, Optional<? extends List<ComputerStatusFilter>> complianceStatusFilterMatchesAny) {
@@ -2055,8 +2068,12 @@ public class AsyncAudits {
      * 
      * <p>Returns a list of people who are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListPeopleInAuditScopeRequestBuilder listPeopleInAuditScope() {
         return new ListPeopleInAuditScopeRequestBuilder(sdkConfiguration);
     }
@@ -2066,9 +2083,13 @@ public class AsyncAudits {
      * 
      * <p>Returns a list of people who are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return {@code CompletableFuture<ListPeopleInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public CompletableFuture<ListPeopleInAuditScopeResponse> listPeopleInAuditScope(ListPeopleInAuditScopeRequest request) {
         AsyncRequestOperation<ListPeopleInAuditScopeRequest, ListPeopleInAuditScopeResponse> operation
               = new ListPeopleInAuditScope.Async(sdkConfiguration, _headers);
@@ -2609,8 +2630,12 @@ public class AsyncAudits {
      * 
      * <p>Returns a list of vendors who are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListVendorsInAuditScopeRequestBuilder listVendorsInAuditScope() {
         return new ListVendorsInAuditScopeRequestBuilder(sdkConfiguration);
     }
@@ -2620,9 +2645,13 @@ public class AsyncAudits {
      * 
      * <p>Returns a list of vendors who are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param auditId 
      * @return {@code CompletableFuture<ListVendorsInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public CompletableFuture<ListVendorsInAuditScopeResponse> listVendorsInAuditScope(String auditId) {
         return listVendorsInAuditScope(auditId, Optional.empty(), Optional.empty());
     }
@@ -2632,11 +2661,15 @@ public class AsyncAudits {
      * 
      * <p>Returns a list of vendors who are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param auditId 
      * @param pageSize 
      * @param pageCursor 
      * @return {@code CompletableFuture<ListVendorsInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public CompletableFuture<ListVendorsInAuditScopeResponse> listVendorsInAuditScope(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor) {
@@ -2659,8 +2692,12 @@ public class AsyncAudits {
      * 
      * <p>List all vulnerabilities based on selected filters.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListVulnerabilitiesRequestBuilder listVulnerabilities() {
         return new ListVulnerabilitiesRequestBuilder(sdkConfiguration);
     }
@@ -2670,9 +2707,13 @@ public class AsyncAudits {
      * 
      * <p>List all vulnerabilities based on selected filters.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return {@code CompletableFuture<ListVulnerabilitiesResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public CompletableFuture<ListVulnerabilitiesResponse> listVulnerabilities(ListVulnerabilitiesRequest request) {
         AsyncRequestOperation<ListVulnerabilitiesRequest, ListVulnerabilitiesResponse> operation
               = new ListVulnerabilities.Async(sdkConfiguration, _headers);
@@ -2686,8 +2727,12 @@ public class AsyncAudits {
      * 
      * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListVulnerabilityRemediationsInAuditScopeRequestBuilder listVulnerabilityRemediationsInAuditScope() {
         return new ListVulnerabilityRemediationsInAuditScopeRequestBuilder(sdkConfiguration);
     }
@@ -2697,9 +2742,13 @@ public class AsyncAudits {
      * 
      * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return {@code CompletableFuture<ListVulnerabilityRemediationsInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public CompletableFuture<ListVulnerabilityRemediationsInAuditScopeResponse> listVulnerabilityRemediationsInAuditScope(ListVulnerabilityRemediationsInAuditScopeRequest request) {
         AsyncRequestOperation<ListVulnerabilityRemediationsInAuditScopeRequest, ListVulnerabilityRemediationsInAuditScopeResponse> operation
               = new ListVulnerabilityRemediationsInAuditScope.Async(sdkConfiguration, _headers);
@@ -2713,8 +2762,12 @@ public class AsyncAudits {
      * 
      * <p>List assets that Vanta monitors that are associated with vulnerabilities.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public GetVulnerableAssetsRequestBuilder getVulnerableAssets() {
         return new GetVulnerableAssetsRequestBuilder(sdkConfiguration);
     }
@@ -2724,9 +2777,13 @@ public class AsyncAudits {
      * 
      * <p>List assets that Vanta monitors that are associated with vulnerabilities.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return {@code CompletableFuture<GetVulnerableAssetsResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public CompletableFuture<GetVulnerableAssetsResponse> getVulnerableAssets(GetVulnerableAssetsRequest request) {
         AsyncRequestOperation<GetVulnerableAssetsRequest, GetVulnerableAssetsResponse> operation
               = new GetVulnerableAssets.Async(sdkConfiguration, _headers);
