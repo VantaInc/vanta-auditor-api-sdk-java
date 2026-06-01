@@ -191,6 +191,7 @@ import com.vanta.vanta_auditor_api.operations.UpdateCommentForInformationRequest
 import com.vanta.vanta_auditor_api.operations.UpdateInformationRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import java.lang.Boolean;
+import java.lang.Deprecated;
 import java.lang.Integer;
 import java.lang.String;
 import java.time.OffsetDateTime;
@@ -1966,8 +1967,12 @@ public class Audits {
      * by Vanta) or by the Vanta Agent. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListMonitoredComputersInAuditScopeRequestBuilder listMonitoredComputersInAuditScope() {
         return new ListMonitoredComputersInAuditScopeRequestBuilder(sdkConfiguration);
     }
@@ -1979,10 +1984,14 @@ public class Audits {
      * by Vanta) or by the Vanta Agent. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param auditId 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListMonitoredComputersInAuditScopeResponse listMonitoredComputersInAuditScope(String auditId) {
         return listMonitoredComputersInAuditScope(auditId, Optional.empty(), Optional.empty(),
             Optional.empty());
@@ -1995,13 +2004,17 @@ public class Audits {
      * by Vanta) or by the Vanta Agent. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param auditId 
      * @param pageSize 
      * @param pageCursor 
      * @param complianceStatusFilterMatchesAny Filters for monitored computers matching any status declared in the filter.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListMonitoredComputersInAuditScopeResponse listMonitoredComputersInAuditScope(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor, Optional<? extends List<ComputerStatusFilter>> complianceStatusFilterMatchesAny) {
@@ -2023,8 +2036,12 @@ public class Audits {
      * 
      * <p>Returns a list of people who are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListPeopleInAuditScopeRequestBuilder listPeopleInAuditScope() {
         return new ListPeopleInAuditScopeRequestBuilder(sdkConfiguration);
     }
@@ -2034,10 +2051,14 @@ public class Audits {
      * 
      * <p>Returns a list of people who are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListPeopleInAuditScopeResponse listPeopleInAuditScope(ListPeopleInAuditScopeRequest request) {
         RequestOperation<ListPeopleInAuditScopeRequest, ListPeopleInAuditScopeResponse> operation
               = new ListPeopleInAuditScope.Sync(sdkConfiguration, _headers);
@@ -2571,8 +2592,12 @@ public class Audits {
      * 
      * <p>Returns a list of vendors who are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListVendorsInAuditScopeRequestBuilder listVendorsInAuditScope() {
         return new ListVendorsInAuditScopeRequestBuilder(sdkConfiguration);
     }
@@ -2582,10 +2607,14 @@ public class Audits {
      * 
      * <p>Returns a list of vendors who are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param auditId 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListVendorsInAuditScopeResponse listVendorsInAuditScope(String auditId) {
         return listVendorsInAuditScope(auditId, Optional.empty(), Optional.empty());
     }
@@ -2595,12 +2624,16 @@ public class Audits {
      * 
      * <p>Returns a list of vendors who are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param auditId 
      * @param pageSize 
      * @param pageCursor 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListVendorsInAuditScopeResponse listVendorsInAuditScope(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor) {
@@ -2621,8 +2654,12 @@ public class Audits {
      * 
      * <p>List all vulnerabilities based on selected filters.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListVulnerabilitiesRequestBuilder listVulnerabilities() {
         return new ListVulnerabilitiesRequestBuilder(sdkConfiguration);
     }
@@ -2632,10 +2669,14 @@ public class Audits {
      * 
      * <p>List all vulnerabilities based on selected filters.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListVulnerabilitiesResponse listVulnerabilities(ListVulnerabilitiesRequest request) {
         RequestOperation<ListVulnerabilitiesRequest, ListVulnerabilitiesResponse> operation
               = new ListVulnerabilities.Sync(sdkConfiguration, _headers);
@@ -2647,8 +2688,12 @@ public class Audits {
      * 
      * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListVulnerabilityRemediationsInAuditScopeRequestBuilder listVulnerabilityRemediationsInAuditScope() {
         return new ListVulnerabilityRemediationsInAuditScopeRequestBuilder(sdkConfiguration);
     }
@@ -2658,10 +2703,14 @@ public class Audits {
      * 
      * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public ListVulnerabilityRemediationsInAuditScopeResponse listVulnerabilityRemediationsInAuditScope(ListVulnerabilityRemediationsInAuditScopeRequest request) {
         RequestOperation<ListVulnerabilityRemediationsInAuditScopeRequest, ListVulnerabilityRemediationsInAuditScopeResponse> operation
               = new ListVulnerabilityRemediationsInAuditScope.Sync(sdkConfiguration, _headers);
@@ -2673,8 +2722,12 @@ public class Audits {
      * 
      * <p>List assets that Vanta monitors that are associated with vulnerabilities.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @return The call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public GetVulnerableAssetsRequestBuilder getVulnerableAssets() {
         return new GetVulnerableAssetsRequestBuilder(sdkConfiguration);
     }
@@ -2684,10 +2737,14 @@ public class Audits {
      * 
      * <p>List assets that Vanta monitors that are associated with vulnerabilities.
      * 
+     * <p>End of life — this endpoint works for legacy audits only and does not support controlled audit view.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public GetVulnerableAssetsResponse getVulnerableAssets(GetVulnerableAssetsRequest request) {
         RequestOperation<GetVulnerableAssetsRequest, GetVulnerableAssetsResponse> operation
               = new GetVulnerableAssets.Sync(sdkConfiguration, _headers);
