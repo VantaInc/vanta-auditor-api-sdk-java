@@ -70,6 +70,16 @@ public class VantaTestSnapshotEvidenceDetail {
     @JsonProperty("rawTestData")
     private List<VantaTestSnapshotRawTestDataRow> rawTestData;
 
+    /**
+     * Resources excluded from the test at snapshot time, grouped by exclusion
+     * reason. `testLevel` contains resources the customer disabled for the
+     * test; `frameworkLevel` contains resources scoped out by the framework's
+     * segment configuration.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("outOfScopeResources")
+    private Optional<? extends VantaTestSnapshotOutOfScopeResources> outOfScopeResources;
+
     @JsonCreator
     public VantaTestSnapshotEvidenceDetail(
             @JsonProperty("testId") String testId,
@@ -78,7 +88,8 @@ public class VantaTestSnapshotEvidenceDetail {
             @JsonProperty("evaluationCriteria") Optional<String> evaluationCriteria,
             @JsonProperty("integrations") List<VantaTestSnapshotIntegration> integrations,
             @JsonProperty("slaRemediation") Optional<? extends SlaRemediation> slaRemediation,
-            @JsonProperty("rawTestData") List<VantaTestSnapshotRawTestDataRow> rawTestData) {
+            @JsonProperty("rawTestData") List<VantaTestSnapshotRawTestDataRow> rawTestData,
+            @JsonProperty("outOfScopeResources") Optional<? extends VantaTestSnapshotOutOfScopeResources> outOfScopeResources) {
         Utils.checkNotNull(testId, "testId");
         Utils.checkNotNull(testName, "testName");
         Utils.checkNotNull(description, "description");
@@ -86,6 +97,7 @@ public class VantaTestSnapshotEvidenceDetail {
         Utils.checkNotNull(integrations, "integrations");
         Utils.checkNotNull(slaRemediation, "slaRemediation");
         Utils.checkNotNull(rawTestData, "rawTestData");
+        Utils.checkNotNull(outOfScopeResources, "outOfScopeResources");
         this.testId = testId;
         this.testName = testName;
         this.description = description;
@@ -93,6 +105,7 @@ public class VantaTestSnapshotEvidenceDetail {
         this.integrations = integrations;
         this.slaRemediation = slaRemediation;
         this.rawTestData = rawTestData;
+        this.outOfScopeResources = outOfScopeResources;
     }
     
     public VantaTestSnapshotEvidenceDetail(
@@ -103,7 +116,7 @@ public class VantaTestSnapshotEvidenceDetail {
             List<VantaTestSnapshotRawTestDataRow> rawTestData) {
         this(testId, testName, description,
             Optional.empty(), integrations, Optional.empty(),
-            rawTestData);
+            rawTestData, Optional.empty());
     }
 
     /**
@@ -161,6 +174,18 @@ public class VantaTestSnapshotEvidenceDetail {
     @JsonIgnore
     public List<VantaTestSnapshotRawTestDataRow> rawTestData() {
         return rawTestData;
+    }
+
+    /**
+     * Resources excluded from the test at snapshot time, grouped by exclusion
+     * reason. `testLevel` contains resources the customer disabled for the
+     * test; `frameworkLevel` contains resources scoped out by the framework's
+     * segment configuration.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<VantaTestSnapshotOutOfScopeResources> outOfScopeResources() {
+        return (Optional<VantaTestSnapshotOutOfScopeResources>) outOfScopeResources;
     }
 
     public static Builder builder() {
@@ -251,6 +276,31 @@ public class VantaTestSnapshotEvidenceDetail {
         return this;
     }
 
+    /**
+     * Resources excluded from the test at snapshot time, grouped by exclusion
+     * reason. `testLevel` contains resources the customer disabled for the
+     * test; `frameworkLevel` contains resources scoped out by the framework's
+     * segment configuration.
+     */
+    public VantaTestSnapshotEvidenceDetail withOutOfScopeResources(VantaTestSnapshotOutOfScopeResources outOfScopeResources) {
+        Utils.checkNotNull(outOfScopeResources, "outOfScopeResources");
+        this.outOfScopeResources = Optional.ofNullable(outOfScopeResources);
+        return this;
+    }
+
+
+    /**
+     * Resources excluded from the test at snapshot time, grouped by exclusion
+     * reason. `testLevel` contains resources the customer disabled for the
+     * test; `frameworkLevel` contains resources scoped out by the framework's
+     * segment configuration.
+     */
+    public VantaTestSnapshotEvidenceDetail withOutOfScopeResources(Optional<? extends VantaTestSnapshotOutOfScopeResources> outOfScopeResources) {
+        Utils.checkNotNull(outOfScopeResources, "outOfScopeResources");
+        this.outOfScopeResources = outOfScopeResources;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -267,7 +317,8 @@ public class VantaTestSnapshotEvidenceDetail {
             Utils.enhancedDeepEquals(this.evaluationCriteria, other.evaluationCriteria) &&
             Utils.enhancedDeepEquals(this.integrations, other.integrations) &&
             Utils.enhancedDeepEquals(this.slaRemediation, other.slaRemediation) &&
-            Utils.enhancedDeepEquals(this.rawTestData, other.rawTestData);
+            Utils.enhancedDeepEquals(this.rawTestData, other.rawTestData) &&
+            Utils.enhancedDeepEquals(this.outOfScopeResources, other.outOfScopeResources);
     }
     
     @Override
@@ -275,7 +326,7 @@ public class VantaTestSnapshotEvidenceDetail {
         return Utils.enhancedHash(
             testId, testName, description,
             evaluationCriteria, integrations, slaRemediation,
-            rawTestData);
+            rawTestData, outOfScopeResources);
     }
     
     @Override
@@ -287,7 +338,8 @@ public class VantaTestSnapshotEvidenceDetail {
                 "evaluationCriteria", evaluationCriteria,
                 "integrations", integrations,
                 "slaRemediation", slaRemediation,
-                "rawTestData", rawTestData);
+                "rawTestData", rawTestData,
+                "outOfScopeResources", outOfScopeResources);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -306,6 +358,8 @@ public class VantaTestSnapshotEvidenceDetail {
         private Optional<? extends SlaRemediation> slaRemediation = Optional.empty();
 
         private List<VantaTestSnapshotRawTestDataRow> rawTestData;
+
+        private Optional<? extends VantaTestSnapshotOutOfScopeResources> outOfScopeResources = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -399,12 +453,37 @@ public class VantaTestSnapshotEvidenceDetail {
             return this;
         }
 
+
+        /**
+         * Resources excluded from the test at snapshot time, grouped by exclusion
+         * reason. `testLevel` contains resources the customer disabled for the
+         * test; `frameworkLevel` contains resources scoped out by the framework's
+         * segment configuration.
+         */
+        public Builder outOfScopeResources(VantaTestSnapshotOutOfScopeResources outOfScopeResources) {
+            Utils.checkNotNull(outOfScopeResources, "outOfScopeResources");
+            this.outOfScopeResources = Optional.ofNullable(outOfScopeResources);
+            return this;
+        }
+
+        /**
+         * Resources excluded from the test at snapshot time, grouped by exclusion
+         * reason. `testLevel` contains resources the customer disabled for the
+         * test; `frameworkLevel` contains resources scoped out by the framework's
+         * segment configuration.
+         */
+        public Builder outOfScopeResources(Optional<? extends VantaTestSnapshotOutOfScopeResources> outOfScopeResources) {
+            Utils.checkNotNull(outOfScopeResources, "outOfScopeResources");
+            this.outOfScopeResources = outOfScopeResources;
+            return this;
+        }
+
         public VantaTestSnapshotEvidenceDetail build() {
 
             return new VantaTestSnapshotEvidenceDetail(
                 testId, testName, description,
                 evaluationCriteria, integrations, slaRemediation,
-                rawTestData);
+                rawTestData, outOfScopeResources);
         }
 
     }

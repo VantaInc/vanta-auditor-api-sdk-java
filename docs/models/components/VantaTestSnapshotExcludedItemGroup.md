@@ -1,0 +1,9 @@
+# VantaTestSnapshotExcludedItemGroup
+
+
+## Fields
+
+| Field                                                                                            | Type                                                                                             | Required                                                                                         | Description                                                                                      |
+| ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| `reason`                                                                                         | *String*                                                                                         | :heavy_check_mark:                                                                               | N/A                                                                                              |
+| `entities`                                                                                       | List\<[VantaTestSnapshotExcludedItem](../../models/components/VantaTestSnapshotExcludedItem.md)> | :heavy_check_mark:                                                                               | N/A                                                                                              |
