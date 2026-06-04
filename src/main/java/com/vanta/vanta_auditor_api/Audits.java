@@ -333,7 +333,7 @@ public class Audits {
      * - `search`: Searches code change titles and repository names (case-insensitive)
      * - `sourcesMatchesAny`: Filters by version control source (accepted values: github, gitlab,
      * bitbucket, azuredevops)
-     * - `startDate` / `endDate`: Filters by the closed date range
+     * - `closedAfterDate` / `closedBeforeDate`: Filters by the closed date range
      * 
      * <p>Uses cursor-based pagination. To paginate:
      * 1. Make initial request with desired `pageSize`
@@ -361,7 +361,7 @@ public class Audits {
      * - `search`: Searches code change titles and repository names (case-insensitive)
      * - `sourcesMatchesAny`: Filters by version control source (accepted values: github, gitlab,
      * bitbucket, azuredevops)
-     * - `startDate` / `endDate`: Filters by the closed date range
+     * - `closedAfterDate` / `closedBeforeDate`: Filters by the closed date range
      * 
      * <p>Uses cursor-based pagination. To paginate:
      * 1. Make initial request with desired `pageSize`
@@ -1624,6 +1624,10 @@ public class Audits {
      * level (customer-disabled) and the framework level (segment
      * configuration). Empty exclusion groups are filtered out.
      * 
+     * <p>The `apiRequests` array contains the HTTP requests captured during API
+     * introspection tests. Empty when the test does not perform API
+     * introspection.
+     * 
      * @return The call builder
      */
     public GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder getInformationRequestTestSnapshotEvidenceDetail() {
@@ -1650,6 +1654,10 @@ public class Audits {
      * <p>The `outOfScopeResources` field lists resources excluded at the test
      * level (customer-disabled) and the framework level (segment
      * configuration). Empty exclusion groups are filtered out.
+     * 
+     * <p>The `apiRequests` array contains the HTTP requests captured during API
+     * introspection tests. Empty when the test does not perform API
+     * introspection.
      * 
      * @param auditId 
      * @param requestId 
@@ -1760,6 +1768,9 @@ public class Audits {
      * - `snapshotId`: filtering to a specific snapshot or snapshots, which represent point-in-time
      * captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs
      * and metadata.
+     * - `createdAfterDate` / `createdBeforeDate`: filter to issues created within a date range (inclusive)
+     * - `detectedAfterDate` / `detectedBeforeDate`: filter to issues detected within a date range
+     * (inclusive)
      * 
      * <p>Results are sorted by issue creation date in descending order (newest first) by default.
      * Use `orderBy` and `orderDirection` to customize sorting.
@@ -1793,6 +1804,9 @@ public class Audits {
      * - `snapshotId`: filtering to a specific snapshot or snapshots, which represent point-in-time
      * captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs
      * and metadata.
+     * - `createdAfterDate` / `createdBeforeDate`: filter to issues created within a date range (inclusive)
+     * - `detectedAfterDate` / `detectedBeforeDate`: filter to issues detected within a date range
+     * (inclusive)
      * 
      * <p>Results are sorted by issue creation date in descending order (newest first) by default.
      * Use `orderBy` and `orderDirection` to customize sorting.

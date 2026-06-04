@@ -15,7 +15,8 @@ import java.util.Optional;
  */
 public enum IssueSnapshotItemOrderBy {
     CREATED_AT("createdAt"),
-    LAST_MODIFIED_AT("lastModifiedAt");
+    LAST_MODIFIED_AT("lastModifiedAt"),
+    DETECTED_AT("detectedAt");
 
     @JsonValue
     private final String value;

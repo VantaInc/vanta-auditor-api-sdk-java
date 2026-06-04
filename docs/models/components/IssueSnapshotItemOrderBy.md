@@ -17,3 +17,4 @@ IssueSnapshotItemOrderBy value = IssueSnapshotItemOrderBy.CREATED_AT;
 | ------------------ | ------------------ |
 | `CREATED_AT`       | createdAt          |
 | `LAST_MODIFIED_AT` | lastModifiedAt     |
+| `DETECTED_AT`      | detectedAt         |

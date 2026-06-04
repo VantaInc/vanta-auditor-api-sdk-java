@@ -2,8 +2,8 @@ speakeasyVersion: 1.770.0
 sources:
     Conduct an audit:
         sourceNamespace: conduct-an-audit
-        sourceRevisionDigest: sha256:a9b5a029e9d4c609d74184b3c8ce7d4aca11761d12c17c7796a1c4dbd3208203
-        sourceBlobDigest: sha256:85557e485b86617a5401a099accf72835b09bc69418d8e3581a5361c2857efd8
+        sourceRevisionDigest: sha256:6817c7e21c3273c5a8319c99a3af68ec76bda24e61d30d995bd401efc72c8eae
+        sourceBlobDigest: sha256:fa22e47a8cc5a8e46f33756aa72d2f977510634dd87cc539792c77dad0a4f1d0
         tags:
             - latest
             - 1.0.0
@@ -11,10 +11,10 @@ targets:
     vanta:
         source: Conduct an audit
         sourceNamespace: conduct-an-audit
-        sourceRevisionDigest: sha256:a9b5a029e9d4c609d74184b3c8ce7d4aca11761d12c17c7796a1c4dbd3208203
-        sourceBlobDigest: sha256:85557e485b86617a5401a099accf72835b09bc69418d8e3581a5361c2857efd8
+        sourceRevisionDigest: sha256:6817c7e21c3273c5a8319c99a3af68ec76bda24e61d30d995bd401efc72c8eae
+        sourceBlobDigest: sha256:fa22e47a8cc5a8e46f33756aa72d2f977510634dd87cc539792c77dad0a4f1d0
         codeSamplesNamespace: conduct-an-audit-java-code-samples
-        codeSamplesRevisionDigest: sha256:deafd4e9d79a92a834908a7d389b7cae19db5bf67149f74382d906e706812825
+        codeSamplesRevisionDigest: sha256:61be2817d93f4dc97dfa769e31945826b3ab2ac3c66065c79d540566c3a0c219
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest

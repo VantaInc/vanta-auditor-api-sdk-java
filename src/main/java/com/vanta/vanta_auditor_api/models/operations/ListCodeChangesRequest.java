@@ -54,14 +54,14 @@ public class ListCodeChangesRequest {
     /**
      * Filter code changes closed on or after this date (ISO 8601)
      */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=startDate")
-    private Optional<OffsetDateTime> startDate;
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=closedAfterDate")
+    private Optional<OffsetDateTime> closedAfterDate;
 
     /**
      * Filter code changes closed on or before this date (ISO 8601)
      */
-    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=endDate")
-    private Optional<OffsetDateTime> endDate;
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=closedBeforeDate")
+    private Optional<OffsetDateTime> closedBeforeDate;
 
     @JsonCreator
     public ListCodeChangesRequest(
@@ -70,22 +70,22 @@ public class ListCodeChangesRequest {
             Optional<String> pageCursor,
             Optional<String> search,
             Optional<? extends List<ApiCodeChangeSource>> sourcesMatchesAny,
-            Optional<OffsetDateTime> startDate,
-            Optional<OffsetDateTime> endDate) {
+            Optional<OffsetDateTime> closedAfterDate,
+            Optional<OffsetDateTime> closedBeforeDate) {
         Utils.checkNotNull(auditId, "auditId");
         Utils.checkNotNull(pageSize, "pageSize");
         Utils.checkNotNull(pageCursor, "pageCursor");
         Utils.checkNotNull(search, "search");
         Utils.checkNotNull(sourcesMatchesAny, "sourcesMatchesAny");
-        Utils.checkNotNull(startDate, "startDate");
-        Utils.checkNotNull(endDate, "endDate");
+        Utils.checkNotNull(closedAfterDate, "closedAfterDate");
+        Utils.checkNotNull(closedBeforeDate, "closedBeforeDate");
         this.auditId = auditId;
         this.pageSize = pageSize;
         this.pageCursor = pageCursor;
         this.search = search;
         this.sourcesMatchesAny = sourcesMatchesAny;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.closedAfterDate = closedAfterDate;
+        this.closedBeforeDate = closedBeforeDate;
     }
     
     public ListCodeChangesRequest(
@@ -141,16 +141,16 @@ public class ListCodeChangesRequest {
      * Filter code changes closed on or after this date (ISO 8601)
      */
     @JsonIgnore
-    public Optional<OffsetDateTime> startDate() {
-        return startDate;
+    public Optional<OffsetDateTime> closedAfterDate() {
+        return closedAfterDate;
     }
 
     /**
      * Filter code changes closed on or before this date (ISO 8601)
      */
     @JsonIgnore
-    public Optional<OffsetDateTime> endDate() {
-        return endDate;
+    public Optional<OffsetDateTime> closedBeforeDate() {
+        return closedBeforeDate;
     }
 
     public static Builder builder() {
@@ -248,9 +248,9 @@ public class ListCodeChangesRequest {
     /**
      * Filter code changes closed on or after this date (ISO 8601)
      */
-    public ListCodeChangesRequest withStartDate(OffsetDateTime startDate) {
-        Utils.checkNotNull(startDate, "startDate");
-        this.startDate = Optional.ofNullable(startDate);
+    public ListCodeChangesRequest withClosedAfterDate(OffsetDateTime closedAfterDate) {
+        Utils.checkNotNull(closedAfterDate, "closedAfterDate");
+        this.closedAfterDate = Optional.ofNullable(closedAfterDate);
         return this;
     }
 
@@ -258,18 +258,18 @@ public class ListCodeChangesRequest {
     /**
      * Filter code changes closed on or after this date (ISO 8601)
      */
-    public ListCodeChangesRequest withStartDate(Optional<OffsetDateTime> startDate) {
-        Utils.checkNotNull(startDate, "startDate");
-        this.startDate = startDate;
+    public ListCodeChangesRequest withClosedAfterDate(Optional<OffsetDateTime> closedAfterDate) {
+        Utils.checkNotNull(closedAfterDate, "closedAfterDate");
+        this.closedAfterDate = closedAfterDate;
         return this;
     }
 
     /**
      * Filter code changes closed on or before this date (ISO 8601)
      */
-    public ListCodeChangesRequest withEndDate(OffsetDateTime endDate) {
-        Utils.checkNotNull(endDate, "endDate");
-        this.endDate = Optional.ofNullable(endDate);
+    public ListCodeChangesRequest withClosedBeforeDate(OffsetDateTime closedBeforeDate) {
+        Utils.checkNotNull(closedBeforeDate, "closedBeforeDate");
+        this.closedBeforeDate = Optional.ofNullable(closedBeforeDate);
         return this;
     }
 
@@ -277,9 +277,9 @@ public class ListCodeChangesRequest {
     /**
      * Filter code changes closed on or before this date (ISO 8601)
      */
-    public ListCodeChangesRequest withEndDate(Optional<OffsetDateTime> endDate) {
-        Utils.checkNotNull(endDate, "endDate");
-        this.endDate = endDate;
+    public ListCodeChangesRequest withClosedBeforeDate(Optional<OffsetDateTime> closedBeforeDate) {
+        Utils.checkNotNull(closedBeforeDate, "closedBeforeDate");
+        this.closedBeforeDate = closedBeforeDate;
         return this;
     }
 
@@ -298,16 +298,16 @@ public class ListCodeChangesRequest {
             Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor) &&
             Utils.enhancedDeepEquals(this.search, other.search) &&
             Utils.enhancedDeepEquals(this.sourcesMatchesAny, other.sourcesMatchesAny) &&
-            Utils.enhancedDeepEquals(this.startDate, other.startDate) &&
-            Utils.enhancedDeepEquals(this.endDate, other.endDate);
+            Utils.enhancedDeepEquals(this.closedAfterDate, other.closedAfterDate) &&
+            Utils.enhancedDeepEquals(this.closedBeforeDate, other.closedBeforeDate);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             auditId, pageSize, pageCursor,
-            search, sourcesMatchesAny, startDate,
-            endDate);
+            search, sourcesMatchesAny, closedAfterDate,
+            closedBeforeDate);
     }
     
     @Override
@@ -318,8 +318,8 @@ public class ListCodeChangesRequest {
                 "pageCursor", pageCursor,
                 "search", search,
                 "sourcesMatchesAny", sourcesMatchesAny,
-                "startDate", startDate,
-                "endDate", endDate);
+                "closedAfterDate", closedAfterDate,
+                "closedBeforeDate", closedBeforeDate);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -335,9 +335,9 @@ public class ListCodeChangesRequest {
 
         private Optional<? extends List<ApiCodeChangeSource>> sourcesMatchesAny = Optional.empty();
 
-        private Optional<OffsetDateTime> startDate = Optional.empty();
+        private Optional<OffsetDateTime> closedAfterDate = Optional.empty();
 
-        private Optional<OffsetDateTime> endDate = Optional.empty();
+        private Optional<OffsetDateTime> closedBeforeDate = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -435,18 +435,18 @@ public class ListCodeChangesRequest {
         /**
          * Filter code changes closed on or after this date (ISO 8601)
          */
-        public Builder startDate(OffsetDateTime startDate) {
-            Utils.checkNotNull(startDate, "startDate");
-            this.startDate = Optional.ofNullable(startDate);
+        public Builder closedAfterDate(OffsetDateTime closedAfterDate) {
+            Utils.checkNotNull(closedAfterDate, "closedAfterDate");
+            this.closedAfterDate = Optional.ofNullable(closedAfterDate);
             return this;
         }
 
         /**
          * Filter code changes closed on or after this date (ISO 8601)
          */
-        public Builder startDate(Optional<OffsetDateTime> startDate) {
-            Utils.checkNotNull(startDate, "startDate");
-            this.startDate = startDate;
+        public Builder closedAfterDate(Optional<OffsetDateTime> closedAfterDate) {
+            Utils.checkNotNull(closedAfterDate, "closedAfterDate");
+            this.closedAfterDate = closedAfterDate;
             return this;
         }
 
@@ -454,18 +454,18 @@ public class ListCodeChangesRequest {
         /**
          * Filter code changes closed on or before this date (ISO 8601)
          */
-        public Builder endDate(OffsetDateTime endDate) {
-            Utils.checkNotNull(endDate, "endDate");
-            this.endDate = Optional.ofNullable(endDate);
+        public Builder closedBeforeDate(OffsetDateTime closedBeforeDate) {
+            Utils.checkNotNull(closedBeforeDate, "closedBeforeDate");
+            this.closedBeforeDate = Optional.ofNullable(closedBeforeDate);
             return this;
         }
 
         /**
          * Filter code changes closed on or before this date (ISO 8601)
          */
-        public Builder endDate(Optional<OffsetDateTime> endDate) {
-            Utils.checkNotNull(endDate, "endDate");
-            this.endDate = endDate;
+        public Builder closedBeforeDate(Optional<OffsetDateTime> closedBeforeDate) {
+            Utils.checkNotNull(closedBeforeDate, "closedBeforeDate");
+            this.closedBeforeDate = closedBeforeDate;
             return this;
         }
 
@@ -476,8 +476,8 @@ public class ListCodeChangesRequest {
 
             return new ListCodeChangesRequest(
                 auditId, pageSize, pageCursor,
-                search, sourcesMatchesAny, startDate,
-                endDate);
+                search, sourcesMatchesAny, closedAfterDate,
+                closedBeforeDate);
         }
 
 
