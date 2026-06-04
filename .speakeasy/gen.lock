@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: f42d74f5-5725-46fa-b13c-649b7ef895c3
 management:
-  docChecksum: 3b82035e884ca5d8bad58afeb53870c9
+  docChecksum: ac522ad892aaf28aad05b5b345bc7867
   docVersion: 1.0.0
-  speakeasyVersion: 1.769.2
-  generationVersion: 2.892.5
-  releaseVersion: 0.5.1
-  configChecksum: a3d53aac3d73cf415bfc7ecc8c294613
+  speakeasyVersion: 1.770.0
+  generationVersion: 2.893.0
+  releaseVersion: 0.5.2
+  configChecksum: 7fe99115718a3346fb70a3734ed38a42
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   installationURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java
   published: true
 persistentEdits:
-  generation_id: de31a501-29d5-418c-9ee9-f947c0a263aa
-  pristine_commit_hash: 2060155ac80a28fb821e33a297496e98a2ac4947
-  pristine_tree_hash: fc39aa0416f283feb70220bdd4bc4a5a5450b839
+  generation_id: 7d901006-a671-45cb-ba9d-7aa3a1b1db95
+  pristine_commit_hash: 1d6466d6e412b2db93b86426f4edaf302f2b0e22
+  pristine_tree_hash: 48e90dae5e541e54e2a5e13d05393502ae85fdaf
 features:
   java:
     additionalDependencies: 0.1.0
@@ -984,12 +984,28 @@ trackedFiles:
     pristine_git_object: 303f686340a270c4d7952353fd78868967c0f049
   docs/models/components/VantaTestSnapshotEvidenceDetail.md:
     id: 8fe985acfa6a
-    last_write_checksum: sha1:6a0975896fb72fa46000dc539b0756c7e853e792
-    pristine_git_object: a66ac3bdde93966e28d8fb68177e13eb8ce19bff
+    last_write_checksum: sha1:72542e4edcf6593c82ebbbfa87e96a4270cb0ad5
+    pristine_git_object: 0d552f5b554881d7ad2583477e73cc7dcc9d1d26
+  docs/models/components/VantaTestSnapshotExcludedItem.md:
+    id: c59f72fb6f70
+    last_write_checksum: sha1:3c73063af9d58c8b6532abd49ec0fcd84037cd87
+    pristine_git_object: ac48255208b90fe2c7fca7473c31920cd24889ba
+  docs/models/components/VantaTestSnapshotExcludedItemGroup.md:
+    id: b77029dce2ac
+    last_write_checksum: sha1:1c8c5068ea0c867d652deef1e45a05463cd6c4fb
+    pristine_git_object: 49ae88440a7bc6abe018d8fcb2226c5504e81e99
+  docs/models/components/VantaTestSnapshotFrameworkExclusion.md:
+    id: 79ea3e8eca07
+    last_write_checksum: sha1:d3066382e6e6361ea9d8c9496e292e80320091b7
+    pristine_git_object: 2dc8baf7da4a5a1072ed05bb961f7ee56ea85c4a
   docs/models/components/VantaTestSnapshotIntegration.md:
     id: 07a25514143f
     last_write_checksum: sha1:52cb7a09b31ef7753928d48a0b6cba22851dd696
     pristine_git_object: e3a6674a0650c17d7630457d2e2a221ad3093c06
+  docs/models/components/VantaTestSnapshotOutOfScopeResources.md:
+    id: 7e9d14986fac
+    last_write_checksum: sha1:236bd3b9f2a61d336463898696e31c05757428ef
+    pristine_git_object: 8d78f6c8dde364525abe5cfc76e1e71e6bda963f
   docs/models/components/VantaTestSnapshotRawTestDataRow.md:
     id: 923d978565be
     last_write_checksum: sha1:df17cb210e4346fcd71bd461c09d8be1b2b768ed
@@ -1392,16 +1408,16 @@ trackedFiles:
     pristine_git_object: 45235728d6a6a6a03ff4dec9664daf4738729787
   docs/sdks/audits/README.md:
     id: b976aa226e19
-    last_write_checksum: sha1:92bc3d8029d714eb73d2a0533d28e8e364742667
-    pristine_git_object: cfa2cb0bb30b5b0a8fe1a7e1c9131086808bf517
+    last_write_checksum: sha1:bc5081cfdcd72767832bfd3a7bdf92c3ccd824cd
+    pristine_git_object: 5db16aca95b5bc75e840cc458bae708f598cccb3
   docs/utils/Blob.md:
     id: 3d9a7c4ad67a
     last_write_checksum: sha1:46ba9a381c8983c4a89c495fbca109cc66851754
     pristine_git_object: de7d1b163d5926363b94e775645373b750f65b30
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:286e812e8e087bafb365fcfcd9f8c035e521bf4e
-    pristine_git_object: 1cd6f31ee13dc1b2303531e847060f4254dacdac
+    last_write_checksum: sha1:2cfe0ab50f13cdd99ffd63d8ee5fbf0a448ede5b
+    pristine_git_object: 8218432c7c9ed1aac5d625898af694f07c264939
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -1460,8 +1476,8 @@ trackedFiles:
     pristine_git_object: 24e9ed003da5d72c5a6fc74b63fc8bd32d91c171
   src/main/java/com/vanta/vanta_auditor_api/AsyncAudits.java:
     id: 2d0875e33c27
-    last_write_checksum: sha1:9e80fa0b762cab56d230cdb97996e5761ba75fc0
-    pristine_git_object: a9e6ae06b8786fe1e04e17d871f06a02ea4787d5
+    last_write_checksum: sha1:647946bc7cc56dcad9a326f12529c6c0850b7f44
+    pristine_git_object: 07794df80fbcaf42287d114766e66bb0e4b8fcbe
   src/main/java/com/vanta/vanta_auditor_api/AsyncVanta.java:
     id: b47385b1c356
     last_write_checksum: sha1:883518392f570199c37a5f9005cddce689f136ce
@@ -1472,12 +1488,12 @@ trackedFiles:
     pristine_git_object: 7143a696671f213eecddf6967721a53cabb602fe
   src/main/java/com/vanta/vanta_auditor_api/Audits.java:
     id: 0ee418adaca4
-    last_write_checksum: sha1:cdde10b637ae398b9759e30bad873f7007553af5
-    pristine_git_object: f8ceca58f6804830bce92b70c8b3e7173fb9843d
+    last_write_checksum: sha1:02da64fa2e84819e8bd2c072e81474bfb3573167
+    pristine_git_object: 5bd3a69ff8c2047b74fde7381278870882ad31c5
   src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java:
     id: ce55360c720c
-    last_write_checksum: sha1:97f54431e4a878f03681ff9ecb64b0f17ef7579b
-    pristine_git_object: 2e8ee7caa1987aeab2faa5eb52b2bb5a7ebd4490
+    last_write_checksum: sha1:0f1068a00e3142a6dcc332f2d67c98072ce0808c
+    pristine_git_object: 272548010b085ab7ed282f5f5011e6e58d9a7c6b
   src/main/java/com/vanta/vanta_auditor_api/SecuritySource.java:
     id: 18c0da44b51f
     last_write_checksum: sha1:55dc5f4240c7317c9a5a4080b6e17dc1b6fdd403
@@ -2428,12 +2444,28 @@ trackedFiles:
     pristine_git_object: fd2d1ff96072e79d42b85e1e21db4a3761d666c4
   src/main/java/com/vanta/vanta_auditor_api/models/components/VantaTestSnapshotEvidenceDetail.java:
     id: 84a6e0a22f0e
-    last_write_checksum: sha1:d9de1214d68ee9bd6eee6eaeec46c622dff77a6d
-    pristine_git_object: 8b23857178d62e59fec1e022f9bb6db36e56dbe3
+    last_write_checksum: sha1:029411de960dab1df4333a2f66a9c4c075d2855c
+    pristine_git_object: 3233cdfedc70f885ef9db9efdee129819d9e83de
+  src/main/java/com/vanta/vanta_auditor_api/models/components/VantaTestSnapshotExcludedItem.java:
+    id: e17f71513964
+    last_write_checksum: sha1:de475b3a37094fad4c541dd8318985f62498f2c0
+    pristine_git_object: 2bf3a341382e1984f72cd4201709b0e317e95b6c
+  src/main/java/com/vanta/vanta_auditor_api/models/components/VantaTestSnapshotExcludedItemGroup.java:
+    id: 471c1638b45b
+    last_write_checksum: sha1:c9ea898a8bf3a394c8530e2094ff6d43adb8cbfd
+    pristine_git_object: 2fa818b0929081e246ab52575c3cb616ab12a9ab
+  src/main/java/com/vanta/vanta_auditor_api/models/components/VantaTestSnapshotFrameworkExclusion.java:
+    id: 3729d31016b3
+    last_write_checksum: sha1:e21a306ff8dcd6ed38ac5d206a1d7e6db45ce5a9
+    pristine_git_object: 21f7976b2b79ca4fcbdd4e23d9d9496dbeab0614
   src/main/java/com/vanta/vanta_auditor_api/models/components/VantaTestSnapshotIntegration.java:
     id: c92f508ae7cb
     last_write_checksum: sha1:3b93dbe4e94a9fde05cdf3dce576a386a3773071
     pristine_git_object: 50c72009dff0b34b600acea7abaf4be81c4f2a90
+  src/main/java/com/vanta/vanta_auditor_api/models/components/VantaTestSnapshotOutOfScopeResources.java:
+    id: 832cfa67a285
+    last_write_checksum: sha1:4dfb7ea0852df22fbd02cea0acfafd02e4e2ab81
+    pristine_git_object: 52bd0b5bd6b1d05af91685d1ea94bdd6e497e1c0
   src/main/java/com/vanta/vanta_auditor_api/models/components/VantaTestSnapshotRawTestDataRow.java:
     id: 90713a15d9bb
     last_write_checksum: sha1:4eed2eb4fb9d700bdcea959be76e22582e659c36
@@ -4079,7 +4111,7 @@ examples:
           evidenceId: "<id>"
       responses:
         "200":
-          application/json: {"testId": "test.okta.account-creation", "testName": "Okta user provisioning test", "description": "Verify Okta user accounts are created via SSO.", "evaluationCriteria": "Confirms that all human user accounts in Okta were provisioned via the SSO workflow.", "integrations": [{"integrationId": "okta", "displayName": "Okta"}], "slaRemediation": {"id": "sla-30d", "settings": {"numericValue": 30, "unit": "DAYS"}}, "rawTestData": [{"resourceId": "6890e473dce1da5d8406f700", "resourceType": "OktaUser", "rawJson": {"id": "6890e473dce1da5d8406f700", "status": "ACTIVE"}}]}
+          application/json: {"testId": "test.okta.account-creation", "testName": "Okta user provisioning test", "description": "Verify Okta user accounts are created via SSO.", "evaluationCriteria": "Confirms that all human user accounts in Okta were provisioned via the SSO workflow.", "integrations": [{"integrationId": "okta", "displayName": "Okta"}], "slaRemediation": {"id": "sla-30d", "settings": {"numericValue": 30, "unit": "DAYS"}}, "rawTestData": [{"resourceId": "6890e473dce1da5d8406f700", "resourceType": "OktaUser", "rawJson": {"id": "6890e473dce1da5d8406f700", "status": "ACTIVE"}}], "outOfScopeResources": {"testLevel": [{"reason": "Disabled by customer", "entities": [{"id": "6890e473dce1da5d8406f701", "displayName": "service-account@example.com"}]}], "frameworkLevel": []}}
   FlagInformationRequestEvidence:
     Example 1:
       parameters:
