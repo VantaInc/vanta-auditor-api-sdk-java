@@ -15,6 +15,7 @@ import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +52,31 @@ public class ListAuditIssuesRequest {
     private Optional<? extends List<String>> snapshotIdMatchesAny;
 
     /**
-     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+     * Filter to issues created on or after this date (ISO 8601)
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=createdAfterDate")
+    private Optional<OffsetDateTime> createdAfterDate;
+
+    /**
+     * Filter to issues created on or before this date (ISO 8601)
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=createdBeforeDate")
+    private Optional<OffsetDateTime> createdBeforeDate;
+
+    /**
+     * Filter to issues detected on or after this date (ISO 8601)
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=detectedAfterDate")
+    private Optional<OffsetDateTime> detectedAfterDate;
+
+    /**
+     * Filter to issues detected on or before this date (ISO 8601)
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=detectedBeforeDate")
+    private Optional<OffsetDateTime> detectedBeforeDate;
+
+    /**
+     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt", "detectedAt". Default: "createdAt"
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=orderBy")
     private Optional<? extends IssueSnapshotItemOrderBy> orderBy;
@@ -69,6 +94,10 @@ public class ListAuditIssuesRequest {
             Optional<String> pageCursor,
             Optional<String> search,
             Optional<? extends List<String>> snapshotIdMatchesAny,
+            Optional<OffsetDateTime> createdAfterDate,
+            Optional<OffsetDateTime> createdBeforeDate,
+            Optional<OffsetDateTime> detectedAfterDate,
+            Optional<OffsetDateTime> detectedBeforeDate,
             Optional<? extends IssueSnapshotItemOrderBy> orderBy,
             Optional<? extends OrderDirection> orderDirection) {
         Utils.checkNotNull(auditId, "auditId");
@@ -76,6 +105,10 @@ public class ListAuditIssuesRequest {
         Utils.checkNotNull(pageCursor, "pageCursor");
         Utils.checkNotNull(search, "search");
         Utils.checkNotNull(snapshotIdMatchesAny, "snapshotIdMatchesAny");
+        Utils.checkNotNull(createdAfterDate, "createdAfterDate");
+        Utils.checkNotNull(createdBeforeDate, "createdBeforeDate");
+        Utils.checkNotNull(detectedAfterDate, "detectedAfterDate");
+        Utils.checkNotNull(detectedBeforeDate, "detectedBeforeDate");
         Utils.checkNotNull(orderBy, "orderBy");
         Utils.checkNotNull(orderDirection, "orderDirection");
         this.auditId = auditId;
@@ -83,6 +116,10 @@ public class ListAuditIssuesRequest {
         this.pageCursor = pageCursor;
         this.search = search;
         this.snapshotIdMatchesAny = snapshotIdMatchesAny;
+        this.createdAfterDate = createdAfterDate;
+        this.createdBeforeDate = createdBeforeDate;
+        this.detectedAfterDate = detectedAfterDate;
+        this.detectedBeforeDate = detectedBeforeDate;
         this.orderBy = orderBy;
         this.orderDirection = orderDirection;
     }
@@ -91,7 +128,8 @@ public class ListAuditIssuesRequest {
             String auditId) {
         this(auditId, Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -136,7 +174,39 @@ public class ListAuditIssuesRequest {
     }
 
     /**
-     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+     * Filter to issues created on or after this date (ISO 8601)
+     */
+    @JsonIgnore
+    public Optional<OffsetDateTime> createdAfterDate() {
+        return createdAfterDate;
+    }
+
+    /**
+     * Filter to issues created on or before this date (ISO 8601)
+     */
+    @JsonIgnore
+    public Optional<OffsetDateTime> createdBeforeDate() {
+        return createdBeforeDate;
+    }
+
+    /**
+     * Filter to issues detected on or after this date (ISO 8601)
+     */
+    @JsonIgnore
+    public Optional<OffsetDateTime> detectedAfterDate() {
+        return detectedAfterDate;
+    }
+
+    /**
+     * Filter to issues detected on or before this date (ISO 8601)
+     */
+    @JsonIgnore
+    public Optional<OffsetDateTime> detectedBeforeDate() {
+        return detectedBeforeDate;
+    }
+
+    /**
+     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt", "detectedAt". Default: "createdAt"
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -244,7 +314,83 @@ public class ListAuditIssuesRequest {
     }
 
     /**
-     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+     * Filter to issues created on or after this date (ISO 8601)
+     */
+    public ListAuditIssuesRequest withCreatedAfterDate(OffsetDateTime createdAfterDate) {
+        Utils.checkNotNull(createdAfterDate, "createdAfterDate");
+        this.createdAfterDate = Optional.ofNullable(createdAfterDate);
+        return this;
+    }
+
+
+    /**
+     * Filter to issues created on or after this date (ISO 8601)
+     */
+    public ListAuditIssuesRequest withCreatedAfterDate(Optional<OffsetDateTime> createdAfterDate) {
+        Utils.checkNotNull(createdAfterDate, "createdAfterDate");
+        this.createdAfterDate = createdAfterDate;
+        return this;
+    }
+
+    /**
+     * Filter to issues created on or before this date (ISO 8601)
+     */
+    public ListAuditIssuesRequest withCreatedBeforeDate(OffsetDateTime createdBeforeDate) {
+        Utils.checkNotNull(createdBeforeDate, "createdBeforeDate");
+        this.createdBeforeDate = Optional.ofNullable(createdBeforeDate);
+        return this;
+    }
+
+
+    /**
+     * Filter to issues created on or before this date (ISO 8601)
+     */
+    public ListAuditIssuesRequest withCreatedBeforeDate(Optional<OffsetDateTime> createdBeforeDate) {
+        Utils.checkNotNull(createdBeforeDate, "createdBeforeDate");
+        this.createdBeforeDate = createdBeforeDate;
+        return this;
+    }
+
+    /**
+     * Filter to issues detected on or after this date (ISO 8601)
+     */
+    public ListAuditIssuesRequest withDetectedAfterDate(OffsetDateTime detectedAfterDate) {
+        Utils.checkNotNull(detectedAfterDate, "detectedAfterDate");
+        this.detectedAfterDate = Optional.ofNullable(detectedAfterDate);
+        return this;
+    }
+
+
+    /**
+     * Filter to issues detected on or after this date (ISO 8601)
+     */
+    public ListAuditIssuesRequest withDetectedAfterDate(Optional<OffsetDateTime> detectedAfterDate) {
+        Utils.checkNotNull(detectedAfterDate, "detectedAfterDate");
+        this.detectedAfterDate = detectedAfterDate;
+        return this;
+    }
+
+    /**
+     * Filter to issues detected on or before this date (ISO 8601)
+     */
+    public ListAuditIssuesRequest withDetectedBeforeDate(OffsetDateTime detectedBeforeDate) {
+        Utils.checkNotNull(detectedBeforeDate, "detectedBeforeDate");
+        this.detectedBeforeDate = Optional.ofNullable(detectedBeforeDate);
+        return this;
+    }
+
+
+    /**
+     * Filter to issues detected on or before this date (ISO 8601)
+     */
+    public ListAuditIssuesRequest withDetectedBeforeDate(Optional<OffsetDateTime> detectedBeforeDate) {
+        Utils.checkNotNull(detectedBeforeDate, "detectedBeforeDate");
+        this.detectedBeforeDate = detectedBeforeDate;
+        return this;
+    }
+
+    /**
+     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt", "detectedAt". Default: "createdAt"
      */
     public ListAuditIssuesRequest withOrderBy(IssueSnapshotItemOrderBy orderBy) {
         Utils.checkNotNull(orderBy, "orderBy");
@@ -254,7 +400,7 @@ public class ListAuditIssuesRequest {
 
 
     /**
-     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+     * Field to sort results by. Allowed: "createdAt", "lastModifiedAt", "detectedAt". Default: "createdAt"
      */
     public ListAuditIssuesRequest withOrderBy(Optional<? extends IssueSnapshotItemOrderBy> orderBy) {
         Utils.checkNotNull(orderBy, "orderBy");
@@ -296,6 +442,10 @@ public class ListAuditIssuesRequest {
             Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor) &&
             Utils.enhancedDeepEquals(this.search, other.search) &&
             Utils.enhancedDeepEquals(this.snapshotIdMatchesAny, other.snapshotIdMatchesAny) &&
+            Utils.enhancedDeepEquals(this.createdAfterDate, other.createdAfterDate) &&
+            Utils.enhancedDeepEquals(this.createdBeforeDate, other.createdBeforeDate) &&
+            Utils.enhancedDeepEquals(this.detectedAfterDate, other.detectedAfterDate) &&
+            Utils.enhancedDeepEquals(this.detectedBeforeDate, other.detectedBeforeDate) &&
             Utils.enhancedDeepEquals(this.orderBy, other.orderBy) &&
             Utils.enhancedDeepEquals(this.orderDirection, other.orderDirection);
     }
@@ -304,8 +454,9 @@ public class ListAuditIssuesRequest {
     public int hashCode() {
         return Utils.enhancedHash(
             auditId, pageSize, pageCursor,
-            search, snapshotIdMatchesAny, orderBy,
-            orderDirection);
+            search, snapshotIdMatchesAny, createdAfterDate,
+            createdBeforeDate, detectedAfterDate, detectedBeforeDate,
+            orderBy, orderDirection);
     }
     
     @Override
@@ -316,6 +467,10 @@ public class ListAuditIssuesRequest {
                 "pageCursor", pageCursor,
                 "search", search,
                 "snapshotIdMatchesAny", snapshotIdMatchesAny,
+                "createdAfterDate", createdAfterDate,
+                "createdBeforeDate", createdBeforeDate,
+                "detectedAfterDate", detectedAfterDate,
+                "detectedBeforeDate", detectedBeforeDate,
                 "orderBy", orderBy,
                 "orderDirection", orderDirection);
     }
@@ -332,6 +487,14 @@ public class ListAuditIssuesRequest {
         private Optional<String> search = Optional.empty();
 
         private Optional<? extends List<String>> snapshotIdMatchesAny = Optional.empty();
+
+        private Optional<OffsetDateTime> createdAfterDate = Optional.empty();
+
+        private Optional<OffsetDateTime> createdBeforeDate = Optional.empty();
+
+        private Optional<OffsetDateTime> detectedAfterDate = Optional.empty();
+
+        private Optional<OffsetDateTime> detectedBeforeDate = Optional.empty();
 
         private Optional<? extends IssueSnapshotItemOrderBy> orderBy = Optional.empty();
 
@@ -429,7 +592,83 @@ public class ListAuditIssuesRequest {
 
 
         /**
-         * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+         * Filter to issues created on or after this date (ISO 8601)
+         */
+        public Builder createdAfterDate(OffsetDateTime createdAfterDate) {
+            Utils.checkNotNull(createdAfterDate, "createdAfterDate");
+            this.createdAfterDate = Optional.ofNullable(createdAfterDate);
+            return this;
+        }
+
+        /**
+         * Filter to issues created on or after this date (ISO 8601)
+         */
+        public Builder createdAfterDate(Optional<OffsetDateTime> createdAfterDate) {
+            Utils.checkNotNull(createdAfterDate, "createdAfterDate");
+            this.createdAfterDate = createdAfterDate;
+            return this;
+        }
+
+
+        /**
+         * Filter to issues created on or before this date (ISO 8601)
+         */
+        public Builder createdBeforeDate(OffsetDateTime createdBeforeDate) {
+            Utils.checkNotNull(createdBeforeDate, "createdBeforeDate");
+            this.createdBeforeDate = Optional.ofNullable(createdBeforeDate);
+            return this;
+        }
+
+        /**
+         * Filter to issues created on or before this date (ISO 8601)
+         */
+        public Builder createdBeforeDate(Optional<OffsetDateTime> createdBeforeDate) {
+            Utils.checkNotNull(createdBeforeDate, "createdBeforeDate");
+            this.createdBeforeDate = createdBeforeDate;
+            return this;
+        }
+
+
+        /**
+         * Filter to issues detected on or after this date (ISO 8601)
+         */
+        public Builder detectedAfterDate(OffsetDateTime detectedAfterDate) {
+            Utils.checkNotNull(detectedAfterDate, "detectedAfterDate");
+            this.detectedAfterDate = Optional.ofNullable(detectedAfterDate);
+            return this;
+        }
+
+        /**
+         * Filter to issues detected on or after this date (ISO 8601)
+         */
+        public Builder detectedAfterDate(Optional<OffsetDateTime> detectedAfterDate) {
+            Utils.checkNotNull(detectedAfterDate, "detectedAfterDate");
+            this.detectedAfterDate = detectedAfterDate;
+            return this;
+        }
+
+
+        /**
+         * Filter to issues detected on or before this date (ISO 8601)
+         */
+        public Builder detectedBeforeDate(OffsetDateTime detectedBeforeDate) {
+            Utils.checkNotNull(detectedBeforeDate, "detectedBeforeDate");
+            this.detectedBeforeDate = Optional.ofNullable(detectedBeforeDate);
+            return this;
+        }
+
+        /**
+         * Filter to issues detected on or before this date (ISO 8601)
+         */
+        public Builder detectedBeforeDate(Optional<OffsetDateTime> detectedBeforeDate) {
+            Utils.checkNotNull(detectedBeforeDate, "detectedBeforeDate");
+            this.detectedBeforeDate = detectedBeforeDate;
+            return this;
+        }
+
+
+        /**
+         * Field to sort results by. Allowed: "createdAt", "lastModifiedAt", "detectedAt". Default: "createdAt"
          */
         public Builder orderBy(IssueSnapshotItemOrderBy orderBy) {
             Utils.checkNotNull(orderBy, "orderBy");
@@ -438,7 +677,7 @@ public class ListAuditIssuesRequest {
         }
 
         /**
-         * Field to sort results by. Allowed: "createdAt", "lastModifiedAt". Default: "createdAt"
+         * Field to sort results by. Allowed: "createdAt", "lastModifiedAt", "detectedAt". Default: "createdAt"
          */
         public Builder orderBy(Optional<? extends IssueSnapshotItemOrderBy> orderBy) {
             Utils.checkNotNull(orderBy, "orderBy");
@@ -472,8 +711,9 @@ public class ListAuditIssuesRequest {
 
             return new ListAuditIssuesRequest(
                 auditId, pageSize, pageCursor,
-                search, snapshotIdMatchesAny, orderBy,
-                orderDirection);
+                search, snapshotIdMatchesAny, createdAfterDate,
+                createdBeforeDate, detectedAfterDate, detectedBeforeDate,
+                orderBy, orderDirection);
         }
 
 

@@ -80,6 +80,15 @@ public class VantaTestSnapshotEvidenceDetail {
     @JsonProperty("outOfScopeResources")
     private Optional<? extends VantaTestSnapshotOutOfScopeResources> outOfScopeResources;
 
+    /**
+     * API requests captured during the test run. Absent when the snapshot
+     * data could not be loaded. Empty array when the test does not perform
+     * API introspection.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("apiRequests")
+    private Optional<? extends List<VantaTestSnapshotApiRequest>> apiRequests;
+
     @JsonCreator
     public VantaTestSnapshotEvidenceDetail(
             @JsonProperty("testId") String testId,
@@ -89,7 +98,8 @@ public class VantaTestSnapshotEvidenceDetail {
             @JsonProperty("integrations") List<VantaTestSnapshotIntegration> integrations,
             @JsonProperty("slaRemediation") Optional<? extends SlaRemediation> slaRemediation,
             @JsonProperty("rawTestData") List<VantaTestSnapshotRawTestDataRow> rawTestData,
-            @JsonProperty("outOfScopeResources") Optional<? extends VantaTestSnapshotOutOfScopeResources> outOfScopeResources) {
+            @JsonProperty("outOfScopeResources") Optional<? extends VantaTestSnapshotOutOfScopeResources> outOfScopeResources,
+            @JsonProperty("apiRequests") Optional<? extends List<VantaTestSnapshotApiRequest>> apiRequests) {
         Utils.checkNotNull(testId, "testId");
         Utils.checkNotNull(testName, "testName");
         Utils.checkNotNull(description, "description");
@@ -98,6 +108,7 @@ public class VantaTestSnapshotEvidenceDetail {
         Utils.checkNotNull(slaRemediation, "slaRemediation");
         Utils.checkNotNull(rawTestData, "rawTestData");
         Utils.checkNotNull(outOfScopeResources, "outOfScopeResources");
+        Utils.checkNotNull(apiRequests, "apiRequests");
         this.testId = testId;
         this.testName = testName;
         this.description = description;
@@ -106,6 +117,7 @@ public class VantaTestSnapshotEvidenceDetail {
         this.slaRemediation = slaRemediation;
         this.rawTestData = rawTestData;
         this.outOfScopeResources = outOfScopeResources;
+        this.apiRequests = apiRequests;
     }
     
     public VantaTestSnapshotEvidenceDetail(
@@ -116,7 +128,7 @@ public class VantaTestSnapshotEvidenceDetail {
             List<VantaTestSnapshotRawTestDataRow> rawTestData) {
         this(testId, testName, description,
             Optional.empty(), integrations, Optional.empty(),
-            rawTestData, Optional.empty());
+            rawTestData, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -186,6 +198,17 @@ public class VantaTestSnapshotEvidenceDetail {
     @JsonIgnore
     public Optional<VantaTestSnapshotOutOfScopeResources> outOfScopeResources() {
         return (Optional<VantaTestSnapshotOutOfScopeResources>) outOfScopeResources;
+    }
+
+    /**
+     * API requests captured during the test run. Absent when the snapshot
+     * data could not be loaded. Empty array when the test does not perform
+     * API introspection.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<VantaTestSnapshotApiRequest>> apiRequests() {
+        return (Optional<List<VantaTestSnapshotApiRequest>>) apiRequests;
     }
 
     public static Builder builder() {
@@ -301,6 +324,29 @@ public class VantaTestSnapshotEvidenceDetail {
         return this;
     }
 
+    /**
+     * API requests captured during the test run. Absent when the snapshot
+     * data could not be loaded. Empty array when the test does not perform
+     * API introspection.
+     */
+    public VantaTestSnapshotEvidenceDetail withApiRequests(List<VantaTestSnapshotApiRequest> apiRequests) {
+        Utils.checkNotNull(apiRequests, "apiRequests");
+        this.apiRequests = Optional.ofNullable(apiRequests);
+        return this;
+    }
+
+
+    /**
+     * API requests captured during the test run. Absent when the snapshot
+     * data could not be loaded. Empty array when the test does not perform
+     * API introspection.
+     */
+    public VantaTestSnapshotEvidenceDetail withApiRequests(Optional<? extends List<VantaTestSnapshotApiRequest>> apiRequests) {
+        Utils.checkNotNull(apiRequests, "apiRequests");
+        this.apiRequests = apiRequests;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -318,7 +364,8 @@ public class VantaTestSnapshotEvidenceDetail {
             Utils.enhancedDeepEquals(this.integrations, other.integrations) &&
             Utils.enhancedDeepEquals(this.slaRemediation, other.slaRemediation) &&
             Utils.enhancedDeepEquals(this.rawTestData, other.rawTestData) &&
-            Utils.enhancedDeepEquals(this.outOfScopeResources, other.outOfScopeResources);
+            Utils.enhancedDeepEquals(this.outOfScopeResources, other.outOfScopeResources) &&
+            Utils.enhancedDeepEquals(this.apiRequests, other.apiRequests);
     }
     
     @Override
@@ -326,7 +373,7 @@ public class VantaTestSnapshotEvidenceDetail {
         return Utils.enhancedHash(
             testId, testName, description,
             evaluationCriteria, integrations, slaRemediation,
-            rawTestData, outOfScopeResources);
+            rawTestData, outOfScopeResources, apiRequests);
     }
     
     @Override
@@ -339,7 +386,8 @@ public class VantaTestSnapshotEvidenceDetail {
                 "integrations", integrations,
                 "slaRemediation", slaRemediation,
                 "rawTestData", rawTestData,
-                "outOfScopeResources", outOfScopeResources);
+                "outOfScopeResources", outOfScopeResources,
+                "apiRequests", apiRequests);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -360,6 +408,8 @@ public class VantaTestSnapshotEvidenceDetail {
         private List<VantaTestSnapshotRawTestDataRow> rawTestData;
 
         private Optional<? extends VantaTestSnapshotOutOfScopeResources> outOfScopeResources = Optional.empty();
+
+        private Optional<? extends List<VantaTestSnapshotApiRequest>> apiRequests = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -478,12 +528,35 @@ public class VantaTestSnapshotEvidenceDetail {
             return this;
         }
 
+
+        /**
+         * API requests captured during the test run. Absent when the snapshot
+         * data could not be loaded. Empty array when the test does not perform
+         * API introspection.
+         */
+        public Builder apiRequests(List<VantaTestSnapshotApiRequest> apiRequests) {
+            Utils.checkNotNull(apiRequests, "apiRequests");
+            this.apiRequests = Optional.ofNullable(apiRequests);
+            return this;
+        }
+
+        /**
+         * API requests captured during the test run. Absent when the snapshot
+         * data could not be loaded. Empty array when the test does not perform
+         * API introspection.
+         */
+        public Builder apiRequests(Optional<? extends List<VantaTestSnapshotApiRequest>> apiRequests) {
+            Utils.checkNotNull(apiRequests, "apiRequests");
+            this.apiRequests = apiRequests;
+            return this;
+        }
+
         public VantaTestSnapshotEvidenceDetail build() {
 
             return new VantaTestSnapshotEvidenceDetail(
                 testId, testName, description,
                 evaluationCriteria, integrations, slaRemediation,
-                rawTestData, outOfScopeResources);
+                rawTestData, outOfScopeResources, apiRequests);
         }
 
     }
