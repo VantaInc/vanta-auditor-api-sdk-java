@@ -204,7 +204,7 @@ public class Vanta {
         return new Builder();
     }
 
-    public Vanta(SDKConfiguration sdkConfiguration) {
+    private Vanta(SDKConfiguration sdkConfiguration) {
         sdkConfiguration.initialize();
         this.auditors = new Auditors(sdkConfiguration);
         this.audits = new Audits(sdkConfiguration);
