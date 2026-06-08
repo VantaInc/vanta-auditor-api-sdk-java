@@ -14,6 +14,7 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 /**
@@ -86,6 +87,17 @@ public class CreateInformationRequestInput {
     @JsonProperty("evidenceCaptureDate")
     private JsonNullable<OffsetDateTime> evidenceCaptureDate;
 
+    /**
+     * Control IDs to link directly to this request, beyond those automatically
+     * mapped from framework codes. Each must be the `id` of an existing control in
+     * the customer's organization (the identifier returned by the controls endpoints).
+     * The request is rejected if any ID does not match a control.
+     * Omit or pass an empty array for no direct control links.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("additionalControlIds")
+    private Optional<? extends List<String>> additionalControlIds;
+
     @JsonCreator
     public CreateInformationRequestInput(
             @JsonProperty("uniqueId") String uniqueId,
@@ -95,7 +107,8 @@ public class CreateInformationRequestInput {
             @JsonProperty("frameworkCodes") List<String> frameworkCodes,
             @JsonProperty("cadence") JsonNullable<? extends CreateInformationRequestInputCadence> cadence,
             @JsonProperty("dueDate") JsonNullable<OffsetDateTime> dueDate,
-            @JsonProperty("evidenceCaptureDate") JsonNullable<OffsetDateTime> evidenceCaptureDate) {
+            @JsonProperty("evidenceCaptureDate") JsonNullable<OffsetDateTime> evidenceCaptureDate,
+            @JsonProperty("additionalControlIds") Optional<? extends List<String>> additionalControlIds) {
         Utils.checkNotNull(uniqueId, "uniqueId");
         Utils.checkNotNull(title, "title");
         Utils.checkNotNull(requestType, "requestType");
@@ -104,6 +117,7 @@ public class CreateInformationRequestInput {
         Utils.checkNotNull(cadence, "cadence");
         Utils.checkNotNull(dueDate, "dueDate");
         Utils.checkNotNull(evidenceCaptureDate, "evidenceCaptureDate");
+        Utils.checkNotNull(additionalControlIds, "additionalControlIds");
         this.uniqueId = uniqueId;
         this.title = title;
         this.requestType = requestType;
@@ -112,6 +126,7 @@ public class CreateInformationRequestInput {
         this.cadence = cadence;
         this.dueDate = dueDate;
         this.evidenceCaptureDate = evidenceCaptureDate;
+        this.additionalControlIds = additionalControlIds;
     }
     
     public CreateInformationRequestInput(
@@ -121,7 +136,7 @@ public class CreateInformationRequestInput {
             List<String> frameworkCodes) {
         this(uniqueId, title, requestType,
             JsonNullable.undefined(), frameworkCodes, JsonNullable.undefined(),
-            JsonNullable.undefined(), JsonNullable.undefined());
+            JsonNullable.undefined(), JsonNullable.undefined(), Optional.empty());
     }
 
     /**
@@ -198,6 +213,19 @@ public class CreateInformationRequestInput {
     @JsonIgnore
     public JsonNullable<OffsetDateTime> evidenceCaptureDate() {
         return evidenceCaptureDate;
+    }
+
+    /**
+     * Control IDs to link directly to this request, beyond those automatically
+     * mapped from framework codes. Each must be the `id` of an existing control in
+     * the customer's organization (the identifier returned by the controls endpoints).
+     * The request is rejected if any ID does not match a control.
+     * Omit or pass an empty array for no direct control links.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> additionalControlIds() {
+        return (Optional<List<String>>) additionalControlIds;
     }
 
     public static Builder builder() {
@@ -328,6 +356,33 @@ public class CreateInformationRequestInput {
         return this;
     }
 
+    /**
+     * Control IDs to link directly to this request, beyond those automatically
+     * mapped from framework codes. Each must be the `id` of an existing control in
+     * the customer's organization (the identifier returned by the controls endpoints).
+     * The request is rejected if any ID does not match a control.
+     * Omit or pass an empty array for no direct control links.
+     */
+    public CreateInformationRequestInput withAdditionalControlIds(List<String> additionalControlIds) {
+        Utils.checkNotNull(additionalControlIds, "additionalControlIds");
+        this.additionalControlIds = Optional.ofNullable(additionalControlIds);
+        return this;
+    }
+
+
+    /**
+     * Control IDs to link directly to this request, beyond those automatically
+     * mapped from framework codes. Each must be the `id` of an existing control in
+     * the customer's organization (the identifier returned by the controls endpoints).
+     * The request is rejected if any ID does not match a control.
+     * Omit or pass an empty array for no direct control links.
+     */
+    public CreateInformationRequestInput withAdditionalControlIds(Optional<? extends List<String>> additionalControlIds) {
+        Utils.checkNotNull(additionalControlIds, "additionalControlIds");
+        this.additionalControlIds = additionalControlIds;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -345,7 +400,8 @@ public class CreateInformationRequestInput {
             Utils.enhancedDeepEquals(this.frameworkCodes, other.frameworkCodes) &&
             Utils.enhancedDeepEquals(this.cadence, other.cadence) &&
             Utils.enhancedDeepEquals(this.dueDate, other.dueDate) &&
-            Utils.enhancedDeepEquals(this.evidenceCaptureDate, other.evidenceCaptureDate);
+            Utils.enhancedDeepEquals(this.evidenceCaptureDate, other.evidenceCaptureDate) &&
+            Utils.enhancedDeepEquals(this.additionalControlIds, other.additionalControlIds);
     }
     
     @Override
@@ -353,7 +409,7 @@ public class CreateInformationRequestInput {
         return Utils.enhancedHash(
             uniqueId, title, requestType,
             description, frameworkCodes, cadence,
-            dueDate, evidenceCaptureDate);
+            dueDate, evidenceCaptureDate, additionalControlIds);
     }
     
     @Override
@@ -366,7 +422,8 @@ public class CreateInformationRequestInput {
                 "frameworkCodes", frameworkCodes,
                 "cadence", cadence,
                 "dueDate", dueDate,
-                "evidenceCaptureDate", evidenceCaptureDate);
+                "evidenceCaptureDate", evidenceCaptureDate,
+                "additionalControlIds", additionalControlIds);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -387,6 +444,8 @@ public class CreateInformationRequestInput {
         private JsonNullable<OffsetDateTime> dueDate = JsonNullable.undefined();
 
         private JsonNullable<OffsetDateTime> evidenceCaptureDate = JsonNullable.undefined();
+
+        private Optional<? extends List<String>> additionalControlIds = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -523,12 +582,39 @@ public class CreateInformationRequestInput {
             return this;
         }
 
+
+        /**
+         * Control IDs to link directly to this request, beyond those automatically
+         * mapped from framework codes. Each must be the `id` of an existing control in
+         * the customer's organization (the identifier returned by the controls endpoints).
+         * The request is rejected if any ID does not match a control.
+         * Omit or pass an empty array for no direct control links.
+         */
+        public Builder additionalControlIds(List<String> additionalControlIds) {
+            Utils.checkNotNull(additionalControlIds, "additionalControlIds");
+            this.additionalControlIds = Optional.ofNullable(additionalControlIds);
+            return this;
+        }
+
+        /**
+         * Control IDs to link directly to this request, beyond those automatically
+         * mapped from framework codes. Each must be the `id` of an existing control in
+         * the customer's organization (the identifier returned by the controls endpoints).
+         * The request is rejected if any ID does not match a control.
+         * Omit or pass an empty array for no direct control links.
+         */
+        public Builder additionalControlIds(Optional<? extends List<String>> additionalControlIds) {
+            Utils.checkNotNull(additionalControlIds, "additionalControlIds");
+            this.additionalControlIds = additionalControlIds;
+            return this;
+        }
+
         public CreateInformationRequestInput build() {
 
             return new CreateInformationRequestInput(
                 uniqueId, title, requestType,
                 description, frameworkCodes, cadence,
-                dueDate, evidenceCaptureDate);
+                dueDate, evidenceCaptureDate, additionalControlIds);
         }
 
     }

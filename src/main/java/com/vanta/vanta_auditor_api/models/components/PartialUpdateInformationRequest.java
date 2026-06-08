@@ -81,6 +81,18 @@ public class PartialUpdateInformationRequest {
     @JsonProperty("cadence")
     private Optional<? extends InformationRequestCadence> cadence;
 
+    /**
+     * Control IDs to link directly to this request, beyond those automatically
+     * mapped from framework codes. Replaces the existing set: pass the complete
+     * desired list, an empty array to clear all direct control links, or omit to
+     * leave them unchanged. Each must be the `id` of an existing control in the
+     * customer's organization (the identifier returned by the controls endpoints).
+     * The request is rejected if any ID does not match a control.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("additionalControlIds")
+    private Optional<? extends List<String>> additionalControlIds;
+
     @JsonCreator
     public PartialUpdateInformationRequest(
             @JsonProperty("frameworkCodes") Optional<? extends List<String>> frameworkCodes,
@@ -89,7 +101,8 @@ public class PartialUpdateInformationRequest {
             @JsonProperty("evidenceCaptureDate") JsonNullable<OffsetDateTime> evidenceCaptureDate,
             @JsonProperty("requestType") Optional<? extends InformationRequestType> requestType,
             @JsonProperty("title") Optional<String> title,
-            @JsonProperty("cadence") Optional<? extends InformationRequestCadence> cadence) {
+            @JsonProperty("cadence") Optional<? extends InformationRequestCadence> cadence,
+            @JsonProperty("additionalControlIds") Optional<? extends List<String>> additionalControlIds) {
         Utils.checkNotNull(frameworkCodes, "frameworkCodes");
         Utils.checkNotNull(description, "description");
         Utils.checkNotNull(dueDate, "dueDate");
@@ -97,6 +110,7 @@ public class PartialUpdateInformationRequest {
         Utils.checkNotNull(requestType, "requestType");
         Utils.checkNotNull(title, "title");
         Utils.checkNotNull(cadence, "cadence");
+        Utils.checkNotNull(additionalControlIds, "additionalControlIds");
         this.frameworkCodes = frameworkCodes;
         this.description = description;
         this.dueDate = dueDate;
@@ -104,12 +118,13 @@ public class PartialUpdateInformationRequest {
         this.requestType = requestType;
         this.title = title;
         this.cadence = cadence;
+        this.additionalControlIds = additionalControlIds;
     }
     
     public PartialUpdateInformationRequest() {
         this(Optional.empty(), JsonNullable.undefined(), JsonNullable.undefined(),
             JsonNullable.undefined(), Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -176,6 +191,20 @@ public class PartialUpdateInformationRequest {
     @JsonIgnore
     public Optional<InformationRequestCadence> cadence() {
         return (Optional<InformationRequestCadence>) cadence;
+    }
+
+    /**
+     * Control IDs to link directly to this request, beyond those automatically
+     * mapped from framework codes. Replaces the existing set: pass the complete
+     * desired list, an empty array to clear all direct control links, or omit to
+     * leave them unchanged. Each must be the `id` of an existing control in the
+     * customer's organization (the identifier returned by the controls endpoints).
+     * The request is rejected if any ID does not match a control.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> additionalControlIds() {
+        return (Optional<List<String>>) additionalControlIds;
     }
 
     public static Builder builder() {
@@ -327,6 +356,35 @@ public class PartialUpdateInformationRequest {
         return this;
     }
 
+    /**
+     * Control IDs to link directly to this request, beyond those automatically
+     * mapped from framework codes. Replaces the existing set: pass the complete
+     * desired list, an empty array to clear all direct control links, or omit to
+     * leave them unchanged. Each must be the `id` of an existing control in the
+     * customer's organization (the identifier returned by the controls endpoints).
+     * The request is rejected if any ID does not match a control.
+     */
+    public PartialUpdateInformationRequest withAdditionalControlIds(List<String> additionalControlIds) {
+        Utils.checkNotNull(additionalControlIds, "additionalControlIds");
+        this.additionalControlIds = Optional.ofNullable(additionalControlIds);
+        return this;
+    }
+
+
+    /**
+     * Control IDs to link directly to this request, beyond those automatically
+     * mapped from framework codes. Replaces the existing set: pass the complete
+     * desired list, an empty array to clear all direct control links, or omit to
+     * leave them unchanged. Each must be the `id` of an existing control in the
+     * customer's organization (the identifier returned by the controls endpoints).
+     * The request is rejected if any ID does not match a control.
+     */
+    public PartialUpdateInformationRequest withAdditionalControlIds(Optional<? extends List<String>> additionalControlIds) {
+        Utils.checkNotNull(additionalControlIds, "additionalControlIds");
+        this.additionalControlIds = additionalControlIds;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -343,7 +401,8 @@ public class PartialUpdateInformationRequest {
             Utils.enhancedDeepEquals(this.evidenceCaptureDate, other.evidenceCaptureDate) &&
             Utils.enhancedDeepEquals(this.requestType, other.requestType) &&
             Utils.enhancedDeepEquals(this.title, other.title) &&
-            Utils.enhancedDeepEquals(this.cadence, other.cadence);
+            Utils.enhancedDeepEquals(this.cadence, other.cadence) &&
+            Utils.enhancedDeepEquals(this.additionalControlIds, other.additionalControlIds);
     }
     
     @Override
@@ -351,7 +410,7 @@ public class PartialUpdateInformationRequest {
         return Utils.enhancedHash(
             frameworkCodes, description, dueDate,
             evidenceCaptureDate, requestType, title,
-            cadence);
+            cadence, additionalControlIds);
     }
     
     @Override
@@ -363,7 +422,8 @@ public class PartialUpdateInformationRequest {
                 "evidenceCaptureDate", evidenceCaptureDate,
                 "requestType", requestType,
                 "title", title,
-                "cadence", cadence);
+                "cadence", cadence,
+                "additionalControlIds", additionalControlIds);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -382,6 +442,8 @@ public class PartialUpdateInformationRequest {
         private Optional<String> title = Optional.empty();
 
         private Optional<? extends InformationRequestCadence> cadence = Optional.empty();
+
+        private Optional<? extends List<String>> additionalControlIds = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -534,12 +596,41 @@ public class PartialUpdateInformationRequest {
             return this;
         }
 
+
+        /**
+         * Control IDs to link directly to this request, beyond those automatically
+         * mapped from framework codes. Replaces the existing set: pass the complete
+         * desired list, an empty array to clear all direct control links, or omit to
+         * leave them unchanged. Each must be the `id` of an existing control in the
+         * customer's organization (the identifier returned by the controls endpoints).
+         * The request is rejected if any ID does not match a control.
+         */
+        public Builder additionalControlIds(List<String> additionalControlIds) {
+            Utils.checkNotNull(additionalControlIds, "additionalControlIds");
+            this.additionalControlIds = Optional.ofNullable(additionalControlIds);
+            return this;
+        }
+
+        /**
+         * Control IDs to link directly to this request, beyond those automatically
+         * mapped from framework codes. Replaces the existing set: pass the complete
+         * desired list, an empty array to clear all direct control links, or omit to
+         * leave them unchanged. Each must be the `id` of an existing control in the
+         * customer's organization (the identifier returned by the controls endpoints).
+         * The request is rejected if any ID does not match a control.
+         */
+        public Builder additionalControlIds(Optional<? extends List<String>> additionalControlIds) {
+            Utils.checkNotNull(additionalControlIds, "additionalControlIds");
+            this.additionalControlIds = additionalControlIds;
+            return this;
+        }
+
         public PartialUpdateInformationRequest build() {
 
             return new PartialUpdateInformationRequest(
                 frameworkCodes, description, dueDate,
                 evidenceCaptureDate, requestType, title,
-                cadence);
+                cadence, additionalControlIds);
         }
 
     }
