@@ -49,7 +49,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'com.vanta:vanta-auditor-api:0.5.3'
+implementation 'com.vanta:vanta-auditor-api:0.5.4'
 ```
 
 Maven:
@@ -57,7 +57,7 @@ Maven:
 <dependency>
     <groupId>com.vanta</groupId>
     <artifactId>vanta-auditor-api</artifactId>
-    <version>0.5.3</version>
+    <version>0.5.4</version>
 </dependency>
 ```
 
