@@ -23,7 +23,8 @@ public enum Method {
     ONE_LOGIN("ONE_LOGIN"),
     OWA("OWA"),
     SSO("SSO"),
-    USERNAME_PASSWORD("USERNAME_PASSWORD");
+    USERNAME_PASSWORD("USERNAME_PASSWORD"),
+    OTHER("OTHER");
 
     @JsonValue
     private final String value;
