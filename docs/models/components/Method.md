@@ -25,3 +25,4 @@ Method value = Method.AUTH0;
 | `OWA`               | OWA                 |
 | `SSO`               | SSO                 |
 | `USERNAME_PASSWORD` | USERNAME_PASSWORD   |
+| `OTHER`             | OTHER               |

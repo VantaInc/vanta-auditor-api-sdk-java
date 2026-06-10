@@ -9,6 +9,7 @@ import java.util.Objects;
 import java.util.Optional;
 
 public enum InformationRequestActivityType {
+    AUDIT_DUPLICATION_AUDIT_TRAIL("AUDIT_DUPLICATION_AUDIT_TRAIL"),
     CHANGE_STATUS("CHANGE_STATUS"),
     EDIT_REQUEST("EDIT_REQUEST"),
     REMOVE_EVIDENCE("REMOVE_EVIDENCE"),
