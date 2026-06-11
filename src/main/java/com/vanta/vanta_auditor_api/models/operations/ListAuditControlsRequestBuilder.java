@@ -13,6 +13,7 @@ import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.String;
+import java.util.List;
 import java.util.Optional;
 
 public class ListAuditControlsRequestBuilder {
@@ -23,6 +24,7 @@ public class ListAuditControlsRequestBuilder {
                             "10",
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
+    private Optional<? extends List<String>> externalIdMatchesAny = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -59,6 +61,18 @@ public class ListAuditControlsRequestBuilder {
         this.pageCursor = pageCursor;
         return this;
     }
+                
+    public ListAuditControlsRequestBuilder externalIdMatchesAny(List<String> externalIdMatchesAny) {
+        Utils.checkNotNull(externalIdMatchesAny, "externalIdMatchesAny");
+        this.externalIdMatchesAny = Optional.of(externalIdMatchesAny);
+        return this;
+    }
+
+    public ListAuditControlsRequestBuilder externalIdMatchesAny(Optional<? extends List<String>> externalIdMatchesAny) {
+        Utils.checkNotNull(externalIdMatchesAny, "externalIdMatchesAny");
+        this.externalIdMatchesAny = externalIdMatchesAny;
+        return this;
+    }
 
 
     private ListAuditControlsRequest buildRequest() {
@@ -68,7 +82,8 @@ public class ListAuditControlsRequestBuilder {
 
         ListAuditControlsRequest request = new ListAuditControlsRequest(auditId,
             pageSize,
-            pageCursor);
+            pageCursor,
+            externalIdMatchesAny);
 
         return request;
     }
