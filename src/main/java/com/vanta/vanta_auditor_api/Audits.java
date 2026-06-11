@@ -455,7 +455,8 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListAuditControlsResponse listControls(String auditId) {
-        return listControls(auditId, Optional.empty(), Optional.empty());
+        return listControls(auditId, Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     /**
@@ -466,18 +467,20 @@ public class Audits {
      * @param auditId 
      * @param pageSize 
      * @param pageCursor 
+     * @param externalIdMatchesAny Filter controls whose externalId matches any of the provided values (exact, case-sensitive match).
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
     public ListAuditControlsResponse listControls(
             String auditId, Optional<Integer> pageSize,
-            Optional<String> pageCursor) {
+            Optional<String> pageCursor, Optional<? extends List<String>> externalIdMatchesAny) {
         ListAuditControlsRequest request =
             ListAuditControlsRequest
                 .builder()
                 .auditId(auditId)
                 .pageSize(pageSize)
                 .pageCursor(pageCursor)
+                .externalIdMatchesAny(externalIdMatchesAny)
                 .build();
         RequestOperation<ListAuditControlsRequest, ListAuditControlsResponse> operation
               = new ListAuditControls.Sync(sdkConfiguration, _headers);

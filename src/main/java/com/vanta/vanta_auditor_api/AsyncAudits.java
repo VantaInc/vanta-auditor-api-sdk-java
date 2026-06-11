@@ -460,7 +460,9 @@ public class AsyncAudits {
      * @return {@code CompletableFuture<ListAuditControlsResponse>} - The async response
      */
     public CompletableFuture<ListAuditControlsResponse> listControls(String auditId) {
-        return listControls(auditId, Optional.empty(), Optional.empty());
+        return listControls(
+                auditId, Optional.empty(), Optional.empty(),
+                Optional.empty());
     }
 
     /**
@@ -471,17 +473,19 @@ public class AsyncAudits {
      * @param auditId 
      * @param pageSize 
      * @param pageCursor 
+     * @param externalIdMatchesAny Filter controls whose externalId matches any of the provided values (exact, case-sensitive match).
      * @return {@code CompletableFuture<ListAuditControlsResponse>} - The async response
      */
     public CompletableFuture<ListAuditControlsResponse> listControls(
             String auditId, Optional<Integer> pageSize,
-            Optional<String> pageCursor) {
+            Optional<String> pageCursor, Optional<? extends List<String>> externalIdMatchesAny) {
         ListAuditControlsRequest request =
             ListAuditControlsRequest
                 .builder()
                 .auditId(auditId)
                 .pageSize(pageSize)
                 .pageCursor(pageCursor)
+                .externalIdMatchesAny(externalIdMatchesAny)
                 .build();
         AsyncRequestOperation<ListAuditControlsRequest, ListAuditControlsResponse> operation
               = new ListAuditControls.Async(sdkConfiguration, _headers);

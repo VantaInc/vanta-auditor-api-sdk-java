@@ -12,6 +12,8 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -28,22 +30,32 @@ public class ListAuditControlsRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=pageCursor")
     private Optional<String> pageCursor;
 
+    /**
+     * Filter controls whose externalId matches any of the provided values (exact, case-sensitive match).
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=externalIdMatchesAny")
+    private Optional<? extends List<String>> externalIdMatchesAny;
+
     @JsonCreator
     public ListAuditControlsRequest(
             String auditId,
             Optional<Integer> pageSize,
-            Optional<String> pageCursor) {
+            Optional<String> pageCursor,
+            Optional<? extends List<String>> externalIdMatchesAny) {
         Utils.checkNotNull(auditId, "auditId");
         Utils.checkNotNull(pageSize, "pageSize");
         Utils.checkNotNull(pageCursor, "pageCursor");
+        Utils.checkNotNull(externalIdMatchesAny, "externalIdMatchesAny");
         this.auditId = auditId;
         this.pageSize = pageSize;
         this.pageCursor = pageCursor;
+        this.externalIdMatchesAny = externalIdMatchesAny;
     }
     
     public ListAuditControlsRequest(
             String auditId) {
-        this(auditId, Optional.empty(), Optional.empty());
+        this(auditId, Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     @JsonIgnore
@@ -59,6 +71,15 @@ public class ListAuditControlsRequest {
     @JsonIgnore
     public Optional<String> pageCursor() {
         return pageCursor;
+    }
+
+    /**
+     * Filter controls whose externalId matches any of the provided values (exact, case-sensitive match).
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> externalIdMatchesAny() {
+        return (Optional<List<String>>) externalIdMatchesAny;
     }
 
     public static Builder builder() {
@@ -98,6 +119,25 @@ public class ListAuditControlsRequest {
         return this;
     }
 
+    /**
+     * Filter controls whose externalId matches any of the provided values (exact, case-sensitive match).
+     */
+    public ListAuditControlsRequest withExternalIdMatchesAny(List<String> externalIdMatchesAny) {
+        Utils.checkNotNull(externalIdMatchesAny, "externalIdMatchesAny");
+        this.externalIdMatchesAny = Optional.ofNullable(externalIdMatchesAny);
+        return this;
+    }
+
+
+    /**
+     * Filter controls whose externalId matches any of the provided values (exact, case-sensitive match).
+     */
+    public ListAuditControlsRequest withExternalIdMatchesAny(Optional<? extends List<String>> externalIdMatchesAny) {
+        Utils.checkNotNull(externalIdMatchesAny, "externalIdMatchesAny");
+        this.externalIdMatchesAny = externalIdMatchesAny;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -110,13 +150,15 @@ public class ListAuditControlsRequest {
         return 
             Utils.enhancedDeepEquals(this.auditId, other.auditId) &&
             Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
-            Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor);
+            Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor) &&
+            Utils.enhancedDeepEquals(this.externalIdMatchesAny, other.externalIdMatchesAny);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            auditId, pageSize, pageCursor);
+            auditId, pageSize, pageCursor,
+            externalIdMatchesAny);
     }
     
     @Override
@@ -124,7 +166,8 @@ public class ListAuditControlsRequest {
         return Utils.toString(ListAuditControlsRequest.class,
                 "auditId", auditId,
                 "pageSize", pageSize,
-                "pageCursor", pageCursor);
+                "pageCursor", pageCursor,
+                "externalIdMatchesAny", externalIdMatchesAny);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -135,6 +178,8 @@ public class ListAuditControlsRequest {
         private Optional<Integer> pageSize;
 
         private Optional<String> pageCursor = Optional.empty();
+
+        private Optional<? extends List<String>> externalIdMatchesAny = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -173,13 +218,33 @@ public class ListAuditControlsRequest {
             return this;
         }
 
+
+        /**
+         * Filter controls whose externalId matches any of the provided values (exact, case-sensitive match).
+         */
+        public Builder externalIdMatchesAny(List<String> externalIdMatchesAny) {
+            Utils.checkNotNull(externalIdMatchesAny, "externalIdMatchesAny");
+            this.externalIdMatchesAny = Optional.ofNullable(externalIdMatchesAny);
+            return this;
+        }
+
+        /**
+         * Filter controls whose externalId matches any of the provided values (exact, case-sensitive match).
+         */
+        public Builder externalIdMatchesAny(Optional<? extends List<String>> externalIdMatchesAny) {
+            Utils.checkNotNull(externalIdMatchesAny, "externalIdMatchesAny");
+            this.externalIdMatchesAny = externalIdMatchesAny;
+            return this;
+        }
+
         public ListAuditControlsRequest build() {
             if (pageSize == null) {
                 pageSize = _SINGLETON_VALUE_PageSize.value();
             }
 
             return new ListAuditControlsRequest(
-                auditId, pageSize, pageCursor);
+                auditId, pageSize, pageCursor,
+                externalIdMatchesAny);
         }
 
 
