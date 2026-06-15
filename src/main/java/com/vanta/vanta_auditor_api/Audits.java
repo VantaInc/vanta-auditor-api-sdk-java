@@ -1989,7 +1989,7 @@ public class Audits {
      * List monitored computers
      * 
      * <p>Returns a list of computers monitored by an MDM (with an integration built
-     * by Vanta) or by the Vanta Agent. Currently this list does not include
+     * by Vanta) or by Vanta Device Monitor. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
      * <p>End of life — this endpoint works for legacy audits only; it does not support
@@ -2008,7 +2008,7 @@ public class Audits {
      * List monitored computers
      * 
      * <p>Returns a list of computers monitored by an MDM (with an integration built
-     * by Vanta) or by the Vanta Agent. Currently this list does not include
+     * by Vanta) or by Vanta Device Monitor. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
      * <p>End of life — this endpoint works for legacy audits only; it does not support
@@ -2030,7 +2030,7 @@ public class Audits {
      * List monitored computers
      * 
      * <p>Returns a list of computers monitored by an MDM (with an integration built
-     * by Vanta) or by the Vanta Agent. Currently this list does not include
+     * by Vanta) or by Vanta Device Monitor. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
      * <p>End of life — this endpoint works for legacy audits only; it does not support
