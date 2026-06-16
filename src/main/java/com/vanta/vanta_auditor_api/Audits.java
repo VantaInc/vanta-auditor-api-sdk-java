@@ -227,6 +227,8 @@ public class Audits {
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
      * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
      * @return The call builder
      */
     public ListAuditsRequestBuilder list() {
@@ -241,6 +243,8 @@ public class Audits {
      * <p>To identify IRL (Information Request List) audits, check for the presence of the
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
+     * 
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -258,6 +262,8 @@ public class Audits {
      * <p>To identify IRL (Information Request List) audits, check for the presence of the
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
+     * 
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @param pageSize 
      * @param pageCursor 
@@ -291,6 +297,8 @@ public class Audits {
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
      * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
      * @return The call builder
      */
     public GetAuditRequestBuilder getAudit() {
@@ -305,6 +313,8 @@ public class Audits {
      * <p>To identify IRL (Information Request List) audits, check for the presence of the
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
+     * 
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @param auditId 
      * @return The response from the API call
@@ -343,6 +353,8 @@ public class Audits {
      * <p>Results are sorted by closed date (newest first). This sort order is
      * fixed and cannot be customized via query parameters.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ListCodeChangesRequestBuilder listCodeChanges() {
@@ -371,6 +383,8 @@ public class Audits {
      * <p>Results are sorted by closed date (newest first). This sort order is
      * fixed and cannot be customized via query parameters.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -386,6 +400,8 @@ public class Audits {
      * 
      * <p>Returns a paginated list of comments for an audit.
      * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
      * @return The call builder
      */
     public ListAuditCommentsRequestBuilder listComments() {
@@ -396,6 +412,8 @@ public class Audits {
      * List audit comments
      * 
      * <p>Returns a paginated list of comments for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @param auditId 
      * @return The response from the API call
@@ -410,6 +428,8 @@ public class Audits {
      * List audit comments
      * 
      * <p>Returns a paginated list of comments for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @param auditId 
      * @param pageSize 
@@ -439,6 +459,8 @@ public class Audits {
      * 
      * <p>Returns a paginated list of controls for an audit.
      * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
      * @return The call builder
      */
     public ListAuditControlsRequestBuilder listControls() {
@@ -449,6 +471,8 @@ public class Audits {
      * List audit controls
      * 
      * <p>Returns a paginated list of controls for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @param auditId 
      * @return The response from the API call
@@ -463,6 +487,8 @@ public class Audits {
      * List audit controls
      * 
      * <p>Returns a paginated list of controls for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @param auditId 
      * @param pageSize 
@@ -492,6 +518,8 @@ public class Audits {
      * 
      * <p>Create a custom control for an audit.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public CreateCustomControlRequestBuilder createCustomControl() {
@@ -502,6 +530,8 @@ public class Audits {
      * Create a custom control for an audit
      * 
      * <p>Create a custom control for an audit.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param createCustomControlInput 
@@ -541,6 +571,8 @@ public class Audits {
      * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
      * 4. Repeat until `hasNextPage` is false
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @return The call builder
      */
     public ListInformationRequestsForControlRequestBuilder listInformationRequestsForControl() {
@@ -567,6 +599,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
      * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
      * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param controlId 
@@ -599,6 +633,8 @@ public class Audits {
      * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
      * 4. Repeat until `hasNextPage` is false
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @param auditId 
      * @param controlId 
      * @param pageSize Maximum number of information requests to return per page.
@@ -627,6 +663,8 @@ public class Audits {
      * 
      * <p>Returns a paginated list of evidence for an audit.
      * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
      * @return The call builder
      */
     public ListAuditEvidenceRequestBuilder listEvidence() {
@@ -637,6 +675,8 @@ public class Audits {
      * List audit evidence
      * 
      * <p>Returns a paginated list of evidence for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @param auditId 
      * @return The response from the API call
@@ -651,6 +691,8 @@ public class Audits {
      * List audit evidence
      * 
      * <p>Returns a paginated list of evidence for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @param auditId 
      * @param pageSize 
@@ -680,6 +722,8 @@ public class Audits {
      * 
      * <p>Create a custom evidence request for an audit.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public CreateCustomEvidenceRequestRequestBuilder createCustomEvidenceRequest() {
@@ -690,6 +734,8 @@ public class Audits {
      * Create a custom evidence request for an audit
      * 
      * <p>Create a custom evidence request for an audit.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param createCustomEvidenceRequestInput 
@@ -713,6 +759,8 @@ public class Audits {
      * 
      * <p>Update audit evidence.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public UpdateAuditEvidenceRequestBuilder updateEvidence() {
@@ -723,6 +771,8 @@ public class Audits {
      * Update audit evidence
      * 
      * <p>Update audit evidence.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param auditEvidenceId 
@@ -750,6 +800,8 @@ public class Audits {
      * 
      * <p>Create a comment in Vanta for a piece of evidence.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public CreateCommentForAuditEvidenceRequestBuilder createCommentForEvidence() {
@@ -760,6 +812,8 @@ public class Audits {
      * Create a comment for audit evidence
      * 
      * <p>Create a comment in Vanta for a piece of evidence.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param auditEvidenceId 
@@ -792,6 +846,8 @@ public class Audits {
      * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
      * "Flagged", or "NA".
      * 
+     * <p>Rate limit: 600 requests / minute.
+     * 
      * @return The call builder
      */
     public ListAuditEvidenceUrlsRequestBuilder getEvidenceUrls() {
@@ -807,6 +863,8 @@ public class Audits {
      * 
      * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
      * "Flagged", or "NA".
+     * 
+     * <p>Rate limit: 600 requests / minute.
      * 
      * @param auditId 
      * @param auditEvidenceId 
@@ -827,6 +885,8 @@ public class Audits {
      * 
      * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
      * "Flagged", or "NA".
+     * 
+     * <p>Rate limit: 600 requests / minute.
      * 
      * @param auditId 
      * @param auditEvidenceId 
@@ -862,6 +922,8 @@ public class Audits {
      * - Validate framework codes against the audit's framework
      * - Get context about what framework codes are available for the audit type
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public GetFrameworkCodesRequestBuilder getFrameworkCodes() {
@@ -878,6 +940,8 @@ public class Audits {
      * - Discover available framework codes before creating information requests
      * - Validate framework codes against the audit's framework
      * - Get context about what framework codes are available for the audit type
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @return The response from the API call
@@ -920,6 +984,8 @@ public class Audits {
      * 4. Process updates and soft-deletes by checking the `deletionDate` field
      * 5. Update your last sync timestamp to the current time
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @return The call builder
      */
     public ListInformationRequestsRequestBuilder listInformationRequests() {
@@ -951,6 +1017,8 @@ public class Audits {
      * 3. Only requests created, modified, or deleted since that timestamp are returned
      * 4. Process updates and soft-deletes by checking the `deletionDate` field
      * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @return The response from the API call
@@ -986,6 +1054,8 @@ public class Audits {
      * 3. Only requests created, modified, or deleted since that timestamp are returned
      * 4. Process updates and soft-deletes by checking the `deletionDate` field
      * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param pageSize Maximum number of information requests to return per page.
@@ -1023,6 +1093,8 @@ public class Audits {
      * <p>New requests are created in an initial state indicating evidence is needed. The status
      * progresses through the workflow: initial state → awaiting review → approved or flagged.
      * 
+     * <p>Rate limit: 600 requests / minute.
+     * 
      * @return The call builder
      */
     public CreateInformationRequestRequestBuilder createInformationRequest() {
@@ -1040,6 +1112,8 @@ public class Audits {
      * 
      * <p>New requests are created in an initial state indicating evidence is needed. The status
      * progresses through the workflow: initial state → awaiting review → approved or flagged.
+     * 
+     * <p>Rate limit: 600 requests / minute.
      * 
      * @param auditId 
      * @param createInformationRequestInput Input for creating a new information request.
@@ -1069,6 +1143,8 @@ public class Audits {
      * <p>Soft-deleted records (where `deletionDate !== null`) are included in the response.
      * Clients should check `deletionDate` to determine whether the request has been deleted.
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @return The call builder
      */
     public GetInformationRequestRequestBuilder getInformationRequest() {
@@ -1084,6 +1160,8 @@ public class Audits {
      * 
      * <p>Soft-deleted records (where `deletionDate !== null`) are included in the response.
      * Clients should check `deletionDate` to determine whether the request has been deleted.
+     * 
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -1117,6 +1195,8 @@ public class Audits {
      * <p>Note: The `modificationDate` is automatically updated to the current timestamp
      * when any field is changed.
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @return The call builder
      */
     public UpdateInformationRequestRequestBuilder updateInformationRequest() {
@@ -1137,6 +1217,8 @@ public class Audits {
      * 
      * <p>Note: The `modificationDate` is automatically updated to the current timestamp
      * when any field is changed.
+     * 
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -1176,6 +1258,8 @@ public class Audits {
      * - The request will not appear in normal list responses (without `changedSinceDate`)
      * - The request's `deletionDate` field will be populated
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public DeleteInformationRequestRequestBuilder deleteInformationRequest() {
@@ -1196,6 +1280,8 @@ public class Audits {
      * <p>After deletion:
      * - The request will not appear in normal list responses (without `changedSinceDate`)
      * - The request's `deletionDate` field will be populated
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -1232,6 +1318,8 @@ public class Audits {
      * - Evidence addresses all specified framework codes
      * - No additional information is needed
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @return The call builder
      */
     public AcceptInformationRequestEvidenceRequestBuilder acceptInformationRequestEvidence() {
@@ -1255,6 +1343,8 @@ public class Audits {
      * - Evidence quality meets audit standards
      * - Evidence addresses all specified framework codes
      * - No additional information is needed
+     * 
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -1301,6 +1391,8 @@ public class Audits {
      * 4. Process updates to track all changes to the information request
      * 5. Update your last sync timestamp to the current time
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @return The call builder
      */
     public ListInformationRequestActivityRequestBuilder listInformationRequestActivity() {
@@ -1328,6 +1420,8 @@ public class Audits {
      * 3. Only activity created since that timestamp is returned
      * 4. Process updates to track all changes to the information request
      * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
@@ -1365,6 +1459,8 @@ public class Audits {
      * 4. Process updates, including soft-deletes (deletionDate !== null)
      * 5. Update your last sync timestamp to the current time
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @return The call builder
      */
     public ListCommentsForInformationRequestRequestBuilder listCommentsForInformationRequest() {
@@ -1397,6 +1493,8 @@ public class Audits {
      * 4. Process updates, including soft-deletes (deletionDate !== null)
      * 5. Update your last sync timestamp to the current time
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -1414,6 +1512,8 @@ public class Audits {
      * in the audit firm making the request. The comment will be associated with the information
      * request and visible to all authorized users.
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @return The call builder
      */
     public CreateCommentForInformationRequestRequestBuilder createCommentForInformationRequest() {
@@ -1426,6 +1526,8 @@ public class Audits {
      * <p>Creates a new comment for an information request. The comment author must be an auditor
      * in the audit firm making the request. The comment will be associated with the information
      * request and visible to all authorized users.
+     * 
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -1457,6 +1559,8 @@ public class Audits {
      * of the comment can update it. The author is identified by their email address,
      * which must match the email of the user who created the comment.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public UpdateCommentForInformationRequestRequestBuilder updateCommentForInformationRequest() {
@@ -1469,6 +1573,8 @@ public class Audits {
      * <p>Updates an existing comment for an information request. Only the original author
      * of the comment can update it. The author is identified by their email address,
      * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -1501,6 +1607,8 @@ public class Audits {
      * of the comment can delete it. The author is identified by their email address,
      * which must match the email of the user who created the comment.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public DeleteCommentForInformationRequestRequestBuilder deleteCommentForInformationRequest() {
@@ -1513,6 +1621,8 @@ public class Audits {
      * <p>Deletes an existing comment for an information request. Only the original author
      * of the comment can delete it. The author is identified by their email address,
      * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -1564,6 +1674,8 @@ public class Audits {
      * 4. Process updates, including soft-deletes (deletionDate !== null)
      * 5. Update your last sync timestamp to the current time
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @return The call builder
      */
     public ListInformationRequestEvidenceRequestBuilder listInformationRequestEvidence() {
@@ -1595,6 +1707,8 @@ public class Audits {
      * 3. Only evidence created, modified, shared, or deleted since that timestamp is returned
      * 4. Process updates, including soft-deletes (deletionDate !== null)
      * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
@@ -1631,6 +1745,8 @@ public class Audits {
      * introspection tests. Empty when the test does not perform API
      * introspection.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder getInformationRequestTestSnapshotEvidenceDetail() {
@@ -1661,6 +1777,8 @@ public class Audits {
      * <p>The `apiRequests` array contains the HTTP requests captured during API
      * introspection tests. Empty when the test does not perform API
      * introspection.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -1703,6 +1821,8 @@ public class Audits {
      * customer knows exactly what to fix. This reason is visible to the customer
      * and appears in the activity log.
      * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
      * @return The call builder
      */
     public FlagInformationRequestEvidenceRequestBuilder flagInformationRequestEvidence() {
@@ -1728,6 +1848,8 @@ public class Audits {
      * <p>The `reason` field should clearly explain what's missing or incorrect so the
      * customer knows exactly what to fix. This reason is visible to the customer
      * and appears in the activity log.
+     * 
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -1784,6 +1906,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ListAuditIssuesRequestBuilder listAuditIssues() {
@@ -1820,6 +1944,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -1849,6 +1975,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ListAuditSnapshotsRequestBuilder listAuditSnapshots() {
@@ -1873,6 +2001,8 @@ public class Audits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId The audit ID
      * @return The response from the API call
@@ -1901,6 +2031,8 @@ public class Audits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId The audit ID
      * @param pageSize Maximum number of results per page (1-100, default 10)
@@ -1947,6 +2079,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ListVendorsRequestBuilder listVendors() {
@@ -1975,6 +2109,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -1996,6 +2132,8 @@ public class Audits {
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -2014,6 +2152,8 @@ public class Audits {
      * <p>End of life — this endpoint works for legacy audits only; it does not support
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @return The response from the API call
@@ -2036,6 +2176,8 @@ public class Audits {
      * <p>End of life — this endpoint works for legacy audits only; it does not support
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param pageSize 
@@ -2071,6 +2213,8 @@ public class Audits {
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -2087,6 +2231,8 @@ public class Audits {
      * <p>End of life — this endpoint works for legacy audits only; it does not support
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
@@ -2120,6 +2266,8 @@ public class Audits {
      * <p>Results are returned in connection order. Sort order is not guaranteed
      * and cannot be customized via query parameters.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ListAccountAccessServicesRequestBuilder listAccountAccessServices() {
@@ -2145,6 +2293,8 @@ public class Audits {
      * 
      * <p>Results are returned in connection order. Sort order is not guaranteed
      * and cannot be customized via query parameters.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId The audit ID
      * @return The response from the API call
@@ -2173,6 +2323,8 @@ public class Audits {
      * 
      * <p>Results are returned in connection order. Sort order is not guaranteed
      * and cannot be customized via query parameters.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId The audit ID
      * @param pageSize Maximum number of results per page (1-100, default 10)
@@ -2240,6 +2392,8 @@ public class Audits {
      * 
      * <p>Sort order cannot be customized via query parameters.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ListPersonnelAccountAccessRequestBuilder listPersonnelAccountAccess() {
@@ -2291,6 +2445,8 @@ public class Audits {
      * 
      * <p>Sort order cannot be customized via query parameters.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -2327,6 +2483,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ListPersonnelGroupsRequestBuilder listPersonnelGroups() {
@@ -2358,6 +2516,8 @@ public class Audits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
@@ -2392,6 +2552,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ListPersonnelPeopleRequestBuilder listPersonnelPeople() {
@@ -2420,6 +2582,8 @@ public class Audits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
@@ -2450,6 +2614,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ListRiskSnapshotsRequestBuilder listRiskSnapshots() {
@@ -2474,6 +2640,8 @@ public class Audits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId The audit ID
      * @return The response from the API call
@@ -2501,6 +2669,8 @@ public class Audits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId The audit ID
      * @param pageSize Maximum number of results per page (1-100, default 10)
@@ -2547,6 +2717,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ListAuditRisksRequestBuilder listAuditRisks() {
@@ -2577,6 +2749,8 @@ public class Audits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
@@ -2594,6 +2768,8 @@ public class Audits {
      * making it visible in their portal. This action allows the customer to see all information
      * requests that have been created for their audit. Only IRL audits are supported.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public ShareInformationRequestListRequestBuilder shareInformationRequestList() {
@@ -2606,6 +2782,8 @@ public class Audits {
      * <p>Shares the current information request list for an audit with the customer organization,
      * making it visible in their portal. This action allows the customer to see all information
      * requests that have been created for their audit. Only IRL audits are supported.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @return The response from the API call
@@ -2631,6 +2809,8 @@ public class Audits {
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -2647,6 +2827,8 @@ public class Audits {
      * <p>End of life — this endpoint works for legacy audits only; it does not support
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @return The response from the API call
@@ -2666,6 +2848,8 @@ public class Audits {
      * <p>End of life — this endpoint works for legacy audits only; it does not support
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param pageSize 
@@ -2699,6 +2883,8 @@ public class Audits {
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -2715,6 +2901,8 @@ public class Audits {
      * <p>End of life — this endpoint works for legacy audits only; it does not support
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
@@ -2737,6 +2925,8 @@ public class Audits {
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -2753,6 +2943,8 @@ public class Audits {
      * <p>End of life — this endpoint works for legacy audits only; it does not support
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
@@ -2775,6 +2967,8 @@ public class Audits {
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -2791,6 +2985,8 @@ public class Audits {
      * <p>End of life — this endpoint works for legacy audits only; it does not support
      * controlled audit view. It remains available for existing legacy audits but will be removed once
      * legacy audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call

@@ -38,6 +38,8 @@ public class AsyncAuditors {
      * 
      * <p>Create an auditor in Vanta.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The async call builder
      */
     public CreateAuditorRequestBuilder create() {
@@ -48,6 +50,8 @@ public class AsyncAuditors {
      * Create an auditor
      * 
      * <p>Create an auditor in Vanta.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return {@code CompletableFuture<CreateAuditorResponse>} - The async response

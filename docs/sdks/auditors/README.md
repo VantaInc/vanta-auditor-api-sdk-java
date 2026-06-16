@@ -10,6 +10,8 @@
 
 Create an auditor in Vanta.
 
+Rate limit: 10 requests / minute.
+
 ### Example Usage
 
 <!-- UsageSnippet language="java" operationID="CreateAuditor" method="post" path="/auditors" example="Example 1" -->

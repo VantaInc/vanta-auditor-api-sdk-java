@@ -36,6 +36,8 @@ public class Auditors {
      * 
      * <p>Create an auditor in Vanta.
      * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
      * @return The call builder
      */
     public CreateAuditorRequestBuilder create() {
@@ -46,6 +48,8 @@ public class Auditors {
      * Create an auditor
      * 
      * <p>Create an auditor in Vanta.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
