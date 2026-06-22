@@ -68,8 +68,9 @@ public class VulnerableAssetScanner {
     /**
      * BIOS UUID of the scanned asset.
      */
+    @JsonInclude(Include.ALWAYS)
     @JsonProperty("biosUuid")
-    private String biosUuid;
+    private Optional<String> biosUuid;
 
     /**
      * IPV4s of the scanned asset.
@@ -129,7 +130,7 @@ public class VulnerableAssetScanner {
             @JsonProperty("imageTags") Optional<? extends List<String>> imageTags,
             @JsonProperty("assetTags") Optional<? extends List<KeyValuePair>> assetTags,
             @JsonProperty("parentAccountOrOrganization") Optional<String> parentAccountOrOrganization,
-            @JsonProperty("biosUuid") String biosUuid,
+            @JsonProperty("biosUuid") Optional<String> biosUuid,
             @JsonProperty("ipv4s") Optional<? extends List<String>> ipv4s,
             @JsonProperty("ipv6s") Optional<? extends List<String>> ipv6s,
             @JsonProperty("macAddresses") Optional<? extends List<String>> macAddresses,
@@ -171,11 +172,10 @@ public class VulnerableAssetScanner {
     
     public VulnerableAssetScanner(
             String resourceId,
-            String integrationId,
-            String biosUuid) {
+            String integrationId) {
         this(resourceId, integrationId, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), biosUuid, Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty());
     }
@@ -242,7 +242,7 @@ public class VulnerableAssetScanner {
      * BIOS UUID of the scanned asset.
      */
     @JsonIgnore
-    public String biosUuid() {
+    public Optional<String> biosUuid() {
         return biosUuid;
     }
 
@@ -430,6 +430,16 @@ public class VulnerableAssetScanner {
      * BIOS UUID of the scanned asset.
      */
     public VulnerableAssetScanner withBiosUuid(String biosUuid) {
+        Utils.checkNotNull(biosUuid, "biosUuid");
+        this.biosUuid = Optional.ofNullable(biosUuid);
+        return this;
+    }
+
+
+    /**
+     * BIOS UUID of the scanned asset.
+     */
+    public VulnerableAssetScanner withBiosUuid(Optional<String> biosUuid) {
         Utils.checkNotNull(biosUuid, "biosUuid");
         this.biosUuid = biosUuid;
         return this;
@@ -642,7 +652,7 @@ public class VulnerableAssetScanner {
 
         private Optional<String> parentAccountOrOrganization = Optional.empty();
 
-        private String biosUuid;
+        private Optional<String> biosUuid = Optional.empty();
 
         private Optional<? extends List<String>> ipv4s = Optional.empty();
 
@@ -782,6 +792,15 @@ public class VulnerableAssetScanner {
          * BIOS UUID of the scanned asset.
          */
         public Builder biosUuid(String biosUuid) {
+            Utils.checkNotNull(biosUuid, "biosUuid");
+            this.biosUuid = Optional.ofNullable(biosUuid);
+            return this;
+        }
+
+        /**
+         * BIOS UUID of the scanned asset.
+         */
+        public Builder biosUuid(Optional<String> biosUuid) {
             Utils.checkNotNull(biosUuid, "biosUuid");
             this.biosUuid = biosUuid;
             return this;

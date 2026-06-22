@@ -2160,9 +2160,9 @@ public class AsyncAudits {
      * by Vanta) or by Vanta Device Monitor. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2181,9 +2181,9 @@ public class AsyncAudits {
      * by Vanta) or by Vanta Device Monitor. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2205,9 +2205,9 @@ public class AsyncAudits {
      * by Vanta) or by Vanta Device Monitor. Currently this list does not include
      * resources from partner or customer-built integrations.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2242,9 +2242,9 @@ public class AsyncAudits {
      * 
      * <p>Returns a list of people who are in scope for this audit.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2261,9 +2261,9 @@ public class AsyncAudits {
      * 
      * <p>Returns a list of people who are in scope for this audit.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2844,9 +2844,9 @@ public class AsyncAudits {
      * 
      * <p>Returns a list of vendors who are in scope for this audit.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2863,9 +2863,9 @@ public class AsyncAudits {
      * 
      * <p>Returns a list of vendors who are in scope for this audit.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2883,9 +2883,9 @@ public class AsyncAudits {
      * 
      * <p>Returns a list of vendors who are in scope for this audit.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2918,9 +2918,9 @@ public class AsyncAudits {
      * 
      * <p>List all vulnerabilities based on selected filters.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2937,9 +2937,9 @@ public class AsyncAudits {
      * 
      * <p>List all vulnerabilities based on selected filters.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2961,9 +2961,9 @@ public class AsyncAudits {
      * 
      * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2980,9 +2980,9 @@ public class AsyncAudits {
      * 
      * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3004,9 +3004,9 @@ public class AsyncAudits {
      * 
      * <p>List assets that Vanta monitors that are associated with vulnerabilities.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3023,9 +3023,9 @@ public class AsyncAudits {
      * 
      * <p>List assets that Vanta monitors that are associated with vulnerabilities.
      * 
-     * <p>End of life — this endpoint works for legacy audits only; it does not support
-     * controlled audit view. It remains available for existing legacy audits but will be removed once
-     * legacy audits are fully phased out, so do not build new integrations on it.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
