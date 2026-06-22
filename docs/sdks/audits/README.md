@@ -2020,9 +2020,9 @@ Returns a list of computers monitored by an MDM (with an integration built
 by Vanta) or by Vanta Device Monitor. Currently this list does not include
 resources from partner or customer-built integrations.
 
-End of life — this endpoint works for legacy audits only; it does not support
-controlled audit view. It remains available for existing legacy audits but will be removed once
-legacy audits are fully phased out, so do not build new integrations on it.
+End of life — this endpoint works for classic audits only; it does not support
+controlled audit view. It remains available for existing classic audits but will be removed once
+classic audits are fully phased out, so do not build new integrations on it.
 
 Rate limit: 10 requests / minute.
 
@@ -2081,9 +2081,9 @@ public class Application {
 
 Returns a list of people who are in scope for this audit.
 
-End of life — this endpoint works for legacy audits only; it does not support
-controlled audit view. It remains available for existing legacy audits but will be removed once
-legacy audits are fully phased out, so do not build new integrations on it.
+End of life — this endpoint works for classic audits only; it does not support
+controlled audit view. It remains available for existing classic audits but will be removed once
+classic audits are fully phased out, so do not build new integrations on it.
 
 Rate limit: 10 requests / minute.
 
@@ -2658,9 +2658,9 @@ public class Application {
 
 Returns a list of vendors who are in scope for this audit.
 
-End of life — this endpoint works for legacy audits only; it does not support
-controlled audit view. It remains available for existing legacy audits but will be removed once
-legacy audits are fully phased out, so do not build new integrations on it.
+End of life — this endpoint works for classic audits only; it does not support
+controlled audit view. It remains available for existing classic audits but will be removed once
+classic audits are fully phased out, so do not build new integrations on it.
 
 Rate limit: 10 requests / minute.
 
@@ -2718,9 +2718,9 @@ public class Application {
 
 List all vulnerabilities based on selected filters.
 
-End of life — this endpoint works for legacy audits only; it does not support
-controlled audit view. It remains available for existing legacy audits but will be removed once
-legacy audits are fully phased out, so do not build new integrations on it.
+End of life — this endpoint works for classic audits only; it does not support
+controlled audit view. It remains available for existing classic audits but will be removed once
+classic audits are fully phased out, so do not build new integrations on it.
 
 Rate limit: 10 requests / minute.
 
@@ -2780,9 +2780,9 @@ public class Application {
 
 List all vulnerability remediations based on selected filters that are in scope for this audit.
 
-End of life — this endpoint works for legacy audits only; it does not support
-controlled audit view. It remains available for existing legacy audits but will be removed once
-legacy audits are fully phased out, so do not build new integrations on it.
+End of life — this endpoint works for classic audits only; it does not support
+controlled audit view. It remains available for existing classic audits but will be removed once
+classic audits are fully phased out, so do not build new integrations on it.
 
 Rate limit: 10 requests / minute.
 
@@ -2842,9 +2842,9 @@ public class Application {
 
 List assets that Vanta monitors that are associated with vulnerabilities.
 
-End of life — this endpoint works for legacy audits only; it does not support
-controlled audit view. It remains available for existing legacy audits but will be removed once
-legacy audits are fully phased out, so do not build new integrations on it.
+End of life — this endpoint works for classic audits only; it does not support
+controlled audit view. It remains available for existing classic audits but will be removed once
+classic audits are fully phased out, so do not build new integrations on it.
 
 Rate limit: 10 requests / minute.
 
