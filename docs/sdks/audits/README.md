@@ -10,6 +10,7 @@
 * [listComments](#listcomments) - List audit comments
 * [listControls](#listcontrols) - List audit controls
 * [createCustomControl](#createcustomcontrol) - Create a custom control for an audit
+* [listCommentsForControl](#listcommentsforcontrol) - List comments for a control within an audit
 * [listInformationRequestsForControl](#listinformationrequestsforcontrol) - List information requests linked to a control within an audit
 * [listEvidence](#listevidence) - List audit evidence
 * [createCustomEvidenceRequest](#createcustomevidencerequest) - Create a custom evidence request for an audit
@@ -399,6 +400,86 @@ public class Application {
 ### Response
 
 **[CreateCustomControlResponse](../../models/operations/CreateCustomControlResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listCommentsForControl
+
+Retrieves a paginated list of comments on a control within an IRL audit,
+enabling auditors to view collaboration history on the control.
+
+This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+Clients should check the `deletionDate` field to identify and handle deleted records
+appropriately in their systems.
+
+This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+allowing efficient polling for changes without retrieving the entire dataset.
+
+Returns 404 when the control is not part of the audit.
+
+Pagination usage:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage` to see if more data exists
+3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+4. Repeat until `hasNextPage` is false
+
+Delta sync usage:
+1. Store the timestamp of your last sync
+2. Pass that timestamp as `changedSinceDate`
+3. Only comments created, modified, or deleted since that timestamp are returned
+4. Process updates, including soft-deletes (deletionDate !== null)
+5. Update your last sync timestamp to the current time
+
+Rate limit: 50 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListCommentsForControl" method="get" path="/audits/{auditId}/controls/{controlId}/comments" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListCommentsForControlRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListCommentsForControlResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListCommentsForControlRequest req = ListCommentsForControlRequest.builder()
+                .auditId("<id>")
+                .controlId("<id>")
+                .build();
+
+        ListCommentsForControlResponse res = sdk.audits().listCommentsForControl()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseAuditControlComment().isPresent()) {
+            System.out.println(res.paginatedResponseAuditControlComment().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [ListCommentsForControlRequest](../../models/operations/ListCommentsForControlRequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+
+### Response
+
+**[ListCommentsForControlResponse](../../models/operations/ListCommentsForControlResponse.md)**
 
 ### Errors
 
