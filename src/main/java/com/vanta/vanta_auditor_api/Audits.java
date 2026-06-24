@@ -89,6 +89,9 @@ import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import com.vanta.vanta_auditor_api.models.operations.ListCodeChangesRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListCodeChangesRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.ListCodeChangesResponse;
+import com.vanta.vanta_auditor_api.models.operations.ListCommentsForControlRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListCommentsForControlRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.ListCommentsForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.ListCommentsForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListCommentsForInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.ListCommentsForInformationRequestResponse;
@@ -170,6 +173,7 @@ import com.vanta.vanta_auditor_api.operations.ListAuditRisks;
 import com.vanta.vanta_auditor_api.operations.ListAuditSnapshots;
 import com.vanta.vanta_auditor_api.operations.ListAudits;
 import com.vanta.vanta_auditor_api.operations.ListCodeChanges;
+import com.vanta.vanta_auditor_api.operations.ListCommentsForControl;
 import com.vanta.vanta_auditor_api.operations.ListCommentsForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestActivity;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestEvidence;
@@ -547,6 +551,82 @@ public class Audits {
                 .build();
         RequestOperation<CreateCustomControlRequest, CreateCustomControlResponse> operation
               = new CreateCustomControl.Sync(sdkConfiguration, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * List comments for a control within an audit
+     * 
+     * <p>Retrieves a paginated list of comments on a control within an IRL audit,
+     * enabling auditors to view collaboration history on the control.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only comments created, modified, or deleted since that timestamp are returned
+     * 4. Process updates, including soft-deletes (deletionDate !== null)
+     * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public ListCommentsForControlRequestBuilder listCommentsForControl() {
+        return new ListCommentsForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List comments for a control within an audit
+     * 
+     * <p>Retrieves a paginated list of comments on a control within an IRL audit,
+     * enabling auditors to view collaboration history on the control.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only comments created, modified, or deleted since that timestamp are returned
+     * 4. Process updates, including soft-deletes (deletionDate !== null)
+     * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListCommentsForControlResponse listCommentsForControl(ListCommentsForControlRequest request) {
+        RequestOperation<ListCommentsForControlRequest, ListCommentsForControlResponse> operation
+              = new ListCommentsForControl.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

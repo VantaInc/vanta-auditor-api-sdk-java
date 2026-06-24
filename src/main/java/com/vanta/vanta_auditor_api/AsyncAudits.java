@@ -41,6 +41,7 @@ import com.vanta.vanta_auditor_api.models.operations.ListAuditRisksRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditSnapshotsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListCodeChangesRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListCommentsForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListCommentsForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestActivityRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceRequest;
@@ -108,6 +109,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.ListAuditsRequestBuil
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditsResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListCodeChangesRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListCodeChangesResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListCommentsForControlRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListCommentsForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListCommentsForInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListCommentsForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestActivityRequestBuilder;
@@ -170,6 +173,7 @@ import com.vanta.vanta_auditor_api.operations.ListAuditRisks;
 import com.vanta.vanta_auditor_api.operations.ListAuditSnapshots;
 import com.vanta.vanta_auditor_api.operations.ListAudits;
 import com.vanta.vanta_auditor_api.operations.ListCodeChanges;
+import com.vanta.vanta_auditor_api.operations.ListCommentsForControl;
 import com.vanta.vanta_auditor_api.operations.ListCommentsForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestActivity;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestEvidence;
@@ -553,6 +557,83 @@ public class AsyncAudits {
                 .build();
         AsyncRequestOperation<CreateCustomControlRequest, CreateCustomControlResponse> operation
               = new CreateCustomControl.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List comments for a control within an audit
+     * 
+     * <p>Retrieves a paginated list of comments on a control within an IRL audit,
+     * enabling auditors to view collaboration history on the control.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only comments created, modified, or deleted since that timestamp are returned
+     * 4. Process updates, including soft-deletes (deletionDate !== null)
+     * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListCommentsForControlRequestBuilder listCommentsForControl() {
+        return new ListCommentsForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List comments for a control within an audit
+     * 
+     * <p>Retrieves a paginated list of comments on a control within an IRL audit,
+     * enabling auditors to view collaboration history on the control.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only comments created, modified, or deleted since that timestamp are returned
+     * 4. Process updates, including soft-deletes (deletionDate !== null)
+     * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListCommentsForControlResponse>} - The async response
+     */
+    public CompletableFuture<ListCommentsForControlResponse> listCommentsForControl(ListCommentsForControlRequest request) {
+        AsyncRequestOperation<ListCommentsForControlRequest, ListCommentsForControlResponse> operation
+              = new ListCommentsForControl.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
