@@ -6,6 +6,7 @@ package com.vanta.vanta_auditor_api;
 import static com.vanta.vanta_auditor_api.operations.Operations.AsyncRequestOperation;
 
 import com.vanta.vanta_auditor_api.models.components.AcceptInformationRequestEvidenceInput;
+import com.vanta.vanta_auditor_api.models.components.AddAuditControlCommentInput;
 import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
 import com.vanta.vanta_auditor_api.models.components.AddInformationRequestCommentInput;
 import com.vanta.vanta_auditor_api.models.components.AuditEvidenceUpdateInput;
@@ -19,6 +20,7 @@ import com.vanta.vanta_auditor_api.models.components.PartialUpdateInformationReq
 import com.vanta.vanta_auditor_api.models.components.UpdateInformationRequestCommentInput;
 import com.vanta.vanta_auditor_api.models.operations.AcceptInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceRequest;
+import com.vanta.vanta_auditor_api.models.operations.CreateCommentForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCustomControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCustomEvidenceRequestRequest;
@@ -65,6 +67,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.AcceptInformationRequ
 import com.vanta.vanta_auditor_api.models.operations.async.AcceptInformationRequestEvidenceResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.CreateCommentForAuditEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.CreateCommentForAuditEvidenceResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.CreateCommentForControlRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.CreateCommentForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.CreateCommentForInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.CreateCommentForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.CreateCustomControlRequestBuilder;
@@ -151,6 +155,7 @@ import com.vanta.vanta_auditor_api.models.operations.async.UpdateInformationRequ
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateInformationRequestResponse;
 import com.vanta.vanta_auditor_api.operations.AcceptInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidence;
+import com.vanta.vanta_auditor_api.operations.CreateCommentForControl;
 import com.vanta.vanta_auditor_api.operations.CreateCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.CreateCustomControl;
 import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequest;
@@ -634,6 +639,57 @@ public class AsyncAudits {
     public CompletableFuture<ListCommentsForControlResponse> listCommentsForControl(ListCommentsForControlRequest request) {
         AsyncRequestOperation<ListCommentsForControlRequest, ListCommentsForControlResponse> operation
               = new ListCommentsForControl.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Create a comment for a control within an audit
+     * 
+     * <p>Creates a new comment on a control within an IRL audit. The comment author
+     * must be an auditor in the audit firm making the request. The comment will be
+     * associated with the control and visible to all authorized users.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public CreateCommentForControlRequestBuilder createCommentForControl() {
+        return new CreateCommentForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Create a comment for a control within an audit
+     * 
+     * <p>Creates a new comment on a control within an IRL audit. The comment author
+     * must be an auditor in the audit firm making the request. The comment will be
+     * associated with the control and visible to all authorized users.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param addAuditControlCommentInput Comments enable auditors and customers to collaborate on a control within an
+     *         audit. All comments are immediately visible to authorized parties once created.
+     * @return {@code CompletableFuture<CreateCommentForControlResponse>} - The async response
+     */
+    public CompletableFuture<CreateCommentForControlResponse> createCommentForControl(
+            String auditId, String controlId,
+            AddAuditControlCommentInput addAuditControlCommentInput) {
+        CreateCommentForControlRequest request =
+            CreateCommentForControlRequest
+                .builder()
+                .auditId(auditId)
+                .controlId(controlId)
+                .addAuditControlCommentInput(addAuditControlCommentInput)
+                .build();
+        AsyncRequestOperation<CreateCommentForControlRequest, CreateCommentForControlResponse> operation
+              = new CreateCommentForControl.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

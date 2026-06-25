@@ -6,6 +6,7 @@ package com.vanta.vanta_auditor_api;
 import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
 
 import com.vanta.vanta_auditor_api.models.components.AcceptInformationRequestEvidenceInput;
+import com.vanta.vanta_auditor_api.models.components.AddAuditControlCommentInput;
 import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
 import com.vanta.vanta_auditor_api.models.components.AddInformationRequestCommentInput;
 import com.vanta.vanta_auditor_api.models.components.AuditEvidenceUpdateInput;
@@ -23,6 +24,9 @@ import com.vanta.vanta_auditor_api.models.operations.AcceptInformationRequestEvi
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceResponse;
+import com.vanta.vanta_auditor_api.models.operations.CreateCommentForControlRequest;
+import com.vanta.vanta_auditor_api.models.operations.CreateCommentForControlRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.CreateCommentForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForInformationRequestResponse;
@@ -151,6 +155,7 @@ import com.vanta.vanta_auditor_api.models.operations.UpdateInformationRequestReq
 import com.vanta.vanta_auditor_api.models.operations.UpdateInformationRequestResponse;
 import com.vanta.vanta_auditor_api.operations.AcceptInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidence;
+import com.vanta.vanta_auditor_api.operations.CreateCommentForControl;
 import com.vanta.vanta_auditor_api.operations.CreateCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.CreateCustomControl;
 import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequest;
@@ -627,6 +632,56 @@ public class Audits {
     public ListCommentsForControlResponse listCommentsForControl(ListCommentsForControlRequest request) {
         RequestOperation<ListCommentsForControlRequest, ListCommentsForControlResponse> operation
               = new ListCommentsForControl.Sync(sdkConfiguration, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Create a comment for a control within an audit
+     * 
+     * <p>Creates a new comment on a control within an IRL audit. The comment author
+     * must be an auditor in the audit firm making the request. The comment will be
+     * associated with the control and visible to all authorized users.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public CreateCommentForControlRequestBuilder createCommentForControl() {
+        return new CreateCommentForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Create a comment for a control within an audit
+     * 
+     * <p>Creates a new comment on a control within an IRL audit. The comment author
+     * must be an auditor in the audit firm making the request. The comment will be
+     * associated with the control and visible to all authorized users.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param addAuditControlCommentInput Comments enable auditors and customers to collaborate on a control within an
+     *         audit. All comments are immediately visible to authorized parties once created.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateCommentForControlResponse createCommentForControl(
+            String auditId, String controlId,
+            AddAuditControlCommentInput addAuditControlCommentInput) {
+        CreateCommentForControlRequest request =
+            CreateCommentForControlRequest
+                .builder()
+                .auditId(auditId)
+                .controlId(controlId)
+                .addAuditControlCommentInput(addAuditControlCommentInput)
+                .build();
+        RequestOperation<CreateCommentForControlRequest, CreateCommentForControlResponse> operation
+              = new CreateCommentForControl.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

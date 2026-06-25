@@ -11,6 +11,7 @@
 * [listControls](#listcontrols) - List audit controls
 * [createCustomControl](#createcustomcontrol) - Create a custom control for an audit
 * [listCommentsForControl](#listcommentsforcontrol) - List comments for a control within an audit
+* [createCommentForControl](#createcommentforcontrol) - Create a comment for a control within an audit
 * [listInformationRequestsForControl](#listinformationrequestsforcontrol) - List information requests linked to a control within an audit
 * [listEvidence](#listevidence) - List audit evidence
 * [createCustomEvidenceRequest](#createcustomevidencerequest) - Create a custom evidence request for an audit
@@ -480,6 +481,71 @@ public class Application {
 ### Response
 
 **[ListCommentsForControlResponse](../../models/operations/ListCommentsForControlResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## createCommentForControl
+
+Creates a new comment on a control within an IRL audit. The comment author
+must be an auditor in the audit firm making the request. The comment will be
+associated with the control and visible to all authorized users.
+
+Returns 404 when the control is not part of the audit.
+
+Rate limit: 50 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="CreateCommentForControl" method="post" path="/audits/{auditId}/controls/{controlId}/comments" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.AddAuditControlCommentInput;
+import com.vanta.vanta_auditor_api.models.operations.CreateCommentForControlResponse;
+import java.lang.Exception;
+import java.time.OffsetDateTime;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        CreateCommentForControlResponse res = sdk.audits().createCommentForControl()
+                .auditId("<id>")
+                .controlId("<id>")
+                .addAuditControlCommentInput(AddAuditControlCommentInput.builder()
+                    .text("<value>")
+                    .email("Justice.Konopelski@hotmail.com")
+                    .creationDate(OffsetDateTime.parse("2024-04-23T18:18:35.232Z"))
+                    .build())
+                .call();
+
+        if (res.auditControlComment().isPresent()) {
+            System.out.println(res.auditControlComment().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `auditId`                                                                             | *String*                                                                              | :heavy_check_mark:                                                                    | N/A                                                                                   |
+| `controlId`                                                                           | *String*                                                                              | :heavy_check_mark:                                                                    | N/A                                                                                   |
+| `addAuditControlCommentInput`                                                         | [AddAuditControlCommentInput](../../models/components/AddAuditControlCommentInput.md) | :heavy_check_mark:                                                                    | N/A                                                                                   |
+
+### Response
+
+**[CreateCommentForControlResponse](../../models/operations/CreateCommentForControlResponse.md)**
 
 ### Errors
 
