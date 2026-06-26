@@ -12,6 +12,8 @@
 * [createCustomControl](#createcustomcontrol) - Create a custom control for an audit
 * [listCommentsForControl](#listcommentsforcontrol) - List comments for a control within an audit
 * [createCommentForControl](#createcommentforcontrol) - Create a comment for a control within an audit
+* [updateCommentForControl](#updatecommentforcontrol) - Update a comment for a control within an audit
+* [deleteCommentForControl](#deletecommentforcontrol) - Delete a comment for a control within an audit
 * [listInformationRequestsForControl](#listinformationrequestsforcontrol) - List information requests linked to a control within an audit
 * [listEvidence](#listevidence) - List audit evidence
 * [createCustomEvidenceRequest](#createcustomevidencerequest) - Create a custom evidence request for an audit
@@ -546,6 +548,129 @@ public class Application {
 ### Response
 
 **[CreateCommentForControlResponse](../../models/operations/CreateCommentForControlResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## updateCommentForControl
+
+Updates an existing comment on a control. Only the original author
+of the comment can update it. The author is identified by their email address,
+which must match the email of the user who created the comment.
+
+Rate limit: 10 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="UpdateCommentForControl" method="patch" path="/audits/{auditId}/controls/{controlId}/comments/{commentId}" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.UpdateAuditControlCommentInput;
+import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForControlResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        UpdateCommentForControlResponse res = sdk.audits().updateCommentForControl()
+                .auditId("<id>")
+                .controlId("<id>")
+                .commentId("<id>")
+                .updateAuditControlCommentInput(UpdateAuditControlCommentInput.builder()
+                    .text("<value>")
+                    .email("Leonardo71@hotmail.com")
+                    .build())
+                .call();
+
+        if (res.auditControlComment().isPresent()) {
+            System.out.println(res.auditControlComment().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                   | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `controlId`                                                                                 | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `commentId`                                                                                 | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `updateAuditControlCommentInput`                                                            | [UpdateAuditControlCommentInput](../../models/components/UpdateAuditControlCommentInput.md) | :heavy_check_mark:                                                                          | N/A                                                                                         |
+
+### Response
+
+**[UpdateCommentForControlResponse](../../models/operations/UpdateCommentForControlResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## deleteCommentForControl
+
+Deletes an existing comment on a control. Only the original author
+of the comment can delete it. The author is identified by their email address,
+which must match the email of the user who created the comment.
+
+Rate limit: 10 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="DeleteCommentForControl" method="delete" path="/audits/{auditId}/controls/{controlId}/comments/{commentId}" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.DeleteAuditControlCommentInput;
+import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForControlResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        DeleteCommentForControlResponse res = sdk.audits().deleteCommentForControl()
+                .auditId("<id>")
+                .controlId("<id>")
+                .commentId("<id>")
+                .deleteAuditControlCommentInput(DeleteAuditControlCommentInput.builder()
+                    .email("Lorenzo.Ondricka@yahoo.com")
+                    .build())
+                .call();
+
+        // handle response
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                   | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `controlId`                                                                                 | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `commentId`                                                                                 | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `deleteAuditControlCommentInput`                                                            | [DeleteAuditControlCommentInput](../../models/components/DeleteAuditControlCommentInput.md) | :heavy_check_mark:                                                                          | N/A                                                                                         |
+
+### Response
+
+**[DeleteCommentForControlResponse](../../models/operations/DeleteCommentForControlResponse.md)**
 
 ### Errors
 

@@ -19,7 +19,7 @@ public class SDKConfiguration {
 
     private static final String LANGUAGE = "java";
     public static final String OPENAPI_DOC_VERSION = "1.0.0";
-    public static final String SDK_VERSION = "0.5.12";
+    public static final String SDK_VERSION = "0.5.13";
     public static final String GEN_VERSION = "2.912.1";
     private static final String BASE_PACKAGE = "com.vanta.vanta_auditor_api";
     public static final String USER_AGENT = 

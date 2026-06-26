@@ -14,9 +14,11 @@ import com.vanta.vanta_auditor_api.models.components.ComputerStatusFilter;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomControlInput;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomEvidenceRequestInput;
 import com.vanta.vanta_auditor_api.models.components.CreateInformationRequestInput;
+import com.vanta.vanta_auditor_api.models.components.DeleteAuditControlCommentInput;
 import com.vanta.vanta_auditor_api.models.components.DeleteInformationRequestCommentInput;
 import com.vanta.vanta_auditor_api.models.components.FlagInformationRequestEvidenceInput;
 import com.vanta.vanta_auditor_api.models.components.PartialUpdateInformationRequest;
+import com.vanta.vanta_auditor_api.models.components.UpdateAuditControlCommentInput;
 import com.vanta.vanta_auditor_api.models.components.UpdateInformationRequestCommentInput;
 import com.vanta.vanta_auditor_api.models.operations.AcceptInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceRequest;
@@ -25,6 +27,7 @@ import com.vanta.vanta_auditor_api.models.operations.CreateCommentForInformation
 import com.vanta.vanta_auditor_api.models.operations.CreateCustomControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCustomEvidenceRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateInformationRequestRequest;
+import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.DeleteInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.FlagInformationRequestEvidenceRequest;
@@ -61,6 +64,7 @@ import com.vanta.vanta_auditor_api.models.operations.ListVulnerabilitiesRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListVulnerabilityRemediationsInAuditScopeRequest;
 import com.vanta.vanta_auditor_api.models.operations.ShareInformationRequestListRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceRequest;
+import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.async.AcceptInformationRequestEvidenceRequestBuilder;
@@ -77,6 +81,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.CreateCustomEvidenceR
 import com.vanta.vanta_auditor_api.models.operations.async.CreateCustomEvidenceRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.CreateInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.CreateInformationRequestResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.DeleteCommentForControlRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.DeleteCommentForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteCommentForInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteCommentForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteInformationRequestRequestBuilder;
@@ -149,6 +155,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.ShareInformationReque
 import com.vanta.vanta_auditor_api.models.operations.async.ShareInformationRequestListResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateAuditEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateAuditEvidenceResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.UpdateCommentForControlRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.UpdateCommentForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateCommentForInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateCommentForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateInformationRequestRequestBuilder;
@@ -160,6 +168,7 @@ import com.vanta.vanta_auditor_api.operations.CreateCommentForInformationRequest
 import com.vanta.vanta_auditor_api.operations.CreateCustomControl;
 import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequest;
 import com.vanta.vanta_auditor_api.operations.CreateInformationRequest;
+import com.vanta.vanta_auditor_api.operations.DeleteCommentForControl;
 import com.vanta.vanta_auditor_api.operations.DeleteCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.DeleteInformationRequest;
 import com.vanta.vanta_auditor_api.operations.FlagInformationRequestEvidence;
@@ -196,6 +205,7 @@ import com.vanta.vanta_auditor_api.operations.ListVulnerabilities;
 import com.vanta.vanta_auditor_api.operations.ListVulnerabilityRemediationsInAuditScope;
 import com.vanta.vanta_auditor_api.operations.ShareInformationRequestList;
 import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidence;
+import com.vanta.vanta_auditor_api.operations.UpdateCommentForControl;
 import com.vanta.vanta_auditor_api.operations.UpdateCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.UpdateInformationRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
@@ -690,6 +700,104 @@ public class AsyncAudits {
                 .build();
         AsyncRequestOperation<CreateCommentForControlRequest, CreateCommentForControlResponse> operation
               = new CreateCommentForControl.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Update a comment for a control within an audit
+     * 
+     * <p>Updates an existing comment on a control. Only the original author
+     * of the comment can update it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public UpdateCommentForControlRequestBuilder updateCommentForControl() {
+        return new UpdateCommentForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update a comment for a control within an audit
+     * 
+     * <p>Updates an existing comment on a control. Only the original author
+     * of the comment can update it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param commentId 
+     * @param updateAuditControlCommentInput Updates an existing comment on a control.
+     *         Only the original author of the comment can update it.
+     * @return {@code CompletableFuture<UpdateCommentForControlResponse>} - The async response
+     */
+    public CompletableFuture<UpdateCommentForControlResponse> updateCommentForControl(
+            String auditId, String controlId,
+            String commentId, UpdateAuditControlCommentInput updateAuditControlCommentInput) {
+        UpdateCommentForControlRequest request =
+            UpdateCommentForControlRequest
+                .builder()
+                .auditId(auditId)
+                .controlId(controlId)
+                .commentId(commentId)
+                .updateAuditControlCommentInput(updateAuditControlCommentInput)
+                .build();
+        AsyncRequestOperation<UpdateCommentForControlRequest, UpdateCommentForControlResponse> operation
+              = new UpdateCommentForControl.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Delete a comment for a control within an audit
+     * 
+     * <p>Deletes an existing comment on a control. Only the original author
+     * of the comment can delete it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public DeleteCommentForControlRequestBuilder deleteCommentForControl() {
+        return new DeleteCommentForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Delete a comment for a control within an audit
+     * 
+     * <p>Deletes an existing comment on a control. Only the original author
+     * of the comment can delete it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param commentId 
+     * @param deleteAuditControlCommentInput Deletes an existing comment on a control.
+     *         Only the original author of the comment can delete it.
+     * @return {@code CompletableFuture<DeleteCommentForControlResponse>} - The async response
+     */
+    public CompletableFuture<DeleteCommentForControlResponse> deleteCommentForControl(
+            String auditId, String controlId,
+            String commentId, DeleteAuditControlCommentInput deleteAuditControlCommentInput) {
+        DeleteCommentForControlRequest request =
+            DeleteCommentForControlRequest
+                .builder()
+                .auditId(auditId)
+                .controlId(controlId)
+                .commentId(commentId)
+                .deleteAuditControlCommentInput(deleteAuditControlCommentInput)
+                .build();
+        AsyncRequestOperation<DeleteCommentForControlRequest, DeleteCommentForControlResponse> operation
+              = new DeleteCommentForControl.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

@@ -78,6 +78,14 @@ public class InformationRequestActivityLog {
     @JsonProperty("reason")
     private Optional<String> reason;
 
+    /**
+     * Result of an automated evidence fill.
+     * Only populated for evidence fill activities. Null for all other activity types.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("fillOutcome")
+    private Optional<? extends FillOutcome> fillOutcome;
+
     @JsonCreator
     public InformationRequestActivityLog(
             @JsonProperty("id") String id,
@@ -86,7 +94,8 @@ public class InformationRequestActivityLog {
             @JsonProperty("userEmail") Optional<String> userEmail,
             @JsonProperty("oldStatus") Optional<? extends OldStatus> oldStatus,
             @JsonProperty("newStatus") Optional<? extends NewStatus> newStatus,
-            @JsonProperty("reason") Optional<String> reason) {
+            @JsonProperty("reason") Optional<String> reason,
+            @JsonProperty("fillOutcome") Optional<? extends FillOutcome> fillOutcome) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(activityType, "activityType");
         Utils.checkNotNull(timestamp, "timestamp");
@@ -94,6 +103,7 @@ public class InformationRequestActivityLog {
         Utils.checkNotNull(oldStatus, "oldStatus");
         Utils.checkNotNull(newStatus, "newStatus");
         Utils.checkNotNull(reason, "reason");
+        Utils.checkNotNull(fillOutcome, "fillOutcome");
         this.id = id;
         this.activityType = activityType;
         this.timestamp = timestamp;
@@ -101,6 +111,7 @@ public class InformationRequestActivityLog {
         this.oldStatus = oldStatus;
         this.newStatus = newStatus;
         this.reason = reason;
+        this.fillOutcome = fillOutcome;
     }
     
     public InformationRequestActivityLog(
@@ -109,7 +120,7 @@ public class InformationRequestActivityLog {
             OffsetDateTime timestamp) {
         this(id, activityType, timestamp,
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -173,6 +184,16 @@ public class InformationRequestActivityLog {
     @JsonIgnore
     public Optional<String> reason() {
         return reason;
+    }
+
+    /**
+     * Result of an automated evidence fill.
+     * Only populated for evidence fill activities. Null for all other activity types.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<FillOutcome> fillOutcome() {
+        return (Optional<FillOutcome>) fillOutcome;
     }
 
     public static Builder builder() {
@@ -294,6 +315,27 @@ public class InformationRequestActivityLog {
         return this;
     }
 
+    /**
+     * Result of an automated evidence fill.
+     * Only populated for evidence fill activities. Null for all other activity types.
+     */
+    public InformationRequestActivityLog withFillOutcome(FillOutcome fillOutcome) {
+        Utils.checkNotNull(fillOutcome, "fillOutcome");
+        this.fillOutcome = Optional.ofNullable(fillOutcome);
+        return this;
+    }
+
+
+    /**
+     * Result of an automated evidence fill.
+     * Only populated for evidence fill activities. Null for all other activity types.
+     */
+    public InformationRequestActivityLog withFillOutcome(Optional<? extends FillOutcome> fillOutcome) {
+        Utils.checkNotNull(fillOutcome, "fillOutcome");
+        this.fillOutcome = fillOutcome;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -310,7 +352,8 @@ public class InformationRequestActivityLog {
             Utils.enhancedDeepEquals(this.userEmail, other.userEmail) &&
             Utils.enhancedDeepEquals(this.oldStatus, other.oldStatus) &&
             Utils.enhancedDeepEquals(this.newStatus, other.newStatus) &&
-            Utils.enhancedDeepEquals(this.reason, other.reason);
+            Utils.enhancedDeepEquals(this.reason, other.reason) &&
+            Utils.enhancedDeepEquals(this.fillOutcome, other.fillOutcome);
     }
     
     @Override
@@ -318,7 +361,7 @@ public class InformationRequestActivityLog {
         return Utils.enhancedHash(
             id, activityType, timestamp,
             userEmail, oldStatus, newStatus,
-            reason);
+            reason, fillOutcome);
     }
     
     @Override
@@ -330,7 +373,8 @@ public class InformationRequestActivityLog {
                 "userEmail", userEmail,
                 "oldStatus", oldStatus,
                 "newStatus", newStatus,
-                "reason", reason);
+                "reason", reason,
+                "fillOutcome", fillOutcome);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -349,6 +393,8 @@ public class InformationRequestActivityLog {
         private Optional<? extends NewStatus> newStatus = Optional.empty();
 
         private Optional<String> reason = Optional.empty();
+
+        private Optional<? extends FillOutcome> fillOutcome = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -471,12 +517,33 @@ public class InformationRequestActivityLog {
             return this;
         }
 
+
+        /**
+         * Result of an automated evidence fill.
+         * Only populated for evidence fill activities. Null for all other activity types.
+         */
+        public Builder fillOutcome(FillOutcome fillOutcome) {
+            Utils.checkNotNull(fillOutcome, "fillOutcome");
+            this.fillOutcome = Optional.ofNullable(fillOutcome);
+            return this;
+        }
+
+        /**
+         * Result of an automated evidence fill.
+         * Only populated for evidence fill activities. Null for all other activity types.
+         */
+        public Builder fillOutcome(Optional<? extends FillOutcome> fillOutcome) {
+            Utils.checkNotNull(fillOutcome, "fillOutcome");
+            this.fillOutcome = fillOutcome;
+            return this;
+        }
+
         public InformationRequestActivityLog build() {
 
             return new InformationRequestActivityLog(
                 id, activityType, timestamp,
                 userEmail, oldStatus, newStatus,
-                reason);
+                reason, fillOutcome);
         }
 
     }
