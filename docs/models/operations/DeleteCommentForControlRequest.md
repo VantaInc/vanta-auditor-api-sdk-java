@@ -1,0 +1,11 @@
+# DeleteCommentForControlRequest
+
+
+## Fields
+
+| Field                                                                                       | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                   | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `controlId`                                                                                 | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `commentId`                                                                                 | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `deleteAuditControlCommentInput`                                                            | [DeleteAuditControlCommentInput](../../models/components/DeleteAuditControlCommentInput.md) | :heavy_check_mark:                                                                          | N/A                                                                                         |

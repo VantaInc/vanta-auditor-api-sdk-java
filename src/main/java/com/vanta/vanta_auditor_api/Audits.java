@@ -14,9 +14,11 @@ import com.vanta.vanta_auditor_api.models.components.ComputerStatusFilter;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomControlInput;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomEvidenceRequestInput;
 import com.vanta.vanta_auditor_api.models.components.CreateInformationRequestInput;
+import com.vanta.vanta_auditor_api.models.components.DeleteAuditControlCommentInput;
 import com.vanta.vanta_auditor_api.models.components.DeleteInformationRequestCommentInput;
 import com.vanta.vanta_auditor_api.models.components.FlagInformationRequestEvidenceInput;
 import com.vanta.vanta_auditor_api.models.components.PartialUpdateInformationRequest;
+import com.vanta.vanta_auditor_api.models.components.UpdateAuditControlCommentInput;
 import com.vanta.vanta_auditor_api.models.components.UpdateInformationRequestCommentInput;
 import com.vanta.vanta_auditor_api.models.operations.AcceptInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.AcceptInformationRequestEvidenceRequestBuilder;
@@ -39,6 +41,9 @@ import com.vanta.vanta_auditor_api.models.operations.CreateCustomEvidenceRequest
 import com.vanta.vanta_auditor_api.models.operations.CreateInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.CreateInformationRequestResponse;
+import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForControlRequest;
+import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForControlRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForInformationRequestResponse;
@@ -147,6 +152,9 @@ import com.vanta.vanta_auditor_api.models.operations.ShareInformationRequestList
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceResponse;
+import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForControlRequest;
+import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForControlRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForInformationRequestResponse;
@@ -160,6 +168,7 @@ import com.vanta.vanta_auditor_api.operations.CreateCommentForInformationRequest
 import com.vanta.vanta_auditor_api.operations.CreateCustomControl;
 import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequest;
 import com.vanta.vanta_auditor_api.operations.CreateInformationRequest;
+import com.vanta.vanta_auditor_api.operations.DeleteCommentForControl;
 import com.vanta.vanta_auditor_api.operations.DeleteCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.DeleteInformationRequest;
 import com.vanta.vanta_auditor_api.operations.FlagInformationRequestEvidence;
@@ -196,6 +205,7 @@ import com.vanta.vanta_auditor_api.operations.ListVulnerabilities;
 import com.vanta.vanta_auditor_api.operations.ListVulnerabilityRemediationsInAuditScope;
 import com.vanta.vanta_auditor_api.operations.ShareInformationRequestList;
 import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidence;
+import com.vanta.vanta_auditor_api.operations.UpdateCommentForControl;
 import com.vanta.vanta_auditor_api.operations.UpdateCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.UpdateInformationRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
@@ -682,6 +692,102 @@ public class Audits {
                 .build();
         RequestOperation<CreateCommentForControlRequest, CreateCommentForControlResponse> operation
               = new CreateCommentForControl.Sync(sdkConfiguration, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Update a comment for a control within an audit
+     * 
+     * <p>Updates an existing comment on a control. Only the original author
+     * of the comment can update it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public UpdateCommentForControlRequestBuilder updateCommentForControl() {
+        return new UpdateCommentForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Update a comment for a control within an audit
+     * 
+     * <p>Updates an existing comment on a control. Only the original author
+     * of the comment can update it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param commentId 
+     * @param updateAuditControlCommentInput Updates an existing comment on a control.
+     *         Only the original author of the comment can update it.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateCommentForControlResponse updateCommentForControl(
+            String auditId, String controlId,
+            String commentId, UpdateAuditControlCommentInput updateAuditControlCommentInput) {
+        UpdateCommentForControlRequest request =
+            UpdateCommentForControlRequest
+                .builder()
+                .auditId(auditId)
+                .controlId(controlId)
+                .commentId(commentId)
+                .updateAuditControlCommentInput(updateAuditControlCommentInput)
+                .build();
+        RequestOperation<UpdateCommentForControlRequest, UpdateCommentForControlResponse> operation
+              = new UpdateCommentForControl.Sync(sdkConfiguration, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Delete a comment for a control within an audit
+     * 
+     * <p>Deletes an existing comment on a control. Only the original author
+     * of the comment can delete it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public DeleteCommentForControlRequestBuilder deleteCommentForControl() {
+        return new DeleteCommentForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Delete a comment for a control within an audit
+     * 
+     * <p>Deletes an existing comment on a control. Only the original author
+     * of the comment can delete it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param commentId 
+     * @param deleteAuditControlCommentInput Deletes an existing comment on a control.
+     *         Only the original author of the comment can delete it.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteCommentForControlResponse deleteCommentForControl(
+            String auditId, String controlId,
+            String commentId, DeleteAuditControlCommentInput deleteAuditControlCommentInput) {
+        DeleteCommentForControlRequest request =
+            DeleteCommentForControlRequest
+                .builder()
+                .auditId(auditId)
+                .controlId(controlId)
+                .commentId(commentId)
+                .deleteAuditControlCommentInput(deleteAuditControlCommentInput)
+                .build();
+        RequestOperation<DeleteCommentForControlRequest, DeleteCommentForControlResponse> operation
+              = new DeleteCommentForControl.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
