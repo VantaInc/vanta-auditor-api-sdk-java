@@ -35,10 +35,13 @@
 * [listInformationRequestEvidence](#listinformationrequestevidence) - List evidence for an information request
 * [getInformationRequestTestSnapshotEvidenceDetail](#getinformationrequesttestsnapshotevidencedetail) - Get test snapshot detail for an evidence row
 * [flagInformationRequestEvidence](#flaginformationrequestevidence) - Flag evidence for an information request
+* [listIntegrations](#listintegrations) - List integrations for an audit
 * [listAuditIssues](#listauditissues) - List snapshotted issues for an audit
 * [listAuditSnapshots](#listauditsnapshots) - List snapshotted issues for an audit
 * [listVendors](#listvendors) - List vendors for an audit
 * [~~listMonitoredComputersInAuditScope~~](#listmonitoredcomputersinauditscope) - List monitored computers :warning: **Deprecated**
+* [getOrganizationInformation](#getorganizationinformation) - Get organization information for an audit
+* [getOrganizationNotifications](#getorganizationnotifications) - Get organization notification settings for an audit
 * [~~listPeopleInAuditScope~~](#listpeopleinauditscope) - List of people who are in scope for this audit :warning: **Deprecated**
 * [listAccountAccessServices](#listaccountaccessservices) - List account access services for an audit
 * [listPersonnelAccountAccess](#listpersonnelaccountaccess) - List account access records for an audit
@@ -2070,6 +2073,79 @@ public class Application {
 | -------------------------- | -------------------------- | -------------------------- |
 | models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
 
+## listIntegrations
+
+Retrieves integration population data for an audit.
+
+This endpoint provides access to integration records visible to auditors
+during an audit engagement. Integrations represent connected services
+(e.g., GitHub, AWS, Slack) that provide data for the audit.
+
+Supports filtering by:
+- `search`: Searches integration names (case-insensitive)
+- `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
+- `categoriesMatchesAny`: Filters by service category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
+
+Uses cursor-based pagination. To paginate:
+1. Make initial request with desired `pageSize`
+2. Check `results.pageInfo.hasNextPage`
+3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+Results are sorted by integration display name (ascending). This sort order
+is fixed and cannot be customized via query parameters.
+
+Rate limit: 10 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListIntegrations" method="get" path="/audits/{auditId}/integrations" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListIntegrationsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListIntegrationsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListIntegrationsRequest req = ListIntegrationsRequest.builder()
+                .auditId("<id>")
+                .build();
+
+        ListIntegrationsResponse res = sdk.audits().listIntegrations()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseAuditIntegration().isPresent()) {
+            System.out.println(res.paginatedResponseAuditIntegration().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `request`                                                                     | [ListIntegrationsRequest](../../models/operations/ListIntegrationsRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
+
+### Response
+
+**[ListIntegrationsResponse](../../models/operations/ListIntegrationsResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
 ## listAuditIssues
 
 Retrieves a list of all issues that have been shared with an audit.
@@ -2342,6 +2418,122 @@ public class Application {
 ### Response
 
 **[ListMonitoredComputersInAuditScopeResponse](../../models/operations/ListMonitoredComputersInAuditScopeResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## getOrganizationInformation
+
+Retrieves organization information for an audit.
+
+This endpoint returns a single record containing the organization's
+business information visible to auditors during an audit engagement.
+
+Sorting and pagination are not applicable.
+
+Rate limit: 10 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="GetOrganizationInformation" method="get" path="/audits/{auditId}/organization/information" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.GetOrganizationInformationResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        GetOrganizationInformationResponse res = sdk.audits().getOrganizationInformation()
+                .auditId("<id>")
+                .call();
+
+        if (res.auditOrganizationInformation().isPresent()) {
+            System.out.println(res.auditOrganizationInformation().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | The audit ID       |
+
+### Response
+
+**[GetOrganizationInformationResponse](../../models/operations/GetOrganizationInformationResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## getOrganizationNotifications
+
+Retrieves organization notification settings for an audit.
+
+This endpoint returns a single record containing the auditee
+organization's notification configuration — schedule, personnel
+reminder settings, and external notification subscriptions
+(Compliance, Vendors, Access Reviews, Trust Center).
+
+The response is a single aggregate object per domain. Sorting and
+pagination are not applicable. Under a controlled audit view
+(TRIMMED_DOWN), only CAV-approved fields are included.
+
+Rate limit: 10 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="GetOrganizationNotifications" method="get" path="/audits/{auditId}/organization/notifications" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.GetOrganizationNotificationsResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        GetOrganizationNotificationsResponse res = sdk.audits().getOrganizationNotifications()
+                .auditId("<id>")
+                .call();
+
+        if (res.auditOrganizationNotifications().isPresent()) {
+            System.out.println(res.auditOrganizationNotifications().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | The audit ID       |
+
+### Response
+
+**[GetOrganizationNotificationsResponse](../../models/operations/GetOrganizationNotificationsResponse.md)**
 
 ### Errors
 

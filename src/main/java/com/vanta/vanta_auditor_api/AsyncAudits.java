@@ -35,6 +35,8 @@ import com.vanta.vanta_auditor_api.models.operations.GetAuditRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetFrameworkCodesRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSnapshotEvidenceDetailRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetOrganizationInformationRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetOrganizationNotificationsRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetVulnerableAssetsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAccountAccessServicesRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditCommentsRequest;
@@ -52,6 +54,7 @@ import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestActiv
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListIntegrationsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListMonitoredComputersInAuditScopeRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListPeopleInAuditScopeRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListPersonnelAccountAccessRequest;
@@ -97,6 +100,10 @@ import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequest
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestTestSnapshotEvidenceDetailResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.GetOrganizationInformationRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.GetOrganizationInformationResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.GetOrganizationNotificationsRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.GetOrganizationNotificationsResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetVulnerableAssetsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.GetVulnerableAssetsResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAccountAccessServicesRequestBuilder;
@@ -131,6 +138,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.ListInformationReques
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestsForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestsResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListIntegrationsRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListIntegrationsResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListMonitoredComputersInAuditScopeRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListMonitoredComputersInAuditScopeResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListPeopleInAuditScopeRequestBuilder;
@@ -176,6 +185,8 @@ import com.vanta.vanta_auditor_api.operations.GetAudit;
 import com.vanta.vanta_auditor_api.operations.GetFrameworkCodes;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequest;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequestTestSnapshotEvidenceDetail;
+import com.vanta.vanta_auditor_api.operations.GetOrganizationInformation;
+import com.vanta.vanta_auditor_api.operations.GetOrganizationNotifications;
 import com.vanta.vanta_auditor_api.operations.GetVulnerableAssets;
 import com.vanta.vanta_auditor_api.operations.ListAccountAccessServices;
 import com.vanta.vanta_auditor_api.operations.ListAuditComments;
@@ -193,6 +204,7 @@ import com.vanta.vanta_auditor_api.operations.ListInformationRequestActivity;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequests;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestsForControl;
+import com.vanta.vanta_auditor_api.operations.ListIntegrations;
 import com.vanta.vanta_auditor_api.operations.ListMonitoredComputersInAuditScope;
 import com.vanta.vanta_auditor_api.operations.ListPeopleInAuditScope;
 import com.vanta.vanta_auditor_api.operations.ListPersonnelAccountAccess;
@@ -2151,6 +2163,71 @@ public class AsyncAudits {
 
 
     /**
+     * List integrations for an audit
+     * 
+     * <p>Retrieves integration population data for an audit.
+     * 
+     * <p>This endpoint provides access to integration records visible to auditors
+     * during an audit engagement. Integrations represent connected services
+     * (e.g., GitHub, AWS, Slack) that provide data for the audit.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches integration names (case-insensitive)
+     * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
+     * - `categoriesMatchesAny`: Filters by service category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are sorted by integration display name (ascending). This sort order
+     * is fixed and cannot be customized via query parameters.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListIntegrationsRequestBuilder listIntegrations() {
+        return new ListIntegrationsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List integrations for an audit
+     * 
+     * <p>Retrieves integration population data for an audit.
+     * 
+     * <p>This endpoint provides access to integration records visible to auditors
+     * during an audit engagement. Integrations represent connected services
+     * (e.g., GitHub, AWS, Slack) that provide data for the audit.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches integration names (case-insensitive)
+     * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
+     * - `categoriesMatchesAny`: Filters by service category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are sorted by integration display name (ascending). This sort order
+     * is fixed and cannot be customized via query parameters.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListIntegrationsResponse>} - The async response
+     */
+    public CompletableFuture<ListIntegrationsResponse> listIntegrations(ListIntegrationsRequest request) {
+        AsyncRequestOperation<ListIntegrationsRequest, ListIntegrationsResponse> operation
+              = new ListIntegrations.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
      * List snapshotted issues for an audit
      * 
      * <p>Retrieves a list of all issues that have been shared with an audit.
@@ -2477,6 +2554,106 @@ public class AsyncAudits {
                 .build();
         AsyncRequestOperation<ListMonitoredComputersInAuditScopeRequest, ListMonitoredComputersInAuditScopeResponse> operation
               = new ListMonitoredComputersInAuditScope.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get organization information for an audit
+     * 
+     * <p>Retrieves organization information for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the organization's
+     * business information visible to auditors during an audit engagement.
+     * 
+     * <p>Sorting and pagination are not applicable.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetOrganizationInformationRequestBuilder getOrganizationInformation() {
+        return new GetOrganizationInformationRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get organization information for an audit
+     * 
+     * <p>Retrieves organization information for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the organization's
+     * business information visible to auditors during an audit engagement.
+     * 
+     * <p>Sorting and pagination are not applicable.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @return {@code CompletableFuture<GetOrganizationInformationResponse>} - The async response
+     */
+    public CompletableFuture<GetOrganizationInformationResponse> getOrganizationInformation(String auditId) {
+        GetOrganizationInformationRequest request =
+            GetOrganizationInformationRequest
+                .builder()
+                .auditId(auditId)
+                .build();
+        AsyncRequestOperation<GetOrganizationInformationRequest, GetOrganizationInformationResponse> operation
+              = new GetOrganizationInformation.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get organization notification settings for an audit
+     * 
+     * <p>Retrieves organization notification settings for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the auditee
+     * organization's notification configuration — schedule, personnel
+     * reminder settings, and external notification subscriptions
+     * (Compliance, Vendors, Access Reviews, Trust Center).
+     * 
+     * <p>The response is a single aggregate object per domain. Sorting and
+     * pagination are not applicable. Under a controlled audit view
+     * (TRIMMED_DOWN), only CAV-approved fields are included.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetOrganizationNotificationsRequestBuilder getOrganizationNotifications() {
+        return new GetOrganizationNotificationsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get organization notification settings for an audit
+     * 
+     * <p>Retrieves organization notification settings for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the auditee
+     * organization's notification configuration — schedule, personnel
+     * reminder settings, and external notification subscriptions
+     * (Compliance, Vendors, Access Reviews, Trust Center).
+     * 
+     * <p>The response is a single aggregate object per domain. Sorting and
+     * pagination are not applicable. Under a controlled audit view
+     * (TRIMMED_DOWN), only CAV-approved fields are included.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @return {@code CompletableFuture<GetOrganizationNotificationsResponse>} - The async response
+     */
+    public CompletableFuture<GetOrganizationNotificationsResponse> getOrganizationNotifications(String auditId) {
+        GetOrganizationNotificationsRequest request =
+            GetOrganizationNotificationsRequest
+                .builder()
+                .auditId(auditId)
+                .build();
+        AsyncRequestOperation<GetOrganizationNotificationsRequest, GetOrganizationNotificationsResponse> operation
+              = new GetOrganizationNotifications.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
