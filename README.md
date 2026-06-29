@@ -49,7 +49,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'com.vanta:vanta-auditor-api:0.5.13'
+implementation 'com.vanta:vanta-auditor-api:0.5.14'
 ```
 
 Maven:
@@ -57,7 +57,7 @@ Maven:
 <dependency>
     <groupId>com.vanta</groupId>
     <artifactId>vanta-auditor-api</artifactId>
-    <version>0.5.13</version>
+    <version>0.5.14</version>
 </dependency>
 ```
 
@@ -319,10 +319,13 @@ public class Application {
 * [listInformationRequestEvidence](docs/sdks/audits/README.md#listinformationrequestevidence) - List evidence for an information request
 * [getInformationRequestTestSnapshotEvidenceDetail](docs/sdks/audits/README.md#getinformationrequesttestsnapshotevidencedetail) - Get test snapshot detail for an evidence row
 * [flagInformationRequestEvidence](docs/sdks/audits/README.md#flaginformationrequestevidence) - Flag evidence for an information request
+* [listIntegrations](docs/sdks/audits/README.md#listintegrations) - List integrations for an audit
 * [listAuditIssues](docs/sdks/audits/README.md#listauditissues) - List snapshotted issues for an audit
 * [listAuditSnapshots](docs/sdks/audits/README.md#listauditsnapshots) - List snapshotted issues for an audit
 * [listVendors](docs/sdks/audits/README.md#listvendors) - List vendors for an audit
 * [~~listMonitoredComputersInAuditScope~~](docs/sdks/audits/README.md#listmonitoredcomputersinauditscope) - List monitored computers :warning: **Deprecated**
+* [getOrganizationInformation](docs/sdks/audits/README.md#getorganizationinformation) - Get organization information for an audit
+* [getOrganizationNotifications](docs/sdks/audits/README.md#getorganizationnotifications) - Get organization notification settings for an audit
 * [~~listPeopleInAuditScope~~](docs/sdks/audits/README.md#listpeopleinauditscope) - List of people who are in scope for this audit :warning: **Deprecated**
 * [listAccountAccessServices](docs/sdks/audits/README.md#listaccountaccessservices) - List account access services for an audit
 * [listPersonnelAccountAccess](docs/sdks/audits/README.md#listpersonnelaccountaccess) - List account access records for an audit

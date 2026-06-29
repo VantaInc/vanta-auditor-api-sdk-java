@@ -67,6 +67,7 @@ public class InformationRequestComment {
     /**
      * Email address of the comment author.
      * This email uniquely identifies users between Vanta and external audit systems.
+     * Null when the comment author can't be matched to a Vanta user.
      */
     @JsonInclude(Include.ALWAYS)
     @JsonProperty("email")
@@ -167,6 +168,7 @@ public class InformationRequestComment {
     /**
      * Email address of the comment author.
      * This email uniquely identifies users between Vanta and external audit systems.
+     * Null when the comment author can't be matched to a Vanta user.
      */
     @JsonIgnore
     public Optional<String> email() {
@@ -270,6 +272,7 @@ public class InformationRequestComment {
     /**
      * Email address of the comment author.
      * This email uniquely identifies users between Vanta and external audit systems.
+     * Null when the comment author can't be matched to a Vanta user.
      */
     public InformationRequestComment withEmail(String email) {
         Utils.checkNotNull(email, "email");
@@ -281,6 +284,7 @@ public class InformationRequestComment {
     /**
      * Email address of the comment author.
      * This email uniquely identifies users between Vanta and external audit systems.
+     * Null when the comment author can't be matched to a Vanta user.
      */
     public InformationRequestComment withEmail(Optional<String> email) {
         Utils.checkNotNull(email, "email");
@@ -458,6 +462,7 @@ public class InformationRequestComment {
         /**
          * Email address of the comment author.
          * This email uniquely identifies users between Vanta and external audit systems.
+         * Null when the comment author can't be matched to a Vanta user.
          */
         public Builder email(String email) {
             Utils.checkNotNull(email, "email");
@@ -468,6 +473,7 @@ public class InformationRequestComment {
         /**
          * Email address of the comment author.
          * This email uniquely identifies users between Vanta and external audit systems.
+         * Null when the comment author can't be matched to a Vanta user.
          */
         public Builder email(Optional<String> email) {
             Utils.checkNotNull(email, "email");

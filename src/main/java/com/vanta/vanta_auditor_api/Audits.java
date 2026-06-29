@@ -65,6 +65,12 @@ import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestRespon
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSnapshotEvidenceDetailRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSnapshotEvidenceDetailResponse;
+import com.vanta.vanta_auditor_api.models.operations.GetOrganizationInformationRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetOrganizationInformationRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.GetOrganizationInformationResponse;
+import com.vanta.vanta_auditor_api.models.operations.GetOrganizationNotificationsRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetOrganizationNotificationsRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.GetOrganizationNotificationsResponse;
 import com.vanta.vanta_auditor_api.models.operations.GetVulnerableAssetsRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetVulnerableAssetsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.GetVulnerableAssetsResponse;
@@ -116,6 +122,9 @@ import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsForC
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsResponse;
+import com.vanta.vanta_auditor_api.models.operations.ListIntegrationsRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListIntegrationsRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.ListIntegrationsResponse;
 import com.vanta.vanta_auditor_api.models.operations.ListMonitoredComputersInAuditScopeRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListMonitoredComputersInAuditScopeRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.ListMonitoredComputersInAuditScopeResponse;
@@ -176,6 +185,8 @@ import com.vanta.vanta_auditor_api.operations.GetAudit;
 import com.vanta.vanta_auditor_api.operations.GetFrameworkCodes;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequest;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequestTestSnapshotEvidenceDetail;
+import com.vanta.vanta_auditor_api.operations.GetOrganizationInformation;
+import com.vanta.vanta_auditor_api.operations.GetOrganizationNotifications;
 import com.vanta.vanta_auditor_api.operations.GetVulnerableAssets;
 import com.vanta.vanta_auditor_api.operations.ListAccountAccessServices;
 import com.vanta.vanta_auditor_api.operations.ListAuditComments;
@@ -193,6 +204,7 @@ import com.vanta.vanta_auditor_api.operations.ListInformationRequestActivity;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequests;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestsForControl;
+import com.vanta.vanta_auditor_api.operations.ListIntegrations;
 import com.vanta.vanta_auditor_api.operations.ListMonitoredComputersInAuditScope;
 import com.vanta.vanta_auditor_api.operations.ListPeopleInAuditScope;
 import com.vanta.vanta_auditor_api.operations.ListPersonnelAccountAccess;
@@ -2118,6 +2130,70 @@ public class Audits {
     }
 
     /**
+     * List integrations for an audit
+     * 
+     * <p>Retrieves integration population data for an audit.
+     * 
+     * <p>This endpoint provides access to integration records visible to auditors
+     * during an audit engagement. Integrations represent connected services
+     * (e.g., GitHub, AWS, Slack) that provide data for the audit.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches integration names (case-insensitive)
+     * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
+     * - `categoriesMatchesAny`: Filters by service category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are sorted by integration display name (ascending). This sort order
+     * is fixed and cannot be customized via query parameters.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public ListIntegrationsRequestBuilder listIntegrations() {
+        return new ListIntegrationsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List integrations for an audit
+     * 
+     * <p>Retrieves integration population data for an audit.
+     * 
+     * <p>This endpoint provides access to integration records visible to auditors
+     * during an audit engagement. Integrations represent connected services
+     * (e.g., GitHub, AWS, Slack) that provide data for the audit.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches integration names (case-insensitive)
+     * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
+     * - `categoriesMatchesAny`: Filters by service category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are sorted by integration display name (ascending). This sort order
+     * is fixed and cannot be customized via query parameters.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListIntegrationsResponse listIntegrations(ListIntegrationsRequest request) {
+        RequestOperation<ListIntegrationsRequest, ListIntegrationsResponse> operation
+              = new ListIntegrations.Sync(sdkConfiguration, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
      * List snapshotted issues for an audit
      * 
      * <p>Retrieves a list of all issues that have been shared with an audit.
@@ -2442,6 +2518,104 @@ public class Audits {
                 .build();
         RequestOperation<ListMonitoredComputersInAuditScopeRequest, ListMonitoredComputersInAuditScopeResponse> operation
               = new ListMonitoredComputersInAuditScope.Sync(sdkConfiguration, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get organization information for an audit
+     * 
+     * <p>Retrieves organization information for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the organization's
+     * business information visible to auditors during an audit engagement.
+     * 
+     * <p>Sorting and pagination are not applicable.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public GetOrganizationInformationRequestBuilder getOrganizationInformation() {
+        return new GetOrganizationInformationRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get organization information for an audit
+     * 
+     * <p>Retrieves organization information for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the organization's
+     * business information visible to auditors during an audit engagement.
+     * 
+     * <p>Sorting and pagination are not applicable.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetOrganizationInformationResponse getOrganizationInformation(String auditId) {
+        GetOrganizationInformationRequest request =
+            GetOrganizationInformationRequest
+                .builder()
+                .auditId(auditId)
+                .build();
+        RequestOperation<GetOrganizationInformationRequest, GetOrganizationInformationResponse> operation
+              = new GetOrganizationInformation.Sync(sdkConfiguration, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get organization notification settings for an audit
+     * 
+     * <p>Retrieves organization notification settings for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the auditee
+     * organization's notification configuration — schedule, personnel
+     * reminder settings, and external notification subscriptions
+     * (Compliance, Vendors, Access Reviews, Trust Center).
+     * 
+     * <p>The response is a single aggregate object per domain. Sorting and
+     * pagination are not applicable. Under a controlled audit view
+     * (TRIMMED_DOWN), only CAV-approved fields are included.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public GetOrganizationNotificationsRequestBuilder getOrganizationNotifications() {
+        return new GetOrganizationNotificationsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get organization notification settings for an audit
+     * 
+     * <p>Retrieves organization notification settings for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the auditee
+     * organization's notification configuration — schedule, personnel
+     * reminder settings, and external notification subscriptions
+     * (Compliance, Vendors, Access Reviews, Trust Center).
+     * 
+     * <p>The response is a single aggregate object per domain. Sorting and
+     * pagination are not applicable. Under a controlled audit view
+     * (TRIMMED_DOWN), only CAV-approved fields are included.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetOrganizationNotificationsResponse getOrganizationNotifications(String auditId) {
+        GetOrganizationNotificationsRequest request =
+            GetOrganizationNotificationsRequest
+                .builder()
+                .auditId(auditId)
+                .build();
+        RequestOperation<GetOrganizationNotificationsRequest, GetOrganizationNotificationsResponse> operation
+              = new GetOrganizationNotifications.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
