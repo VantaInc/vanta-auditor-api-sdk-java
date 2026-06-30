@@ -2174,7 +2174,7 @@ public class AsyncAudits {
      * <p>Supports filtering by:
      * - `search`: Searches integration names (case-insensitive)
      * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
-     * - `categoriesMatchesAny`: Filters by service category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
+     * - `categoriesMatchesAny`: Filters by category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
      * 
      * <p>Uses cursor-based pagination. To paginate:
      * 1. Make initial request with desired `pageSize`
@@ -2204,7 +2204,7 @@ public class AsyncAudits {
      * <p>Supports filtering by:
      * - `search`: Searches integration names (case-insensitive)
      * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
-     * - `categoriesMatchesAny`: Filters by service category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
+     * - `categoriesMatchesAny`: Filters by category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
      * 
      * <p>Uses cursor-based pagination. To paginate:
      * 1. Make initial request with desired `pageSize`

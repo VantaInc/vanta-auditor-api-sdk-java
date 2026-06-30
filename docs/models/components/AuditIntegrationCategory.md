@@ -5,32 +5,33 @@
 ```java
 import com.vanta.vanta_auditor_api.models.components.AuditIntegrationCategory;
 
-AuditIntegrationCategory value = AuditIntegrationCategory.ACCESS;
+AuditIntegrationCategory value = AuditIntegrationCategory.ATS_MERGE_ACCOUNT;
 ```
 
 
 ## Values
 
-| Name                          | Value                         |
-| ----------------------------- | ----------------------------- |
-| `ACCESS`                      | ACCESS                        |
-| `COMPUTERS`                   | COMPUTERS                     |
-| `CUSTOM_RESOURCE`             | CUSTOM_RESOURCE               |
-| `DATA_LOSS_PREVENTION`        | DATA_LOSS_PREVENTION          |
-| `DOCUMENTS`                   | DOCUMENTS                     |
-| `DOCUMENT_UPLOAD`             | DOCUMENT_UPLOAD               |
-| `FRAMEWORK`                   | FRAMEWORK                     |
-| `GROUPS`                      | GROUPS                        |
-| `INVENTORY`                   | INVENTORY                     |
-| `NOTIFICATIONS`               | NOTIFICATIONS                 |
-| `PEOPLE`                      | PEOPLE                        |
-| `POLICIES`                    | POLICIES                      |
-| `SECURITY_AWARENESS_TRAINING` | SECURITY_AWARENESS_TRAINING   |
-| `SECURITY_SCANNER_ALERTS`     | SECURITY_SCANNER_ALERTS       |
-| `SSO`                         | SSO                           |
-| `TASK_CREATION`               | TASK_CREATION                 |
-| `TASK_TRACKING`               | TASK_TRACKING                 |
-| `TRUST_CENTER`                | TRUST_CENTER                  |
-| `VENDOR_DISCOVERY`            | VENDOR_DISCOVERY              |
-| `VENDOR_PROCUREMENT`          | VENDOR_PROCUREMENT            |
-| `VULNERABILITIES`             | VULNERABILITIES               |
+| Name                                   | Value                                  |
+| -------------------------------------- | -------------------------------------- |
+| `ATS_MERGE_ACCOUNT`                    | ATS_MERGE_ACCOUNT                      |
+| `BACKGROUND_CHECK_SERVICE`             | BACKGROUND_CHECK_SERVICE               |
+| `CLOUD_PROVIDER`                       | CLOUD_PROVIDER                         |
+| `COMMUNICATION_PLATFORM`               | COMMUNICATION_PLATFORM                 |
+| `CRM_MERGE_ACCOUNT`                    | CRM_MERGE_ACCOUNT                      |
+| `CRM_PLATFORM`                         | CRM_PLATFORM                           |
+| `DATASTORE_PROVIDER`                   | DATASTORE_PROVIDER                     |
+| `DATA_LOSS_PREVENTION`                 | DATA_LOSS_PREVENTION                   |
+| `DATA_WAREHOUSE_PROVIDER`              | DATA_WAREHOUSE_PROVIDER                |
+| `DOCUMENT_MANAGEMENT_TOOL`             | DOCUMENT_MANAGEMENT_TOOL               |
+| `ENDPOINT_SECURITY_TOOL`               | ENDPOINT_SECURITY_TOOL                 |
+| `HR_PROVIDER`                          | HR_PROVIDER                            |
+| `IDENTITY_PROVIDER`                    | IDENTITY_PROVIDER                      |
+| `INCIDENT_MANAGEMENT_TOOL`             | INCIDENT_MANAGEMENT_TOOL               |
+| `MOBILE_DEVICE_MANAGEMENT_TOOL`        | MOBILE_DEVICE_MANAGEMENT_TOOL          |
+| `MONITORING_SERVICE`                   | MONITORING_SERVICE                     |
+| `OTHER_INTEGRATION`                    | OTHER_INTEGRATION                      |
+| `SECURITY_AWARENESS_TRAINING_PROVIDER` | SECURITY_AWARENESS_TRAINING_PROVIDER   |
+| `SECURITY_SCANNER_ALERTS`              | SECURITY_SCANNER_ALERTS                |
+| `TASK_TRACKER`                         | TASK_TRACKER                           |
+| `VERSION_CONTROL_SYSTEM`               | VERSION_CONTROL_SYSTEM                 |
+| `VULNERABILITY_SCANNER`                | VULNERABILITY_SCANNER                  |

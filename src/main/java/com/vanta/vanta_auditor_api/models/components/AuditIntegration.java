@@ -37,14 +37,14 @@ public class AuditIntegration {
     private String name;
 
     /**
-     * Integration category display names describing what data this integration provides.
+     * Integration tag display names describing what data this integration provides.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("tags")
     private Optional<? extends List<String>> tags;
 
     /**
-     * Service category display names describing what the integration is used for.
+     * Category display names describing what the integration is used for.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("categories")
@@ -90,7 +90,7 @@ public class AuditIntegration {
     }
 
     /**
-     * Integration category display names describing what data this integration provides.
+     * Integration tag display names describing what data this integration provides.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -99,7 +99,7 @@ public class AuditIntegration {
     }
 
     /**
-     * Service category display names describing what the integration is used for.
+     * Category display names describing what the integration is used for.
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
@@ -131,7 +131,7 @@ public class AuditIntegration {
     }
 
     /**
-     * Integration category display names describing what data this integration provides.
+     * Integration tag display names describing what data this integration provides.
      */
     public AuditIntegration withTags(List<String> tags) {
         Utils.checkNotNull(tags, "tags");
@@ -141,7 +141,7 @@ public class AuditIntegration {
 
 
     /**
-     * Integration category display names describing what data this integration provides.
+     * Integration tag display names describing what data this integration provides.
      */
     public AuditIntegration withTags(Optional<? extends List<String>> tags) {
         Utils.checkNotNull(tags, "tags");
@@ -150,7 +150,7 @@ public class AuditIntegration {
     }
 
     /**
-     * Service category display names describing what the integration is used for.
+     * Category display names describing what the integration is used for.
      */
     public AuditIntegration withCategories(List<String> categories) {
         Utils.checkNotNull(categories, "categories");
@@ -160,7 +160,7 @@ public class AuditIntegration {
 
 
     /**
-     * Service category display names describing what the integration is used for.
+     * Category display names describing what the integration is used for.
      */
     public AuditIntegration withCategories(Optional<? extends List<String>> categories) {
         Utils.checkNotNull(categories, "categories");
@@ -237,7 +237,7 @@ public class AuditIntegration {
 
 
         /**
-         * Integration category display names describing what data this integration provides.
+         * Integration tag display names describing what data this integration provides.
          */
         public Builder tags(List<String> tags) {
             Utils.checkNotNull(tags, "tags");
@@ -246,7 +246,7 @@ public class AuditIntegration {
         }
 
         /**
-         * Integration category display names describing what data this integration provides.
+         * Integration tag display names describing what data this integration provides.
          */
         public Builder tags(Optional<? extends List<String>> tags) {
             Utils.checkNotNull(tags, "tags");
@@ -256,7 +256,7 @@ public class AuditIntegration {
 
 
         /**
-         * Service category display names describing what the integration is used for.
+         * Category display names describing what the integration is used for.
          */
         public Builder categories(List<String> categories) {
             Utils.checkNotNull(categories, "categories");
@@ -265,7 +265,7 @@ public class AuditIntegration {
         }
 
         /**
-         * Service category display names describing what the integration is used for.
+         * Category display names describing what the integration is used for.
          */
         public Builder categories(Optional<? extends List<String>> categories) {
             Utils.checkNotNull(categories, "categories");
