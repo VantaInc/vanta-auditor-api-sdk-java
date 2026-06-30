@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.vanta.vanta_auditor_api.models.components.AuditIntegrationCategory;
-import com.vanta.vanta_auditor_api.models.components.AuditIntegrationServiceCategory;
+import com.vanta.vanta_auditor_api.models.components.AuditIntegrationTag;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.SpeakeasyMetadata;
 import com.vanta.vanta_auditor_api.utils.Utils;
@@ -48,13 +48,13 @@ public class ListIntegrationsRequest {
      * Filter integrations by tag values
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=tagsMatchesAny")
-    private Optional<? extends List<AuditIntegrationCategory>> tagsMatchesAny;
+    private Optional<? extends List<AuditIntegrationTag>> tagsMatchesAny;
 
     /**
      * Filter integrations by category values
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=categoriesMatchesAny")
-    private Optional<? extends List<AuditIntegrationServiceCategory>> categoriesMatchesAny;
+    private Optional<? extends List<AuditIntegrationCategory>> categoriesMatchesAny;
 
     @JsonCreator
     public ListIntegrationsRequest(
@@ -62,8 +62,8 @@ public class ListIntegrationsRequest {
             Optional<Integer> pageSize,
             Optional<String> pageCursor,
             Optional<String> search,
-            Optional<? extends List<AuditIntegrationCategory>> tagsMatchesAny,
-            Optional<? extends List<AuditIntegrationServiceCategory>> categoriesMatchesAny) {
+            Optional<? extends List<AuditIntegrationTag>> tagsMatchesAny,
+            Optional<? extends List<AuditIntegrationCategory>> categoriesMatchesAny) {
         Utils.checkNotNull(auditId, "auditId");
         Utils.checkNotNull(pageSize, "pageSize");
         Utils.checkNotNull(pageCursor, "pageCursor");
@@ -121,8 +121,8 @@ public class ListIntegrationsRequest {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<AuditIntegrationCategory>> tagsMatchesAny() {
-        return (Optional<List<AuditIntegrationCategory>>) tagsMatchesAny;
+    public Optional<List<AuditIntegrationTag>> tagsMatchesAny() {
+        return (Optional<List<AuditIntegrationTag>>) tagsMatchesAny;
     }
 
     /**
@@ -130,8 +130,8 @@ public class ListIntegrationsRequest {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<List<AuditIntegrationServiceCategory>> categoriesMatchesAny() {
-        return (Optional<List<AuditIntegrationServiceCategory>>) categoriesMatchesAny;
+    public Optional<List<AuditIntegrationCategory>> categoriesMatchesAny() {
+        return (Optional<List<AuditIntegrationCategory>>) categoriesMatchesAny;
     }
 
     public static Builder builder() {
@@ -208,7 +208,7 @@ public class ListIntegrationsRequest {
     /**
      * Filter integrations by tag values
      */
-    public ListIntegrationsRequest withTagsMatchesAny(List<AuditIntegrationCategory> tagsMatchesAny) {
+    public ListIntegrationsRequest withTagsMatchesAny(List<AuditIntegrationTag> tagsMatchesAny) {
         Utils.checkNotNull(tagsMatchesAny, "tagsMatchesAny");
         this.tagsMatchesAny = Optional.ofNullable(tagsMatchesAny);
         return this;
@@ -218,7 +218,7 @@ public class ListIntegrationsRequest {
     /**
      * Filter integrations by tag values
      */
-    public ListIntegrationsRequest withTagsMatchesAny(Optional<? extends List<AuditIntegrationCategory>> tagsMatchesAny) {
+    public ListIntegrationsRequest withTagsMatchesAny(Optional<? extends List<AuditIntegrationTag>> tagsMatchesAny) {
         Utils.checkNotNull(tagsMatchesAny, "tagsMatchesAny");
         this.tagsMatchesAny = tagsMatchesAny;
         return this;
@@ -227,7 +227,7 @@ public class ListIntegrationsRequest {
     /**
      * Filter integrations by category values
      */
-    public ListIntegrationsRequest withCategoriesMatchesAny(List<AuditIntegrationServiceCategory> categoriesMatchesAny) {
+    public ListIntegrationsRequest withCategoriesMatchesAny(List<AuditIntegrationCategory> categoriesMatchesAny) {
         Utils.checkNotNull(categoriesMatchesAny, "categoriesMatchesAny");
         this.categoriesMatchesAny = Optional.ofNullable(categoriesMatchesAny);
         return this;
@@ -237,7 +237,7 @@ public class ListIntegrationsRequest {
     /**
      * Filter integrations by category values
      */
-    public ListIntegrationsRequest withCategoriesMatchesAny(Optional<? extends List<AuditIntegrationServiceCategory>> categoriesMatchesAny) {
+    public ListIntegrationsRequest withCategoriesMatchesAny(Optional<? extends List<AuditIntegrationCategory>> categoriesMatchesAny) {
         Utils.checkNotNull(categoriesMatchesAny, "categoriesMatchesAny");
         this.categoriesMatchesAny = categoriesMatchesAny;
         return this;
@@ -290,9 +290,9 @@ public class ListIntegrationsRequest {
 
         private Optional<String> search = Optional.empty();
 
-        private Optional<? extends List<AuditIntegrationCategory>> tagsMatchesAny = Optional.empty();
+        private Optional<? extends List<AuditIntegrationTag>> tagsMatchesAny = Optional.empty();
 
-        private Optional<? extends List<AuditIntegrationServiceCategory>> categoriesMatchesAny = Optional.empty();
+        private Optional<? extends List<AuditIntegrationCategory>> categoriesMatchesAny = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -369,7 +369,7 @@ public class ListIntegrationsRequest {
         /**
          * Filter integrations by tag values
          */
-        public Builder tagsMatchesAny(List<AuditIntegrationCategory> tagsMatchesAny) {
+        public Builder tagsMatchesAny(List<AuditIntegrationTag> tagsMatchesAny) {
             Utils.checkNotNull(tagsMatchesAny, "tagsMatchesAny");
             this.tagsMatchesAny = Optional.ofNullable(tagsMatchesAny);
             return this;
@@ -378,7 +378,7 @@ public class ListIntegrationsRequest {
         /**
          * Filter integrations by tag values
          */
-        public Builder tagsMatchesAny(Optional<? extends List<AuditIntegrationCategory>> tagsMatchesAny) {
+        public Builder tagsMatchesAny(Optional<? extends List<AuditIntegrationTag>> tagsMatchesAny) {
             Utils.checkNotNull(tagsMatchesAny, "tagsMatchesAny");
             this.tagsMatchesAny = tagsMatchesAny;
             return this;
@@ -388,7 +388,7 @@ public class ListIntegrationsRequest {
         /**
          * Filter integrations by category values
          */
-        public Builder categoriesMatchesAny(List<AuditIntegrationServiceCategory> categoriesMatchesAny) {
+        public Builder categoriesMatchesAny(List<AuditIntegrationCategory> categoriesMatchesAny) {
             Utils.checkNotNull(categoriesMatchesAny, "categoriesMatchesAny");
             this.categoriesMatchesAny = Optional.ofNullable(categoriesMatchesAny);
             return this;
@@ -397,7 +397,7 @@ public class ListIntegrationsRequest {
         /**
          * Filter integrations by category values
          */
-        public Builder categoriesMatchesAny(Optional<? extends List<AuditIntegrationServiceCategory>> categoriesMatchesAny) {
+        public Builder categoriesMatchesAny(Optional<? extends List<AuditIntegrationCategory>> categoriesMatchesAny) {
             Utils.checkNotNull(categoriesMatchesAny, "categoriesMatchesAny");
             this.categoriesMatchesAny = categoriesMatchesAny;
             return this;
