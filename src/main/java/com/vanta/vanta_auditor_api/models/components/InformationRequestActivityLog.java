@@ -86,6 +86,25 @@ public class InformationRequestActivityLog {
     @JsonProperty("fillOutcome")
     private Optional<? extends FillOutcome> fillOutcome;
 
+    /**
+     * Identifier of the information request this one was copied from when its
+     * audit was duplicated.
+     * Only populated for audit-duplication trail activities. Null for all other activity types.
+     * Format: ObjectId as a string.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("sourceInformationRequestId")
+    private Optional<String> sourceInformationRequestId;
+
+    /**
+     * Identifier of the audit this request's audit was duplicated from.
+     * Only populated for audit-duplication trail activities. Null for all other activity types.
+     * Format: ObjectId as a string.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("sourceAuditId")
+    private Optional<String> sourceAuditId;
+
     @JsonCreator
     public InformationRequestActivityLog(
             @JsonProperty("id") String id,
@@ -95,7 +114,9 @@ public class InformationRequestActivityLog {
             @JsonProperty("oldStatus") Optional<? extends OldStatus> oldStatus,
             @JsonProperty("newStatus") Optional<? extends NewStatus> newStatus,
             @JsonProperty("reason") Optional<String> reason,
-            @JsonProperty("fillOutcome") Optional<? extends FillOutcome> fillOutcome) {
+            @JsonProperty("fillOutcome") Optional<? extends FillOutcome> fillOutcome,
+            @JsonProperty("sourceInformationRequestId") Optional<String> sourceInformationRequestId,
+            @JsonProperty("sourceAuditId") Optional<String> sourceAuditId) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(activityType, "activityType");
         Utils.checkNotNull(timestamp, "timestamp");
@@ -104,6 +125,8 @@ public class InformationRequestActivityLog {
         Utils.checkNotNull(newStatus, "newStatus");
         Utils.checkNotNull(reason, "reason");
         Utils.checkNotNull(fillOutcome, "fillOutcome");
+        Utils.checkNotNull(sourceInformationRequestId, "sourceInformationRequestId");
+        Utils.checkNotNull(sourceAuditId, "sourceAuditId");
         this.id = id;
         this.activityType = activityType;
         this.timestamp = timestamp;
@@ -112,6 +135,8 @@ public class InformationRequestActivityLog {
         this.newStatus = newStatus;
         this.reason = reason;
         this.fillOutcome = fillOutcome;
+        this.sourceInformationRequestId = sourceInformationRequestId;
+        this.sourceAuditId = sourceAuditId;
     }
     
     public InformationRequestActivityLog(
@@ -120,7 +145,8 @@ public class InformationRequestActivityLog {
             OffsetDateTime timestamp) {
         this(id, activityType, timestamp,
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     /**
@@ -194,6 +220,27 @@ public class InformationRequestActivityLog {
     @JsonIgnore
     public Optional<FillOutcome> fillOutcome() {
         return (Optional<FillOutcome>) fillOutcome;
+    }
+
+    /**
+     * Identifier of the information request this one was copied from when its
+     * audit was duplicated.
+     * Only populated for audit-duplication trail activities. Null for all other activity types.
+     * Format: ObjectId as a string.
+     */
+    @JsonIgnore
+    public Optional<String> sourceInformationRequestId() {
+        return sourceInformationRequestId;
+    }
+
+    /**
+     * Identifier of the audit this request's audit was duplicated from.
+     * Only populated for audit-duplication trail activities. Null for all other activity types.
+     * Format: ObjectId as a string.
+     */
+    @JsonIgnore
+    public Optional<String> sourceAuditId() {
+        return sourceAuditId;
     }
 
     public static Builder builder() {
@@ -336,6 +383,54 @@ public class InformationRequestActivityLog {
         return this;
     }
 
+    /**
+     * Identifier of the information request this one was copied from when its
+     * audit was duplicated.
+     * Only populated for audit-duplication trail activities. Null for all other activity types.
+     * Format: ObjectId as a string.
+     */
+    public InformationRequestActivityLog withSourceInformationRequestId(String sourceInformationRequestId) {
+        Utils.checkNotNull(sourceInformationRequestId, "sourceInformationRequestId");
+        this.sourceInformationRequestId = Optional.ofNullable(sourceInformationRequestId);
+        return this;
+    }
+
+
+    /**
+     * Identifier of the information request this one was copied from when its
+     * audit was duplicated.
+     * Only populated for audit-duplication trail activities. Null for all other activity types.
+     * Format: ObjectId as a string.
+     */
+    public InformationRequestActivityLog withSourceInformationRequestId(Optional<String> sourceInformationRequestId) {
+        Utils.checkNotNull(sourceInformationRequestId, "sourceInformationRequestId");
+        this.sourceInformationRequestId = sourceInformationRequestId;
+        return this;
+    }
+
+    /**
+     * Identifier of the audit this request's audit was duplicated from.
+     * Only populated for audit-duplication trail activities. Null for all other activity types.
+     * Format: ObjectId as a string.
+     */
+    public InformationRequestActivityLog withSourceAuditId(String sourceAuditId) {
+        Utils.checkNotNull(sourceAuditId, "sourceAuditId");
+        this.sourceAuditId = Optional.ofNullable(sourceAuditId);
+        return this;
+    }
+
+
+    /**
+     * Identifier of the audit this request's audit was duplicated from.
+     * Only populated for audit-duplication trail activities. Null for all other activity types.
+     * Format: ObjectId as a string.
+     */
+    public InformationRequestActivityLog withSourceAuditId(Optional<String> sourceAuditId) {
+        Utils.checkNotNull(sourceAuditId, "sourceAuditId");
+        this.sourceAuditId = sourceAuditId;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -353,7 +448,9 @@ public class InformationRequestActivityLog {
             Utils.enhancedDeepEquals(this.oldStatus, other.oldStatus) &&
             Utils.enhancedDeepEquals(this.newStatus, other.newStatus) &&
             Utils.enhancedDeepEquals(this.reason, other.reason) &&
-            Utils.enhancedDeepEquals(this.fillOutcome, other.fillOutcome);
+            Utils.enhancedDeepEquals(this.fillOutcome, other.fillOutcome) &&
+            Utils.enhancedDeepEquals(this.sourceInformationRequestId, other.sourceInformationRequestId) &&
+            Utils.enhancedDeepEquals(this.sourceAuditId, other.sourceAuditId);
     }
     
     @Override
@@ -361,7 +458,8 @@ public class InformationRequestActivityLog {
         return Utils.enhancedHash(
             id, activityType, timestamp,
             userEmail, oldStatus, newStatus,
-            reason, fillOutcome);
+            reason, fillOutcome, sourceInformationRequestId,
+            sourceAuditId);
     }
     
     @Override
@@ -374,7 +472,9 @@ public class InformationRequestActivityLog {
                 "oldStatus", oldStatus,
                 "newStatus", newStatus,
                 "reason", reason,
-                "fillOutcome", fillOutcome);
+                "fillOutcome", fillOutcome,
+                "sourceInformationRequestId", sourceInformationRequestId,
+                "sourceAuditId", sourceAuditId);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -395,6 +495,10 @@ public class InformationRequestActivityLog {
         private Optional<String> reason = Optional.empty();
 
         private Optional<? extends FillOutcome> fillOutcome = Optional.empty();
+
+        private Optional<String> sourceInformationRequestId = Optional.empty();
+
+        private Optional<String> sourceAuditId = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -538,12 +642,61 @@ public class InformationRequestActivityLog {
             return this;
         }
 
+
+        /**
+         * Identifier of the information request this one was copied from when its
+         * audit was duplicated.
+         * Only populated for audit-duplication trail activities. Null for all other activity types.
+         * Format: ObjectId as a string.
+         */
+        public Builder sourceInformationRequestId(String sourceInformationRequestId) {
+            Utils.checkNotNull(sourceInformationRequestId, "sourceInformationRequestId");
+            this.sourceInformationRequestId = Optional.ofNullable(sourceInformationRequestId);
+            return this;
+        }
+
+        /**
+         * Identifier of the information request this one was copied from when its
+         * audit was duplicated.
+         * Only populated for audit-duplication trail activities. Null for all other activity types.
+         * Format: ObjectId as a string.
+         */
+        public Builder sourceInformationRequestId(Optional<String> sourceInformationRequestId) {
+            Utils.checkNotNull(sourceInformationRequestId, "sourceInformationRequestId");
+            this.sourceInformationRequestId = sourceInformationRequestId;
+            return this;
+        }
+
+
+        /**
+         * Identifier of the audit this request's audit was duplicated from.
+         * Only populated for audit-duplication trail activities. Null for all other activity types.
+         * Format: ObjectId as a string.
+         */
+        public Builder sourceAuditId(String sourceAuditId) {
+            Utils.checkNotNull(sourceAuditId, "sourceAuditId");
+            this.sourceAuditId = Optional.ofNullable(sourceAuditId);
+            return this;
+        }
+
+        /**
+         * Identifier of the audit this request's audit was duplicated from.
+         * Only populated for audit-duplication trail activities. Null for all other activity types.
+         * Format: ObjectId as a string.
+         */
+        public Builder sourceAuditId(Optional<String> sourceAuditId) {
+            Utils.checkNotNull(sourceAuditId, "sourceAuditId");
+            this.sourceAuditId = sourceAuditId;
+            return this;
+        }
+
         public InformationRequestActivityLog build() {
 
             return new InformationRequestActivityLog(
                 id, activityType, timestamp,
                 userEmail, oldStatus, newStatus,
-                reason, fillOutcome);
+                reason, fillOutcome, sourceInformationRequestId,
+                sourceAuditId);
         }
 
     }
