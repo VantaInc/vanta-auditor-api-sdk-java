@@ -5,6 +5,7 @@
 ### Available Operations
 
 * [list](#list) - List audits
+* [duplicate](#duplicate) - Duplicate an IRL audit
 * [getAudit](#getaudit) - Get audit by ID
 * [listCodeChanges](#listcodechanges) - List code changes for an audit
 * [listComments](#listcomments) - List audit comments
@@ -106,6 +107,89 @@ public class Application {
 ### Response
 
 **[ListAuditsResponse](../../models/operations/ListAuditsResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## duplicate
+
+Duplicates an existing IRL audit into a new audit engagement with the supplied
+displayName, audit dates, early access date, and auditor roster. Company, audit
+type, and framework are copied from the source audit and cannot be changed.
+
+Each email in `allowAuditorEmails` must match an active user in the
+authenticated audit firm's domain. Provision auditors via `POST /auditors`
+before referencing them here, or copy emails from `GET /audits/{sourceAuditId}`
+→ `allowAuditorEmails` when duplicating with the same roster.
+
+Information requests are copied from the source audit. After duplication:
+
+- Requests with Vanta evidence will be pre-filled and marked as internal review.
+
+  Review them before sharing with your customer.
+- Requests where evidence was not available or was uploaded externally will need
+
+  evidence added manually.
+- Evidence capture dates and due dates can be modified after duplication.
+
+Rate limit: 10 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="Duplicate" method="post" path="/audits/duplicate" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.DuplicateAuditRequest;
+import com.vanta.vanta_auditor_api.models.operations.DuplicateResponse;
+import java.lang.Exception;
+import java.time.OffsetDateTime;
+import java.util.List;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        DuplicateAuditRequest req = DuplicateAuditRequest.builder()
+                .sourceAuditId("<id>")
+                .displayName("Orpha.Schoen")
+                .auditStartDate(OffsetDateTime.parse("2024-01-02T08:34:53.150Z"))
+                .auditEndDate(OffsetDateTime.parse("2024-10-06T07:06:05.931Z"))
+                .earlyAccessStartsAt(OffsetDateTime.parse("2025-05-31T02:08:59.254Z"))
+                .allowAuditorEmails(List.of(
+                    "<value 1>",
+                    "<value 2>",
+                    "<value 3>"))
+                .build();
+
+        DuplicateResponse res = sdk.audits().duplicate()
+                .request(req)
+                .call();
+
+        if (res.audit().isPresent()) {
+            System.out.println(res.audit().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `request`                                                             | [DuplicateAuditRequest](../../models/shared/DuplicateAuditRequest.md) | :heavy_check_mark:                                                    | The request object to use for the request.                            |
+
+### Response
+
+**[DuplicateResponse](../../models/operations/DuplicateResponse.md)**
 
 ### Errors
 

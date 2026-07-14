@@ -16,6 +16,7 @@ import com.vanta.vanta_auditor_api.models.components.CreateCustomEvidenceRequest
 import com.vanta.vanta_auditor_api.models.components.CreateInformationRequestInput;
 import com.vanta.vanta_auditor_api.models.components.DeleteAuditControlCommentInput;
 import com.vanta.vanta_auditor_api.models.components.DeleteInformationRequestCommentInput;
+import com.vanta.vanta_auditor_api.models.components.DuplicateAuditRequest;
 import com.vanta.vanta_auditor_api.models.components.FlagInformationRequestEvidenceInput;
 import com.vanta.vanta_auditor_api.models.components.PartialUpdateInformationRequest;
 import com.vanta.vanta_auditor_api.models.components.UpdateAuditControlCommentInput;
@@ -90,6 +91,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.DeleteCommentForInfor
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteCommentForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteInformationRequestResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.DuplicateRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.DuplicateResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.FlagInformationRequestEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.FlagInformationRequestEvidenceResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetAuditRequestBuilder;
@@ -180,6 +183,7 @@ import com.vanta.vanta_auditor_api.operations.CreateInformationRequest;
 import com.vanta.vanta_auditor_api.operations.DeleteCommentForControl;
 import com.vanta.vanta_auditor_api.operations.DeleteCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.DeleteInformationRequest;
+import com.vanta.vanta_auditor_api.operations.Duplicate;
 import com.vanta.vanta_auditor_api.operations.FlagInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.GetAudit;
 import com.vanta.vanta_auditor_api.operations.GetFrameworkCodes;
@@ -317,6 +321,71 @@ public class AsyncAudits {
                 .build();
         AsyncRequestOperation<ListAuditsRequest, ListAuditsResponse> operation
               = new ListAudits.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Duplicate an IRL audit
+     * 
+     * <p>Duplicates an existing IRL audit into a new audit engagement with the supplied
+     * displayName, audit dates, early access date, and auditor roster. Company, audit
+     * type, and framework are copied from the source audit and cannot be changed.
+     * 
+     * <p>Each email in `allowAuditorEmails` must match an active user in the
+     * authenticated audit firm's domain. Provision auditors via `POST /auditors`
+     * before referencing them here, or copy emails from `GET /audits/{sourceAuditId}`
+     * → `allowAuditorEmails` when duplicating with the same roster.
+     * 
+     * <p>Information requests are copied from the source audit. After duplication:
+     * 
+     * <p>- Requests with Vanta evidence will be pre-filled and marked as internal review.
+     * 
+     * <p>Review them before sharing with your customer.
+     * - Requests where evidence was not available or was uploaded externally will need
+     * 
+     * <p>evidence added manually.
+     * - Evidence capture dates and due dates can be modified after duplication.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public DuplicateRequestBuilder duplicate() {
+        return new DuplicateRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Duplicate an IRL audit
+     * 
+     * <p>Duplicates an existing IRL audit into a new audit engagement with the supplied
+     * displayName, audit dates, early access date, and auditor roster. Company, audit
+     * type, and framework are copied from the source audit and cannot be changed.
+     * 
+     * <p>Each email in `allowAuditorEmails` must match an active user in the
+     * authenticated audit firm's domain. Provision auditors via `POST /auditors`
+     * before referencing them here, or copy emails from `GET /audits/{sourceAuditId}`
+     * → `allowAuditorEmails` when duplicating with the same roster.
+     * 
+     * <p>Information requests are copied from the source audit. After duplication:
+     * 
+     * <p>- Requests with Vanta evidence will be pre-filled and marked as internal review.
+     * 
+     * <p>Review them before sharing with your customer.
+     * - Requests where evidence was not available or was uploaded externally will need
+     * 
+     * <p>evidence added manually.
+     * - Evidence capture dates and due dates can be modified after duplication.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<DuplicateResponse>} - The async response
+     */
+    public CompletableFuture<DuplicateResponse> duplicate(DuplicateAuditRequest request) {
+        AsyncRequestOperation<DuplicateAuditRequest, DuplicateResponse> operation
+              = new Duplicate.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
