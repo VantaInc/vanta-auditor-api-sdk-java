@@ -100,6 +100,15 @@ public class AuditorControl {
     @JsonProperty("sections")
     private List<Section> sections;
 
+    /**
+     * The auditor's assessments of this control, one per audit segment the
+     * control is in scope for. Populated only for IRL audits when the assessment
+     * feature is enabled; empty otherwise. A segment with no recorded assessment
+     * still contributes an entry, coerced to `NOT_ASSESSED`.
+     */
+    @JsonProperty("assessments")
+    private List<AuditControlAssessment> assessments;
+
     @JsonCreator
     public AuditorControl(
             @JsonProperty("id") String id,
@@ -114,7 +123,8 @@ public class AuditorControl {
             @JsonProperty("creationDate") Optional<OffsetDateTime> creationDate,
             @JsonProperty("modificationDate") Optional<OffsetDateTime> modificationDate,
             @JsonProperty("framework") String framework,
-            @JsonProperty("sections") List<Section> sections) {
+            @JsonProperty("sections") List<Section> sections,
+            @JsonProperty("assessments") List<AuditControlAssessment> assessments) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(externalId, "externalId");
         Utils.checkNotNull(name, "name");
@@ -128,6 +138,7 @@ public class AuditorControl {
         Utils.checkNotNull(modificationDate, "modificationDate");
         Utils.checkNotNull(framework, "framework");
         Utils.checkNotNull(sections, "sections");
+        Utils.checkNotNull(assessments, "assessments");
         this.id = id;
         this.externalId = externalId;
         this.name = name;
@@ -141,6 +152,7 @@ public class AuditorControl {
         this.modificationDate = modificationDate;
         this.framework = framework;
         this.sections = sections;
+        this.assessments = assessments;
     }
     
     public AuditorControl(
@@ -151,12 +163,13 @@ public class AuditorControl {
             List<String> domains,
             List<CustomField> customFields,
             String framework,
-            List<Section> sections) {
+            List<Section> sections,
+            List<AuditControlAssessment> assessments) {
         this(id, Optional.empty(), name,
             description, source, domains,
             Optional.empty(), JsonNullable.undefined(), customFields,
             Optional.empty(), Optional.empty(), framework,
-            sections);
+            sections, assessments);
     }
 
     /**
@@ -259,6 +272,17 @@ public class AuditorControl {
     @JsonIgnore
     public List<Section> sections() {
         return sections;
+    }
+
+    /**
+     * The auditor's assessments of this control, one per audit segment the
+     * control is in scope for. Populated only for IRL audits when the assessment
+     * feature is enabled; empty otherwise. A segment with no recorded assessment
+     * still contributes an entry, coerced to `NOT_ASSESSED`.
+     */
+    @JsonIgnore
+    public List<AuditControlAssessment> assessments() {
+        return assessments;
     }
 
     public static Builder builder() {
@@ -429,6 +453,18 @@ public class AuditorControl {
         return this;
     }
 
+    /**
+     * The auditor's assessments of this control, one per audit segment the
+     * control is in scope for. Populated only for IRL audits when the assessment
+     * feature is enabled; empty otherwise. A segment with no recorded assessment
+     * still contributes an entry, coerced to `NOT_ASSESSED`.
+     */
+    public AuditorControl withAssessments(List<AuditControlAssessment> assessments) {
+        Utils.checkNotNull(assessments, "assessments");
+        this.assessments = assessments;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -451,7 +487,8 @@ public class AuditorControl {
             Utils.enhancedDeepEquals(this.creationDate, other.creationDate) &&
             Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
             Utils.enhancedDeepEquals(this.framework, other.framework) &&
-            Utils.enhancedDeepEquals(this.sections, other.sections);
+            Utils.enhancedDeepEquals(this.sections, other.sections) &&
+            Utils.enhancedDeepEquals(this.assessments, other.assessments);
     }
     
     @Override
@@ -461,7 +498,7 @@ public class AuditorControl {
             description, source, domains,
             owner, role, customFields,
             creationDate, modificationDate, framework,
-            sections);
+            sections, assessments);
     }
     
     @Override
@@ -479,7 +516,8 @@ public class AuditorControl {
                 "creationDate", creationDate,
                 "modificationDate", modificationDate,
                 "framework", framework,
-                "sections", sections);
+                "sections", sections,
+                "assessments", assessments);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -510,6 +548,8 @@ public class AuditorControl {
         private String framework;
 
         private List<Section> sections;
+
+        private List<AuditControlAssessment> assessments;
 
         private Builder() {
           // force use of static builder() method
@@ -687,6 +727,19 @@ public class AuditorControl {
             return this;
         }
 
+
+        /**
+         * The auditor's assessments of this control, one per audit segment the
+         * control is in scope for. Populated only for IRL audits when the assessment
+         * feature is enabled; empty otherwise. A segment with no recorded assessment
+         * still contributes an entry, coerced to `NOT_ASSESSED`.
+         */
+        public Builder assessments(List<AuditControlAssessment> assessments) {
+            Utils.checkNotNull(assessments, "assessments");
+            this.assessments = assessments;
+            return this;
+        }
+
         public AuditorControl build() {
 
             return new AuditorControl(
@@ -694,7 +747,7 @@ public class AuditorControl {
                 description, source, domains,
                 owner, role, customFields,
                 creationDate, modificationDate, framework,
-                sections);
+                sections, assessments);
         }
 
     }
