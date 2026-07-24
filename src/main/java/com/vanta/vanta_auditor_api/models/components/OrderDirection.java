@@ -11,11 +11,7 @@ import java.util.Optional;
 /**
  * OrderDirection
  * 
- * <p>Sort direction shared across the external REST API surface.
- * 
- * <p>`"asc"` for ascending, `"desc"` for descending. Endpoints expose this as the
- * `orderDirection` / `sortDirection` query parameter and map it onto whatever
- * internal direction representation the underlying service expects.
+ * <p>`"asc"` for ascending, `"desc"` for descending.
  */
 public enum OrderDirection {
     ASC("asc"),
