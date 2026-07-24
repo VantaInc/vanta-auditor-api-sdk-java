@@ -30,6 +30,7 @@ public enum FrameworkId {
     MVSP("MVSP"),
     NIS2_D("NIS_2D"),
     NIST171("NIST_171"),
+    NIST171_R3("NIST_171_R3"),
     NIST53("NIST_53"),
     NIST_AI_RMF("NIST_AI_RMF"),
     NIST_CSF("NIST_CSF"),
