@@ -29,7 +29,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 java:
-  version: 0.5.20
+  version: 0.6.0
   additionalDependencies: []
   additionalPlugins: []
   artifactID: vanta-auditor-api
@@ -51,8 +51,10 @@ java:
   generateOptionalUnionAccessors: false
   generateSpringBootStarter: true
   generateUnionDocs: false
+  getterStyle: presence-aware
   githubURL: github.com/VantaInc/vanta-auditor-api-sdk-java
   groupID: com.vanta
+  httpClient: jdk
   imports:
     option: openapi
     paths:
