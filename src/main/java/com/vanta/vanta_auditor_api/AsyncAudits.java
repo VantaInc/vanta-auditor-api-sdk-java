@@ -21,6 +21,7 @@ import com.vanta.vanta_auditor_api.models.components.FlagInformationRequestEvide
 import com.vanta.vanta_auditor_api.models.components.PartialUpdateInformationRequest;
 import com.vanta.vanta_auditor_api.models.components.UpdateAuditControlCommentInput;
 import com.vanta.vanta_auditor_api.models.components.UpdateInformationRequestCommentInput;
+import com.vanta.vanta_auditor_api.models.components.UpsertAuditControlAssessmentInput;
 import com.vanta.vanta_auditor_api.models.operations.AcceptInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForControlRequest;
@@ -71,6 +72,7 @@ import com.vanta.vanta_auditor_api.models.operations.UpdateAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.UpdateInformationRequestRequest;
+import com.vanta.vanta_auditor_api.models.operations.UpsertAssessmentForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.async.AcceptInformationRequestEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.AcceptInformationRequestEvidenceResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.CreateCommentForAuditEvidenceRequestBuilder;
@@ -173,6 +175,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.UpdateCommentForInfor
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateCommentForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.UpdateInformationRequestResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.UpsertAssessmentForControlRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.UpsertAssessmentForControlResponse;
 import com.vanta.vanta_auditor_api.operations.AcceptInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidence;
 import com.vanta.vanta_auditor_api.operations.CreateCommentForControl;
@@ -224,6 +228,7 @@ import com.vanta.vanta_auditor_api.operations.UpdateAuditEvidence;
 import com.vanta.vanta_auditor_api.operations.UpdateCommentForControl;
 import com.vanta.vanta_auditor_api.operations.UpdateCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.UpdateInformationRequest;
+import com.vanta.vanta_auditor_api.operations.UpsertAssessmentForControl;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import java.lang.Boolean;
 import java.lang.Deprecated;
@@ -653,6 +658,71 @@ public class AsyncAudits {
                 .build();
         AsyncRequestOperation<CreateCustomControlRequest, CreateCustomControlResponse> operation
               = new CreateCustomControl.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Upsert a control's assessment within an audit
+     * 
+     * <p>Records (upserts) an auditor's assessment state and justification for a
+     * control within an IRL audit — the API equivalent of assessing a control in
+     * the web app. Overwrites the single assessment for this control in the
+     * audit's program segment.
+     * 
+     * <p>The `assessmentState` must be valid for the audit's framework (the request
+     * is rejected otherwise). The acting auditor is identified by `auditorEmail`,
+     * which must belong to the audit firm making the request.
+     * 
+     * <p>Returns 404 when the control is not part of the audit or the auditor email
+     * does not resolve to a firm user. Applies to both Full and Controlled Audit
+     * View audits.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public UpsertAssessmentForControlRequestBuilder upsertAssessmentForControl() {
+        return new UpsertAssessmentForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Upsert a control's assessment within an audit
+     * 
+     * <p>Records (upserts) an auditor's assessment state and justification for a
+     * control within an IRL audit — the API equivalent of assessing a control in
+     * the web app. Overwrites the single assessment for this control in the
+     * audit's program segment.
+     * 
+     * <p>The `assessmentState` must be valid for the audit's framework (the request
+     * is rejected otherwise). The acting auditor is identified by `auditorEmail`,
+     * which must belong to the audit firm making the request.
+     * 
+     * <p>Returns 404 when the control is not part of the audit or the auditor email
+     * does not resolve to a firm user. Applies to both Full and Controlled Audit
+     * View audits.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param upsertAuditControlAssessmentInput Input for upserting a control's auditor assessment within an audit. Overwrites
+     *         the single assessment for this control in the audit's program segment.
+     * @return {@code CompletableFuture<UpsertAssessmentForControlResponse>} - The async response
+     */
+    public CompletableFuture<UpsertAssessmentForControlResponse> upsertAssessmentForControl(
+            String auditId, String controlId,
+            UpsertAuditControlAssessmentInput upsertAuditControlAssessmentInput) {
+        UpsertAssessmentForControlRequest request =
+            UpsertAssessmentForControlRequest
+                .builder()
+                .auditId(auditId)
+                .controlId(controlId)
+                .upsertAuditControlAssessmentInput(upsertAuditControlAssessmentInput)
+                .build();
+        AsyncRequestOperation<UpsertAssessmentForControlRequest, UpsertAssessmentForControlResponse> operation
+              = new UpsertAssessmentForControl.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

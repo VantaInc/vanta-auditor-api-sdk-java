@@ -49,7 +49,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'com.vanta:vanta-auditor-api:0.6.0'
+implementation 'com.vanta:vanta-auditor-api:0.6.1'
 ```
 
 Maven:
@@ -57,7 +57,7 @@ Maven:
 <dependency>
     <groupId>com.vanta</groupId>
     <artifactId>vanta-auditor-api</artifactId>
-    <version>0.6.0</version>
+    <version>0.6.1</version>
 </dependency>
 ```
 
@@ -295,6 +295,7 @@ public class Application {
 * [listComments](docs/sdks/audits/README.md#listcomments) - List audit comments
 * [listControls](docs/sdks/audits/README.md#listcontrols) - List audit controls
 * [createCustomControl](docs/sdks/audits/README.md#createcustomcontrol) - Create a custom control for an audit
+* [upsertAssessmentForControl](docs/sdks/audits/README.md#upsertassessmentforcontrol) - Upsert a control's assessment within an audit
 * [listCommentsForControl](docs/sdks/audits/README.md#listcommentsforcontrol) - List comments for a control within an audit
 * [createCommentForControl](docs/sdks/audits/README.md#createcommentforcontrol) - Create a comment for a control within an audit
 * [updateCommentForControl](docs/sdks/audits/README.md#updatecommentforcontrol) - Update a comment for a control within an audit

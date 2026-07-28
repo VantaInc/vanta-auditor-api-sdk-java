@@ -11,6 +11,7 @@
 * [listComments](#listcomments) - List audit comments
 * [listControls](#listcontrols) - List audit controls
 * [createCustomControl](#createcustomcontrol) - Create a custom control for an audit
+* [upsertAssessmentForControl](#upsertassessmentforcontrol) - Upsert a control's assessment within an audit
 * [listCommentsForControl](#listcommentsforcontrol) - List comments for a control within an audit
 * [createCommentForControl](#createcommentforcontrol) - Create a comment for a control within an audit
 * [updateCommentForControl](#updatecommentforcontrol) - Update a comment for a control within an audit
@@ -490,6 +491,78 @@ public class Application {
 ### Response
 
 **[CreateCustomControlResponse](../../models/operations/CreateCustomControlResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## upsertAssessmentForControl
+
+Records (upserts) an auditor's assessment state and justification for a
+control within an IRL audit — the API equivalent of assessing a control in
+the web app. Overwrites the single assessment for this control in the
+audit's program segment.
+
+The `assessmentState` must be valid for the audit's framework (the request
+is rejected otherwise). The acting auditor is identified by `auditorEmail`,
+which must belong to the audit firm making the request.
+
+Returns 404 when the control is not part of the audit or the auditor email
+does not resolve to a firm user. Applies to both Full and Controlled Audit
+View audits.
+
+Rate limit: 10 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="UpsertAssessmentForControl" method="put" path="/audits/{auditId}/controls/{controlId}/assessment" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.components.AuditControlAssessmentState;
+import com.vanta.vanta_auditor_api.models.components.UpsertAuditControlAssessmentInput;
+import com.vanta.vanta_auditor_api.models.operations.UpsertAssessmentForControlResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        UpsertAssessmentForControlResponse res = sdk.audits().upsertAssessmentForControl()
+                .auditId("<id>")
+                .controlId("<id>")
+                .upsertAuditControlAssessmentInput(UpsertAuditControlAssessmentInput.builder()
+                    .assessmentState(AuditControlAssessmentState.TRUE)
+                    .justification("<value>")
+                    .auditorEmail("<value>")
+                    .build())
+                .call();
+
+        if (res.auditorControlAssessment().isPresent()) {
+            System.out.println(res.auditorControlAssessment().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                         | *String*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
+| `controlId`                                                                                       | *String*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
+| `upsertAuditControlAssessmentInput`                                                               | [UpsertAuditControlAssessmentInput](../../models/components/UpsertAuditControlAssessmentInput.md) | :heavy_check_mark:                                                                                | N/A                                                                                               |
+
+### Response
+
+**[UpsertAssessmentForControlResponse](../../models/operations/UpsertAssessmentForControlResponse.md)**
 
 ### Errors
 
