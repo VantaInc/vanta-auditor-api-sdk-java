@@ -1,0 +1,10 @@
+# UpsertAssessmentForControlRequest
+
+
+## Fields
+
+| Field                                                                                             | Type                                                                                              | Required                                                                                          | Description                                                                                       |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                         | *String*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
+| `controlId`                                                                                       | *String*                                                                                          | :heavy_check_mark:                                                                                | N/A                                                                                               |
+| `upsertAuditControlAssessmentInput`                                                               | [UpsertAuditControlAssessmentInput](../../models/components/UpsertAuditControlAssessmentInput.md) | :heavy_check_mark:                                                                                | N/A                                                                                               |
