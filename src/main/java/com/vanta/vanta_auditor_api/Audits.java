@@ -662,7 +662,7 @@ public class Audits {
      * the web app. Overwrites the single assessment for this control in the
      * audit's program segment.
      * 
-     * <p>The `assessmentState` must be valid for the audit's framework (the request
+     * <p>The `assessmentState` must be valid for the segment's framework (the request
      * is rejected otherwise). The acting auditor is identified by `auditorEmail`,
      * which must belong to the audit firm making the request.
      * 
@@ -686,7 +686,7 @@ public class Audits {
      * the web app. Overwrites the single assessment for this control in the
      * audit's program segment.
      * 
-     * <p>The `assessmentState` must be valid for the audit's framework (the request
+     * <p>The `assessmentState` must be valid for the segment's framework (the request
      * is rejected otherwise). The acting auditor is identified by `auditorEmail`,
      * which must belong to the audit firm making the request.
      * 
