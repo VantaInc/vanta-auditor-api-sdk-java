@@ -101,10 +101,12 @@ public class AuditorControl {
     private List<Section> sections;
 
     /**
-     * The auditor's assessments of this control, one per audit program segment
-     * (a multi-framework audit has more than one). Populated only for IRL audits
-     * when the assessment feature is enabled; empty otherwise. A segment with no
-     * recorded assessment still contributes an entry, coerced to `NOT_ASSESSED`.
+     * The auditor's assessments of this control, one per audit program segment the
+     * control is in scope for (a multi-framework audit can have more than one).
+     * Populated only for IRL audits when the assessment feature is enabled; empty
+     * otherwise. Within an in-scope segment a control with no recorded assessment
+     * coerces to `NOT_ASSESSED`; a segment the control is not in scope for
+     * contributes no entry.
      */
     @JsonProperty("assessments")
     private List<AuditControlAssessment> assessments;
@@ -275,10 +277,12 @@ public class AuditorControl {
     }
 
     /**
-     * The auditor's assessments of this control, one per audit program segment
-     * (a multi-framework audit has more than one). Populated only for IRL audits
-     * when the assessment feature is enabled; empty otherwise. A segment with no
-     * recorded assessment still contributes an entry, coerced to `NOT_ASSESSED`.
+     * The auditor's assessments of this control, one per audit program segment the
+     * control is in scope for (a multi-framework audit can have more than one).
+     * Populated only for IRL audits when the assessment feature is enabled; empty
+     * otherwise. Within an in-scope segment a control with no recorded assessment
+     * coerces to `NOT_ASSESSED`; a segment the control is not in scope for
+     * contributes no entry.
      */
     @JsonIgnore
     public List<AuditControlAssessment> assessments() {
@@ -454,10 +458,12 @@ public class AuditorControl {
     }
 
     /**
-     * The auditor's assessments of this control, one per audit program segment
-     * (a multi-framework audit has more than one). Populated only for IRL audits
-     * when the assessment feature is enabled; empty otherwise. A segment with no
-     * recorded assessment still contributes an entry, coerced to `NOT_ASSESSED`.
+     * The auditor's assessments of this control, one per audit program segment the
+     * control is in scope for (a multi-framework audit can have more than one).
+     * Populated only for IRL audits when the assessment feature is enabled; empty
+     * otherwise. Within an in-scope segment a control with no recorded assessment
+     * coerces to `NOT_ASSESSED`; a segment the control is not in scope for
+     * contributes no entry.
      */
     public AuditorControl withAssessments(List<AuditControlAssessment> assessments) {
         Utils.checkNotNull(assessments, "assessments");
@@ -729,10 +735,12 @@ public class AuditorControl {
 
 
         /**
-         * The auditor's assessments of this control, one per audit program segment
-         * (a multi-framework audit has more than one). Populated only for IRL audits
-         * when the assessment feature is enabled; empty otherwise. A segment with no
-         * recorded assessment still contributes an entry, coerced to `NOT_ASSESSED`.
+         * The auditor's assessments of this control, one per audit program segment the
+         * control is in scope for (a multi-framework audit can have more than one).
+         * Populated only for IRL audits when the assessment feature is enabled; empty
+         * otherwise. Within an in-scope segment a control with no recorded assessment
+         * coerces to `NOT_ASSESSED`; a segment the control is not in scope for
+         * contributes no entry.
          */
         public Builder assessments(List<AuditControlAssessment> assessments) {
             Utils.checkNotNull(assessments, "assessments");
