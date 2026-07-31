@@ -10,6 +10,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vanta.vanta_auditor_api.Vanta;
 import com.vanta.vanta_auditor_api.models.components.Audit;
 import com.vanta.vanta_auditor_api.models.components.Evidence;
+import com.vanta.vanta_auditor_api.models.components.PageInfo;
+import com.vanta.vanta_auditor_api.models.components.Results;
 import com.vanta.vanta_auditor_api.models.errors.APIException;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditCommentsResponse;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditControlsResponse;
@@ -24,6 +26,7 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -148,14 +151,29 @@ public class SmokeTest {
     @Test
     @Order(2)
     void listAudits_findsFixtureAudit() throws Exception {
-        ListAuditsResponse res = sdk.audits().listDirect();
-        assertEquals(200, res.statusCode());
-        assertTrue(res.paginatedResponseAudit().isPresent(), "expected paginated response body");
+        Optional<String> pageCursor = Optional.empty();
+        boolean found = false;
+        do {
+            ListAuditsResponse res = sdk.audits().list()
+                .pageSize(100)
+                .pageCursor(pageCursor)
+                .call();
+            assertEquals(200, res.statusCode());
+            assertTrue(res.paginatedResponseAudit().isPresent(), "expected paginated response body");
 
-        List<Audit> audits = res.paginatedResponseAudit().get().results().data();
-        assertNotNull(audits, "audits list should not be null");
+            Results results = res.paginatedResponseAudit().get().results();
+            List<Audit> audits = results.data();
+            assertNotNull(audits, "audits list should not be null");
+            if (audits.stream().anyMatch(a -> auditId.equals(a.id()))) {
+                found = true;
+                break;
+            }
+            PageInfo pageInfo = results.pageInfo();
+            pageCursor = pageInfo.hasNextPage() ? pageInfo.endCursor() : Optional.empty();
+        } while (pageCursor.isPresent());
+
         assertTrue(
-            audits.stream().anyMatch(a -> auditId.equals(a.id())),
+            found,
             "fixture audit " + auditId + " not found in /audits results — "
                 + "was it deleted? See SMOKE_TEST.md for recovery steps."
         );
