@@ -57,6 +57,9 @@ import com.vanta.vanta_auditor_api.models.operations.DuplicateResponse;
 import com.vanta.vanta_auditor_api.models.operations.FlagInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.FlagInformationRequestEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.FlagInformationRequestEvidenceResponse;
+import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceCommentRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceCommentRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceCommentResponse;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditResponse;
@@ -190,6 +193,7 @@ import com.vanta.vanta_auditor_api.operations.DeleteInformationRequest;
 import com.vanta.vanta_auditor_api.operations.Duplicate;
 import com.vanta.vanta_auditor_api.operations.FlagInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.GetAudit;
+import com.vanta.vanta_auditor_api.operations.GetAuditEvidenceComment;
 import com.vanta.vanta_auditor_api.operations.GetFrameworkCodes;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequest;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequestTestSnapshotEvidenceDetail;
@@ -1223,6 +1227,67 @@ public class Audits {
                 .build();
         RequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
               = new CreateCommentForAuditEvidence.Sync(sdkConfiguration, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get an audit evidence comment by ID
+     * 
+     * <p>Retrieves a single comment on a classic audit evidence item by its ID.
+     * 
+     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
+     * response. Clients should check `deletionDate` to determine whether the
+     * comment has been deleted. This matches
+     * `GET /audits/{auditId}/comments`, which supports `changedSinceDate` and
+     * returns soft-deleted comments for delta sync.
+     * 
+     * <p>Comments remain fetchable when the parent evidence item has been
+     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
+     * after evidence deletion.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public GetAuditEvidenceCommentRequestBuilder getAuditEvidenceComment() {
+        return new GetAuditEvidenceCommentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get an audit evidence comment by ID
+     * 
+     * <p>Retrieves a single comment on a classic audit evidence item by its ID.
+     * 
+     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
+     * response. Clients should check `deletionDate` to determine whether the
+     * comment has been deleted. This matches
+     * `GET /audits/{auditId}/comments`, which supports `changedSinceDate` and
+     * returns soft-deleted comments for delta sync.
+     * 
+     * <p>Comments remain fetchable when the parent evidence item has been
+     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
+     * after evidence deletion.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param auditEvidenceId 
+     * @param commentId 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAuditEvidenceCommentResponse getAuditEvidenceComment(
+            String auditId, String auditEvidenceId,
+            String commentId) {
+        GetAuditEvidenceCommentRequest request =
+            GetAuditEvidenceCommentRequest
+                .builder()
+                .auditId(auditId)
+                .auditEvidenceId(auditEvidenceId)
+                .commentId(commentId)
+                .build();
+        RequestOperation<GetAuditEvidenceCommentRequest, GetAuditEvidenceCommentResponse> operation
+              = new GetAuditEvidenceComment.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

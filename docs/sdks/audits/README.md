@@ -21,6 +21,7 @@
 * [createCustomEvidenceRequest](#createcustomevidencerequest) - Create a custom evidence request for an audit
 * [updateEvidence](#updateevidence) - Update audit evidence
 * [createCommentForEvidence](#createcommentforevidence) - Create a comment for audit evidence
+* [getAuditEvidenceComment](#getauditevidencecomment) - Get an audit evidence comment by ID
 * [getEvidenceUrls](#getevidenceurls) - List audit evidence url
 * [getFrameworkCodes](#getframeworkcodes) - Get framework codes for an audit
 * [listInformationRequests](#listinformationrequests) - List information requests for an audit
@@ -1142,6 +1143,71 @@ public class Application {
 ### Response
 
 **[CreateCommentForAuditEvidenceResponse](../../models/operations/CreateCommentForAuditEvidenceResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## getAuditEvidenceComment
+
+Retrieves a single comment on a classic audit evidence item by its ID.
+
+Soft-deleted comments (where `deletionDate !== null`) are included in the
+response. Clients should check `deletionDate` to determine whether the
+comment has been deleted. This matches
+`GET /audits/{auditId}/comments`, which supports `changedSinceDate` and
+returns soft-deleted comments for delta sync.
+
+Comments remain fetchable when the parent evidence item has been
+soft-deleted, so delayed webhook consumers can still resolve a comment ID
+after evidence deletion.
+
+Rate limit: 50 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="GetAuditEvidenceComment" method="get" path="/audits/{auditId}/evidence/{auditEvidenceId}/comments/{commentId}" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceCommentResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        GetAuditEvidenceCommentResponse res = sdk.audits().getAuditEvidenceComment()
+                .auditId("<id>")
+                .auditEvidenceId("<id>")
+                .commentId("<id>")
+                .call();
+
+        if (res.comment().isPresent()) {
+            System.out.println(res.comment().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | N/A                |
+| `auditEvidenceId`  | *String*           | :heavy_check_mark: | N/A                |
+| `commentId`        | *String*           | :heavy_check_mark: | N/A                |
+
+### Response
+
+**[GetAuditEvidenceCommentResponse](../../models/operations/GetAuditEvidenceCommentResponse.md)**
 
 ### Errors
 
