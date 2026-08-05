@@ -49,7 +49,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'com.vanta:vanta-auditor-api:0.6.3'
+implementation 'com.vanta:vanta-auditor-api:0.6.4'
 ```
 
 Maven:
@@ -57,7 +57,7 @@ Maven:
 <dependency>
     <groupId>com.vanta</groupId>
     <artifactId>vanta-auditor-api</artifactId>
-    <version>0.6.3</version>
+    <version>0.6.4</version>
 </dependency>
 ```
 
@@ -305,6 +305,7 @@ public class Application {
 * [createCustomEvidenceRequest](docs/sdks/audits/README.md#createcustomevidencerequest) - Create a custom evidence request for an audit
 * [updateEvidence](docs/sdks/audits/README.md#updateevidence) - Update audit evidence
 * [createCommentForEvidence](docs/sdks/audits/README.md#createcommentforevidence) - Create a comment for audit evidence
+* [getAuditEvidenceComment](docs/sdks/audits/README.md#getauditevidencecomment) - Get an audit evidence comment by ID
 * [getEvidenceUrls](docs/sdks/audits/README.md#getevidenceurls) - List audit evidence url
 * [getFrameworkCodes](docs/sdks/audits/README.md#getframeworkcodes) - Get framework codes for an audit
 * [listInformationRequests](docs/sdks/audits/README.md#listinformationrequests) - List information requests for an audit
