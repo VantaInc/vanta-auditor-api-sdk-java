@@ -34,7 +34,9 @@ import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForInformation
 import com.vanta.vanta_auditor_api.models.operations.DeleteInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.FlagInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceCommentRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetFrameworkCodesRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSnapshotEvidenceDetailRequest;
@@ -100,8 +102,12 @@ import com.vanta.vanta_auditor_api.models.operations.async.FlagInformationReques
 import com.vanta.vanta_auditor_api.models.operations.async.FlagInformationRequestEvidenceResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetAuditEvidenceCommentRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.GetAuditEvidenceCommentResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.GetAuditEvidenceRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.GetAuditEvidenceResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetAuditRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.GetAuditResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.GetCommentForInformationRequestRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.GetCommentForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetFrameworkCodesRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.GetFrameworkCodesResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestRequestBuilder;
@@ -193,7 +199,9 @@ import com.vanta.vanta_auditor_api.operations.DeleteInformationRequest;
 import com.vanta.vanta_auditor_api.operations.Duplicate;
 import com.vanta.vanta_auditor_api.operations.FlagInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.GetAudit;
+import com.vanta.vanta_auditor_api.operations.GetAuditEvidence;
 import com.vanta.vanta_auditor_api.operations.GetAuditEvidenceComment;
+import com.vanta.vanta_auditor_api.operations.GetCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.GetFrameworkCodes;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequest;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequestTestSnapshotEvidenceDetail;
@@ -1208,6 +1216,62 @@ public class AsyncAudits {
 
 
     /**
+     * Get an audit evidence item by ID
+     * 
+     * <p>Retrieves a single classic audit evidence item by its ID, scoped to its
+     * audit. The response matches the entry `GET /audits/{auditId}/evidence`
+     * returns for the same item, so an evidence ID surfaced by a webhook can be
+     * resolved directly instead of paging the audit's full evidence list.
+     * 
+     * <p>Soft-deleted evidence (where `deletionDate !== null`) is included in the
+     * response. Clients should check `deletionDate` to determine whether the item
+     * has been deleted. This matches `GET /audits/{auditId}/evidence`, which
+     * supports `changedSinceDate` and returns soft-deleted evidence for delta
+     * sync. As on the list endpoint, `description` is null for deleted items.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetAuditEvidenceRequestBuilder getAuditEvidence() {
+        return new GetAuditEvidenceRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get an audit evidence item by ID
+     * 
+     * <p>Retrieves a single classic audit evidence item by its ID, scoped to its
+     * audit. The response matches the entry `GET /audits/{auditId}/evidence`
+     * returns for the same item, so an evidence ID surfaced by a webhook can be
+     * resolved directly instead of paging the audit's full evidence list.
+     * 
+     * <p>Soft-deleted evidence (where `deletionDate !== null`) is included in the
+     * response. Clients should check `deletionDate` to determine whether the item
+     * has been deleted. This matches `GET /audits/{auditId}/evidence`, which
+     * supports `changedSinceDate` and returns soft-deleted evidence for delta
+     * sync. As on the list endpoint, `description` is null for deleted items.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param auditId 
+     * @param auditEvidenceId 
+     * @return {@code CompletableFuture<GetAuditEvidenceResponse>} - The async response
+     */
+    public CompletableFuture<GetAuditEvidenceResponse> getAuditEvidence(String auditId, String auditEvidenceId) {
+        GetAuditEvidenceRequest request =
+            GetAuditEvidenceRequest
+                .builder()
+                .auditId(auditId)
+                .auditEvidenceId(auditEvidenceId)
+                .build();
+        AsyncRequestOperation<GetAuditEvidenceRequest, GetAuditEvidenceResponse> operation
+              = new GetAuditEvidence.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
      * Create a comment for audit evidence
      * 
      * <p>Create a comment in Vanta for a piece of evidence.
@@ -2033,6 +2097,68 @@ public class AsyncAudits {
                 .build();
         AsyncRequestOperation<CreateCommentForInformationRequestRequest, CreateCommentForInformationRequestResponse> operation
               = new CreateCommentForInformationRequest.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get an information request comment by ID
+     * 
+     * <p>Retrieves a single comment on an information request by its ID.
+     * 
+     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
+     * response. Clients should check `deletionDate` to determine whether the
+     * comment has been deleted. This matches
+     * `GET /audits/{auditId}/information-requests/{requestId}/comments`, which
+     * supports `changedSinceDate` and returns soft-deleted comments for delta sync.
+     * 
+     * <p>Comments remain fetchable when the parent information request has been
+     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
+     * after the request is deleted.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetCommentForInformationRequestRequestBuilder getCommentForInformationRequest() {
+        return new GetCommentForInformationRequestRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get an information request comment by ID
+     * 
+     * <p>Retrieves a single comment on an information request by its ID.
+     * 
+     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
+     * response. Clients should check `deletionDate` to determine whether the
+     * comment has been deleted. This matches
+     * `GET /audits/{auditId}/information-requests/{requestId}/comments`, which
+     * supports `changedSinceDate` and returns soft-deleted comments for delta sync.
+     * 
+     * <p>Comments remain fetchable when the parent information request has been
+     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
+     * after the request is deleted.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param commentId 
+     * @return {@code CompletableFuture<GetCommentForInformationRequestResponse>} - The async response
+     */
+    public CompletableFuture<GetCommentForInformationRequestResponse> getCommentForInformationRequest(
+            String auditId, String requestId,
+            String commentId) {
+        GetCommentForInformationRequestRequest request =
+            GetCommentForInformationRequestRequest
+                .builder()
+                .auditId(auditId)
+                .requestId(requestId)
+                .commentId(commentId)
+                .build();
+        AsyncRequestOperation<GetCommentForInformationRequestRequest, GetCommentForInformationRequestResponse> operation
+              = new GetCommentForInformationRequest.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

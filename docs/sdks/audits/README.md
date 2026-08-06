@@ -20,6 +20,7 @@
 * [listEvidence](#listevidence) - List audit evidence
 * [createCustomEvidenceRequest](#createcustomevidencerequest) - Create a custom evidence request for an audit
 * [updateEvidence](#updateevidence) - Update audit evidence
+* [getAuditEvidence](#getauditevidence) - Get an audit evidence item by ID
 * [createCommentForEvidence](#createcommentforevidence) - Create a comment for audit evidence
 * [getAuditEvidenceComment](#getauditevidencecomment) - Get an audit evidence comment by ID
 * [getEvidenceUrls](#getevidenceurls) - List audit evidence url
@@ -33,6 +34,7 @@
 * [listInformationRequestActivity](#listinformationrequestactivity) - List information request activity
 * [listCommentsForInformationRequest](#listcommentsforinformationrequest) - List comments for an information request
 * [createCommentForInformationRequest](#createcommentforinformationrequest) - Create a comment for an information request
+* [getCommentForInformationRequest](#getcommentforinformationrequest) - Get an information request comment by ID
 * [updateCommentForInformationRequest](#updatecommentforinformationrequest) - Update a comment for an information request
 * [deleteCommentForInformationRequest](#deletecommentforinformationrequest) - Delete a comment for an information request
 * [listInformationRequestEvidence](#listinformationrequestevidence) - List evidence for an information request
@@ -1089,6 +1091,68 @@ public class Application {
 | -------------------------- | -------------------------- | -------------------------- |
 | models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
 
+## getAuditEvidence
+
+Retrieves a single classic audit evidence item by its ID, scoped to its
+audit. The response matches the entry `GET /audits/{auditId}/evidence`
+returns for the same item, so an evidence ID surfaced by a webhook can be
+resolved directly instead of paging the audit's full evidence list.
+
+Soft-deleted evidence (where `deletionDate !== null`) is included in the
+response. Clients should check `deletionDate` to determine whether the item
+has been deleted. This matches `GET /audits/{auditId}/evidence`, which
+supports `changedSinceDate` and returns soft-deleted evidence for delta
+sync. As on the list endpoint, `description` is null for deleted items.
+
+Rate limit: 250 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="GetAuditEvidence" method="get" path="/audits/{auditId}/evidence/{auditEvidenceId}" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        GetAuditEvidenceResponse res = sdk.audits().getAuditEvidence()
+                .auditId("<id>")
+                .auditEvidenceId("<id>")
+                .call();
+
+        if (res.evidence().isPresent()) {
+            System.out.println(res.evidence().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | N/A                |
+| `auditEvidenceId`  | *String*           | :heavy_check_mark: | N/A                |
+
+### Response
+
+**[GetAuditEvidenceResponse](../../models/operations/GetAuditEvidenceResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
 ## createCommentForEvidence
 
 Create a comment in Vanta for a piece of evidence.
@@ -1939,6 +2003,71 @@ public class Application {
 ### Response
 
 **[CreateCommentForInformationRequestResponse](../../models/operations/CreateCommentForInformationRequestResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## getCommentForInformationRequest
+
+Retrieves a single comment on an information request by its ID.
+
+Soft-deleted comments (where `deletionDate !== null`) are included in the
+response. Clients should check `deletionDate` to determine whether the
+comment has been deleted. This matches
+`GET /audits/{auditId}/information-requests/{requestId}/comments`, which
+supports `changedSinceDate` and returns soft-deleted comments for delta sync.
+
+Comments remain fetchable when the parent information request has been
+soft-deleted, so delayed webhook consumers can still resolve a comment ID
+after the request is deleted.
+
+Rate limit: 50 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="GetCommentForInformationRequest" method="get" path="/audits/{auditId}/information-requests/{requestId}/comments/{commentId}" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.GetCommentForInformationRequestResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        GetCommentForInformationRequestResponse res = sdk.audits().getCommentForInformationRequest()
+                .auditId("<id>")
+                .requestId("<id>")
+                .commentId("<id>")
+                .call();
+
+        if (res.informationRequestComment().isPresent()) {
+            System.out.println(res.informationRequestComment().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter          | Type               | Required           | Description        |
+| ------------------ | ------------------ | ------------------ | ------------------ |
+| `auditId`          | *String*           | :heavy_check_mark: | N/A                |
+| `requestId`        | *String*           | :heavy_check_mark: | N/A                |
+| `commentId`        | *String*           | :heavy_check_mark: | N/A                |
+
+### Response
+
+**[GetCommentForInformationRequestResponse](../../models/operations/GetCommentForInformationRequestResponse.md)**
 
 ### Errors
 
