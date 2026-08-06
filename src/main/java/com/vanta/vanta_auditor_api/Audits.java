@@ -60,9 +60,15 @@ import com.vanta.vanta_auditor_api.models.operations.FlagInformationRequestEvide
 import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceCommentRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceCommentRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceCommentResponse;
+import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceResponse;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditResponse;
+import com.vanta.vanta_auditor_api.models.operations.GetCommentForInformationRequestRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetCommentForInformationRequestRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.GetCommentForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.GetFrameworkCodesRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetFrameworkCodesRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.GetFrameworkCodesResponse;
@@ -193,7 +199,9 @@ import com.vanta.vanta_auditor_api.operations.DeleteInformationRequest;
 import com.vanta.vanta_auditor_api.operations.Duplicate;
 import com.vanta.vanta_auditor_api.operations.FlagInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.GetAudit;
+import com.vanta.vanta_auditor_api.operations.GetAuditEvidence;
 import com.vanta.vanta_auditor_api.operations.GetAuditEvidenceComment;
+import com.vanta.vanta_auditor_api.operations.GetCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.GetFrameworkCodes;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequest;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequestTestSnapshotEvidenceDetail;
@@ -1190,6 +1198,61 @@ public class Audits {
     }
 
     /**
+     * Get an audit evidence item by ID
+     * 
+     * <p>Retrieves a single classic audit evidence item by its ID, scoped to its
+     * audit. The response matches the entry `GET /audits/{auditId}/evidence`
+     * returns for the same item, so an evidence ID surfaced by a webhook can be
+     * resolved directly instead of paging the audit's full evidence list.
+     * 
+     * <p>Soft-deleted evidence (where `deletionDate !== null`) is included in the
+     * response. Clients should check `deletionDate` to determine whether the item
+     * has been deleted. This matches `GET /audits/{auditId}/evidence`, which
+     * supports `changedSinceDate` and returns soft-deleted evidence for delta
+     * sync. As on the list endpoint, `description` is null for deleted items.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public GetAuditEvidenceRequestBuilder getAuditEvidence() {
+        return new GetAuditEvidenceRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get an audit evidence item by ID
+     * 
+     * <p>Retrieves a single classic audit evidence item by its ID, scoped to its
+     * audit. The response matches the entry `GET /audits/{auditId}/evidence`
+     * returns for the same item, so an evidence ID surfaced by a webhook can be
+     * resolved directly instead of paging the audit's full evidence list.
+     * 
+     * <p>Soft-deleted evidence (where `deletionDate !== null`) is included in the
+     * response. Clients should check `deletionDate` to determine whether the item
+     * has been deleted. This matches `GET /audits/{auditId}/evidence`, which
+     * supports `changedSinceDate` and returns soft-deleted evidence for delta
+     * sync. As on the list endpoint, `description` is null for deleted items.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param auditId 
+     * @param auditEvidenceId 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAuditEvidenceResponse getAuditEvidence(String auditId, String auditEvidenceId) {
+        GetAuditEvidenceRequest request =
+            GetAuditEvidenceRequest
+                .builder()
+                .auditId(auditId)
+                .auditEvidenceId(auditEvidenceId)
+                .build();
+        RequestOperation<GetAuditEvidenceRequest, GetAuditEvidenceResponse> operation
+              = new GetAuditEvidence.Sync(sdkConfiguration, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
      * Create a comment for audit evidence
      * 
      * <p>Create a comment in Vanta for a piece of evidence.
@@ -2004,6 +2067,67 @@ public class Audits {
                 .build();
         RequestOperation<CreateCommentForInformationRequestRequest, CreateCommentForInformationRequestResponse> operation
               = new CreateCommentForInformationRequest.Sync(sdkConfiguration, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * Get an information request comment by ID
+     * 
+     * <p>Retrieves a single comment on an information request by its ID.
+     * 
+     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
+     * response. Clients should check `deletionDate` to determine whether the
+     * comment has been deleted. This matches
+     * `GET /audits/{auditId}/information-requests/{requestId}/comments`, which
+     * supports `changedSinceDate` and returns soft-deleted comments for delta sync.
+     * 
+     * <p>Comments remain fetchable when the parent information request has been
+     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
+     * after the request is deleted.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public GetCommentForInformationRequestRequestBuilder getCommentForInformationRequest() {
+        return new GetCommentForInformationRequestRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get an information request comment by ID
+     * 
+     * <p>Retrieves a single comment on an information request by its ID.
+     * 
+     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
+     * response. Clients should check `deletionDate` to determine whether the
+     * comment has been deleted. This matches
+     * `GET /audits/{auditId}/information-requests/{requestId}/comments`, which
+     * supports `changedSinceDate` and returns soft-deleted comments for delta sync.
+     * 
+     * <p>Comments remain fetchable when the parent information request has been
+     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
+     * after the request is deleted.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param commentId 
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCommentForInformationRequestResponse getCommentForInformationRequest(
+            String auditId, String requestId,
+            String commentId) {
+        GetCommentForInformationRequestRequest request =
+            GetCommentForInformationRequestRequest
+                .builder()
+                .auditId(auditId)
+                .requestId(requestId)
+                .commentId(commentId)
+                .build();
+        RequestOperation<GetCommentForInformationRequestRequest, GetCommentForInformationRequestResponse> operation
+              = new GetCommentForInformationRequest.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

@@ -49,7 +49,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'com.vanta:vanta-auditor-api:0.6.4'
+implementation 'com.vanta:vanta-auditor-api:0.6.5'
 ```
 
 Maven:
@@ -57,7 +57,7 @@ Maven:
 <dependency>
     <groupId>com.vanta</groupId>
     <artifactId>vanta-auditor-api</artifactId>
-    <version>0.6.4</version>
+    <version>0.6.5</version>
 </dependency>
 ```
 
@@ -304,6 +304,7 @@ public class Application {
 * [listEvidence](docs/sdks/audits/README.md#listevidence) - List audit evidence
 * [createCustomEvidenceRequest](docs/sdks/audits/README.md#createcustomevidencerequest) - Create a custom evidence request for an audit
 * [updateEvidence](docs/sdks/audits/README.md#updateevidence) - Update audit evidence
+* [getAuditEvidence](docs/sdks/audits/README.md#getauditevidence) - Get an audit evidence item by ID
 * [createCommentForEvidence](docs/sdks/audits/README.md#createcommentforevidence) - Create a comment for audit evidence
 * [getAuditEvidenceComment](docs/sdks/audits/README.md#getauditevidencecomment) - Get an audit evidence comment by ID
 * [getEvidenceUrls](docs/sdks/audits/README.md#getevidenceurls) - List audit evidence url
@@ -317,6 +318,7 @@ public class Application {
 * [listInformationRequestActivity](docs/sdks/audits/README.md#listinformationrequestactivity) - List information request activity
 * [listCommentsForInformationRequest](docs/sdks/audits/README.md#listcommentsforinformationrequest) - List comments for an information request
 * [createCommentForInformationRequest](docs/sdks/audits/README.md#createcommentforinformationrequest) - Create a comment for an information request
+* [getCommentForInformationRequest](docs/sdks/audits/README.md#getcommentforinformationrequest) - Get an information request comment by ID
 * [updateCommentForInformationRequest](docs/sdks/audits/README.md#updatecommentforinformationrequest) - Update a comment for an information request
 * [deleteCommentForInformationRequest](docs/sdks/audits/README.md#deletecommentforinformationrequest) - Delete a comment for an information request
 * [listInformationRequestEvidence](docs/sdks/audits/README.md#listinformationrequestevidence) - List evidence for an information request
