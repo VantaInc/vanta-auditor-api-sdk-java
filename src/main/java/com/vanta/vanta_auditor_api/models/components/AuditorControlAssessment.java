@@ -24,6 +24,12 @@ public class AuditorControlAssessment {
     private String controlId;
 
     /**
+     * The program segment this assessment was written to.
+     */
+    @JsonProperty("segmentId")
+    private String segmentId;
+
+    /**
      * An auditor's assessment of a control within an audit. This is the full flat
      * union of every framework's assessment states (the superset); a given audit's
      * framework only uses its own subset. `NOT_ASSESSED` is shared by all
@@ -50,12 +56,15 @@ public class AuditorControlAssessment {
     @JsonCreator
     public AuditorControlAssessment(
             @JsonProperty("controlId") String controlId,
+            @JsonProperty("segmentId") String segmentId,
             @JsonProperty("assessmentState") AuditControlAssessmentState assessmentState,
             @JsonProperty("justification") String justification) {
         Utils.checkNotNull(controlId, "controlId");
+        Utils.checkNotNull(segmentId, "segmentId");
         Utils.checkNotNull(assessmentState, "assessmentState");
         Utils.checkNotNull(justification, "justification");
         this.controlId = controlId;
+        this.segmentId = segmentId;
         this.assessmentState = assessmentState;
         this.justification = justification;
     }
@@ -66,6 +75,14 @@ public class AuditorControlAssessment {
     @JsonIgnore
     public String controlId() {
         return controlId;
+    }
+
+    /**
+     * The program segment this assessment was written to.
+     */
+    @JsonIgnore
+    public String segmentId() {
+        return segmentId;
     }
 
     /**
@@ -111,6 +128,15 @@ public class AuditorControlAssessment {
     }
 
     /**
+     * The program segment this assessment was written to.
+     */
+    public AuditorControlAssessment withSegmentId(String segmentId) {
+        Utils.checkNotNull(segmentId, "segmentId");
+        this.segmentId = segmentId;
+        return this;
+    }
+
+    /**
      * An auditor's assessment of a control within an audit. This is the full flat
      * union of every framework's assessment states (the superset); a given audit's
      * framework only uses its own subset. `NOT_ASSESSED` is shared by all
@@ -151,6 +177,7 @@ public class AuditorControlAssessment {
         AuditorControlAssessment other = (AuditorControlAssessment) o;
         return 
             Utils.enhancedDeepEquals(this.controlId, other.controlId) &&
+            Utils.enhancedDeepEquals(this.segmentId, other.segmentId) &&
             Utils.enhancedDeepEquals(this.assessmentState, other.assessmentState) &&
             Utils.enhancedDeepEquals(this.justification, other.justification);
     }
@@ -158,13 +185,15 @@ public class AuditorControlAssessment {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            controlId, assessmentState, justification);
+            controlId, segmentId, assessmentState,
+            justification);
     }
     
     @Override
     public String toString() {
         return Utils.toString(AuditorControlAssessment.class,
                 "controlId", controlId,
+                "segmentId", segmentId,
                 "assessmentState", assessmentState,
                 "justification", justification);
     }
@@ -173,6 +202,8 @@ public class AuditorControlAssessment {
     public final static class Builder {
 
         private String controlId;
+
+        private String segmentId;
 
         private AuditControlAssessmentState assessmentState;
 
@@ -189,6 +220,16 @@ public class AuditorControlAssessment {
         public Builder controlId(String controlId) {
             Utils.checkNotNull(controlId, "controlId");
             this.controlId = controlId;
+            return this;
+        }
+
+
+        /**
+         * The program segment this assessment was written to.
+         */
+        public Builder segmentId(String segmentId) {
+            Utils.checkNotNull(segmentId, "segmentId");
+            this.segmentId = segmentId;
             return this;
         }
 
@@ -227,7 +268,8 @@ public class AuditorControlAssessment {
         public AuditorControlAssessment build() {
 
             return new AuditorControlAssessment(
-                controlId, assessmentState, justification);
+                controlId, segmentId, assessmentState,
+                justification);
         }
 
     }

@@ -29,7 +29,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 java:
-  version: 0.6.5
+  version: 0.7.0
   additionalDependencies: []
   additionalPlugins: []
   artifactID: vanta-auditor-api
@@ -47,7 +47,7 @@ java:
   explicitDocImports: false
   flattenGlobalSecurity: true
   forwardCompatibleEnumsByDefault: false
-  forwardCompatibleUnionsByDefault: "false"
+  forwardCompatibleUnionsByDefault: true
   generateOptionalUnionAccessors: false
   generateSpringBootStarter: true
   generateUnionDocs: false

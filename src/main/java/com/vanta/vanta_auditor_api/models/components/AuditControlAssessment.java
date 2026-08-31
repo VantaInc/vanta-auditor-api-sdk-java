@@ -24,6 +24,12 @@ import java.util.Optional;
  */
 public class AuditControlAssessment {
     /**
+     * The audit program segment this assessment belongs to.
+     */
+    @JsonProperty("segmentId")
+    private String segmentId;
+
+    /**
      * An auditor's assessment of a control within an audit. This is the full flat
      * union of every framework's assessment states (the superset); a given audit's
      * framework only uses its own subset. `NOT_ASSESSED` is shared by all
@@ -50,17 +56,29 @@ public class AuditControlAssessment {
 
     @JsonCreator
     public AuditControlAssessment(
+            @JsonProperty("segmentId") String segmentId,
             @JsonProperty("assessmentState") AuditControlAssessmentState assessmentState,
             @JsonProperty("justification") Optional<String> justification) {
+        Utils.checkNotNull(segmentId, "segmentId");
         Utils.checkNotNull(assessmentState, "assessmentState");
         Utils.checkNotNull(justification, "justification");
+        this.segmentId = segmentId;
         this.assessmentState = assessmentState;
         this.justification = justification;
     }
     
     public AuditControlAssessment(
+            String segmentId,
             AuditControlAssessmentState assessmentState) {
-        this(assessmentState, Optional.empty());
+        this(segmentId, assessmentState, Optional.empty());
+    }
+
+    /**
+     * The audit program segment this assessment belongs to.
+     */
+    @JsonIgnore
+    public String segmentId() {
+        return segmentId;
     }
 
     /**
@@ -95,6 +113,15 @@ public class AuditControlAssessment {
         return new Builder();
     }
 
+
+    /**
+     * The audit program segment this assessment belongs to.
+     */
+    public AuditControlAssessment withSegmentId(String segmentId) {
+        Utils.checkNotNull(segmentId, "segmentId");
+        this.segmentId = segmentId;
+        return this;
+    }
 
     /**
      * An auditor's assessment of a control within an audit. This is the full flat
@@ -146,6 +173,7 @@ public class AuditControlAssessment {
         }
         AuditControlAssessment other = (AuditControlAssessment) o;
         return 
+            Utils.enhancedDeepEquals(this.segmentId, other.segmentId) &&
             Utils.enhancedDeepEquals(this.assessmentState, other.assessmentState) &&
             Utils.enhancedDeepEquals(this.justification, other.justification);
     }
@@ -153,12 +181,13 @@ public class AuditControlAssessment {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            assessmentState, justification);
+            segmentId, assessmentState, justification);
     }
     
     @Override
     public String toString() {
         return Utils.toString(AuditControlAssessment.class,
+                "segmentId", segmentId,
                 "assessmentState", assessmentState,
                 "justification", justification);
     }
@@ -166,12 +195,24 @@ public class AuditControlAssessment {
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        private String segmentId;
+
         private AuditControlAssessmentState assessmentState;
 
         private Optional<String> justification = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
+        }
+
+
+        /**
+         * The audit program segment this assessment belongs to.
+         */
+        public Builder segmentId(String segmentId) {
+            Utils.checkNotNull(segmentId, "segmentId");
+            this.segmentId = segmentId;
+            return this;
         }
 
 
@@ -218,7 +259,7 @@ public class AuditControlAssessment {
         public AuditControlAssessment build() {
 
             return new AuditControlAssessment(
-                assessmentState, justification);
+                segmentId, assessmentState, justification);
         }
 
     }

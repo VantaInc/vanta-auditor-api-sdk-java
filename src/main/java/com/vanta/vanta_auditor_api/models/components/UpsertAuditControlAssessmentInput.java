@@ -5,18 +5,30 @@ package com.vanta.vanta_auditor_api.models.components;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
+import java.util.Optional;
 
 /**
  * UpsertAuditControlAssessmentInput
  * 
  * <p>Input for upserting a control's auditor assessment within an audit. Overwrites
- * the single assessment for this control in the audit's program segment.
+ * the assessment for this control in the chosen program segment.
  */
 public class UpsertAuditControlAssessmentInput {
+    /**
+     * The program segment to assess. Required when the audit has more than one
+     * program segment. Optional on a single-program audit (the only program is
+     * used). Must be a program segment on the audit; system segments are rejected.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("segmentId")
+    private Optional<String> segmentId;
+
     /**
      * An auditor's assessment of a control within an audit. This is the full flat
      * union of every framework's assessment states (the superset); a given audit's
@@ -50,15 +62,36 @@ public class UpsertAuditControlAssessmentInput {
 
     @JsonCreator
     public UpsertAuditControlAssessmentInput(
+            @JsonProperty("segmentId") Optional<String> segmentId,
             @JsonProperty("assessmentState") AuditControlAssessmentState assessmentState,
             @JsonProperty("justification") String justification,
             @JsonProperty("auditorEmail") String auditorEmail) {
+        Utils.checkNotNull(segmentId, "segmentId");
         Utils.checkNotNull(assessmentState, "assessmentState");
         Utils.checkNotNull(justification, "justification");
         Utils.checkNotNull(auditorEmail, "auditorEmail");
+        this.segmentId = segmentId;
         this.assessmentState = assessmentState;
         this.justification = justification;
         this.auditorEmail = auditorEmail;
+    }
+    
+    public UpsertAuditControlAssessmentInput(
+            AuditControlAssessmentState assessmentState,
+            String justification,
+            String auditorEmail) {
+        this(Optional.empty(), assessmentState, justification,
+            auditorEmail);
+    }
+
+    /**
+     * The program segment to assess. Required when the audit has more than one
+     * program segment. Optional on a single-program audit (the only program is
+     * used). Must be a program segment on the audit; system segments are rejected.
+     */
+    @JsonIgnore
+    public Optional<String> segmentId() {
+        return segmentId;
     }
 
     /**
@@ -102,6 +135,29 @@ public class UpsertAuditControlAssessmentInput {
         return new Builder();
     }
 
+
+    /**
+     * The program segment to assess. Required when the audit has more than one
+     * program segment. Optional on a single-program audit (the only program is
+     * used). Must be a program segment on the audit; system segments are rejected.
+     */
+    public UpsertAuditControlAssessmentInput withSegmentId(String segmentId) {
+        Utils.checkNotNull(segmentId, "segmentId");
+        this.segmentId = Optional.ofNullable(segmentId);
+        return this;
+    }
+
+
+    /**
+     * The program segment to assess. Required when the audit has more than one
+     * program segment. Optional on a single-program audit (the only program is
+     * used). Must be a program segment on the audit; system segments are rejected.
+     */
+    public UpsertAuditControlAssessmentInput withSegmentId(Optional<String> segmentId) {
+        Utils.checkNotNull(segmentId, "segmentId");
+        this.segmentId = segmentId;
+        return this;
+    }
 
     /**
      * An auditor's assessment of a control within an audit. This is the full flat
@@ -153,6 +209,7 @@ public class UpsertAuditControlAssessmentInput {
         }
         UpsertAuditControlAssessmentInput other = (UpsertAuditControlAssessmentInput) o;
         return 
+            Utils.enhancedDeepEquals(this.segmentId, other.segmentId) &&
             Utils.enhancedDeepEquals(this.assessmentState, other.assessmentState) &&
             Utils.enhancedDeepEquals(this.justification, other.justification) &&
             Utils.enhancedDeepEquals(this.auditorEmail, other.auditorEmail);
@@ -161,12 +218,14 @@ public class UpsertAuditControlAssessmentInput {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            assessmentState, justification, auditorEmail);
+            segmentId, assessmentState, justification,
+            auditorEmail);
     }
     
     @Override
     public String toString() {
         return Utils.toString(UpsertAuditControlAssessmentInput.class,
+                "segmentId", segmentId,
                 "assessmentState", assessmentState,
                 "justification", justification,
                 "auditorEmail", auditorEmail);
@@ -174,6 +233,8 @@ public class UpsertAuditControlAssessmentInput {
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
+
+        private Optional<String> segmentId = Optional.empty();
 
         private AuditControlAssessmentState assessmentState;
 
@@ -183,6 +244,29 @@ public class UpsertAuditControlAssessmentInput {
 
         private Builder() {
           // force use of static builder() method
+        }
+
+
+        /**
+         * The program segment to assess. Required when the audit has more than one
+         * program segment. Optional on a single-program audit (the only program is
+         * used). Must be a program segment on the audit; system segments are rejected.
+         */
+        public Builder segmentId(String segmentId) {
+            Utils.checkNotNull(segmentId, "segmentId");
+            this.segmentId = Optional.ofNullable(segmentId);
+            return this;
+        }
+
+        /**
+         * The program segment to assess. Required when the audit has more than one
+         * program segment. Optional on a single-program audit (the only program is
+         * used). Must be a program segment on the audit; system segments are rejected.
+         */
+        public Builder segmentId(Optional<String> segmentId) {
+            Utils.checkNotNull(segmentId, "segmentId");
+            this.segmentId = segmentId;
+            return this;
         }
 
 
@@ -231,7 +315,8 @@ public class UpsertAuditControlAssessmentInput {
         public UpsertAuditControlAssessmentInput build() {
 
             return new UpsertAuditControlAssessmentInput(
-                assessmentState, justification, auditorEmail);
+                segmentId, assessmentState, justification,
+                auditorEmail);
         }
 
     }

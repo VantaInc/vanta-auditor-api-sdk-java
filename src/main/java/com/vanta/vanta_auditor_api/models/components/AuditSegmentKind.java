@@ -8,16 +8,14 @@ import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
 
-public enum IssueStatusTypeForSnapshot {
-    IN_PROGRESS("IN_PROGRESS"),
-    NOT_STARTED("NOT_STARTED"),
-    PENDING_REVIEW("PENDING_REVIEW"),
-    CLOSED("CLOSED");
+public enum AuditSegmentKind {
+    PROGRAM("PROGRAM"),
+    SYSTEM("SYSTEM");
 
     @JsonValue
     private final String value;
 
-    IssueStatusTypeForSnapshot(String value) {
+    AuditSegmentKind(String value) {
         this.value = value;
     }
     
@@ -25,8 +23,8 @@ public enum IssueStatusTypeForSnapshot {
         return value;
     }
     
-    public static Optional<IssueStatusTypeForSnapshot> fromValue(String value) {
-        for (IssueStatusTypeForSnapshot o: IssueStatusTypeForSnapshot.values()) {
+    public static Optional<AuditSegmentKind> fromValue(String value) {
+        for (AuditSegmentKind o: AuditSegmentKind.values()) {
             if (Objects.deepEquals(o.value, value)) {
                 return Optional.of(o);
             }

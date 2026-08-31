@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Boolean;
+import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -64,9 +65,13 @@ public class Audit {
     private Optional<OffsetDateTime> earlyAccessStartsAt;
 
     /**
-     * The name of the framework for the audit
+     * Legacy singular framework display name from the audit type. Incomplete for
+     * a multi-framework audit — use `segments` for framework identity.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonProperty("framework")
+    @Deprecated
     private String framework;
 
     /**
@@ -128,6 +133,16 @@ public class Audit {
     @JsonProperty("auditorRequestListMetadata")
     private Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata;
 
+    /**
+     * The audit's scope as a list of segments. Always present. A live
+     * single-framework audit has one entry; a multi-framework audit has one
+     * entry per in-scope framework (and business unit or system, when applicable).
+     * Soft-deleted audits return an empty list. Prefer this over the deprecated
+     * top-level `framework` field.
+     */
+    @JsonProperty("segments")
+    private List<AuditSegment> segments;
+
     @JsonCreator
     public Audit(
             @JsonProperty("id") String id,
@@ -146,7 +161,8 @@ public class Audit {
             @JsonProperty("modificationDate") Optional<OffsetDateTime> modificationDate,
             @JsonProperty("completionDate") Optional<OffsetDateTime> completionDate,
             @JsonProperty("auditFocus") AuditFocus auditFocus,
-            @JsonProperty("auditorRequestListMetadata") Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata) {
+            @JsonProperty("auditorRequestListMetadata") Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata,
+            @JsonProperty("segments") List<AuditSegment> segments) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(customerOrganizationName, "customerOrganizationName");
         Utils.checkNotNull(customerDisplayName, "customerDisplayName");
@@ -164,6 +180,7 @@ public class Audit {
         Utils.checkNotNull(completionDate, "completionDate");
         Utils.checkNotNull(auditFocus, "auditFocus");
         Utils.checkNotNull(auditorRequestListMetadata, "auditorRequestListMetadata");
+        Utils.checkNotNull(segments, "segments");
         this.id = id;
         this.customerOrganizationName = customerOrganizationName;
         this.customerDisplayName = customerDisplayName;
@@ -181,6 +198,7 @@ public class Audit {
         this.completionDate = completionDate;
         this.auditFocus = auditFocus;
         this.auditorRequestListMetadata = auditorRequestListMetadata;
+        this.segments = segments;
     }
     
     public Audit(
@@ -194,13 +212,14 @@ public class Audit {
             List<String> allowAuditorEmails,
             boolean allowAllAuditors,
             OffsetDateTime creationDate,
-            AuditFocus auditFocus) {
+            AuditFocus auditFocus,
+            List<AuditSegment> segments) {
         this(id, customerOrganizationName, Optional.empty(),
             customerOrganizationId, auditStartDate, auditEndDate,
             Optional.empty(), framework, displayName,
             allowAuditorEmails, allowAllAuditors, Optional.empty(),
             creationDate, Optional.empty(), Optional.empty(),
-            auditFocus, Optional.empty());
+            auditFocus, Optional.empty(), segments);
     }
 
     /**
@@ -260,8 +279,12 @@ public class Audit {
     }
 
     /**
-     * The name of the framework for the audit
+     * Legacy singular framework display name from the audit type. Incomplete for
+     * a multi-framework audit — use `segments` for framework identity.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     @JsonIgnore
     public String framework() {
         return framework;
@@ -338,6 +361,18 @@ public class Audit {
     @JsonIgnore
     public Optional<AuditorRequestListMetadata> auditorRequestListMetadata() {
         return (Optional<AuditorRequestListMetadata>) auditorRequestListMetadata;
+    }
+
+    /**
+     * The audit's scope as a list of segments. Always present. A live
+     * single-framework audit has one entry; a multi-framework audit has one
+     * entry per in-scope framework (and business unit or system, when applicable).
+     * Soft-deleted audits return an empty list. Prefer this over the deprecated
+     * top-level `framework` field.
+     */
+    @JsonIgnore
+    public List<AuditSegment> segments() {
+        return segments;
     }
 
     public static Builder builder() {
@@ -429,8 +464,12 @@ public class Audit {
     }
 
     /**
-     * The name of the framework for the audit
+     * Legacy singular framework display name from the audit type. Incomplete for
+     * a multi-framework audit — use `segments` for framework identity.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public Audit withFramework(String framework) {
         Utils.checkNotNull(framework, "framework");
         this.framework = framework;
@@ -560,6 +599,19 @@ public class Audit {
         return this;
     }
 
+    /**
+     * The audit's scope as a list of segments. Always present. A live
+     * single-framework audit has one entry; a multi-framework audit has one
+     * entry per in-scope framework (and business unit or system, when applicable).
+     * Soft-deleted audits return an empty list. Prefer this over the deprecated
+     * top-level `framework` field.
+     */
+    public Audit withSegments(List<AuditSegment> segments) {
+        Utils.checkNotNull(segments, "segments");
+        this.segments = segments;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -586,7 +638,8 @@ public class Audit {
             Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
             Utils.enhancedDeepEquals(this.completionDate, other.completionDate) &&
             Utils.enhancedDeepEquals(this.auditFocus, other.auditFocus) &&
-            Utils.enhancedDeepEquals(this.auditorRequestListMetadata, other.auditorRequestListMetadata);
+            Utils.enhancedDeepEquals(this.auditorRequestListMetadata, other.auditorRequestListMetadata) &&
+            Utils.enhancedDeepEquals(this.segments, other.segments);
     }
     
     @Override
@@ -597,7 +650,7 @@ public class Audit {
             earlyAccessStartsAt, framework, displayName,
             allowAuditorEmails, allowAllAuditors, deletionDate,
             creationDate, modificationDate, completionDate,
-            auditFocus, auditorRequestListMetadata);
+            auditFocus, auditorRequestListMetadata, segments);
     }
     
     @Override
@@ -619,7 +672,8 @@ public class Audit {
                 "modificationDate", modificationDate,
                 "completionDate", completionDate,
                 "auditFocus", auditFocus,
-                "auditorRequestListMetadata", auditorRequestListMetadata);
+                "auditorRequestListMetadata", auditorRequestListMetadata,
+                "segments", segments);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -639,6 +693,7 @@ public class Audit {
 
         private Optional<OffsetDateTime> earlyAccessStartsAt = Optional.empty();
 
+        @Deprecated
         private String framework;
 
         private String displayName;
@@ -658,6 +713,8 @@ public class Audit {
         private AuditFocus auditFocus;
 
         private Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata = Optional.empty();
+
+        private List<AuditSegment> segments;
 
         private Builder() {
           // force use of static builder() method
@@ -753,8 +810,12 @@ public class Audit {
 
 
         /**
-         * The name of the framework for the audit
+         * Legacy singular framework display name from the audit type. Incomplete for
+         * a multi-framework audit — use `segments` for framework identity.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder framework(String framework) {
             Utils.checkNotNull(framework, "framework");
             this.framework = framework;
@@ -889,6 +950,20 @@ public class Audit {
             return this;
         }
 
+
+        /**
+         * The audit's scope as a list of segments. Always present. A live
+         * single-framework audit has one entry; a multi-framework audit has one
+         * entry per in-scope framework (and business unit or system, when applicable).
+         * Soft-deleted audits return an empty list. Prefer this over the deprecated
+         * top-level `framework` field.
+         */
+        public Builder segments(List<AuditSegment> segments) {
+            Utils.checkNotNull(segments, "segments");
+            this.segments = segments;
+            return this;
+        }
+
         public Audit build() {
 
             return new Audit(
@@ -897,7 +972,7 @@ public class Audit {
                 earlyAccessStartsAt, framework, displayName,
                 allowAuditorEmails, allowAllAuditors, deletionDate,
                 creationDate, modificationDate, completionDate,
-                auditFocus, auditorRequestListMetadata);
+                auditFocus, auditorRequestListMetadata, segments);
         }
 
     }

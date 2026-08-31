@@ -38,6 +38,7 @@ import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetFrameworkCodesRequest;
+import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSnapshotEvidenceDetailRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetOrganizationInformationRequest;
@@ -110,6 +111,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.GetCommentForInformat
 import com.vanta.vanta_auditor_api.models.operations.async.GetCommentForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetFrameworkCodesRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.GetFrameworkCodesResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestEvidenceRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestEvidenceResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder;
@@ -204,6 +207,7 @@ import com.vanta.vanta_auditor_api.operations.GetAuditEvidenceComment;
 import com.vanta.vanta_auditor_api.operations.GetCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.GetFrameworkCodes;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequest;
+import com.vanta.vanta_auditor_api.operations.GetInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequestTestSnapshotEvidenceDetail;
 import com.vanta.vanta_auditor_api.operations.GetOrganizationInformation;
 import com.vanta.vanta_auditor_api.operations.GetOrganizationNotifications;
@@ -281,6 +285,12 @@ public class AsyncAudits {
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
      * 
+     * <p>Each audit includes `segments`, the audit's scope. A live single-framework
+     * audit has one entry; a live multi-framework audit has one entry per
+     * in-scope framework (and business unit or system, when applicable).
+     * Soft-deleted audits return an empty list. The top-level `framework` field
+     * is deprecated; use `segments` for framework identity.
+     * 
      * <p>Rate limit: 250 requests / minute.
      * 
      * @return The async call builder
@@ -297,6 +307,12 @@ public class AsyncAudits {
      * <p>To identify IRL (Information Request List) audits, check for the presence of the
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
+     * 
+     * <p>Each audit includes `segments`, the audit's scope. A live single-framework
+     * audit has one entry; a live multi-framework audit has one entry per
+     * in-scope framework (and business unit or system, when applicable).
+     * Soft-deleted audits return an empty list. The top-level `framework` field
+     * is deprecated; use `segments` for framework identity.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -316,6 +332,12 @@ public class AsyncAudits {
      * <p>To identify IRL (Information Request List) audits, check for the presence of the
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
+     * 
+     * <p>Each audit includes `segments`, the audit's scope. A live single-framework
+     * audit has one entry; a live multi-framework audit has one entry per
+     * in-scope framework (and business unit or system, when applicable).
+     * Soft-deleted audits return an empty list. The top-level `framework` field
+     * is deprecated; use `segments` for framework identity.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -365,6 +387,9 @@ public class AsyncAudits {
      * <p>evidence added manually.
      * - Evidence capture dates and due dates can be modified after duplication.
      * 
+     * <p>Audits with generated information requests can be duplicated only after their information
+     * requests have been created successfully.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -395,6 +420,9 @@ public class AsyncAudits {
      * <p>evidence added manually.
      * - Evidence capture dates and due dates can be modified after duplication.
      * 
+     * <p>Audits with generated information requests can be duplicated only after their information
+     * requests have been created successfully.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
@@ -417,6 +445,12 @@ public class AsyncAudits {
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
      * 
+     * <p>The response includes `segments`, the audit's scope. A live single-framework
+     * audit has one entry; a live multi-framework audit has one entry per
+     * in-scope framework (and business unit or system, when applicable).
+     * Soft-deleted audits return an empty list. The top-level `framework` field
+     * is deprecated; use `segments` for framework identity.
+     * 
      * <p>Rate limit: 250 requests / minute.
      * 
      * @return The async call builder
@@ -433,6 +467,12 @@ public class AsyncAudits {
      * <p>To identify IRL (Information Request List) audits, check for the presence of the
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
+     * 
+     * <p>The response includes `segments`, the audit's scope. A live single-framework
+     * audit has one entry; a live multi-framework audit has one entry per
+     * in-scope framework (and business unit or system, when applicable).
+     * Soft-deleted audits return an empty list. The top-level `framework` field
+     * is deprecated; use `segments` for framework identity.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -474,6 +514,9 @@ public class AsyncAudits {
      * <p>Results are sorted by closed date (newest first). This sort order is
      * fixed and cannot be customized via query parameters.
      * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -503,6 +546,9 @@ public class AsyncAudits {
      * 
      * <p>Results are sorted by closed date (newest first). This sort order is
      * fixed and cannot be customized via query parameters.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -642,6 +688,9 @@ public class AsyncAudits {
      * 
      * <p>Create a custom control for an audit.
      * 
+     * <p>This endpoint supports classic audits only. Audits that use information request
+     * lists (IRL) are not supported and return a 422 error.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -654,6 +703,9 @@ public class AsyncAudits {
      * Create a custom control for an audit
      * 
      * <p>Create a custom control for an audit.
+     * 
+     * <p>This endpoint supports classic audits only. Audits that use information request
+     * lists (IRL) are not supported and return a 422 error.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -688,8 +740,9 @@ public class AsyncAudits {
      * which must belong to the audit firm making the request.
      * 
      * <p>Returns 404 when the control is not part of the audit or the auditor email
-     * does not resolve to a firm user. Applies to both Full and Controlled Audit
-     * View audits.
+     * does not resolve to a firm user. Returns 422 when the audit does not have
+     * exactly one program segment (multi-framework audits are not supported on
+     * this endpoint). Applies to both Full and Controlled Audit View audits.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -712,15 +765,16 @@ public class AsyncAudits {
      * which must belong to the audit firm making the request.
      * 
      * <p>Returns 404 when the control is not part of the audit or the auditor email
-     * does not resolve to a firm user. Applies to both Full and Controlled Audit
-     * View audits.
+     * does not resolve to a firm user. Returns 422 when the audit does not have
+     * exactly one program segment (multi-framework audits are not supported on
+     * this endpoint). Applies to both Full and Controlled Audit View audits.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param controlId 
      * @param upsertAuditControlAssessmentInput Input for upserting a control's auditor assessment within an audit. Overwrites
-     *         the single assessment for this control in the audit's program segment.
+     *         the assessment for this control in the chosen program segment.
      * @return {@code CompletableFuture<UpsertAssessmentForControlResponse>} - The async response
      */
     public CompletableFuture<UpsertAssessmentForControlResponse> upsertAssessmentForControl(
@@ -1178,7 +1232,7 @@ public class AsyncAudits {
      * 
      * <p>Update audit evidence.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @return The async call builder
      */
@@ -1191,7 +1245,7 @@ public class AsyncAudits {
      * 
      * <p>Update audit evidence.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param auditEvidenceId 
@@ -1276,7 +1330,7 @@ public class AsyncAudits {
      * 
      * <p>Create a comment in Vanta for a piece of evidence.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 25 requests / minute.
      * 
      * @return The async call builder
      */
@@ -1289,7 +1343,7 @@ public class AsyncAudits {
      * 
      * <p>Create a comment in Vanta for a piece of evidence.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 25 requests / minute.
      * 
      * @param auditId 
      * @param auditEvidenceId 
@@ -1385,6 +1439,9 @@ public class AsyncAudits {
      * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
      * "Flagged", or "NA".
      * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
      * <p>Rate limit: 600 requests / minute.
      * 
      * @return The async call builder
@@ -1402,6 +1459,9 @@ public class AsyncAudits {
      * 
      * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
      * "Flagged", or "NA".
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
      * <p>Rate limit: 600 requests / minute.
      * 
@@ -1424,6 +1484,9 @@ public class AsyncAudits {
      * 
      * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
      * "Flagged", or "NA".
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
      * <p>Rate limit: 600 requests / minute.
      * 
@@ -1462,7 +1525,7 @@ public class AsyncAudits {
      * - Validate framework codes against the audit's framework
      * - Get context about what framework codes are available for the audit type
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @return The async call builder
      */
@@ -1481,7 +1544,7 @@ public class AsyncAudits {
      * - Validate framework codes against the audit's framework
      * - Get context about what framework codes are available for the audit type
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @return {@code CompletableFuture<GetFrameworkCodesResponse>} - The async response
@@ -1803,7 +1866,7 @@ public class AsyncAudits {
      * - The request will not appear in normal list responses (without `changedSinceDate`)
      * - The request's `deletionDate` field will be populated
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @return The async call builder
      */
@@ -1826,7 +1889,7 @@ public class AsyncAudits {
      * - The request will not appear in normal list responses (without `changedSinceDate`)
      * - The request's `deletionDate` field will be populated
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -2171,7 +2234,7 @@ public class AsyncAudits {
      * of the comment can update it. The author is identified by their email address,
      * which must match the email of the user who created the comment.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 25 requests / minute.
      * 
      * @return The async call builder
      */
@@ -2186,7 +2249,7 @@ public class AsyncAudits {
      * of the comment can update it. The author is identified by their email address,
      * which must match the email of the user who created the comment.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 25 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -2220,7 +2283,7 @@ public class AsyncAudits {
      * of the comment can delete it. The author is identified by their email address,
      * which must match the email of the user who created the comment.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 25 requests / minute.
      * 
      * @return The async call builder
      */
@@ -2235,7 +2298,7 @@ public class AsyncAudits {
      * of the comment can delete it. The author is identified by their email address,
      * which must match the email of the user who created the comment.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 25 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -2330,6 +2393,74 @@ public class AsyncAudits {
     public CompletableFuture<ListInformationRequestEvidenceResponse> listInformationRequestEvidence(ListInformationRequestEvidenceRequest request) {
         AsyncRequestOperation<ListInformationRequestEvidenceRequest, ListInformationRequestEvidenceResponse> operation
               = new ListInformationRequestEvidence.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get information request evidence by ID
+     * 
+     * <p>Retrieves a single evidence item attached to an information request by its ID.
+     * 
+     * <p>This endpoint always includes soft-deleted evidence (where `deletionDate !== null`),
+     * so an evidence ID surfaced by a `changedSinceDate` delta sync stays fetchable after
+     * the evidence is deleted. Clients should check the `deletionDate` field to identify
+     * and handle deleted records appropriately in their systems.
+     * 
+     * <p>Evidence is only resolvable while its information request exists. Once the
+     * request itself is deleted, this endpoint reports the request as not found —
+     * matching `GET /audits/{auditId}/information-requests/{requestId}/evidence`.
+     * Clients reconciling a deleted request should treat its evidence as gone with it.
+     * 
+     * <p>Evidence that the customer has not shared with the auditor is reported as not
+     * found, rather than distinguishing it from an ID that does not exist.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetInformationRequestEvidenceRequestBuilder getInformationRequestEvidence() {
+        return new GetInformationRequestEvidenceRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get information request evidence by ID
+     * 
+     * <p>Retrieves a single evidence item attached to an information request by its ID.
+     * 
+     * <p>This endpoint always includes soft-deleted evidence (where `deletionDate !== null`),
+     * so an evidence ID surfaced by a `changedSinceDate` delta sync stays fetchable after
+     * the evidence is deleted. Clients should check the `deletionDate` field to identify
+     * and handle deleted records appropriately in their systems.
+     * 
+     * <p>Evidence is only resolvable while its information request exists. Once the
+     * request itself is deleted, this endpoint reports the request as not found —
+     * matching `GET /audits/{auditId}/information-requests/{requestId}/evidence`.
+     * Clients reconciling a deleted request should treat its evidence as gone with it.
+     * 
+     * <p>Evidence that the customer has not shared with the auditor is reported as not
+     * found, rather than distinguishing it from an ID that does not exist.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param evidenceId 
+     * @return {@code CompletableFuture<GetInformationRequestEvidenceResponse>} - The async response
+     */
+    public CompletableFuture<GetInformationRequestEvidenceResponse> getInformationRequestEvidence(
+            String auditId, String requestId,
+            String evidenceId) {
+        GetInformationRequestEvidenceRequest request =
+            GetInformationRequestEvidenceRequest
+                .builder()
+                .auditId(auditId)
+                .requestId(requestId)
+                .evidenceId(evidenceId)
+                .build();
+        AsyncRequestOperation<GetInformationRequestEvidenceRequest, GetInformationRequestEvidenceResponse> operation
+              = new GetInformationRequestEvidence.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2817,6 +2948,9 @@ public class AsyncAudits {
      * controlled audit view. It remains available for existing classic audits but will be removed once
      * classic audits are fully phased out, so do not build new integrations on it.
      * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -2837,6 +2971,9 @@ public class AsyncAudits {
      * <p>End of life — this endpoint works for classic audits only; it does not support
      * controlled audit view. It remains available for existing classic audits but will be removed once
      * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2861,6 +2998,9 @@ public class AsyncAudits {
      * <p>End of life — this endpoint works for classic audits only; it does not support
      * controlled audit view. It remains available for existing classic audits but will be removed once
      * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3053,6 +3193,9 @@ public class AsyncAudits {
      * <p>Results are returned in connection order. Sort order is not guaranteed
      * and cannot be customized via query parameters.
      * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -3080,6 +3223,9 @@ public class AsyncAudits {
      * 
      * <p>Results are returned in connection order. Sort order is not guaranteed
      * and cannot be customized via query parameters.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3109,6 +3255,9 @@ public class AsyncAudits {
      * 
      * <p>Results are returned in connection order. Sort order is not guaranteed
      * and cannot be customized via query parameters.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3179,6 +3328,9 @@ public class AsyncAudits {
      * 
      * <p>Sort order cannot be customized via query parameters.
      * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -3231,6 +3383,9 @@ public class AsyncAudits {
      * - Third-party application services (e.g. GitHub, Jira): sorted by account name, ascending
      * 
      * <p>Sort order cannot be customized via query parameters.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3559,7 +3714,7 @@ public class AsyncAudits {
      * making it visible in their portal. This action allows the customer to see all information
      * requests that have been created for their audit. Only IRL audits are supported.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @return The async call builder
      */
@@ -3574,7 +3729,7 @@ public class AsyncAudits {
      * making it visible in their portal. This action allows the customer to see all information
      * requests that have been created for their audit. Only IRL audits are supported.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @return {@code CompletableFuture<ShareInformationRequestListResponse>} - The async response
@@ -3718,6 +3873,9 @@ public class AsyncAudits {
      * controlled audit view. It remains available for existing classic audits but will be removed once
      * classic audits are fully phased out, so do not build new integrations on it.
      * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -3736,6 +3894,9 @@ public class AsyncAudits {
      * <p>End of life — this endpoint works for classic audits only; it does not support
      * controlled audit view. It remains available for existing classic audits but will be removed once
      * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
