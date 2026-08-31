@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -90,8 +91,12 @@ public class AuditorControl {
 
     /**
      * The report standard framework fulfilled by the control.
+     * Incomplete once a control is in scope for more than one framework.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonProperty("framework")
+    @Deprecated
     private String framework;
 
     /**
@@ -99,6 +104,14 @@ public class AuditorControl {
      */
     @JsonProperty("sections")
     private List<Section> sections;
+
+    /**
+     * Audit segments this control is in scope for. Empty when the control is
+     * attached only by a direct link and has no catalog mapping on a
+     * multi-program audit.
+     */
+    @JsonProperty("inScopeSegmentIds")
+    private List<String> inScopeSegmentIds;
 
     /**
      * The auditor's assessments of this control, one per audit program segment the
@@ -126,6 +139,7 @@ public class AuditorControl {
             @JsonProperty("modificationDate") Optional<OffsetDateTime> modificationDate,
             @JsonProperty("framework") String framework,
             @JsonProperty("sections") List<Section> sections,
+            @JsonProperty("inScopeSegmentIds") List<String> inScopeSegmentIds,
             @JsonProperty("assessments") List<AuditControlAssessment> assessments) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(externalId, "externalId");
@@ -140,6 +154,7 @@ public class AuditorControl {
         Utils.checkNotNull(modificationDate, "modificationDate");
         Utils.checkNotNull(framework, "framework");
         Utils.checkNotNull(sections, "sections");
+        Utils.checkNotNull(inScopeSegmentIds, "inScopeSegmentIds");
         Utils.checkNotNull(assessments, "assessments");
         this.id = id;
         this.externalId = externalId;
@@ -154,6 +169,7 @@ public class AuditorControl {
         this.modificationDate = modificationDate;
         this.framework = framework;
         this.sections = sections;
+        this.inScopeSegmentIds = inScopeSegmentIds;
         this.assessments = assessments;
     }
     
@@ -166,12 +182,13 @@ public class AuditorControl {
             List<CustomField> customFields,
             String framework,
             List<Section> sections,
+            List<String> inScopeSegmentIds,
             List<AuditControlAssessment> assessments) {
         this(id, Optional.empty(), name,
             description, source, domains,
             Optional.empty(), JsonNullable.undefined(), customFields,
             Optional.empty(), Optional.empty(), framework,
-            sections, assessments);
+            sections, inScopeSegmentIds, assessments);
     }
 
     /**
@@ -262,7 +279,11 @@ public class AuditorControl {
 
     /**
      * The report standard framework fulfilled by the control.
+     * Incomplete once a control is in scope for more than one framework.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     @JsonIgnore
     public String framework() {
         return framework;
@@ -274,6 +295,16 @@ public class AuditorControl {
     @JsonIgnore
     public List<Section> sections() {
         return sections;
+    }
+
+    /**
+     * Audit segments this control is in scope for. Empty when the control is
+     * attached only by a direct link and has no catalog mapping on a
+     * multi-program audit.
+     */
+    @JsonIgnore
+    public List<String> inScopeSegmentIds() {
+        return inScopeSegmentIds;
     }
 
     /**
@@ -441,7 +472,11 @@ public class AuditorControl {
 
     /**
      * The report standard framework fulfilled by the control.
+     * Incomplete once a control is in scope for more than one framework.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public AuditorControl withFramework(String framework) {
         Utils.checkNotNull(framework, "framework");
         this.framework = framework;
@@ -454,6 +489,17 @@ public class AuditorControl {
     public AuditorControl withSections(List<Section> sections) {
         Utils.checkNotNull(sections, "sections");
         this.sections = sections;
+        return this;
+    }
+
+    /**
+     * Audit segments this control is in scope for. Empty when the control is
+     * attached only by a direct link and has no catalog mapping on a
+     * multi-program audit.
+     */
+    public AuditorControl withInScopeSegmentIds(List<String> inScopeSegmentIds) {
+        Utils.checkNotNull(inScopeSegmentIds, "inScopeSegmentIds");
+        this.inScopeSegmentIds = inScopeSegmentIds;
         return this;
     }
 
@@ -494,6 +540,7 @@ public class AuditorControl {
             Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
             Utils.enhancedDeepEquals(this.framework, other.framework) &&
             Utils.enhancedDeepEquals(this.sections, other.sections) &&
+            Utils.enhancedDeepEquals(this.inScopeSegmentIds, other.inScopeSegmentIds) &&
             Utils.enhancedDeepEquals(this.assessments, other.assessments);
     }
     
@@ -504,7 +551,7 @@ public class AuditorControl {
             description, source, domains,
             owner, role, customFields,
             creationDate, modificationDate, framework,
-            sections, assessments);
+            sections, inScopeSegmentIds, assessments);
     }
     
     @Override
@@ -523,6 +570,7 @@ public class AuditorControl {
                 "modificationDate", modificationDate,
                 "framework", framework,
                 "sections", sections,
+                "inScopeSegmentIds", inScopeSegmentIds,
                 "assessments", assessments);
     }
 
@@ -551,9 +599,12 @@ public class AuditorControl {
 
         private Optional<OffsetDateTime> modificationDate = Optional.empty();
 
+        @Deprecated
         private String framework;
 
         private List<Section> sections;
+
+        private List<String> inScopeSegmentIds;
 
         private List<AuditControlAssessment> assessments;
 
@@ -716,7 +767,11 @@ public class AuditorControl {
 
         /**
          * The report standard framework fulfilled by the control.
+         * Incomplete once a control is in scope for more than one framework.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder framework(String framework) {
             Utils.checkNotNull(framework, "framework");
             this.framework = framework;
@@ -730,6 +785,18 @@ public class AuditorControl {
         public Builder sections(List<Section> sections) {
             Utils.checkNotNull(sections, "sections");
             this.sections = sections;
+            return this;
+        }
+
+
+        /**
+         * Audit segments this control is in scope for. Empty when the control is
+         * attached only by a direct link and has no catalog mapping on a
+         * multi-program audit.
+         */
+        public Builder inScopeSegmentIds(List<String> inScopeSegmentIds) {
+            Utils.checkNotNull(inScopeSegmentIds, "inScopeSegmentIds");
+            this.inScopeSegmentIds = inScopeSegmentIds;
             return this;
         }
 
@@ -755,7 +822,7 @@ public class AuditorControl {
                 description, source, domains,
                 owner, role, customFields,
                 creationDate, modificationDate, framework,
-                sections, assessments);
+                sections, inScopeSegmentIds, assessments);
         }
 
     }

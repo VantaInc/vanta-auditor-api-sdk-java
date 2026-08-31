@@ -11,8 +11,9 @@ IssueStatusTypeForSnapshot value = IssueStatusTypeForSnapshot.IN_PROGRESS;
 
 ## Values
 
-| Name          | Value         |
-| ------------- | ------------- |
-| `IN_PROGRESS` | IN_PROGRESS   |
-| `NOT_STARTED` | NOT_STARTED   |
-| `CLOSED`      | CLOSED        |
+| Name             | Value            |
+| ---------------- | ---------------- |
+| `IN_PROGRESS`    | IN_PROGRESS      |
+| `NOT_STARTED`    | NOT_STARTED      |
+| `PENDING_REVIEW` | PENDING_REVIEW   |
+| `CLOSED`         | CLOSED           |

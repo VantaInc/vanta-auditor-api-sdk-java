@@ -78,6 +78,14 @@ public class IssueSnapshotItem {
     private Optional<? extends IssueStatusTypeForSnapshot> status;
 
     /**
+     * The issue's approval progress at the time the snapshot was captured,
+     * or null if no approval was in progress or issue approvals are not enabled.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("approvalProgress")
+    private JsonNullable<? extends ApprovalProgress> approvalProgress;
+
+    /**
      * The date and time when the issue was last modified.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -108,6 +116,7 @@ public class IssueSnapshotItem {
             @JsonProperty("snapshotId") String snapshotId,
             @JsonProperty("dueDate") JsonNullable<OffsetDateTime> dueDate,
             @JsonProperty("status") Optional<? extends IssueStatusTypeForSnapshot> status,
+            @JsonProperty("approvalProgress") JsonNullable<? extends ApprovalProgress> approvalProgress,
             @JsonProperty("lastModifiedAt") Optional<OffsetDateTime> lastModifiedAt,
             @JsonProperty("createdAt") Optional<OffsetDateTime> createdAt,
             @JsonProperty("detectedAt") Optional<OffsetDateTime> detectedAt) {
@@ -119,6 +128,7 @@ public class IssueSnapshotItem {
         Utils.checkNotNull(snapshotId, "snapshotId");
         Utils.checkNotNull(dueDate, "dueDate");
         Utils.checkNotNull(status, "status");
+        Utils.checkNotNull(approvalProgress, "approvalProgress");
         Utils.checkNotNull(lastModifiedAt, "lastModifiedAt");
         Utils.checkNotNull(createdAt, "createdAt");
         Utils.checkNotNull(detectedAt, "detectedAt");
@@ -130,6 +140,7 @@ public class IssueSnapshotItem {
         this.snapshotId = snapshotId;
         this.dueDate = dueDate;
         this.status = status;
+        this.approvalProgress = approvalProgress;
         this.lastModifiedAt = lastModifiedAt;
         this.createdAt = createdAt;
         this.detectedAt = detectedAt;
@@ -142,8 +153,8 @@ public class IssueSnapshotItem {
             String snapshotId) {
         this(id, Optional.empty(), Optional.empty(),
             readableIssueId, issueId, snapshotId,
-            JsonNullable.undefined(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty());
+            JsonNullable.undefined(), Optional.empty(), JsonNullable.undefined(),
+            Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     /**
@@ -215,6 +226,16 @@ public class IssueSnapshotItem {
     @JsonIgnore
     public Optional<IssueStatusTypeForSnapshot> status() {
         return (Optional<IssueStatusTypeForSnapshot>) status;
+    }
+
+    /**
+     * The issue's approval progress at the time the snapshot was captured,
+     * or null if no approval was in progress or issue approvals are not enabled.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public JsonNullable<ApprovalProgress> approvalProgress() {
+        return (JsonNullable<ApprovalProgress>) approvalProgress;
     }
 
     /**
@@ -361,6 +382,26 @@ public class IssueSnapshotItem {
     }
 
     /**
+     * The issue's approval progress at the time the snapshot was captured,
+     * or null if no approval was in progress or issue approvals are not enabled.
+     */
+    public IssueSnapshotItem withApprovalProgress(ApprovalProgress approvalProgress) {
+        Utils.checkNotNull(approvalProgress, "approvalProgress");
+        this.approvalProgress = JsonNullable.of(approvalProgress);
+        return this;
+    }
+
+    /**
+     * The issue's approval progress at the time the snapshot was captured,
+     * or null if no approval was in progress or issue approvals are not enabled.
+     */
+    public IssueSnapshotItem withApprovalProgress(JsonNullable<? extends ApprovalProgress> approvalProgress) {
+        Utils.checkNotNull(approvalProgress, "approvalProgress");
+        this.approvalProgress = approvalProgress;
+        return this;
+    }
+
+    /**
      * The date and time when the issue was last modified.
      */
     public IssueSnapshotItem withLastModifiedAt(OffsetDateTime lastModifiedAt) {
@@ -435,6 +476,7 @@ public class IssueSnapshotItem {
             Utils.enhancedDeepEquals(this.snapshotId, other.snapshotId) &&
             Utils.enhancedDeepEquals(this.dueDate, other.dueDate) &&
             Utils.enhancedDeepEquals(this.status, other.status) &&
+            Utils.enhancedDeepEquals(this.approvalProgress, other.approvalProgress) &&
             Utils.enhancedDeepEquals(this.lastModifiedAt, other.lastModifiedAt) &&
             Utils.enhancedDeepEquals(this.createdAt, other.createdAt) &&
             Utils.enhancedDeepEquals(this.detectedAt, other.detectedAt);
@@ -445,8 +487,8 @@ public class IssueSnapshotItem {
         return Utils.enhancedHash(
             id, title, description,
             readableIssueId, issueId, snapshotId,
-            dueDate, status, lastModifiedAt,
-            createdAt, detectedAt);
+            dueDate, status, approvalProgress,
+            lastModifiedAt, createdAt, detectedAt);
     }
     
     @Override
@@ -460,6 +502,7 @@ public class IssueSnapshotItem {
                 "snapshotId", snapshotId,
                 "dueDate", dueDate,
                 "status", status,
+                "approvalProgress", approvalProgress,
                 "lastModifiedAt", lastModifiedAt,
                 "createdAt", createdAt,
                 "detectedAt", detectedAt);
@@ -483,6 +526,8 @@ public class IssueSnapshotItem {
         private JsonNullable<OffsetDateTime> dueDate = JsonNullable.undefined();
 
         private Optional<? extends IssueStatusTypeForSnapshot> status = Optional.empty();
+
+        private JsonNullable<? extends ApprovalProgress> approvalProgress = JsonNullable.undefined();
 
         private Optional<OffsetDateTime> lastModifiedAt = Optional.empty();
 
@@ -615,6 +660,27 @@ public class IssueSnapshotItem {
 
 
         /**
+         * The issue's approval progress at the time the snapshot was captured,
+         * or null if no approval was in progress or issue approvals are not enabled.
+         */
+        public Builder approvalProgress(ApprovalProgress approvalProgress) {
+            Utils.checkNotNull(approvalProgress, "approvalProgress");
+            this.approvalProgress = JsonNullable.of(approvalProgress);
+            return this;
+        }
+
+        /**
+         * The issue's approval progress at the time the snapshot was captured,
+         * or null if no approval was in progress or issue approvals are not enabled.
+         */
+        public Builder approvalProgress(JsonNullable<? extends ApprovalProgress> approvalProgress) {
+            Utils.checkNotNull(approvalProgress, "approvalProgress");
+            this.approvalProgress = approvalProgress;
+            return this;
+        }
+
+
+        /**
          * The date and time when the issue was last modified.
          */
         public Builder lastModifiedAt(OffsetDateTime lastModifiedAt) {
@@ -675,8 +741,8 @@ public class IssueSnapshotItem {
             return new IssueSnapshotItem(
                 id, title, description,
                 readableIssueId, issueId, snapshotId,
-                dueDate, status, lastModifiedAt,
-                createdAt, detectedAt);
+                dueDate, status, approvalProgress,
+                lastModifiedAt, createdAt, detectedAt);
         }
 
     }
