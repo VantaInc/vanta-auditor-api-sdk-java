@@ -12,7 +12,9 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -36,30 +38,43 @@ public class ListInformationRequestsRequest {
     /**
      * Includes all information requests that have changed since changedSinceDate.
      * Considers creationDate, modificationDate, and deletionDate timestamps when determining changes.
+     * Does not include requests whose only change is the derived `segmentIds`
+     * projection after an audit-scope change.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=changedSinceDate")
     private Optional<OffsetDateTime> changedSinceDate;
+
+    /**
+     * Return requests whose stored segment assignment includes any of these
+     * IDs (OR). Omit to return all. A match can still come back with
+     * `segmentIds: []` if the stored ID is no longer in the audit's scope.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=segmentIdsMatchesAny")
+    private Optional<? extends List<String>> segmentIdsMatchesAny;
 
     @JsonCreator
     public ListInformationRequestsRequest(
             String auditId,
             Optional<Integer> pageSize,
             Optional<String> pageCursor,
-            Optional<OffsetDateTime> changedSinceDate) {
+            Optional<OffsetDateTime> changedSinceDate,
+            Optional<? extends List<String>> segmentIdsMatchesAny) {
         Utils.checkNotNull(auditId, "auditId");
         Utils.checkNotNull(pageSize, "pageSize");
         Utils.checkNotNull(pageCursor, "pageCursor");
         Utils.checkNotNull(changedSinceDate, "changedSinceDate");
+        Utils.checkNotNull(segmentIdsMatchesAny, "segmentIdsMatchesAny");
         this.auditId = auditId;
         this.pageSize = pageSize;
         this.pageCursor = pageCursor;
         this.changedSinceDate = changedSinceDate;
+        this.segmentIdsMatchesAny = segmentIdsMatchesAny;
     }
     
     public ListInformationRequestsRequest(
             String auditId) {
         this(auditId, Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     @JsonIgnore
@@ -86,10 +101,23 @@ public class ListInformationRequestsRequest {
     /**
      * Includes all information requests that have changed since changedSinceDate.
      * Considers creationDate, modificationDate, and deletionDate timestamps when determining changes.
+     * Does not include requests whose only change is the derived `segmentIds`
+     * projection after an audit-scope change.
      */
     @JsonIgnore
     public Optional<OffsetDateTime> changedSinceDate() {
         return changedSinceDate;
+    }
+
+    /**
+     * Return requests whose stored segment assignment includes any of these
+     * IDs (OR). Omit to return all. A match can still come back with
+     * `segmentIds: []` if the stored ID is no longer in the audit's scope.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> segmentIdsMatchesAny() {
+        return (Optional<List<String>>) segmentIdsMatchesAny;
     }
 
     public static Builder builder() {
@@ -144,6 +172,8 @@ public class ListInformationRequestsRequest {
     /**
      * Includes all information requests that have changed since changedSinceDate.
      * Considers creationDate, modificationDate, and deletionDate timestamps when determining changes.
+     * Does not include requests whose only change is the derived `segmentIds`
+     * projection after an audit-scope change.
      */
     public ListInformationRequestsRequest withChangedSinceDate(OffsetDateTime changedSinceDate) {
         Utils.checkNotNull(changedSinceDate, "changedSinceDate");
@@ -155,10 +185,35 @@ public class ListInformationRequestsRequest {
     /**
      * Includes all information requests that have changed since changedSinceDate.
      * Considers creationDate, modificationDate, and deletionDate timestamps when determining changes.
+     * Does not include requests whose only change is the derived `segmentIds`
+     * projection after an audit-scope change.
      */
     public ListInformationRequestsRequest withChangedSinceDate(Optional<OffsetDateTime> changedSinceDate) {
         Utils.checkNotNull(changedSinceDate, "changedSinceDate");
         this.changedSinceDate = changedSinceDate;
+        return this;
+    }
+
+    /**
+     * Return requests whose stored segment assignment includes any of these
+     * IDs (OR). Omit to return all. A match can still come back with
+     * `segmentIds: []` if the stored ID is no longer in the audit's scope.
+     */
+    public ListInformationRequestsRequest withSegmentIdsMatchesAny(List<String> segmentIdsMatchesAny) {
+        Utils.checkNotNull(segmentIdsMatchesAny, "segmentIdsMatchesAny");
+        this.segmentIdsMatchesAny = Optional.ofNullable(segmentIdsMatchesAny);
+        return this;
+    }
+
+
+    /**
+     * Return requests whose stored segment assignment includes any of these
+     * IDs (OR). Omit to return all. A match can still come back with
+     * `segmentIds: []` if the stored ID is no longer in the audit's scope.
+     */
+    public ListInformationRequestsRequest withSegmentIdsMatchesAny(Optional<? extends List<String>> segmentIdsMatchesAny) {
+        Utils.checkNotNull(segmentIdsMatchesAny, "segmentIdsMatchesAny");
+        this.segmentIdsMatchesAny = segmentIdsMatchesAny;
         return this;
     }
 
@@ -175,14 +230,15 @@ public class ListInformationRequestsRequest {
             Utils.enhancedDeepEquals(this.auditId, other.auditId) &&
             Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
             Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor) &&
-            Utils.enhancedDeepEquals(this.changedSinceDate, other.changedSinceDate);
+            Utils.enhancedDeepEquals(this.changedSinceDate, other.changedSinceDate) &&
+            Utils.enhancedDeepEquals(this.segmentIdsMatchesAny, other.segmentIdsMatchesAny);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             auditId, pageSize, pageCursor,
-            changedSinceDate);
+            changedSinceDate, segmentIdsMatchesAny);
     }
     
     @Override
@@ -191,7 +247,8 @@ public class ListInformationRequestsRequest {
                 "auditId", auditId,
                 "pageSize", pageSize,
                 "pageCursor", pageCursor,
-                "changedSinceDate", changedSinceDate);
+                "changedSinceDate", changedSinceDate,
+                "segmentIdsMatchesAny", segmentIdsMatchesAny);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -204,6 +261,8 @@ public class ListInformationRequestsRequest {
         private Optional<String> pageCursor = Optional.empty();
 
         private Optional<OffsetDateTime> changedSinceDate = Optional.empty();
+
+        private Optional<? extends List<String>> segmentIdsMatchesAny = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -258,6 +317,8 @@ public class ListInformationRequestsRequest {
         /**
          * Includes all information requests that have changed since changedSinceDate.
          * Considers creationDate, modificationDate, and deletionDate timestamps when determining changes.
+         * Does not include requests whose only change is the derived `segmentIds`
+         * projection after an audit-scope change.
          */
         public Builder changedSinceDate(OffsetDateTime changedSinceDate) {
             Utils.checkNotNull(changedSinceDate, "changedSinceDate");
@@ -268,10 +329,35 @@ public class ListInformationRequestsRequest {
         /**
          * Includes all information requests that have changed since changedSinceDate.
          * Considers creationDate, modificationDate, and deletionDate timestamps when determining changes.
+         * Does not include requests whose only change is the derived `segmentIds`
+         * projection after an audit-scope change.
          */
         public Builder changedSinceDate(Optional<OffsetDateTime> changedSinceDate) {
             Utils.checkNotNull(changedSinceDate, "changedSinceDate");
             this.changedSinceDate = changedSinceDate;
+            return this;
+        }
+
+
+        /**
+         * Return requests whose stored segment assignment includes any of these
+         * IDs (OR). Omit to return all. A match can still come back with
+         * `segmentIds: []` if the stored ID is no longer in the audit's scope.
+         */
+        public Builder segmentIdsMatchesAny(List<String> segmentIdsMatchesAny) {
+            Utils.checkNotNull(segmentIdsMatchesAny, "segmentIdsMatchesAny");
+            this.segmentIdsMatchesAny = Optional.ofNullable(segmentIdsMatchesAny);
+            return this;
+        }
+
+        /**
+         * Return requests whose stored segment assignment includes any of these
+         * IDs (OR). Omit to return all. A match can still come back with
+         * `segmentIds: []` if the stored ID is no longer in the audit's scope.
+         */
+        public Builder segmentIdsMatchesAny(Optional<? extends List<String>> segmentIdsMatchesAny) {
+            Utils.checkNotNull(segmentIdsMatchesAny, "segmentIdsMatchesAny");
+            this.segmentIdsMatchesAny = segmentIdsMatchesAny;
             return this;
         }
 
@@ -282,7 +368,7 @@ public class ListInformationRequestsRequest {
 
             return new ListInformationRequestsRequest(
                 auditId, pageSize, pageCursor,
-                changedSinceDate);
+                changedSinceDate, segmentIdsMatchesAny);
         }
 
 

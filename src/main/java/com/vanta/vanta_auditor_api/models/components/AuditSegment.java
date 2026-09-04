@@ -44,7 +44,7 @@ public class AuditSegment {
     private String displayName;
 
     /**
-     * The framework reached through a segment.
+     * The framework this segment is in.
      */
     @JsonProperty("framework")
     private AuditSegmentFramework framework;
@@ -129,7 +129,7 @@ public class AuditSegment {
     }
 
     /**
-     * The framework reached through a segment.
+     * The framework this segment is in.
      */
     @JsonIgnore
     public AuditSegmentFramework framework() {
@@ -195,7 +195,7 @@ public class AuditSegment {
     }
 
     /**
-     * The framework reached through a segment.
+     * The framework this segment is in.
      */
     public AuditSegment withFramework(AuditSegmentFramework framework) {
         Utils.checkNotNull(framework, "framework");
@@ -353,7 +353,7 @@ public class AuditSegment {
 
 
         /**
-         * The framework reached through a segment.
+         * The framework this segment is in.
          */
         public Builder framework(AuditSegmentFramework framework) {
             Utils.checkNotNull(framework, "framework");

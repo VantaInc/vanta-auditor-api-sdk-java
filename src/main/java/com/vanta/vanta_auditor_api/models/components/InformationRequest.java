@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -69,13 +70,28 @@ public class InformationRequest {
     private Optional<? extends Cadence> cadence;
 
     /**
-     * The framework codes this request addresses.
-     * Links the request to specific compliance requirements. Can be an empty array
-     * if no framework codes are associated. These codes correspond to standards like SOC 2, ISO 27001,
-     * etc.
+     * Always empty on read. To find requests for a control, use
+     * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
+     * For request assignment, use `segmentIds`.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonProperty("frameworkCodes")
+    @Deprecated
     private List<String> frameworkCodes;
+
+    /**
+     * Audit segments this request is assigned to. Empty means unassigned.
+     * Resolved against the current audit scope — stale IDs are dropped.
+     * 
+     * <p>This field is a current-scope projection, not a stored watermark. An
+     * audit-scope change that drops or adds IDs here does not update
+     * creationDate, modificationDate, or deletionDate, so it does not appear in
+     * `changedSinceDate` delta sync on its own. Re-fetch the list without that
+     * parameter, or GET the request by id, to see the current projection.
+     */
+    @JsonProperty("segmentIds")
+    private List<String> segmentIds;
 
     /**
      * Detailed description explaining what evidence is needed and why.
@@ -168,6 +184,7 @@ public class InformationRequest {
             @JsonProperty("approvalStatus") InformationRequestApprovalStatus approvalStatus,
             @JsonProperty("cadence") Optional<? extends Cadence> cadence,
             @JsonProperty("frameworkCodes") List<String> frameworkCodes,
+            @JsonProperty("segmentIds") List<String> segmentIds,
             @JsonProperty("description") Optional<String> description,
             @JsonProperty("dueDate") Optional<OffsetDateTime> dueDate,
             @JsonProperty("evidenceCaptureDate") Optional<OffsetDateTime> evidenceCaptureDate,
@@ -184,6 +201,7 @@ public class InformationRequest {
         Utils.checkNotNull(approvalStatus, "approvalStatus");
         Utils.checkNotNull(cadence, "cadence");
         Utils.checkNotNull(frameworkCodes, "frameworkCodes");
+        Utils.checkNotNull(segmentIds, "segmentIds");
         Utils.checkNotNull(description, "description");
         Utils.checkNotNull(dueDate, "dueDate");
         Utils.checkNotNull(evidenceCaptureDate, "evidenceCaptureDate");
@@ -200,6 +218,7 @@ public class InformationRequest {
         this.approvalStatus = approvalStatus;
         this.cadence = cadence;
         this.frameworkCodes = frameworkCodes;
+        this.segmentIds = segmentIds;
         this.description = description;
         this.dueDate = dueDate;
         this.evidenceCaptureDate = evidenceCaptureDate;
@@ -218,16 +237,17 @@ public class InformationRequest {
             List<String> additionalControlIds,
             InformationRequestApprovalStatus approvalStatus,
             List<String> frameworkCodes,
+            List<String> segmentIds,
             InformationRequestType requestType,
             String title,
             OffsetDateTime creationDate,
             OffsetDateTime modificationDate) {
         this(id, uniqueId, additionalControlIds,
             approvalStatus, Optional.empty(), frameworkCodes,
-            Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), requestType, title,
-            creationDate, modificationDate, Optional.empty(),
-            Optional.empty());
+            segmentIds, Optional.empty(), Optional.empty(),
+            Optional.empty(), Optional.empty(), requestType,
+            title, creationDate, modificationDate,
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -283,14 +303,31 @@ public class InformationRequest {
     }
 
     /**
-     * The framework codes this request addresses.
-     * Links the request to specific compliance requirements. Can be an empty array
-     * if no framework codes are associated. These codes correspond to standards like SOC 2, ISO 27001,
-     * etc.
+     * Always empty on read. To find requests for a control, use
+     * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
+     * For request assignment, use `segmentIds`.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     @JsonIgnore
     public List<String> frameworkCodes() {
         return frameworkCodes;
+    }
+
+    /**
+     * Audit segments this request is assigned to. Empty means unassigned.
+     * Resolved against the current audit scope — stale IDs are dropped.
+     * 
+     * <p>This field is a current-scope projection, not a stored watermark. An
+     * audit-scope change that drops or adds IDs here does not update
+     * creationDate, modificationDate, or deletionDate, so it does not appear in
+     * `changedSinceDate` delta sync on its own. Re-fetch the list without that
+     * parameter, or GET the request by id, to see the current projection.
+     */
+    @JsonIgnore
+    public List<String> segmentIds() {
+        return segmentIds;
     }
 
     /**
@@ -464,14 +501,32 @@ public class InformationRequest {
     }
 
     /**
-     * The framework codes this request addresses.
-     * Links the request to specific compliance requirements. Can be an empty array
-     * if no framework codes are associated. These codes correspond to standards like SOC 2, ISO 27001,
-     * etc.
+     * Always empty on read. To find requests for a control, use
+     * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
+     * For request assignment, use `segmentIds`.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public InformationRequest withFrameworkCodes(List<String> frameworkCodes) {
         Utils.checkNotNull(frameworkCodes, "frameworkCodes");
         this.frameworkCodes = frameworkCodes;
+        return this;
+    }
+
+    /**
+     * Audit segments this request is assigned to. Empty means unassigned.
+     * Resolved against the current audit scope — stale IDs are dropped.
+     * 
+     * <p>This field is a current-scope projection, not a stored watermark. An
+     * audit-scope change that drops or adds IDs here does not update
+     * creationDate, modificationDate, or deletionDate, so it does not appear in
+     * `changedSinceDate` delta sync on its own. Re-fetch the list without that
+     * parameter, or GET the request by id, to see the current projection.
+     */
+    public InformationRequest withSegmentIds(List<String> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = segmentIds;
         return this;
     }
 
@@ -669,6 +724,7 @@ public class InformationRequest {
             Utils.enhancedDeepEquals(this.approvalStatus, other.approvalStatus) &&
             Utils.enhancedDeepEquals(this.cadence, other.cadence) &&
             Utils.enhancedDeepEquals(this.frameworkCodes, other.frameworkCodes) &&
+            Utils.enhancedDeepEquals(this.segmentIds, other.segmentIds) &&
             Utils.enhancedDeepEquals(this.description, other.description) &&
             Utils.enhancedDeepEquals(this.dueDate, other.dueDate) &&
             Utils.enhancedDeepEquals(this.evidenceCaptureDate, other.evidenceCaptureDate) &&
@@ -686,10 +742,10 @@ public class InformationRequest {
         return Utils.enhancedHash(
             id, uniqueId, additionalControlIds,
             approvalStatus, cadence, frameworkCodes,
-            description, dueDate, evidenceCaptureDate,
-            requestId, requestType, title,
-            creationDate, modificationDate, deletionDate,
-            ownerAssignment);
+            segmentIds, description, dueDate,
+            evidenceCaptureDate, requestId, requestType,
+            title, creationDate, modificationDate,
+            deletionDate, ownerAssignment);
     }
     
     @Override
@@ -701,6 +757,7 @@ public class InformationRequest {
                 "approvalStatus", approvalStatus,
                 "cadence", cadence,
                 "frameworkCodes", frameworkCodes,
+                "segmentIds", segmentIds,
                 "description", description,
                 "dueDate", dueDate,
                 "evidenceCaptureDate", evidenceCaptureDate,
@@ -726,7 +783,10 @@ public class InformationRequest {
 
         private Optional<? extends Cadence> cadence = Optional.empty();
 
+        @Deprecated
         private List<String> frameworkCodes;
+
+        private List<String> segmentIds;
 
         private Optional<String> description = Optional.empty();
 
@@ -825,14 +885,33 @@ public class InformationRequest {
 
 
         /**
-         * The framework codes this request addresses.
-         * Links the request to specific compliance requirements. Can be an empty array
-         * if no framework codes are associated. These codes correspond to standards like SOC 2, ISO 27001,
-         * etc.
+         * Always empty on read. To find requests for a control, use
+         * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
+         * For request assignment, use `segmentIds`.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder frameworkCodes(List<String> frameworkCodes) {
             Utils.checkNotNull(frameworkCodes, "frameworkCodes");
             this.frameworkCodes = frameworkCodes;
+            return this;
+        }
+
+
+        /**
+         * Audit segments this request is assigned to. Empty means unassigned.
+         * Resolved against the current audit scope — stale IDs are dropped.
+         * 
+         * <p>This field is a current-scope projection, not a stored watermark. An
+         * audit-scope change that drops or adds IDs here does not update
+         * creationDate, modificationDate, or deletionDate, so it does not appear in
+         * `changedSinceDate` delta sync on its own. Re-fetch the list without that
+         * parameter, or GET the request by id, to see the current projection.
+         */
+        public Builder segmentIds(List<String> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = segmentIds;
             return this;
         }
 
@@ -1023,10 +1102,10 @@ public class InformationRequest {
             return new InformationRequest(
                 id, uniqueId, additionalControlIds,
                 approvalStatus, cadence, frameworkCodes,
-                description, dueDate, evidenceCaptureDate,
-                requestId, requestType, title,
-                creationDate, modificationDate, deletionDate,
-                ownerAssignment);
+                segmentIds, description, dueDate,
+                evidenceCaptureDate, requestId, requestType,
+                title, creationDate, modificationDate,
+                deletionDate, ownerAssignment);
         }
 
     }
