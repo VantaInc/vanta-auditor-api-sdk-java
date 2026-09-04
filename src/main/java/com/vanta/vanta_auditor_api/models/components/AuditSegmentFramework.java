@@ -13,62 +13,28 @@ import java.lang.String;
 /**
  * AuditSegmentFramework
  * 
- * <p>The framework reached through a segment.
+ * <p>The framework this segment is in.
  */
 public class AuditSegmentFramework {
     /**
-     * The stable identifier of the framework (for example `soc2`).
-     */
-    @JsonProperty("id")
-    private String id;
-
-    /**
-     * The human-readable framework name.
+     * Display name of the framework.
      */
     @JsonProperty("displayName")
     private String displayName;
 
-    /**
-     * The short framework name used in compact UI.
-     */
-    @JsonProperty("shortName")
-    private String shortName;
-
     @JsonCreator
     public AuditSegmentFramework(
-            @JsonProperty("id") String id,
-            @JsonProperty("displayName") String displayName,
-            @JsonProperty("shortName") String shortName) {
-        Utils.checkNotNull(id, "id");
+            @JsonProperty("displayName") String displayName) {
         Utils.checkNotNull(displayName, "displayName");
-        Utils.checkNotNull(shortName, "shortName");
-        this.id = id;
         this.displayName = displayName;
-        this.shortName = shortName;
     }
 
     /**
-     * The stable identifier of the framework (for example `soc2`).
-     */
-    @JsonIgnore
-    public String id() {
-        return id;
-    }
-
-    /**
-     * The human-readable framework name.
+     * Display name of the framework.
      */
     @JsonIgnore
     public String displayName() {
         return displayName;
-    }
-
-    /**
-     * The short framework name used in compact UI.
-     */
-    @JsonIgnore
-    public String shortName() {
-        return shortName;
     }
 
     public static Builder builder() {
@@ -77,29 +43,11 @@ public class AuditSegmentFramework {
 
 
     /**
-     * The stable identifier of the framework (for example `soc2`).
-     */
-    public AuditSegmentFramework withId(String id) {
-        Utils.checkNotNull(id, "id");
-        this.id = id;
-        return this;
-    }
-
-    /**
-     * The human-readable framework name.
+     * Display name of the framework.
      */
     public AuditSegmentFramework withDisplayName(String displayName) {
         Utils.checkNotNull(displayName, "displayName");
         this.displayName = displayName;
-        return this;
-    }
-
-    /**
-     * The short framework name used in compact UI.
-     */
-    public AuditSegmentFramework withShortName(String shortName) {
-        Utils.checkNotNull(shortName, "shortName");
-        this.shortName = shortName;
         return this;
     }
 
@@ -113,33 +61,25 @@ public class AuditSegmentFramework {
         }
         AuditSegmentFramework other = (AuditSegmentFramework) o;
         return 
-            Utils.enhancedDeepEquals(this.id, other.id) &&
-            Utils.enhancedDeepEquals(this.displayName, other.displayName) &&
-            Utils.enhancedDeepEquals(this.shortName, other.shortName);
+            Utils.enhancedDeepEquals(this.displayName, other.displayName);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, displayName, shortName);
+            displayName);
     }
     
     @Override
     public String toString() {
         return Utils.toString(AuditSegmentFramework.class,
-                "id", id,
-                "displayName", displayName,
-                "shortName", shortName);
+                "displayName", displayName);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
-        private String id;
-
         private String displayName;
-
-        private String shortName;
 
         private Builder() {
           // force use of static builder() method
@@ -147,17 +87,7 @@ public class AuditSegmentFramework {
 
 
         /**
-         * The stable identifier of the framework (for example `soc2`).
-         */
-        public Builder id(String id) {
-            Utils.checkNotNull(id, "id");
-            this.id = id;
-            return this;
-        }
-
-
-        /**
-         * The human-readable framework name.
+         * Display name of the framework.
          */
         public Builder displayName(String displayName) {
             Utils.checkNotNull(displayName, "displayName");
@@ -165,20 +95,10 @@ public class AuditSegmentFramework {
             return this;
         }
 
-
-        /**
-         * The short framework name used in compact UI.
-         */
-        public Builder shortName(String shortName) {
-            Utils.checkNotNull(shortName, "shortName");
-            this.shortName = shortName;
-            return this;
-        }
-
         public AuditSegmentFramework build() {
 
             return new AuditSegmentFramework(
-                id, displayName, shortName);
+                displayName);
         }
 
     }

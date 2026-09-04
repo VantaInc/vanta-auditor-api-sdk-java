@@ -287,7 +287,7 @@ public class Audits {
      * audit has one entry; a live multi-framework audit has one entry per
      * in-scope framework (and business unit or system, when applicable).
      * Soft-deleted audits return an empty list. The top-level `framework` field
-     * is deprecated; use `segments` for framework identity.
+     * is deprecated; use `segments` for in-scope frameworks.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -310,7 +310,7 @@ public class Audits {
      * audit has one entry; a live multi-framework audit has one entry per
      * in-scope framework (and business unit or system, when applicable).
      * Soft-deleted audits return an empty list. The top-level `framework` field
-     * is deprecated; use `segments` for framework identity.
+     * is deprecated; use `segments` for in-scope frameworks.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -335,7 +335,7 @@ public class Audits {
      * audit has one entry; a live multi-framework audit has one entry per
      * in-scope framework (and business unit or system, when applicable).
      * Soft-deleted audits return an empty list. The top-level `framework` field
-     * is deprecated; use `segments` for framework identity.
+     * is deprecated; use `segments` for in-scope frameworks.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -445,7 +445,7 @@ public class Audits {
      * audit has one entry; a live multi-framework audit has one entry per
      * in-scope framework (and business unit or system, when applicable).
      * Soft-deleted audits return an empty list. The top-level `framework` field
-     * is deprecated; use `segments` for framework identity.
+     * is deprecated; use `segments` for in-scope frameworks.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -468,7 +468,7 @@ public class Audits {
      * audit has one entry; a live multi-framework audit has one entry per
      * in-scope framework (and business unit or system, when applicable).
      * Soft-deleted audits return an empty list. The top-level `framework` field
-     * is deprecated; use `segments` for framework identity.
+     * is deprecated; use `segments` for in-scope frameworks.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -1017,8 +1017,9 @@ public class Audits {
      * 
      * <p>Returns a paginated list of active information requests linked to a specific
      * control within an IRL audit. An information request is linked to a control
-     * either via its framework codes (`criteriaIds`) or via a direct association
-     * (`additionalControlIds`).
+     * via its framework codes (`criteriaIds`), a direct association
+     * (`additionalControlIds`), or an owned AuditControl row attached in Vanta
+     * (`additionalAuditControlIds`).
      * 
      * <p>Soft-deleted information requests are not included in the response. To
      * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
@@ -1046,8 +1047,9 @@ public class Audits {
      * 
      * <p>Returns a paginated list of active information requests linked to a specific
      * control within an IRL audit. An information request is linked to a control
-     * either via its framework codes (`criteriaIds`) or via a direct association
-     * (`additionalControlIds`).
+     * via its framework codes (`criteriaIds`), a direct association
+     * (`additionalControlIds`), or an owned AuditControl row attached in Vanta
+     * (`additionalAuditControlIds`).
      * 
      * <p>Soft-deleted information requests are not included in the response. To
      * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
@@ -1079,8 +1081,9 @@ public class Audits {
      * 
      * <p>Returns a paginated list of active information requests linked to a specific
      * control within an IRL audit. An information request is linked to a control
-     * either via its framework codes (`criteriaIds`) or via a direct association
-     * (`additionalControlIds`).
+     * via its framework codes (`criteriaIds`), a direct association
+     * (`additionalControlIds`), or an owned AuditControl row attached in Vanta
+     * (`additionalAuditControlIds`).
      * 
      * <p>Soft-deleted information requests are not included in the response. To
      * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
@@ -1505,9 +1508,9 @@ public class Audits {
      * which framework codes are available for creating and updating information requests for this audit.
      * 
      * <p>Use this endpoint to:
-     * - Discover available framework codes before creating information requests
-     * - Validate framework codes against the audit's framework
-     * - Get context about what framework codes are available for the audit type
+     * - Discover available framework codes (`frameworkCodes`, the original flat list)
+     * - Validate framework codes against the audit's frameworks
+     * - See which codes belong to which in-scope framework (`codesByFramework`)
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
@@ -1524,9 +1527,9 @@ public class Audits {
      * which framework codes are available for creating and updating information requests for this audit.
      * 
      * <p>Use this endpoint to:
-     * - Discover available framework codes before creating information requests
-     * - Validate framework codes against the audit's framework
-     * - Get context about what framework codes are available for the audit type
+     * - Discover available framework codes (`frameworkCodes`, the original flat list)
+     * - Validate framework codes against the audit's frameworks
+     * - See which codes belong to which in-scope framework (`codesByFramework`)
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
@@ -1571,6 +1574,11 @@ public class Audits {
      * 4. Process updates and soft-deletes by checking the `deletionDate` field
      * 5. Update your last sync timestamp to the current time
      * 
+     * <p>`segmentIds` on each returned request is resolved against the audit's
+     * current scope. A scope-only change (a segment leaving or joining the audit
+     * without the request row being written) is not a delta-sync event. Re-fetch
+     * without `changedSinceDate`, or GET by id, to see the current projection.
+     * 
      * <p>Rate limit: 50 requests / minute.
      * 
      * @return The call builder
@@ -1605,64 +1613,18 @@ public class Audits {
      * 4. Process updates and soft-deletes by checking the `deletionDate` field
      * 5. Update your last sync timestamp to the current time
      * 
-     * <p>Rate limit: 50 requests / minute.
-     * 
-     * @param auditId 
-     * @return The response from the API call
-     * @throws RuntimeException subclass if the API call fails
-     */
-    public ListInformationRequestsResponse listInformationRequests(String auditId) {
-        return listInformationRequests(auditId, Optional.empty(), Optional.empty(),
-            Optional.empty());
-    }
-
-    /**
-     * List information requests for an audit
-     * 
-     * <p>Retrieves a paginated list of all information requests for an audit, enabling
-     * external audit management systems to display and track evidence requests.
-     * 
-     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
-     * Clients should check the `deletionDate` field to identify and handle deleted records
-     * appropriately in their systems.
-     * 
-     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
-     * allowing efficient polling for changes without retrieving the entire dataset.
-     * 
-     * <p>Pagination usage:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
-     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
-     * 4. Repeat until `hasNextPage` is false
-     * 
-     * <p>Delta sync usage:
-     * 1. Store the timestamp of your last sync
-     * 2. Pass that timestamp as `changedSinceDate`
-     * 3. Only requests created, modified, or deleted since that timestamp are returned
-     * 4. Process updates and soft-deletes by checking the `deletionDate` field
-     * 5. Update your last sync timestamp to the current time
+     * <p>`segmentIds` on each returned request is resolved against the audit's
+     * current scope. A scope-only change (a segment leaving or joining the audit
+     * without the request row being written) is not a delta-sync event. Re-fetch
+     * without `changedSinceDate`, or GET by id, to see the current projection.
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
-     * @param auditId 
-     * @param pageSize Maximum number of information requests to return per page.
-     * @param pageCursor Pagination cursor from a previous response. Provide to fetch the next page of results.
-     * @param changedSinceDate Includes all information requests that have changed since changedSinceDate.
-     *         Considers creationDate, modificationDate, and deletionDate timestamps when determining changes.
+     * @param request The request object containing all the parameters for the API call.
      * @return The response from the API call
      * @throws RuntimeException subclass if the API call fails
      */
-    public ListInformationRequestsResponse listInformationRequests(
-            String auditId, Optional<Integer> pageSize,
-            Optional<String> pageCursor, Optional<OffsetDateTime> changedSinceDate) {
-        ListInformationRequestsRequest request =
-            ListInformationRequestsRequest
-                .builder()
-                .auditId(auditId)
-                .pageSize(pageSize)
-                .pageCursor(pageCursor)
-                .changedSinceDate(changedSinceDate)
-                .build();
+    public ListInformationRequestsResponse listInformationRequests(ListInformationRequestsRequest request) {
         RequestOperation<ListInformationRequestsRequest, ListInformationRequestsResponse> operation
               = new ListInformationRequests.Sync(sdkConfiguration, _headers);
         return operation.handleResponse(operation.doRequest(request));

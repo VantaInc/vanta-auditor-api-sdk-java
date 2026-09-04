@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 import java.util.List;
@@ -18,26 +19,51 @@ import java.util.List;
  */
 public class FrameworkCodes {
     /**
-     * Array of valid framework codes for the audit's framework (e.g., "CC6.1", "CC6.2").
-     * These represent the different framework sections available for creating information requests.
+     * Valid framework codes for this audit.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonProperty("frameworkCodes")
+    @Deprecated
     private List<String> frameworkCodes;
+
+    /**
+     * Valid codes grouped by each distinct in-scope framework. A code that exists
+     * on two frameworks appears in both groups. Two segments that share a
+     * framework contribute one group. `framework` is the display name.
+     */
+    @JsonProperty("codesByFramework")
+    private List<FrameworkCodesByFramework> codesByFramework;
 
     @JsonCreator
     public FrameworkCodes(
-            @JsonProperty("frameworkCodes") List<String> frameworkCodes) {
+            @JsonProperty("frameworkCodes") List<String> frameworkCodes,
+            @JsonProperty("codesByFramework") List<FrameworkCodesByFramework> codesByFramework) {
         Utils.checkNotNull(frameworkCodes, "frameworkCodes");
+        Utils.checkNotNull(codesByFramework, "codesByFramework");
         this.frameworkCodes = frameworkCodes;
+        this.codesByFramework = codesByFramework;
     }
 
     /**
-     * Array of valid framework codes for the audit's framework (e.g., "CC6.1", "CC6.2").
-     * These represent the different framework sections available for creating information requests.
+     * Valid framework codes for this audit.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     @JsonIgnore
     public List<String> frameworkCodes() {
         return frameworkCodes;
+    }
+
+    /**
+     * Valid codes grouped by each distinct in-scope framework. A code that exists
+     * on two frameworks appears in both groups. Two segments that share a
+     * framework contribute one group. `framework` is the display name.
+     */
+    @JsonIgnore
+    public List<FrameworkCodesByFramework> codesByFramework() {
+        return codesByFramework;
     }
 
     public static Builder builder() {
@@ -46,12 +72,25 @@ public class FrameworkCodes {
 
 
     /**
-     * Array of valid framework codes for the audit's framework (e.g., "CC6.1", "CC6.2").
-     * These represent the different framework sections available for creating information requests.
+     * Valid framework codes for this audit.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public FrameworkCodes withFrameworkCodes(List<String> frameworkCodes) {
         Utils.checkNotNull(frameworkCodes, "frameworkCodes");
         this.frameworkCodes = frameworkCodes;
+        return this;
+    }
+
+    /**
+     * Valid codes grouped by each distinct in-scope framework. A code that exists
+     * on two frameworks appears in both groups. Two segments that share a
+     * framework contribute one group. `framework` is the display name.
+     */
+    public FrameworkCodes withCodesByFramework(List<FrameworkCodesByFramework> codesByFramework) {
+        Utils.checkNotNull(codesByFramework, "codesByFramework");
+        this.codesByFramework = codesByFramework;
         return this;
     }
 
@@ -65,25 +104,30 @@ public class FrameworkCodes {
         }
         FrameworkCodes other = (FrameworkCodes) o;
         return 
-            Utils.enhancedDeepEquals(this.frameworkCodes, other.frameworkCodes);
+            Utils.enhancedDeepEquals(this.frameworkCodes, other.frameworkCodes) &&
+            Utils.enhancedDeepEquals(this.codesByFramework, other.codesByFramework);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            frameworkCodes);
+            frameworkCodes, codesByFramework);
     }
     
     @Override
     public String toString() {
         return Utils.toString(FrameworkCodes.class,
-                "frameworkCodes", frameworkCodes);
+                "frameworkCodes", frameworkCodes,
+                "codesByFramework", codesByFramework);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        @Deprecated
         private List<String> frameworkCodes;
+
+        private List<FrameworkCodesByFramework> codesByFramework;
 
         private Builder() {
           // force use of static builder() method
@@ -91,19 +135,33 @@ public class FrameworkCodes {
 
 
         /**
-         * Array of valid framework codes for the audit's framework (e.g., "CC6.1", "CC6.2").
-         * These represent the different framework sections available for creating information requests.
+         * Valid framework codes for this audit.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder frameworkCodes(List<String> frameworkCodes) {
             Utils.checkNotNull(frameworkCodes, "frameworkCodes");
             this.frameworkCodes = frameworkCodes;
             return this;
         }
 
+
+        /**
+         * Valid codes grouped by each distinct in-scope framework. A code that exists
+         * on two frameworks appears in both groups. Two segments that share a
+         * framework contribute one group. `framework` is the display name.
+         */
+        public Builder codesByFramework(List<FrameworkCodesByFramework> codesByFramework) {
+            Utils.checkNotNull(codesByFramework, "codesByFramework");
+            this.codesByFramework = codesByFramework;
+            return this;
+        }
+
         public FrameworkCodes build() {
 
             return new FrameworkCodes(
-                frameworkCodes);
+                frameworkCodes, codesByFramework);
         }
 
     }
