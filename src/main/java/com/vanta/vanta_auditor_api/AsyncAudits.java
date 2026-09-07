@@ -1030,10 +1030,8 @@ public class AsyncAudits {
      * List information requests linked to a control within an audit
      * 
      * <p>Returns a paginated list of active information requests linked to a specific
-     * control within an IRL audit. An information request is linked to a control
-     * via its framework codes (`criteriaIds`), a direct association
-     * (`additionalControlIds`), or an owned AuditControl row attached in Vanta
-     * (`additionalAuditControlIds`).
+     * control within an IRL audit. Only links saved on the audit's current
+     * control rows are included.
      * 
      * <p>Soft-deleted information requests are not included in the response. To
      * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
@@ -1060,10 +1058,8 @@ public class AsyncAudits {
      * List information requests linked to a control within an audit
      * 
      * <p>Returns a paginated list of active information requests linked to a specific
-     * control within an IRL audit. An information request is linked to a control
-     * via its framework codes (`criteriaIds`), a direct association
-     * (`additionalControlIds`), or an owned AuditControl row attached in Vanta
-     * (`additionalAuditControlIds`).
+     * control within an IRL audit. Only links saved on the audit's current
+     * control rows are included.
      * 
      * <p>Soft-deleted information requests are not included in the response. To
      * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
@@ -1094,10 +1090,8 @@ public class AsyncAudits {
      * List information requests linked to a control within an audit
      * 
      * <p>Returns a paginated list of active information requests linked to a specific
-     * control within an IRL audit. An information request is linked to a control
-     * via its framework codes (`criteriaIds`), a direct association
-     * (`additionalControlIds`), or an owned AuditControl row attached in Vanta
-     * (`additionalAuditControlIds`).
+     * control within an IRL audit. Only links saved on the audit's current
+     * control rows are included.
      * 
      * <p>Soft-deleted information requests are not included in the response. To
      * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
