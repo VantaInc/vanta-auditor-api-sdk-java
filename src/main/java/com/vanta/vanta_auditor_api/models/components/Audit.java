@@ -134,11 +134,11 @@ public class Audit {
     private Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata;
 
     /**
-     * The audit's scope as a list of segments. Always present. A live
-     * single-framework audit has one entry; a multi-framework audit has one
-     * entry per in-scope framework (and business unit or system, when applicable).
-     * Soft-deleted audits return an empty list. Prefer this over the deprecated
-     * top-level `framework` field.
+     * The audit's scope as a list of segments. Always present. A live audit
+     * returns every in-scope program and system segment; more than one segment
+     * does not by itself imply more than one framework. Soft-deleted audits
+     * return an empty list. Prefer this over the deprecated top-level `framework`
+     * field.
      */
     @JsonProperty("segments")
     private List<AuditSegment> segments;
@@ -364,11 +364,11 @@ public class Audit {
     }
 
     /**
-     * The audit's scope as a list of segments. Always present. A live
-     * single-framework audit has one entry; a multi-framework audit has one
-     * entry per in-scope framework (and business unit or system, when applicable).
-     * Soft-deleted audits return an empty list. Prefer this over the deprecated
-     * top-level `framework` field.
+     * The audit's scope as a list of segments. Always present. A live audit
+     * returns every in-scope program and system segment; more than one segment
+     * does not by itself imply more than one framework. Soft-deleted audits
+     * return an empty list. Prefer this over the deprecated top-level `framework`
+     * field.
      */
     @JsonIgnore
     public List<AuditSegment> segments() {
@@ -600,11 +600,11 @@ public class Audit {
     }
 
     /**
-     * The audit's scope as a list of segments. Always present. A live
-     * single-framework audit has one entry; a multi-framework audit has one
-     * entry per in-scope framework (and business unit or system, when applicable).
-     * Soft-deleted audits return an empty list. Prefer this over the deprecated
-     * top-level `framework` field.
+     * The audit's scope as a list of segments. Always present. A live audit
+     * returns every in-scope program and system segment; more than one segment
+     * does not by itself imply more than one framework. Soft-deleted audits
+     * return an empty list. Prefer this over the deprecated top-level `framework`
+     * field.
      */
     public Audit withSegments(List<AuditSegment> segments) {
         Utils.checkNotNull(segments, "segments");
@@ -952,11 +952,11 @@ public class Audit {
 
 
         /**
-         * The audit's scope as a list of segments. Always present. A live
-         * single-framework audit has one entry; a multi-framework audit has one
-         * entry per in-scope framework (and business unit or system, when applicable).
-         * Soft-deleted audits return an empty list. Prefer this over the deprecated
-         * top-level `framework` field.
+         * The audit's scope as a list of segments. Always present. A live audit
+         * returns every in-scope program and system segment; more than one segment
+         * does not by itself imply more than one framework. Soft-deleted audits
+         * return an empty list. Prefer this over the deprecated top-level `framework`
+         * field.
          */
         public Builder segments(List<AuditSegment> segments) {
             Utils.checkNotNull(segments, "segments");

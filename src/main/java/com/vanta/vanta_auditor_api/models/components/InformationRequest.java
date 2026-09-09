@@ -44,11 +44,16 @@ public class InformationRequest {
     private String uniqueId;
 
     /**
-     * Additional control IDs beyond those automatically mapped from framework codes.
-     * Allows manual association with specific controls when automatic mapping
-     * is insufficient. Each ID should reference a valid control in your audit framework.
+     * Deprecated control-linkage field retained for response compatibility. It
+     * may contain control IDs supplied directly to the request, but it is not a
+     * complete or guaranteed-current list of controls linked to the request. To
+     * list information requests linked to a particular control, use
+     * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonProperty("additionalControlIds")
+    @Deprecated
     private List<String> additionalControlIds;
 
     /**
@@ -271,10 +276,15 @@ public class InformationRequest {
     }
 
     /**
-     * Additional control IDs beyond those automatically mapped from framework codes.
-     * Allows manual association with specific controls when automatic mapping
-     * is insufficient. Each ID should reference a valid control in your audit framework.
+     * Deprecated control-linkage field retained for response compatibility. It
+     * may contain control IDs supplied directly to the request, but it is not a
+     * complete or guaranteed-current list of controls linked to the request. To
+     * list information requests linked to a particular control, use
+     * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     @JsonIgnore
     public List<String> additionalControlIds() {
         return additionalControlIds;
@@ -456,10 +466,15 @@ public class InformationRequest {
     }
 
     /**
-     * Additional control IDs beyond those automatically mapped from framework codes.
-     * Allows manual association with specific controls when automatic mapping
-     * is insufficient. Each ID should reference a valid control in your audit framework.
+     * Deprecated control-linkage field retained for response compatibility. It
+     * may contain control IDs supplied directly to the request, but it is not a
+     * complete or guaranteed-current list of controls linked to the request. To
+     * list information requests linked to a particular control, use
+     * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public InformationRequest withAdditionalControlIds(List<String> additionalControlIds) {
         Utils.checkNotNull(additionalControlIds, "additionalControlIds");
         this.additionalControlIds = additionalControlIds;
@@ -777,6 +792,7 @@ public class InformationRequest {
 
         private String uniqueId;
 
+        @Deprecated
         private List<String> additionalControlIds;
 
         private InformationRequestApprovalStatus approvalStatus;
@@ -838,10 +854,15 @@ public class InformationRequest {
 
 
         /**
-         * Additional control IDs beyond those automatically mapped from framework codes.
-         * Allows manual association with specific controls when automatic mapping
-         * is insufficient. Each ID should reference a valid control in your audit framework.
+         * Deprecated control-linkage field retained for response compatibility. It
+         * may contain control IDs supplied directly to the request, but it is not a
+         * complete or guaranteed-current list of controls linked to the request. To
+         * list information requests linked to a particular control, use
+         * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder additionalControlIds(List<String> additionalControlIds) {
             Utils.checkNotNull(additionalControlIds, "additionalControlIds");
             this.additionalControlIds = additionalControlIds;

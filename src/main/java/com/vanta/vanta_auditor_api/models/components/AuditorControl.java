@@ -106,20 +106,20 @@ public class AuditorControl {
     private List<Section> sections;
 
     /**
-     * Audit segments this control is in scope for. Empty when the control is
-     * attached only by a direct link and has no catalog mapping on a
-     * multi-program audit.
+     * Audit segments in which this control is in scope. The array can be empty
+     * when a control is linked directly to the audit but has no framework-section
+     * mapping.
      */
     @JsonProperty("inScopeSegmentIds")
     private List<String> inScopeSegmentIds;
 
     /**
-     * The auditor's assessments of this control, one per audit program segment the
-     * control is in scope for (a multi-framework audit can have more than one).
-     * Populated only for IRL audits when the assessment feature is enabled; empty
-     * otherwise. Within an in-scope segment a control with no recorded assessment
-     * coerces to `NOT_ASSESSED`; a segment the control is not in scope for
-     * contributes no entry.
+     * The auditor's assessments of this control, with one entry for each program
+     * segment in which the control is in scope. More than one entry does not by
+     * itself imply more than one framework. Populated only for IRL audits when
+     * the assessment feature is enabled; empty otherwise. Within an in-scope
+     * segment a control with no recorded assessment coerces to `NOT_ASSESSED`; a
+     * segment the control is not in scope for contributes no entry.
      */
     @JsonProperty("assessments")
     private List<AuditControlAssessment> assessments;
@@ -298,9 +298,9 @@ public class AuditorControl {
     }
 
     /**
-     * Audit segments this control is in scope for. Empty when the control is
-     * attached only by a direct link and has no catalog mapping on a
-     * multi-program audit.
+     * Audit segments in which this control is in scope. The array can be empty
+     * when a control is linked directly to the audit but has no framework-section
+     * mapping.
      */
     @JsonIgnore
     public List<String> inScopeSegmentIds() {
@@ -308,12 +308,12 @@ public class AuditorControl {
     }
 
     /**
-     * The auditor's assessments of this control, one per audit program segment the
-     * control is in scope for (a multi-framework audit can have more than one).
-     * Populated only for IRL audits when the assessment feature is enabled; empty
-     * otherwise. Within an in-scope segment a control with no recorded assessment
-     * coerces to `NOT_ASSESSED`; a segment the control is not in scope for
-     * contributes no entry.
+     * The auditor's assessments of this control, with one entry for each program
+     * segment in which the control is in scope. More than one entry does not by
+     * itself imply more than one framework. Populated only for IRL audits when
+     * the assessment feature is enabled; empty otherwise. Within an in-scope
+     * segment a control with no recorded assessment coerces to `NOT_ASSESSED`; a
+     * segment the control is not in scope for contributes no entry.
      */
     @JsonIgnore
     public List<AuditControlAssessment> assessments() {
@@ -493,9 +493,9 @@ public class AuditorControl {
     }
 
     /**
-     * Audit segments this control is in scope for. Empty when the control is
-     * attached only by a direct link and has no catalog mapping on a
-     * multi-program audit.
+     * Audit segments in which this control is in scope. The array can be empty
+     * when a control is linked directly to the audit but has no framework-section
+     * mapping.
      */
     public AuditorControl withInScopeSegmentIds(List<String> inScopeSegmentIds) {
         Utils.checkNotNull(inScopeSegmentIds, "inScopeSegmentIds");
@@ -504,12 +504,12 @@ public class AuditorControl {
     }
 
     /**
-     * The auditor's assessments of this control, one per audit program segment the
-     * control is in scope for (a multi-framework audit can have more than one).
-     * Populated only for IRL audits when the assessment feature is enabled; empty
-     * otherwise. Within an in-scope segment a control with no recorded assessment
-     * coerces to `NOT_ASSESSED`; a segment the control is not in scope for
-     * contributes no entry.
+     * The auditor's assessments of this control, with one entry for each program
+     * segment in which the control is in scope. More than one entry does not by
+     * itself imply more than one framework. Populated only for IRL audits when
+     * the assessment feature is enabled; empty otherwise. Within an in-scope
+     * segment a control with no recorded assessment coerces to `NOT_ASSESSED`; a
+     * segment the control is not in scope for contributes no entry.
      */
     public AuditorControl withAssessments(List<AuditControlAssessment> assessments) {
         Utils.checkNotNull(assessments, "assessments");
@@ -790,9 +790,9 @@ public class AuditorControl {
 
 
         /**
-         * Audit segments this control is in scope for. Empty when the control is
-         * attached only by a direct link and has no catalog mapping on a
-         * multi-program audit.
+         * Audit segments in which this control is in scope. The array can be empty
+         * when a control is linked directly to the audit but has no framework-section
+         * mapping.
          */
         public Builder inScopeSegmentIds(List<String> inScopeSegmentIds) {
             Utils.checkNotNull(inScopeSegmentIds, "inScopeSegmentIds");
@@ -802,12 +802,12 @@ public class AuditorControl {
 
 
         /**
-         * The auditor's assessments of this control, one per audit program segment the
-         * control is in scope for (a multi-framework audit can have more than one).
-         * Populated only for IRL audits when the assessment feature is enabled; empty
-         * otherwise. Within an in-scope segment a control with no recorded assessment
-         * coerces to `NOT_ASSESSED`; a segment the control is not in scope for
-         * contributes no entry.
+         * The auditor's assessments of this control, with one entry for each program
+         * segment in which the control is in scope. More than one entry does not by
+         * itself imply more than one framework. Populated only for IRL audits when
+         * the assessment feature is enabled; empty otherwise. Within an in-scope
+         * segment a control with no recorded assessment coerces to `NOT_ASSESSED`; a
+         * segment the control is not in scope for contributes no entry.
          */
         public Builder assessments(List<AuditControlAssessment> assessments) {
             Utils.checkNotNull(assessments, "assessments");
