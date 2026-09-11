@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: f42d74f5-5725-46fa-b13c-649b7ef895c3
 management:
-  docChecksum: 59e19486b49758e48b9c9ad4ecf27954
+  docChecksum: 441c15c476741c4778e5af3883a97e5b
   docVersion: 1.0.0
   speakeasyVersion: 1.796.4
   generationVersion: 2.935.1
-  releaseVersion: 0.7.4
-  configChecksum: 000bc78be706afcd00ce45659557f1e8
+  releaseVersion: 0.7.5
+  configChecksum: 4bfc253c5c3e21bcce8226f6b5ce7d1a
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   installationURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java
   published: true
 persistentEdits:
-  generation_id: f8e7c3f7-7eb6-4137-b095-ce61150fe986
-  pristine_commit_hash: 9b3d5847e4b268253f92e3a4b74e7cb62a655613
-  pristine_tree_hash: 4dd32f1a101454c6ce5e3e1c6dec1b0bfc7e7684
+  generation_id: 4e7da71c-19d4-4ac4-bc61-18d7c09ccc3c
+  pristine_commit_hash: c4d05c91ae968b9f40164dc27b1d6f0fa2edca9c
+  pristine_tree_hash: 8db1d68bf311a4e3c7f086ab66221197a941d881
 features:
   java:
     additionalDependencies: 0.1.0
@@ -452,8 +452,8 @@ trackedFiles:
     pristine_git_object: 9bb93e4dfc387061026170d128c1cf069af6e7f3
   docs/models/components/InformationRequest.md:
     id: 470109d2da90
-    last_write_checksum: sha1:182e1f4ac97db8a1726b81ae3ce83f18c62ec749
-    pristine_git_object: 7515eec6a9b8e27dd4127e2e0f68f70cd595ef47
+    last_write_checksum: sha1:0a3e9434f5c1703ea0072e3faee2f0bc31a5be7f
+    pristine_git_object: 4e383b6140e7a2b0f2fd04cb546751adbebf1541
   docs/models/components/InformationRequestActivityLog.md:
     id: c0627c069348
     last_write_checksum: sha1:b20a2bc78e680aa7bcee9748f440d5f61507752e
@@ -824,8 +824,8 @@ trackedFiles:
     pristine_git_object: 02480b1e0b080e3336e56b91e4e07b302ef959f8
   docs/models/components/PartialUpdateInformationRequest.md:
     id: 520dbd7fe7ef
-    last_write_checksum: sha1:e138c63310642cbbb3ecb0c7297bf512b160e007
-    pristine_git_object: dddcada5e906955e70e63690e0e86d89568a72ef
+    last_write_checksum: sha1:09ea11b0e875f5e3acc59d509c01e9b0015fa6b6
+    pristine_git_object: 46aea708aa2b27fbfb9c8b6ea311b31f96c84027
   docs/models/components/PeopleEmploymentStatus.md:
     id: b139d4f3be79
     last_write_checksum: sha1:916941137fb3f5a784111dce0d1eb1d5fb0c2441
@@ -1644,8 +1644,8 @@ trackedFiles:
     pristine_git_object: de7d1b163d5926363b94e775645373b750f65b30
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:8709da8cb60d3a50b21523a1c61e8bf3b1c4c050
-    pristine_git_object: ee94e509c2077b5f92d7111ddc0b6e9204524488
+    last_write_checksum: sha1:a093b5a33e8107b37f817782f21b09bf4c42bee9
+    pristine_git_object: 749eb9044e8625b2fbc6420e5148d5fa62042b8e
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -1692,8 +1692,8 @@ trackedFiles:
     pristine_git_object: 154d532b2356417df0b7f5ac8b59d931c7b9e721
   src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java:
     id: ce55360c720c
-    last_write_checksum: sha1:1e8bed2a59eb19344fdd3526e3b5e1eea72673c9
-    pristine_git_object: 7e00cca375004a334a386d60d118beec1c8b9ab2
+    last_write_checksum: sha1:4e3576f3f82bad8151302c296298ff40d3ed7258
+    pristine_git_object: 744f4569ead62b8c7c667d1820a147df071c9724
   src/main/java/com/vanta/vanta_auditor_api/SecuritySource.java:
     id: 18c0da44b51f
     last_write_checksum: sha1:55dc5f4240c7317c9a5a4080b6e17dc1b6fdd403
@@ -2112,8 +2112,8 @@ trackedFiles:
     pristine_git_object: 6bee16d60c3a0353416c2c511fdaeb15086d9f6c
   src/main/java/com/vanta/vanta_auditor_api/models/components/InformationRequest.java:
     id: f4893ae2ac96
-    last_write_checksum: sha1:2af713b71df8b4d60b1d1439a840932d5d6cc963
-    pristine_git_object: 95b9c942b7a1da7f5921ea1b2a18e2bc9622b14f
+    last_write_checksum: sha1:e69d88bd5a91cb68c6cbb2d70acb848ef75edff8
+    pristine_git_object: b38bf169b49b80be89357f84bbabf88cf7f07581
   src/main/java/com/vanta/vanta_auditor_api/models/components/InformationRequestActivityLog.java:
     id: 90cc6c274b1b
     last_write_checksum: sha1:4fc0418121a5c2ff4c6ffa2e834af4bcc08ec4fb
@@ -2484,8 +2484,8 @@ trackedFiles:
     pristine_git_object: bb1bb0e281862f80e78885005b62d6f3e8bf7c54
   src/main/java/com/vanta/vanta_auditor_api/models/components/PartialUpdateInformationRequest.java:
     id: 56d6c4e83321
-    last_write_checksum: sha1:06c7c0c247fbf825a40b2d8085f734fbaea55952
-    pristine_git_object: d7df4056a87096dc24bf60c3338e740a2c2157ef
+    last_write_checksum: sha1:db68baf3819c440663ef27b1e643ccf68f1a5412
+    pristine_git_object: d73bed657a8b8ad8e90589d87a355ae0f4970930
   src/main/java/com/vanta/vanta_auditor_api/models/components/PeopleEmploymentStatus.java:
     id: bb5aed39013a
     last_write_checksum: sha1:97fed9a8fbd980c5f89e16d724a1e1b2fa054068
