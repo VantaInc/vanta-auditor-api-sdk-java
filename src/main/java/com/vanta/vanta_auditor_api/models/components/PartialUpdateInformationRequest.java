@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -26,11 +27,15 @@ import org.openapitools.jackson.nullable.JsonNullable;
  */
 public class PartialUpdateInformationRequest {
     /**
-     * The framework codes this request addresses.
-     * An empty array if no framework codes are associated.
+     * Framework codes are assigned only at creation; on update this field is a
+     * silent no-op — a value sent here is accepted for backwards compatibility
+     * but ignored, leaving the request's framework codes unchanged.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("frameworkCodes")
+    @Deprecated
     private Optional<? extends List<String>> frameworkCodes;
 
     /**
@@ -82,16 +87,26 @@ public class PartialUpdateInformationRequest {
     private Optional<? extends InformationRequestCadence> cadence;
 
     /**
-     * Control IDs to link directly to this request, beyond those automatically
-     * mapped from framework codes. Replaces the existing set: pass the complete
-     * desired list, an empty array to clear all direct control links, or omit to
-     * leave them unchanged. Each must be the `id` of an existing control in the
-     * customer's organization (the identifier returned by the controls endpoints).
-     * The request is rejected if any ID does not match a control.
+     * This legacy field is accepted for backwards compatibility but ignored.
+     * Use `linkedControlIds` to replace the complete set of linked controls.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("additionalControlIds")
+    @Deprecated
     private Optional<? extends List<String>> additionalControlIds;
+
+    /**
+     * The complete desired set of control IDs linked to this request. Send the
+     * full list to replace the set, an empty array to clear it, or omit the
+     * property to leave links unchanged. Each ID must identify an existing control
+     * in the customer's organization and is returned by the audit controls
+     * endpoint. The request is rejected if any ID does not match a control.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("linkedControlIds")
+    private Optional<? extends List<String>> linkedControlIds;
 
     @JsonCreator
     public PartialUpdateInformationRequest(
@@ -102,7 +117,8 @@ public class PartialUpdateInformationRequest {
             @JsonProperty("requestType") Optional<? extends InformationRequestType> requestType,
             @JsonProperty("title") Optional<String> title,
             @JsonProperty("cadence") Optional<? extends InformationRequestCadence> cadence,
-            @JsonProperty("additionalControlIds") Optional<? extends List<String>> additionalControlIds) {
+            @JsonProperty("additionalControlIds") Optional<? extends List<String>> additionalControlIds,
+            @JsonProperty("linkedControlIds") Optional<? extends List<String>> linkedControlIds) {
         Utils.checkNotNull(frameworkCodes, "frameworkCodes");
         Utils.checkNotNull(description, "description");
         Utils.checkNotNull(dueDate, "dueDate");
@@ -111,6 +127,7 @@ public class PartialUpdateInformationRequest {
         Utils.checkNotNull(title, "title");
         Utils.checkNotNull(cadence, "cadence");
         Utils.checkNotNull(additionalControlIds, "additionalControlIds");
+        Utils.checkNotNull(linkedControlIds, "linkedControlIds");
         this.frameworkCodes = frameworkCodes;
         this.description = description;
         this.dueDate = dueDate;
@@ -119,18 +136,23 @@ public class PartialUpdateInformationRequest {
         this.title = title;
         this.cadence = cadence;
         this.additionalControlIds = additionalControlIds;
+        this.linkedControlIds = linkedControlIds;
     }
     
     public PartialUpdateInformationRequest() {
         this(Optional.empty(), JsonNullable.undefined(), JsonNullable.undefined(),
             JsonNullable.undefined(), Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty());
     }
 
     /**
-     * The framework codes this request addresses.
-     * An empty array if no framework codes are associated.
+     * Framework codes are assigned only at creation; on update this field is a
+     * silent no-op — a value sent here is accepted for backwards compatibility
+     * but ignored, leaving the request's framework codes unchanged.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<List<String>> frameworkCodes() {
@@ -194,17 +216,29 @@ public class PartialUpdateInformationRequest {
     }
 
     /**
-     * Control IDs to link directly to this request, beyond those automatically
-     * mapped from framework codes. Replaces the existing set: pass the complete
-     * desired list, an empty array to clear all direct control links, or omit to
-     * leave them unchanged. Each must be the `id` of an existing control in the
-     * customer's organization (the identifier returned by the controls endpoints).
-     * The request is rejected if any ID does not match a control.
+     * This legacy field is accepted for backwards compatibility but ignored.
+     * Use `linkedControlIds` to replace the complete set of linked controls.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<List<String>> additionalControlIds() {
         return (Optional<List<String>>) additionalControlIds;
+    }
+
+    /**
+     * The complete desired set of control IDs linked to this request. Send the
+     * full list to replace the set, an empty array to clear it, or omit the
+     * property to leave links unchanged. Each ID must identify an existing control
+     * in the customer's organization and is returned by the audit controls
+     * endpoint. The request is rejected if any ID does not match a control.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> linkedControlIds() {
+        return (Optional<List<String>>) linkedControlIds;
     }
 
     public static Builder builder() {
@@ -213,9 +247,13 @@ public class PartialUpdateInformationRequest {
 
 
     /**
-     * The framework codes this request addresses.
-     * An empty array if no framework codes are associated.
+     * Framework codes are assigned only at creation; on update this field is a
+     * silent no-op — a value sent here is accepted for backwards compatibility
+     * but ignored, leaving the request's framework codes unchanged.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public PartialUpdateInformationRequest withFrameworkCodes(List<String> frameworkCodes) {
         Utils.checkNotNull(frameworkCodes, "frameworkCodes");
         this.frameworkCodes = Optional.ofNullable(frameworkCodes);
@@ -224,9 +262,13 @@ public class PartialUpdateInformationRequest {
 
 
     /**
-     * The framework codes this request addresses.
-     * An empty array if no framework codes are associated.
+     * Framework codes are assigned only at creation; on update this field is a
+     * silent no-op — a value sent here is accepted for backwards compatibility
+     * but ignored, leaving the request's framework codes unchanged.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public PartialUpdateInformationRequest withFrameworkCodes(Optional<? extends List<String>> frameworkCodes) {
         Utils.checkNotNull(frameworkCodes, "frameworkCodes");
         this.frameworkCodes = frameworkCodes;
@@ -357,13 +399,12 @@ public class PartialUpdateInformationRequest {
     }
 
     /**
-     * Control IDs to link directly to this request, beyond those automatically
-     * mapped from framework codes. Replaces the existing set: pass the complete
-     * desired list, an empty array to clear all direct control links, or omit to
-     * leave them unchanged. Each must be the `id` of an existing control in the
-     * customer's organization (the identifier returned by the controls endpoints).
-     * The request is rejected if any ID does not match a control.
+     * This legacy field is accepted for backwards compatibility but ignored.
+     * Use `linkedControlIds` to replace the complete set of linked controls.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public PartialUpdateInformationRequest withAdditionalControlIds(List<String> additionalControlIds) {
         Utils.checkNotNull(additionalControlIds, "additionalControlIds");
         this.additionalControlIds = Optional.ofNullable(additionalControlIds);
@@ -372,16 +413,42 @@ public class PartialUpdateInformationRequest {
 
 
     /**
-     * Control IDs to link directly to this request, beyond those automatically
-     * mapped from framework codes. Replaces the existing set: pass the complete
-     * desired list, an empty array to clear all direct control links, or omit to
-     * leave them unchanged. Each must be the `id` of an existing control in the
-     * customer's organization (the identifier returned by the controls endpoints).
-     * The request is rejected if any ID does not match a control.
+     * This legacy field is accepted for backwards compatibility but ignored.
+     * Use `linkedControlIds` to replace the complete set of linked controls.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public PartialUpdateInformationRequest withAdditionalControlIds(Optional<? extends List<String>> additionalControlIds) {
         Utils.checkNotNull(additionalControlIds, "additionalControlIds");
         this.additionalControlIds = additionalControlIds;
+        return this;
+    }
+
+    /**
+     * The complete desired set of control IDs linked to this request. Send the
+     * full list to replace the set, an empty array to clear it, or omit the
+     * property to leave links unchanged. Each ID must identify an existing control
+     * in the customer's organization and is returned by the audit controls
+     * endpoint. The request is rejected if any ID does not match a control.
+     */
+    public PartialUpdateInformationRequest withLinkedControlIds(List<String> linkedControlIds) {
+        Utils.checkNotNull(linkedControlIds, "linkedControlIds");
+        this.linkedControlIds = Optional.ofNullable(linkedControlIds);
+        return this;
+    }
+
+
+    /**
+     * The complete desired set of control IDs linked to this request. Send the
+     * full list to replace the set, an empty array to clear it, or omit the
+     * property to leave links unchanged. Each ID must identify an existing control
+     * in the customer's organization and is returned by the audit controls
+     * endpoint. The request is rejected if any ID does not match a control.
+     */
+    public PartialUpdateInformationRequest withLinkedControlIds(Optional<? extends List<String>> linkedControlIds) {
+        Utils.checkNotNull(linkedControlIds, "linkedControlIds");
+        this.linkedControlIds = linkedControlIds;
         return this;
     }
 
@@ -402,7 +469,8 @@ public class PartialUpdateInformationRequest {
             Utils.enhancedDeepEquals(this.requestType, other.requestType) &&
             Utils.enhancedDeepEquals(this.title, other.title) &&
             Utils.enhancedDeepEquals(this.cadence, other.cadence) &&
-            Utils.enhancedDeepEquals(this.additionalControlIds, other.additionalControlIds);
+            Utils.enhancedDeepEquals(this.additionalControlIds, other.additionalControlIds) &&
+            Utils.enhancedDeepEquals(this.linkedControlIds, other.linkedControlIds);
     }
     
     @Override
@@ -410,7 +478,7 @@ public class PartialUpdateInformationRequest {
         return Utils.enhancedHash(
             frameworkCodes, description, dueDate,
             evidenceCaptureDate, requestType, title,
-            cadence, additionalControlIds);
+            cadence, additionalControlIds, linkedControlIds);
     }
     
     @Override
@@ -423,12 +491,14 @@ public class PartialUpdateInformationRequest {
                 "requestType", requestType,
                 "title", title,
                 "cadence", cadence,
-                "additionalControlIds", additionalControlIds);
+                "additionalControlIds", additionalControlIds,
+                "linkedControlIds", linkedControlIds);
     }
 
     @SuppressWarnings("UnusedReturnValue")
     public final static class Builder {
 
+        @Deprecated
         private Optional<? extends List<String>> frameworkCodes = Optional.empty();
 
         private JsonNullable<String> description = JsonNullable.undefined();
@@ -443,7 +513,10 @@ public class PartialUpdateInformationRequest {
 
         private Optional<? extends InformationRequestCadence> cadence = Optional.empty();
 
+        @Deprecated
         private Optional<? extends List<String>> additionalControlIds = Optional.empty();
+
+        private Optional<? extends List<String>> linkedControlIds = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -451,9 +524,13 @@ public class PartialUpdateInformationRequest {
 
 
         /**
-         * The framework codes this request addresses.
-         * An empty array if no framework codes are associated.
+         * Framework codes are assigned only at creation; on update this field is a
+         * silent no-op — a value sent here is accepted for backwards compatibility
+         * but ignored, leaving the request's framework codes unchanged.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder frameworkCodes(List<String> frameworkCodes) {
             Utils.checkNotNull(frameworkCodes, "frameworkCodes");
             this.frameworkCodes = Optional.ofNullable(frameworkCodes);
@@ -461,9 +538,13 @@ public class PartialUpdateInformationRequest {
         }
 
         /**
-         * The framework codes this request addresses.
-         * An empty array if no framework codes are associated.
+         * Framework codes are assigned only at creation; on update this field is a
+         * silent no-op — a value sent here is accepted for backwards compatibility
+         * but ignored, leaving the request's framework codes unchanged.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder frameworkCodes(Optional<? extends List<String>> frameworkCodes) {
             Utils.checkNotNull(frameworkCodes, "frameworkCodes");
             this.frameworkCodes = frameworkCodes;
@@ -598,13 +679,12 @@ public class PartialUpdateInformationRequest {
 
 
         /**
-         * Control IDs to link directly to this request, beyond those automatically
-         * mapped from framework codes. Replaces the existing set: pass the complete
-         * desired list, an empty array to clear all direct control links, or omit to
-         * leave them unchanged. Each must be the `id` of an existing control in the
-         * customer's organization (the identifier returned by the controls endpoints).
-         * The request is rejected if any ID does not match a control.
+         * This legacy field is accepted for backwards compatibility but ignored.
+         * Use `linkedControlIds` to replace the complete set of linked controls.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder additionalControlIds(List<String> additionalControlIds) {
             Utils.checkNotNull(additionalControlIds, "additionalControlIds");
             this.additionalControlIds = Optional.ofNullable(additionalControlIds);
@@ -612,16 +692,42 @@ public class PartialUpdateInformationRequest {
         }
 
         /**
-         * Control IDs to link directly to this request, beyond those automatically
-         * mapped from framework codes. Replaces the existing set: pass the complete
-         * desired list, an empty array to clear all direct control links, or omit to
-         * leave them unchanged. Each must be the `id` of an existing control in the
-         * customer's organization (the identifier returned by the controls endpoints).
-         * The request is rejected if any ID does not match a control.
+         * This legacy field is accepted for backwards compatibility but ignored.
+         * Use `linkedControlIds` to replace the complete set of linked controls.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder additionalControlIds(Optional<? extends List<String>> additionalControlIds) {
             Utils.checkNotNull(additionalControlIds, "additionalControlIds");
             this.additionalControlIds = additionalControlIds;
+            return this;
+        }
+
+
+        /**
+         * The complete desired set of control IDs linked to this request. Send the
+         * full list to replace the set, an empty array to clear it, or omit the
+         * property to leave links unchanged. Each ID must identify an existing control
+         * in the customer's organization and is returned by the audit controls
+         * endpoint. The request is rejected if any ID does not match a control.
+         */
+        public Builder linkedControlIds(List<String> linkedControlIds) {
+            Utils.checkNotNull(linkedControlIds, "linkedControlIds");
+            this.linkedControlIds = Optional.ofNullable(linkedControlIds);
+            return this;
+        }
+
+        /**
+         * The complete desired set of control IDs linked to this request. Send the
+         * full list to replace the set, an empty array to clear it, or omit the
+         * property to leave links unchanged. Each ID must identify an existing control
+         * in the customer's organization and is returned by the audit controls
+         * endpoint. The request is rejected if any ID does not match a control.
+         */
+        public Builder linkedControlIds(Optional<? extends List<String>> linkedControlIds) {
+            Utils.checkNotNull(linkedControlIds, "linkedControlIds");
+            this.linkedControlIds = linkedControlIds;
             return this;
         }
 
@@ -630,7 +736,7 @@ public class PartialUpdateInformationRequest {
             return new PartialUpdateInformationRequest(
                 frameworkCodes, description, dueDate,
                 evidenceCaptureDate, requestType, title,
-                cadence, additionalControlIds);
+                cadence, additionalControlIds, linkedControlIds);
         }
 
     }
