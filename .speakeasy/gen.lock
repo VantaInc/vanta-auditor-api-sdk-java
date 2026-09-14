@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: f42d74f5-5725-46fa-b13c-649b7ef895c3
 management:
-  docChecksum: 441c15c476741c4778e5af3883a97e5b
+  docChecksum: 63a160a2df77727b3c4b88731557b40a
   docVersion: 1.0.0
   speakeasyVersion: 1.796.4
   generationVersion: 2.935.1
-  releaseVersion: 0.7.5
-  configChecksum: 4bfc253c5c3e21bcce8226f6b5ce7d1a
+  releaseVersion: 0.7.6
+  configChecksum: c421d63406eb97e6f04f3b851c6455f8
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   installationURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java
   published: true
 persistentEdits:
-  generation_id: 4e7da71c-19d4-4ac4-bc61-18d7c09ccc3c
-  pristine_commit_hash: c4d05c91ae968b9f40164dc27b1d6f0fa2edca9c
-  pristine_tree_hash: 8db1d68bf311a4e3c7f086ab66221197a941d881
+  generation_id: 151ae928-0206-4b0d-9003-66b74d832cfc
+  pristine_commit_hash: a3b1145a0ce26cf93323625f1dd2f785df847992
+  pristine_tree_hash: 4bad53b3a0783fb3e005c6bd1d1682c07c6d5e4a
 features:
   java:
     additionalDependencies: 0.1.0
@@ -202,6 +202,14 @@ trackedFiles:
     id: 0f9334b6d184
     last_write_checksum: sha1:366104173fb13620e7565139645b870b2688108e
     pristine_git_object: 95a9c41c68893843dca82a18e75818f2f93cd82c
+  docs/models/components/AuditorApiControl.md:
+    id: 3b44692f59f3
+    last_write_checksum: sha1:20934832990e7fb5728eabcdff8f07e4d0be619a
+    pristine_git_object: 71c316307916277ce657ad4132db823ec5dd488e
+  docs/models/components/AuditorApiControlOwner.md:
+    id: 974bf9a6aefb
+    last_write_checksum: sha1:57a111354f9b622254b0b78f1a7b175a975f841e
+    pristine_git_object: 3d5b72f64aab0384628e6de4ee89494e6b104223
   docs/models/components/AuditorApiVulnerability.md:
     id: cbc1c3c18e94
     last_write_checksum: sha1:f977d35d0b77318ffbff11ae8b2b843c3f0c6822
@@ -298,18 +306,10 @@ trackedFiles:
     id: 969e25149123
     last_write_checksum: sha1:e437f84c683f162d42384f39ece0ca9162c36158
     pristine_git_object: 05fd173d92e4a0ca19cb14c228a177d6e025961f
-  docs/models/components/Control.md:
-    id: 3163183392d0
-    last_write_checksum: sha1:2aba23a5b218da1b24371445c15377182ed877ba
-    pristine_git_object: d57a67823a3de66217279141adab176d87fe4d69
   docs/models/components/ControlDomain.md:
     id: 78efc0a99d5d
     last_write_checksum: sha1:0eab821ce7a3aadff4eac70339bd87e3367f7173
     pristine_git_object: e9d3606004f595c3ce885ada16e0de2388f93b5d
-  docs/models/components/ControlOwner.md:
-    id: 48e2682c2ac8
-    last_write_checksum: sha1:26ba30b845b869a96efc15463f48b5d9db5b39b0
-    pristine_git_object: 19d2ea3c096aefba84e9d65ceba3546481685e54
   docs/models/components/ControlSource.md:
     id: e2de469ce103
     last_write_checksum: sha1:46dbe916cc09735aed049876daf9041a471afe29
@@ -452,8 +452,8 @@ trackedFiles:
     pristine_git_object: 9bb93e4dfc387061026170d128c1cf069af6e7f3
   docs/models/components/InformationRequest.md:
     id: 470109d2da90
-    last_write_checksum: sha1:0a3e9434f5c1703ea0072e3faee2f0bc31a5be7f
-    pristine_git_object: 4e383b6140e7a2b0f2fd04cb546751adbebf1541
+    last_write_checksum: sha1:0b0682201426bb8ac906afc7c76bd388375641b7
+    pristine_git_object: 8d557d212b1a9ab4f381c94fdda7d6a55ba9a4d3
   docs/models/components/InformationRequestActivityLog.md:
     id: c0627c069348
     last_write_checksum: sha1:b20a2bc78e680aa7bcee9748f440d5f61507752e
@@ -1224,8 +1224,8 @@ trackedFiles:
     pristine_git_object: b6ca3edf4c23b4fee66faad020dbf38e27671c30
   docs/models/operations/CreateCustomControlResponse.md:
     id: 1ce71748e7dd
-    last_write_checksum: sha1:6c12ab21ec141359701185d894b656194d9bbd7c
-    pristine_git_object: 635e23eba8f38b4382887b864c9242ce1eab5d9c
+    last_write_checksum: sha1:1bdbe96324a6969374cb216d921fe21cc00513fb
+    pristine_git_object: aa92418b15c240fa24d1c950c9ed920af4833b6b
   docs/models/operations/CreateCustomEvidenceRequestRequest.md:
     id: 5159a36cd649
     last_write_checksum: sha1:a68fdb5ce7800ecc86f0c3abbcdc79c55c5c9ab1
@@ -1636,16 +1636,16 @@ trackedFiles:
     pristine_git_object: 0808108fb53faaa59313b7f3a8cb82e6a32884ad
   docs/sdks/audits/README.md:
     id: b976aa226e19
-    last_write_checksum: sha1:9d5c0136e57db971c69e9cfa7be0e3f74e926a9d
-    pristine_git_object: 37b5a53a34bad666b7c03063bc39683ea6870415
+    last_write_checksum: sha1:64190bcb74cd710a9f368aacecc16b5125fe3305
+    pristine_git_object: b144380be54bc67736eb686102c2068c957ee3a3
   docs/utils/Blob.md:
     id: 3d9a7c4ad67a
     last_write_checksum: sha1:46ba9a381c8983c4a89c495fbca109cc66851754
     pristine_git_object: de7d1b163d5926363b94e775645373b750f65b30
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:a093b5a33e8107b37f817782f21b09bf4c42bee9
-    pristine_git_object: 749eb9044e8625b2fbc6420e5148d5fa62042b8e
+    last_write_checksum: sha1:d61dcbb052246a0685fdf3f9ed9e120912d6fab0
+    pristine_git_object: 3b2aae6a872547194bf0458e5923c72ab5a95d19
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -1692,8 +1692,8 @@ trackedFiles:
     pristine_git_object: 154d532b2356417df0b7f5ac8b59d931c7b9e721
   src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java:
     id: ce55360c720c
-    last_write_checksum: sha1:4e3576f3f82bad8151302c296298ff40d3ed7258
-    pristine_git_object: 744f4569ead62b8c7c667d1820a147df071c9724
+    last_write_checksum: sha1:da48e9efe9399b01741c48198bbc73baffbdb68a
+    pristine_git_object: 09d06108e4d940c26c001bea9f359d585998e553
   src/main/java/com/vanta/vanta_auditor_api/SecuritySource.java:
     id: 18c0da44b51f
     last_write_checksum: sha1:55dc5f4240c7317c9a5a4080b6e17dc1b6fdd403
@@ -1862,6 +1862,14 @@ trackedFiles:
     id: a919532816db
     last_write_checksum: sha1:1420bf43f5d236eec388fdac1a04c20df7882ad4
     pristine_git_object: fc4e6501073659c689bf152f0ea98079e614f111
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AuditorApiControl.java:
+    id: 461b51492faf
+    last_write_checksum: sha1:9a4c6e83c951cc9cc39a0633aeaa9729a1715121
+    pristine_git_object: d79be0099a3d672480f29efe23443c18312f417e
+  src/main/java/com/vanta/vanta_auditor_api/models/components/AuditorApiControlOwner.java:
+    id: 4de95640a43c
+    last_write_checksum: sha1:1873adf25b4aa85c06c0a9a48c0e39644d73616b
+    pristine_git_object: 386a904bf619002a00caab42e63dc14def905e46
   src/main/java/com/vanta/vanta_auditor_api/models/components/AuditorApiVulnerability.java:
     id: 57c3f6c5e76f
     last_write_checksum: sha1:117347632a152e6212a970ffeaef698389d7078b
@@ -1958,18 +1966,10 @@ trackedFiles:
     id: 12f1f16c6203
     last_write_checksum: sha1:52f58a7042041e1cf64dc9946ab490f8467caccf
     pristine_git_object: 18071bf6c1052593a797c4fc0ece1598d8cd8fdc
-  src/main/java/com/vanta/vanta_auditor_api/models/components/Control.java:
-    id: 628e96a36904
-    last_write_checksum: sha1:9b21207422b0a16b5bb868dc8b837da0958acd0f
-    pristine_git_object: f2a7f1af61ff8743e0c690030e42da7e1a3a5442
   src/main/java/com/vanta/vanta_auditor_api/models/components/ControlDomain.java:
     id: 9be135372a89
     last_write_checksum: sha1:ac0f5694d92559f0586ec1f44d4b15cab9cff710
     pristine_git_object: 59952e7677423969fae774f36b6166f36c93adfb
-  src/main/java/com/vanta/vanta_auditor_api/models/components/ControlOwner.java:
-    id: 469dee67cde9
-    last_write_checksum: sha1:65f5decf51f1d633a4b03bf47b5dfe67de298573
-    pristine_git_object: ca00a08648db646af5274a0dd89d021467f5b16f
   src/main/java/com/vanta/vanta_auditor_api/models/components/ControlSource.java:
     id: 85ed5e913bf7
     last_write_checksum: sha1:f80e862079cc3d5b05577018f83d04f592786781
@@ -2112,8 +2112,8 @@ trackedFiles:
     pristine_git_object: 6bee16d60c3a0353416c2c511fdaeb15086d9f6c
   src/main/java/com/vanta/vanta_auditor_api/models/components/InformationRequest.java:
     id: f4893ae2ac96
-    last_write_checksum: sha1:e69d88bd5a91cb68c6cbb2d70acb848ef75edff8
-    pristine_git_object: b38bf169b49b80be89357f84bbabf88cf7f07581
+    last_write_checksum: sha1:96da5bd7308b8f6338075b7c8c7d3c4f17ca90ed
+    pristine_git_object: 173638e06509c4fc15b0be989d0788ee076ea952
   src/main/java/com/vanta/vanta_auditor_api/models/components/InformationRequestActivityLog.java:
     id: 90cc6c274b1b
     last_write_checksum: sha1:4fc0418121a5c2ff4c6ffa2e834af4bcc08ec4fb
@@ -3152,8 +3152,8 @@ trackedFiles:
     pristine_git_object: 281a36f773f3413b3e865d86ef5aeb53c7048813
   src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCustomControlResponse.java:
     id: cf1edebd75d4
-    last_write_checksum: sha1:2f654e68f7dfba5cb7db173a44e3c99001f9d02e
-    pristine_git_object: 72f114e00053327ff4b15bc6755ec5e9ec17e4f2
+    last_write_checksum: sha1:107837ad45d6d177bc5b3ccecdd4a1803c2ad957
+    pristine_git_object: a9d96ac8a66c5059a0f1a14e2c571856e2187493
   src/main/java/com/vanta/vanta_auditor_api/models/operations/CreateCustomEvidenceRequestRequest.java:
     id: d499e3f47acf
     last_write_checksum: sha1:3cf190471ad6965c9e8e78e27ae4b53d9f5b0837
@@ -3784,8 +3784,8 @@ trackedFiles:
     pristine_git_object: ca24d4b991a95474f60bfbfc86c5b13b8aef52a4
   src/main/java/com/vanta/vanta_auditor_api/models/operations/async/CreateCustomControlResponse.java:
     id: 0c4f0f813a6a
-    last_write_checksum: sha1:148c3346e1dcdc194dde65c54bf4dd73cdd1c3d3
-    pristine_git_object: 29c591eb9509078d29a6bd8ae225d4d6c16ef3b0
+    last_write_checksum: sha1:a5f8b57b174b8ad9672c6dc54bb1886258516496
+    pristine_git_object: 04d640b5665b7593ba99c5f42f38a436706d1f1b
   src/main/java/com/vanta/vanta_auditor_api/models/operations/async/CreateCustomEvidenceRequestResponse.java:
     id: c7d05f30d4fb
     last_write_checksum: sha1:f9f9b899b9f7ed1706918c46a362721f5856f35a
@@ -4012,8 +4012,8 @@ trackedFiles:
     pristine_git_object: 01eaf7b30f9b9f851efa8cb18f748d323ec8002c
   src/main/java/com/vanta/vanta_auditor_api/operations/CreateCustomControl.java:
     id: 7dbd2b37c626
-    last_write_checksum: sha1:5c4bac71a26bdd79c04bf2c173da9adcdaeb5ced
-    pristine_git_object: e8bac5321004b3d2377b9c3cf6b8624816d76c66
+    last_write_checksum: sha1:123d75546754843d0057c3dcf0fd32be5d518aa9
+    pristine_git_object: 4c5302a187c6330ca41ee67e7cb731a00a97bf8c
   src/main/java/com/vanta/vanta_auditor_api/operations/CreateCustomEvidenceRequest.java:
     id: 746ef478d8b0
     last_write_checksum: sha1:1a1c9ae3b65c0d88773cd87c292e427c3c72d1e1
@@ -4581,7 +4581,7 @@ examples:
         application/json: {"externalId": "<id>", "name": null, "description": "yet plus utter queasily what juvenile wound", "effectiveDate": "2024-11-10T13:58:54.564Z", "category": "CLOUD_SECURITY"}
       responses:
         "201":
-          application/json: {"id": "a2f7e1b9d0c3f4e5a6c7b8d9", "externalId": "CRY-104", "name": "Data encryption utilized", "description": "Access reviews are performed to ensure that access is appropriate for the user's role and responsibilities.", "source": "Vanta", "domains": ["CRYPTOGRAPHIC_PROTECTIONS"], "owner": {"id": "65e1efde08e8478f143a8ff9", "displayName": "Example Owner", "emailAddress": "example-person@email.com"}, "role": "CONTROLLER", "customFields": [{"label": "Additional context", "value": "This control is critical for GDPR compliance"}], "creationDate": null, "modificationDate": null}
+          application/json: {"id": "a2f7e1b9d0c3f4e5a6c7b8d9", "externalId": "CRY-104", "name": "Data encryption utilized", "description": "Access reviews are performed to ensure that access is appropriate for the user's role and responsibilities.", "source": "Vanta", "domains": ["CRYPTOGRAPHIC_PROTECTIONS"], "owner": {"id": "65e1efde08e8478f143a8ff9", "displayName": "Example Owner", "emailAddress": "example-person@email.com"}, "role": null, "customFields": [], "creationDate": null, "modificationDate": null}
   CreateAuditor:
     Example 1:
       requestBody:
@@ -4607,7 +4607,7 @@ examples:
           pageSize: 10
       responses:
         "200":
-          application/json: {"results": {"data": [{"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}], "pageInfo": {"endCursor": "Njg5MGU0NzNkY2UxZGE1Z", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "Njg5MGU0NzNkY2UxZGE1Z"}}}
+          application/json: {"results": {"data": [{"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "linkedControlIds": ["c1a2b3c4d5e6f7a8b9c0d1e2"], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}], "pageInfo": {"endCursor": "Njg5MGU0NzNkY2UxZGE1Z", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "Njg5MGU0NzNkY2UxZGE1Z"}}}
   GetFrameworkCodes:
     Example 1:
       parameters:
@@ -4625,7 +4625,7 @@ examples:
           pageSize: 10
       responses:
         "200":
-          application/json: {"results": {"data": [{"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}], "pageInfo": {"endCursor": "Njg5MGU0NzNkY2UxZGE1Z", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "Njg5MGU0NzNkY2UxZGE1Z"}}}
+          application/json: {"results": {"data": [{"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "linkedControlIds": ["c1a2b3c4d5e6f7a8b9c0d1e2"], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}], "pageInfo": {"endCursor": "Njg5MGU0NzNkY2UxZGE1Z", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "Njg5MGU0NzNkY2UxZGE1Z"}}}
   CreateInformationRequest:
     Example 1:
       parameters:
@@ -4635,7 +4635,7 @@ examples:
         application/json: {"uniqueId": "<id>", "title": "<value>", "requestType": "SAMPLE", "frameworkCodes": []}
       responses:
         "201":
-          application/json: {"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}
+          application/json: {"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "linkedControlIds": ["c1a2b3c4d5e6f7a8b9c0d1e2"], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}
   GetInformationRequest:
     Example 1:
       parameters:
@@ -4644,7 +4644,7 @@ examples:
           requestId: "<id>"
       responses:
         "200":
-          application/json: {"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}
+          application/json: {"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "linkedControlIds": ["c1a2b3c4d5e6f7a8b9c0d1e2"], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}
   UpdateInformationRequest:
     Example 1:
       parameters:
@@ -4655,7 +4655,7 @@ examples:
         application/json: {}
       responses:
         "200":
-          application/json: {"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}
+          application/json: {"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "linkedControlIds": ["c1a2b3c4d5e6f7a8b9c0d1e2"], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}
   DeleteInformationRequest:
     speakeasy-default-delete-information-request:
       parameters:
@@ -4672,7 +4672,7 @@ examples:
         application/json: {"auditorEmail": "<value>"}
       responses:
         "200":
-          application/json: {"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}
+          application/json: {"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "linkedControlIds": ["c1a2b3c4d5e6f7a8b9c0d1e2"], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}
   ListInformationRequestActivity:
     Example 1:
       parameters:
@@ -4758,7 +4758,7 @@ examples:
         application/json: {"auditorEmail": "<value>", "reason": "<value>"}
       responses:
         "200":
-          application/json: {"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}
+          application/json: {"id": "6890e473dce1da5d8406f5e7", "uniqueId": "1466132", "additionalControlIds": [], "linkedControlIds": ["c1a2b3c4d5e6f7a8b9c0d1e2"], "approvalStatus": "NEEDS_EVIDENCE", "cadence": "ANNUALLY", "frameworkCodes": [], "segmentIds": ["65fc81a3359c8508c9af880f"], "description": "Provide the data deletion evidence for a sample of terminated customers", "dueDate": "2025-10-28T00:00:00.000Z", "evidenceCaptureDate": "2025-10-28T00:00:00.000Z", "requestId": null, "requestType": "SAMPLE", "title": "Terminated Customer Deletion Evidence", "creationDate": "2025-08-01T12:34:56.000Z", "modificationDate": "2025-08-02T08:00:00.000Z", "deletionDate": null, "ownerAssignment": {"displayName": "John Doe", "id": "507f1f77bcf86cd799439011", "type": "user"}}
   ListAuditIssues:
     Example 1:
       parameters:

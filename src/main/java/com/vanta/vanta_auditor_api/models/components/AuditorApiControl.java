@@ -18,7 +18,7 @@ import java.util.Optional;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 
-public class Control {
+public class AuditorApiControl {
     /**
      * The control's unique ID.
      */
@@ -59,7 +59,7 @@ public class Control {
      */
     @JsonInclude(Include.ALWAYS)
     @JsonProperty("owner")
-    private Optional<? extends ControlOwner> owner;
+    private Optional<? extends AuditorApiControlOwner> owner;
 
     /**
      * The control's GDPR role, if the control is a GDPR control.
@@ -89,14 +89,14 @@ public class Control {
     private Optional<OffsetDateTime> modificationDate;
 
     @JsonCreator
-    public Control(
+    public AuditorApiControl(
             @JsonProperty("id") String id,
             @JsonProperty("externalId") Optional<String> externalId,
             @JsonProperty("name") String name,
             @JsonProperty("description") String description,
             @JsonProperty("source") ControlSource source,
             @JsonProperty("domains") List<String> domains,
-            @JsonProperty("owner") Optional<? extends ControlOwner> owner,
+            @JsonProperty("owner") Optional<? extends AuditorApiControlOwner> owner,
             @JsonProperty("role") JsonNullable<String> role,
             @JsonProperty("customFields") List<CustomField> customFields,
             @JsonProperty("creationDate") Optional<OffsetDateTime> creationDate,
@@ -125,7 +125,7 @@ public class Control {
         this.modificationDate = modificationDate;
     }
     
-    public Control(
+    public AuditorApiControl(
             String id,
             String name,
             String description,
@@ -188,8 +188,8 @@ public class Control {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<ControlOwner> owner() {
-        return (Optional<ControlOwner>) owner;
+    public Optional<AuditorApiControlOwner> owner() {
+        return (Optional<AuditorApiControlOwner>) owner;
     }
 
     /**
@@ -232,7 +232,7 @@ public class Control {
     /**
      * The control's unique ID.
      */
-    public Control withId(String id) {
+    public AuditorApiControl withId(String id) {
         Utils.checkNotNull(id, "id");
         this.id = id;
         return this;
@@ -241,7 +241,7 @@ public class Control {
     /**
      * The control's external ID.
      */
-    public Control withExternalId(String externalId) {
+    public AuditorApiControl withExternalId(String externalId) {
         Utils.checkNotNull(externalId, "externalId");
         this.externalId = Optional.ofNullable(externalId);
         return this;
@@ -251,7 +251,7 @@ public class Control {
     /**
      * The control's external ID.
      */
-    public Control withExternalId(Optional<String> externalId) {
+    public AuditorApiControl withExternalId(Optional<String> externalId) {
         Utils.checkNotNull(externalId, "externalId");
         this.externalId = externalId;
         return this;
@@ -260,7 +260,7 @@ public class Control {
     /**
      * The control's name.
      */
-    public Control withName(String name) {
+    public AuditorApiControl withName(String name) {
         Utils.checkNotNull(name, "name");
         this.name = name;
         return this;
@@ -269,13 +269,13 @@ public class Control {
     /**
      * The control's description.
      */
-    public Control withDescription(String description) {
+    public AuditorApiControl withDescription(String description) {
         Utils.checkNotNull(description, "description");
         this.description = description;
         return this;
     }
 
-    public Control withSource(ControlSource source) {
+    public AuditorApiControl withSource(ControlSource source) {
         Utils.checkNotNull(source, "source");
         this.source = source;
         return this;
@@ -284,7 +284,7 @@ public class Control {
     /**
      * The security domains that the control belongs to.
      */
-    public Control withDomains(List<String> domains) {
+    public AuditorApiControl withDomains(List<String> domains) {
         Utils.checkNotNull(domains, "domains");
         this.domains = domains;
         return this;
@@ -293,7 +293,7 @@ public class Control {
     /**
      * The control's owner.
      */
-    public Control withOwner(ControlOwner owner) {
+    public AuditorApiControl withOwner(AuditorApiControlOwner owner) {
         Utils.checkNotNull(owner, "owner");
         this.owner = Optional.ofNullable(owner);
         return this;
@@ -303,7 +303,7 @@ public class Control {
     /**
      * The control's owner.
      */
-    public Control withOwner(Optional<? extends ControlOwner> owner) {
+    public AuditorApiControl withOwner(Optional<? extends AuditorApiControlOwner> owner) {
         Utils.checkNotNull(owner, "owner");
         this.owner = owner;
         return this;
@@ -312,7 +312,7 @@ public class Control {
     /**
      * The control's GDPR role, if the control is a GDPR control.
      */
-    public Control withRole(String role) {
+    public AuditorApiControl withRole(String role) {
         Utils.checkNotNull(role, "role");
         this.role = JsonNullable.of(role);
         return this;
@@ -321,7 +321,7 @@ public class Control {
     /**
      * The control's GDPR role, if the control is a GDPR control.
      */
-    public Control withRole(JsonNullable<String> role) {
+    public AuditorApiControl withRole(JsonNullable<String> role) {
         Utils.checkNotNull(role, "role");
         this.role = role;
         return this;
@@ -330,7 +330,7 @@ public class Control {
     /**
      * The control's custom field values, if control custom fields is included in your Vanta instance.
      */
-    public Control withCustomFields(List<CustomField> customFields) {
+    public AuditorApiControl withCustomFields(List<CustomField> customFields) {
         Utils.checkNotNull(customFields, "customFields");
         this.customFields = customFields;
         return this;
@@ -339,7 +339,7 @@ public class Control {
     /**
      * When the control was created. Returns null for Vanta library controls.
      */
-    public Control withCreationDate(OffsetDateTime creationDate) {
+    public AuditorApiControl withCreationDate(OffsetDateTime creationDate) {
         Utils.checkNotNull(creationDate, "creationDate");
         this.creationDate = Optional.ofNullable(creationDate);
         return this;
@@ -349,7 +349,7 @@ public class Control {
     /**
      * When the control was created. Returns null for Vanta library controls.
      */
-    public Control withCreationDate(Optional<OffsetDateTime> creationDate) {
+    public AuditorApiControl withCreationDate(Optional<OffsetDateTime> creationDate) {
         Utils.checkNotNull(creationDate, "creationDate");
         this.creationDate = creationDate;
         return this;
@@ -358,7 +358,7 @@ public class Control {
     /**
      * When the control was last modified. Returns null for Vanta library controls.
      */
-    public Control withModificationDate(OffsetDateTime modificationDate) {
+    public AuditorApiControl withModificationDate(OffsetDateTime modificationDate) {
         Utils.checkNotNull(modificationDate, "modificationDate");
         this.modificationDate = Optional.ofNullable(modificationDate);
         return this;
@@ -368,7 +368,7 @@ public class Control {
     /**
      * When the control was last modified. Returns null for Vanta library controls.
      */
-    public Control withModificationDate(Optional<OffsetDateTime> modificationDate) {
+    public AuditorApiControl withModificationDate(Optional<OffsetDateTime> modificationDate) {
         Utils.checkNotNull(modificationDate, "modificationDate");
         this.modificationDate = modificationDate;
         return this;
@@ -382,7 +382,7 @@ public class Control {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Control other = (Control) o;
+        AuditorApiControl other = (AuditorApiControl) o;
         return 
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.externalId, other.externalId) &&
@@ -408,7 +408,7 @@ public class Control {
     
     @Override
     public String toString() {
-        return Utils.toString(Control.class,
+        return Utils.toString(AuditorApiControl.class,
                 "id", id,
                 "externalId", externalId,
                 "name", name,
@@ -437,7 +437,7 @@ public class Control {
 
         private List<String> domains;
 
-        private Optional<? extends ControlOwner> owner = Optional.empty();
+        private Optional<? extends AuditorApiControlOwner> owner = Optional.empty();
 
         private JsonNullable<String> role = JsonNullable.undefined();
 
@@ -521,7 +521,7 @@ public class Control {
         /**
          * The control's owner.
          */
-        public Builder owner(ControlOwner owner) {
+        public Builder owner(AuditorApiControlOwner owner) {
             Utils.checkNotNull(owner, "owner");
             this.owner = Optional.ofNullable(owner);
             return this;
@@ -530,7 +530,7 @@ public class Control {
         /**
          * The control's owner.
          */
-        public Builder owner(Optional<? extends ControlOwner> owner) {
+        public Builder owner(Optional<? extends AuditorApiControlOwner> owner) {
             Utils.checkNotNull(owner, "owner");
             this.owner = owner;
             return this;
@@ -603,9 +603,9 @@ public class Control {
             return this;
         }
 
-        public Control build() {
+        public AuditorApiControl build() {
 
-            return new Control(
+            return new AuditorApiControl(
                 id, externalId, name,
                 description, source, domains,
                 owner, role, customFields,

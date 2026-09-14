@@ -46,17 +46,22 @@ public class InformationRequest {
     /**
      * Deprecated control-linkage field retained for response compatibility. It
      * may contain control IDs supplied directly to the request, but it is not a
-     * complete or guaranteed-current list of controls linked to the request. To
-     * list information requests linked to a particular control, use the
-     * `GET /audits/{auditId}/controls/{controlId}/information-requests` endpoint.
-     * A request may be absent from that endpoint when its link appears only in
-     * this deprecated field.
+     * complete or guaranteed-current list of controls linked to the request. Use
+     * `linkedControlIds` for the complete current list.
      * 
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonProperty("additionalControlIds")
     @Deprecated
     private List<String> additionalControlIds;
+
+    /**
+     * The complete current set of control IDs linked to this request, including
+     * controls linked through framework codes and controls added directly. Each
+     * ID is returned by the audit controls endpoint.
+     */
+    @JsonProperty("linkedControlIds")
+    private List<String> linkedControlIds;
 
     /**
      * Current approval status of the information request, tracking its lifecycle through the audit
@@ -77,9 +82,8 @@ public class InformationRequest {
     private Optional<? extends Cadence> cadence;
 
     /**
-     * Always empty on read. To find requests for a control, use
-     * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
-     * For request assignment, use `segmentIds`.
+     * Always empty on read. Use `linkedControlIds` for control linkage and
+     * `segmentIds` for request assignment.
      * 
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -188,6 +192,7 @@ public class InformationRequest {
             @JsonProperty("id") String id,
             @JsonProperty("uniqueId") String uniqueId,
             @JsonProperty("additionalControlIds") List<String> additionalControlIds,
+            @JsonProperty("linkedControlIds") List<String> linkedControlIds,
             @JsonProperty("approvalStatus") InformationRequestApprovalStatus approvalStatus,
             @JsonProperty("cadence") Optional<? extends Cadence> cadence,
             @JsonProperty("frameworkCodes") List<String> frameworkCodes,
@@ -205,6 +210,7 @@ public class InformationRequest {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(uniqueId, "uniqueId");
         Utils.checkNotNull(additionalControlIds, "additionalControlIds");
+        Utils.checkNotNull(linkedControlIds, "linkedControlIds");
         Utils.checkNotNull(approvalStatus, "approvalStatus");
         Utils.checkNotNull(cadence, "cadence");
         Utils.checkNotNull(frameworkCodes, "frameworkCodes");
@@ -222,6 +228,7 @@ public class InformationRequest {
         this.id = id;
         this.uniqueId = uniqueId;
         this.additionalControlIds = additionalControlIds;
+        this.linkedControlIds = linkedControlIds;
         this.approvalStatus = approvalStatus;
         this.cadence = cadence;
         this.frameworkCodes = frameworkCodes;
@@ -242,6 +249,7 @@ public class InformationRequest {
             String id,
             String uniqueId,
             List<String> additionalControlIds,
+            List<String> linkedControlIds,
             InformationRequestApprovalStatus approvalStatus,
             List<String> frameworkCodes,
             List<String> segmentIds,
@@ -250,11 +258,11 @@ public class InformationRequest {
             OffsetDateTime creationDate,
             OffsetDateTime modificationDate) {
         this(id, uniqueId, additionalControlIds,
-            approvalStatus, Optional.empty(), frameworkCodes,
-            segmentIds, Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), requestType,
-            title, creationDate, modificationDate,
-            Optional.empty(), Optional.empty());
+            linkedControlIds, approvalStatus, Optional.empty(),
+            frameworkCodes, segmentIds, Optional.empty(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            requestType, title, creationDate,
+            modificationDate, Optional.empty(), Optional.empty());
     }
 
     /**
@@ -280,11 +288,8 @@ public class InformationRequest {
     /**
      * Deprecated control-linkage field retained for response compatibility. It
      * may contain control IDs supplied directly to the request, but it is not a
-     * complete or guaranteed-current list of controls linked to the request. To
-     * list information requests linked to a particular control, use the
-     * `GET /audits/{auditId}/controls/{controlId}/information-requests` endpoint.
-     * A request may be absent from that endpoint when its link appears only in
-     * this deprecated field.
+     * complete or guaranteed-current list of controls linked to the request. Use
+     * `linkedControlIds` for the complete current list.
      * 
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -292,6 +297,16 @@ public class InformationRequest {
     @JsonIgnore
     public List<String> additionalControlIds() {
         return additionalControlIds;
+    }
+
+    /**
+     * The complete current set of control IDs linked to this request, including
+     * controls linked through framework codes and controls added directly. Each
+     * ID is returned by the audit controls endpoint.
+     */
+    @JsonIgnore
+    public List<String> linkedControlIds() {
+        return linkedControlIds;
     }
 
     /**
@@ -317,9 +332,8 @@ public class InformationRequest {
     }
 
     /**
-     * Always empty on read. To find requests for a control, use
-     * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
-     * For request assignment, use `segmentIds`.
+     * Always empty on read. Use `linkedControlIds` for control linkage and
+     * `segmentIds` for request assignment.
      * 
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -472,11 +486,8 @@ public class InformationRequest {
     /**
      * Deprecated control-linkage field retained for response compatibility. It
      * may contain control IDs supplied directly to the request, but it is not a
-     * complete or guaranteed-current list of controls linked to the request. To
-     * list information requests linked to a particular control, use the
-     * `GET /audits/{auditId}/controls/{controlId}/information-requests` endpoint.
-     * A request may be absent from that endpoint when its link appears only in
-     * this deprecated field.
+     * complete or guaranteed-current list of controls linked to the request. Use
+     * `linkedControlIds` for the complete current list.
      * 
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -484,6 +495,17 @@ public class InformationRequest {
     public InformationRequest withAdditionalControlIds(List<String> additionalControlIds) {
         Utils.checkNotNull(additionalControlIds, "additionalControlIds");
         this.additionalControlIds = additionalControlIds;
+        return this;
+    }
+
+    /**
+     * The complete current set of control IDs linked to this request, including
+     * controls linked through framework codes and controls added directly. Each
+     * ID is returned by the audit controls endpoint.
+     */
+    public InformationRequest withLinkedControlIds(List<String> linkedControlIds) {
+        Utils.checkNotNull(linkedControlIds, "linkedControlIds");
+        this.linkedControlIds = linkedControlIds;
         return this;
     }
 
@@ -522,9 +544,8 @@ public class InformationRequest {
     }
 
     /**
-     * Always empty on read. To find requests for a control, use
-     * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
-     * For request assignment, use `segmentIds`.
+     * Always empty on read. Use `linkedControlIds` for control linkage and
+     * `segmentIds` for request assignment.
      * 
      * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
@@ -742,6 +763,7 @@ public class InformationRequest {
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.uniqueId, other.uniqueId) &&
             Utils.enhancedDeepEquals(this.additionalControlIds, other.additionalControlIds) &&
+            Utils.enhancedDeepEquals(this.linkedControlIds, other.linkedControlIds) &&
             Utils.enhancedDeepEquals(this.approvalStatus, other.approvalStatus) &&
             Utils.enhancedDeepEquals(this.cadence, other.cadence) &&
             Utils.enhancedDeepEquals(this.frameworkCodes, other.frameworkCodes) &&
@@ -762,11 +784,11 @@ public class InformationRequest {
     public int hashCode() {
         return Utils.enhancedHash(
             id, uniqueId, additionalControlIds,
-            approvalStatus, cadence, frameworkCodes,
-            segmentIds, description, dueDate,
-            evidenceCaptureDate, requestId, requestType,
-            title, creationDate, modificationDate,
-            deletionDate, ownerAssignment);
+            linkedControlIds, approvalStatus, cadence,
+            frameworkCodes, segmentIds, description,
+            dueDate, evidenceCaptureDate, requestId,
+            requestType, title, creationDate,
+            modificationDate, deletionDate, ownerAssignment);
     }
     
     @Override
@@ -775,6 +797,7 @@ public class InformationRequest {
                 "id", id,
                 "uniqueId", uniqueId,
                 "additionalControlIds", additionalControlIds,
+                "linkedControlIds", linkedControlIds,
                 "approvalStatus", approvalStatus,
                 "cadence", cadence,
                 "frameworkCodes", frameworkCodes,
@@ -800,6 +823,8 @@ public class InformationRequest {
 
         @Deprecated
         private List<String> additionalControlIds;
+
+        private List<String> linkedControlIds;
 
         private InformationRequestApprovalStatus approvalStatus;
 
@@ -862,11 +887,8 @@ public class InformationRequest {
         /**
          * Deprecated control-linkage field retained for response compatibility. It
          * may contain control IDs supplied directly to the request, but it is not a
-         * complete or guaranteed-current list of controls linked to the request. To
-         * list information requests linked to a particular control, use the
-         * `GET /audits/{auditId}/controls/{controlId}/information-requests` endpoint.
-         * A request may be absent from that endpoint when its link appears only in
-         * this deprecated field.
+         * complete or guaranteed-current list of controls linked to the request. Use
+         * `linkedControlIds` for the complete current list.
          * 
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
@@ -874,6 +896,18 @@ public class InformationRequest {
         public Builder additionalControlIds(List<String> additionalControlIds) {
             Utils.checkNotNull(additionalControlIds, "additionalControlIds");
             this.additionalControlIds = additionalControlIds;
+            return this;
+        }
+
+
+        /**
+         * The complete current set of control IDs linked to this request, including
+         * controls linked through framework codes and controls added directly. Each
+         * ID is returned by the audit controls endpoint.
+         */
+        public Builder linkedControlIds(List<String> linkedControlIds) {
+            Utils.checkNotNull(linkedControlIds, "linkedControlIds");
+            this.linkedControlIds = linkedControlIds;
             return this;
         }
 
@@ -914,9 +948,8 @@ public class InformationRequest {
 
 
         /**
-         * Always empty on read. To find requests for a control, use
-         * `GET /audits/{auditId}/controls/{controlId}/information-requests`.
-         * For request assignment, use `segmentIds`.
+         * Always empty on read. Use `linkedControlIds` for control linkage and
+         * `segmentIds` for request assignment.
          * 
          * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
@@ -1130,11 +1163,11 @@ public class InformationRequest {
 
             return new InformationRequest(
                 id, uniqueId, additionalControlIds,
-                approvalStatus, cadence, frameworkCodes,
-                segmentIds, description, dueDate,
-                evidenceCaptureDate, requestId, requestType,
-                title, creationDate, modificationDate,
-                deletionDate, ownerAssignment);
+                linkedControlIds, approvalStatus, cadence,
+                frameworkCodes, segmentIds, description,
+                dueDate, evidenceCaptureDate, requestId,
+                requestType, title, creationDate,
+                modificationDate, deletionDate, ownerAssignment);
         }
 
     }

@@ -10,7 +10,7 @@ import static com.vanta.vanta_auditor_api.operations.Operations.AsyncRequestOper
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.SecuritySource;
-import com.vanta.vanta_auditor_api.models.components.Control;
+import com.vanta.vanta_auditor_api.models.components.AuditorApiControl;
 import com.vanta.vanta_auditor_api.models.errors.APIException;
 import com.vanta.vanta_auditor_api.models.operations.CreateCustomControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.CreateCustomControlResponse;
@@ -171,7 +171,7 @@ public class CreateCustomControl {
             
             if (Utils.statusCodeMatches(response.statusCode(), "201")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return res.withControl(Utils.unmarshal(response, new TypeReference<Control>() {}));
+                    return res.withAuditorApiControl(Utils.unmarshal(response, new TypeReference<AuditorApiControl>() {}));
                 } else {
                     throw APIException.from("Unexpected content-type received: " + contentType, response);
                 }
@@ -241,8 +241,8 @@ public class CreateCustomControl {
             
             if (Utils.statusCodeMatches(response.statusCode(), "201")) {
                 if (Utils.contentTypeMatches(contentType, "application/json")) {
-                    return Utils.unmarshalAsync(response, new TypeReference<Control>() {})
-                            .thenApply(res::withControl);
+                    return Utils.unmarshalAsync(response, new TypeReference<AuditorApiControl>() {})
+                            .thenApply(res::withAuditorApiControl);
                 } else {
                     return Utils.createAsyncApiError(response, "Unexpected content-type received: " + contentType);
                 }

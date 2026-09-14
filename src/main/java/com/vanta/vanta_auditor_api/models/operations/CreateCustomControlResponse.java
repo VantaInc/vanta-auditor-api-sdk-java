@@ -5,7 +5,7 @@ package com.vanta.vanta_auditor_api.models.operations;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.vanta.vanta_auditor_api.models.components.Control;
+import com.vanta.vanta_auditor_api.models.components.AuditorApiControl;
 import com.vanta.vanta_auditor_api.utils.Response;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.io.InputStream;
@@ -36,22 +36,22 @@ public class CreateCustomControlResponse implements Response {
     /**
      * Custom control created
      */
-    private Optional<? extends Control> control;
+    private Optional<? extends AuditorApiControl> auditorApiControl;
 
     @JsonCreator
     public CreateCustomControlResponse(
             String contentType,
             int statusCode,
             HttpResponse<InputStream> rawResponse,
-            Optional<? extends Control> control) {
+            Optional<? extends AuditorApiControl> auditorApiControl) {
         Utils.checkNotNull(contentType, "contentType");
         Utils.checkNotNull(statusCode, "statusCode");
         Utils.checkNotNull(rawResponse, "rawResponse");
-        Utils.checkNotNull(control, "control");
+        Utils.checkNotNull(auditorApiControl, "auditorApiControl");
         this.contentType = contentType;
         this.statusCode = statusCode;
         this.rawResponse = rawResponse;
-        this.control = control;
+        this.auditorApiControl = auditorApiControl;
     }
     
     public CreateCustomControlResponse(
@@ -91,8 +91,8 @@ public class CreateCustomControlResponse implements Response {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Control> control() {
-        return (Optional<Control>) control;
+    public Optional<AuditorApiControl> auditorApiControl() {
+        return (Optional<AuditorApiControl>) auditorApiControl;
     }
 
     public static Builder builder() {
@@ -130,9 +130,9 @@ public class CreateCustomControlResponse implements Response {
     /**
      * Custom control created
      */
-    public CreateCustomControlResponse withControl(Control control) {
-        Utils.checkNotNull(control, "control");
-        this.control = Optional.ofNullable(control);
+    public CreateCustomControlResponse withAuditorApiControl(AuditorApiControl auditorApiControl) {
+        Utils.checkNotNull(auditorApiControl, "auditorApiControl");
+        this.auditorApiControl = Optional.ofNullable(auditorApiControl);
         return this;
     }
 
@@ -140,9 +140,9 @@ public class CreateCustomControlResponse implements Response {
     /**
      * Custom control created
      */
-    public CreateCustomControlResponse withControl(Optional<? extends Control> control) {
-        Utils.checkNotNull(control, "control");
-        this.control = control;
+    public CreateCustomControlResponse withAuditorApiControl(Optional<? extends AuditorApiControl> auditorApiControl) {
+        Utils.checkNotNull(auditorApiControl, "auditorApiControl");
+        this.auditorApiControl = auditorApiControl;
         return this;
     }
 
@@ -159,14 +159,14 @@ public class CreateCustomControlResponse implements Response {
             Utils.enhancedDeepEquals(this.contentType, other.contentType) &&
             Utils.enhancedDeepEquals(this.statusCode, other.statusCode) &&
             Utils.enhancedDeepEquals(this.rawResponse, other.rawResponse) &&
-            Utils.enhancedDeepEquals(this.control, other.control);
+            Utils.enhancedDeepEquals(this.auditorApiControl, other.auditorApiControl);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             contentType, statusCode, rawResponse,
-            control);
+            auditorApiControl);
     }
     
     @Override
@@ -175,7 +175,7 @@ public class CreateCustomControlResponse implements Response {
                 "contentType", contentType,
                 "statusCode", statusCode,
                 "rawResponse", rawResponse,
-                "control", control);
+                "auditorApiControl", auditorApiControl);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -187,7 +187,7 @@ public class CreateCustomControlResponse implements Response {
 
         private HttpResponse<InputStream> rawResponse;
 
-        private Optional<? extends Control> control = Optional.empty();
+        private Optional<? extends AuditorApiControl> auditorApiControl = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -227,18 +227,18 @@ public class CreateCustomControlResponse implements Response {
         /**
          * Custom control created
          */
-        public Builder control(Control control) {
-            Utils.checkNotNull(control, "control");
-            this.control = Optional.ofNullable(control);
+        public Builder auditorApiControl(AuditorApiControl auditorApiControl) {
+            Utils.checkNotNull(auditorApiControl, "auditorApiControl");
+            this.auditorApiControl = Optional.ofNullable(auditorApiControl);
             return this;
         }
 
         /**
          * Custom control created
          */
-        public Builder control(Optional<? extends Control> control) {
-            Utils.checkNotNull(control, "control");
-            this.control = control;
+        public Builder auditorApiControl(Optional<? extends AuditorApiControl> auditorApiControl) {
+            Utils.checkNotNull(auditorApiControl, "auditorApiControl");
+            this.auditorApiControl = auditorApiControl;
             return this;
         }
 
@@ -246,7 +246,7 @@ public class CreateCustomControlResponse implements Response {
 
             return new CreateCustomControlResponse(
                 contentType, statusCode, rawResponse,
-                control);
+                auditorApiControl);
         }
 
     }

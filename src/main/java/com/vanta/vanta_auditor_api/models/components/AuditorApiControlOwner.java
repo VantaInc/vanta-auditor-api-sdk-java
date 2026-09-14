@@ -11,11 +11,11 @@ import java.lang.Override;
 import java.lang.String;
 
 /**
- * ControlOwner
+ * AuditorApiControlOwner
  * 
  * <p>The control's owner.
  */
-public class ControlOwner {
+public class AuditorApiControlOwner {
     /**
      * Unique identifier for the person.
      */
@@ -35,7 +35,7 @@ public class ControlOwner {
     private String emailAddress;
 
     @JsonCreator
-    public ControlOwner(
+    public AuditorApiControlOwner(
             @JsonProperty("id") String id,
             @JsonProperty("displayName") String displayName,
             @JsonProperty("emailAddress") String emailAddress) {
@@ -79,7 +79,7 @@ public class ControlOwner {
     /**
      * Unique identifier for the person.
      */
-    public ControlOwner withId(String id) {
+    public AuditorApiControlOwner withId(String id) {
         Utils.checkNotNull(id, "id");
         this.id = id;
         return this;
@@ -88,7 +88,7 @@ public class ControlOwner {
     /**
      * Name of the person that is shown in product.
      */
-    public ControlOwner withDisplayName(String displayName) {
+    public AuditorApiControlOwner withDisplayName(String displayName) {
         Utils.checkNotNull(displayName, "displayName");
         this.displayName = displayName;
         return this;
@@ -97,7 +97,7 @@ public class ControlOwner {
     /**
      * Email address of the person.
      */
-    public ControlOwner withEmailAddress(String emailAddress) {
+    public AuditorApiControlOwner withEmailAddress(String emailAddress) {
         Utils.checkNotNull(emailAddress, "emailAddress");
         this.emailAddress = emailAddress;
         return this;
@@ -111,7 +111,7 @@ public class ControlOwner {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        ControlOwner other = (ControlOwner) o;
+        AuditorApiControlOwner other = (AuditorApiControlOwner) o;
         return 
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.displayName, other.displayName) &&
@@ -126,7 +126,7 @@ public class ControlOwner {
     
     @Override
     public String toString() {
-        return Utils.toString(ControlOwner.class,
+        return Utils.toString(AuditorApiControlOwner.class,
                 "id", id,
                 "displayName", displayName,
                 "emailAddress", emailAddress);
@@ -175,9 +175,9 @@ public class ControlOwner {
             return this;
         }
 
-        public ControlOwner build() {
+        public AuditorApiControlOwner build() {
 
-            return new ControlOwner(
+            return new AuditorApiControlOwner(
                 id, displayName, emailAddress);
         }
 
