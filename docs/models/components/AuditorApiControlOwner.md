@@ -1,4 +1,4 @@
-# ControlOwner
+# AuditorApiControlOwner
 
 The control's owner.
 

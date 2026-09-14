@@ -499,8 +499,8 @@ public class Application {
                     .build())
                 .call();
 
-        if (res.control().isPresent()) {
-            System.out.println(res.control().get());
+        if (res.auditorApiControl().isPresent()) {
+            System.out.println(res.auditorApiControl().get());
         }
     }
 }
