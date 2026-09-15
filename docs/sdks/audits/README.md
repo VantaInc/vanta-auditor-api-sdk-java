@@ -71,9 +71,12 @@ and will be `undefined` for standard audits.
 
 Each audit includes `segments`, the audit's scope. A live audit returns
 every in-scope program and system segment; more than one segment does not
-by itself imply more than one framework. Soft-deleted audits return an
-empty list. The top-level `framework` field is deprecated; use `segments`
-for in-scope frameworks.
+by itself imply more than one framework. The top-level `framework` field is
+deprecated; use `segments` for in-scope frameworks.
+
+This list may include soft-deleted audits so clients can reconcile
+deletions. Check `deletionDate`; a deleted audit has an empty `segments`
+list.
 
 Rate limit: 250 requests / minute.
 
@@ -108,12 +111,12 @@ public class Application {
 
 ### Parameters
 
-| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
-| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
-| `pageSize`                                                                                | *Optional\<Integer>*                                                                      | :heavy_minus_sign:                                                                        | N/A                                                                                       |
-| `pageCursor`                                                                              | *Optional\<String>*                                                                       | :heavy_minus_sign:                                                                        | N/A                                                                                       |
-| `changedSinceDate`                                                                        | [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html) | :heavy_minus_sign:                                                                        | Includes all audits that have changed since changedSinceDate.                             |
-| `isActiveAudit`                                                                           | *Optional\<Boolean>*                                                                      | :heavy_minus_sign:                                                                        | Includes only audits with no audit report uploaded                                        |
+| Parameter                                                                                                                                     | Type                                                                                                                                          | Required                                                                                                                                      | Description                                                                                                                                   |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
+| `pageSize`                                                                                                                                    | *Optional\<Integer>*                                                                                                                          | :heavy_minus_sign:                                                                                                                            | N/A                                                                                                                                           |
+| `pageCursor`                                                                                                                                  | *Optional\<String>*                                                                                                                           | :heavy_minus_sign:                                                                                                                            | N/A                                                                                                                                           |
+| `changedSinceDate`                                                                                                                            | [OffsetDateTime](https://docs.oracle.com/javase/8/docs/api/java/time/OffsetDateTime.html)                                                     | :heavy_minus_sign:                                                                                                                            | Includes all audits that have changed since changedSinceDate, including<br/>soft-deleted audits whose deletionDate is on or after that timestamp. |
+| `isActiveAudit`                                                                                                                               | *Optional\<Boolean>*                                                                                                                          | :heavy_minus_sign:                                                                                                                            | Includes only audits with no audit report uploaded                                                                                            |
 
 ### Response
 
@@ -219,11 +222,12 @@ To identify IRL (Information Request List) audits, check for the presence of the
 `auditorRequestListMetadata` field. This field is only present for IRL-based audits
 and will be `undefined` for standard audits.
 
-The response includes `segments`, the audit's scope. A live audit returns
-every in-scope program and system segment; more than one segment does not
-by itself imply more than one framework. Soft-deleted audits return an
-empty list. The top-level `framework` field is deprecated; use `segments`
-for in-scope frameworks.
+The response includes `segments`, the audit's scope. It returns every
+in-scope program and system segment; more than one segment does not by
+itself imply more than one framework. The top-level `framework` field is
+deprecated; use `segments` for in-scope frameworks.
+
+This endpoint returns 404 for a soft-deleted audit.
 
 Rate limit: 250 requests / minute.
 
@@ -1832,7 +1836,14 @@ public class Application {
 ## listInformationRequestActivity
 
 Retrieves a paginated list of activity logs for an information request, providing
-a complete audit trail of all changes and actions.
+an audit trail of the changes and actions taken on it.
+
+Activity recording Vanta's automated preparation of a request is never returned by
+this endpoint, so `fillOutcome` is always null here. Some internal status transitions
+are also withheld, and those are removed after a page is selected, so a page can
+contain fewer entries than `pageSize` — or none at all — while more pages remain.
+Follow `results.pageInfo.hasNextPage` rather than treating a short or empty page as
+the end of the list.
 
 This endpoint supports delta synchronization via the `changedSinceDate` parameter,
 allowing efficient polling for changes without retrieving the entire dataset.

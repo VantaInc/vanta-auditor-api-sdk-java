@@ -27,7 +27,8 @@ public class ListAuditsRequest {
     private Optional<String> pageCursor;
 
     /**
-     * Includes all audits that have changed since changedSinceDate.
+     * Includes all audits that have changed since changedSinceDate, including
+     * soft-deleted audits whose deletionDate is on or after that timestamp.
      */
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=changedSinceDate")
     private Optional<OffsetDateTime> changedSinceDate;
@@ -70,7 +71,8 @@ public class ListAuditsRequest {
     }
 
     /**
-     * Includes all audits that have changed since changedSinceDate.
+     * Includes all audits that have changed since changedSinceDate, including
+     * soft-deleted audits whose deletionDate is on or after that timestamp.
      */
     @JsonIgnore
     public Optional<OffsetDateTime> changedSinceDate() {
@@ -117,7 +119,8 @@ public class ListAuditsRequest {
     }
 
     /**
-     * Includes all audits that have changed since changedSinceDate.
+     * Includes all audits that have changed since changedSinceDate, including
+     * soft-deleted audits whose deletionDate is on or after that timestamp.
      */
     public ListAuditsRequest withChangedSinceDate(OffsetDateTime changedSinceDate) {
         Utils.checkNotNull(changedSinceDate, "changedSinceDate");
@@ -127,7 +130,8 @@ public class ListAuditsRequest {
 
 
     /**
-     * Includes all audits that have changed since changedSinceDate.
+     * Includes all audits that have changed since changedSinceDate, including
+     * soft-deleted audits whose deletionDate is on or after that timestamp.
      */
     public ListAuditsRequest withChangedSinceDate(Optional<OffsetDateTime> changedSinceDate) {
         Utils.checkNotNull(changedSinceDate, "changedSinceDate");
@@ -229,7 +233,8 @@ public class ListAuditsRequest {
 
 
         /**
-         * Includes all audits that have changed since changedSinceDate.
+         * Includes all audits that have changed since changedSinceDate, including
+         * soft-deleted audits whose deletionDate is on or after that timestamp.
          */
         public Builder changedSinceDate(OffsetDateTime changedSinceDate) {
             Utils.checkNotNull(changedSinceDate, "changedSinceDate");
@@ -238,7 +243,8 @@ public class ListAuditsRequest {
         }
 
         /**
-         * Includes all audits that have changed since changedSinceDate.
+         * Includes all audits that have changed since changedSinceDate, including
+         * soft-deleted audits whose deletionDate is on or after that timestamp.
          */
         public Builder changedSinceDate(Optional<OffsetDateTime> changedSinceDate) {
             Utils.checkNotNull(changedSinceDate, "changedSinceDate");

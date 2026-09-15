@@ -4,6 +4,7 @@
 package com.vanta.vanta_auditor_api.models.components;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Deprecated;
 import java.lang.String;
 import java.util.Objects;
 import java.util.Optional;
@@ -11,9 +12,13 @@ import java.util.Optional;
 /**
  * FillOutcome
  * 
- * <p>Result of an automated evidence fill.
- * Only populated for evidence fill activities. Null for all other activity types.
+ * <p>Result of an automated evidence fill. Always null: only evidence fill activities
+ * could populate it, and those are never returned, so nothing can set it. Do not
+ * branch on it.
+ * 
+ * @deprecated enum: This will be removed in a future release, please migrate away from it as soon as possible.
  */
+@Deprecated
 public enum FillOutcome {
     SUCCESS("SUCCESS"),
     PARTIAL("PARTIAL"),
