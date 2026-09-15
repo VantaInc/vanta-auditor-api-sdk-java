@@ -287,9 +287,12 @@ public class AsyncAudits {
      * 
      * <p>Each audit includes `segments`, the audit's scope. A live audit returns
      * every in-scope program and system segment; more than one segment does not
-     * by itself imply more than one framework. Soft-deleted audits return an
-     * empty list. The top-level `framework` field is deprecated; use `segments`
-     * for in-scope frameworks.
+     * by itself imply more than one framework. The top-level `framework` field is
+     * deprecated; use `segments` for in-scope frameworks.
+     * 
+     * <p>This list may include soft-deleted audits so clients can reconcile
+     * deletions. Check `deletionDate`; a deleted audit has an empty `segments`
+     * list.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -310,9 +313,12 @@ public class AsyncAudits {
      * 
      * <p>Each audit includes `segments`, the audit's scope. A live audit returns
      * every in-scope program and system segment; more than one segment does not
-     * by itself imply more than one framework. Soft-deleted audits return an
-     * empty list. The top-level `framework` field is deprecated; use `segments`
-     * for in-scope frameworks.
+     * by itself imply more than one framework. The top-level `framework` field is
+     * deprecated; use `segments` for in-scope frameworks.
+     * 
+     * <p>This list may include soft-deleted audits so clients can reconcile
+     * deletions. Check `deletionDate`; a deleted audit has an empty `segments`
+     * list.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -335,15 +341,19 @@ public class AsyncAudits {
      * 
      * <p>Each audit includes `segments`, the audit's scope. A live audit returns
      * every in-scope program and system segment; more than one segment does not
-     * by itself imply more than one framework. Soft-deleted audits return an
-     * empty list. The top-level `framework` field is deprecated; use `segments`
-     * for in-scope frameworks.
+     * by itself imply more than one framework. The top-level `framework` field is
+     * deprecated; use `segments` for in-scope frameworks.
+     * 
+     * <p>This list may include soft-deleted audits so clients can reconcile
+     * deletions. Check `deletionDate`; a deleted audit has an empty `segments`
+     * list.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
      * @param pageSize 
      * @param pageCursor 
-     * @param changedSinceDate Includes all audits that have changed since changedSinceDate.
+     * @param changedSinceDate Includes all audits that have changed since changedSinceDate, including
+     *         soft-deleted audits whose deletionDate is on or after that timestamp.
      * @param isActiveAudit Includes only audits with no audit report uploaded
      * @return {@code CompletableFuture<ListAuditsResponse>} - The async response
      */
@@ -445,11 +455,12 @@ public class AsyncAudits {
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
      * 
-     * <p>The response includes `segments`, the audit's scope. A live audit returns
-     * every in-scope program and system segment; more than one segment does not
-     * by itself imply more than one framework. Soft-deleted audits return an
-     * empty list. The top-level `framework` field is deprecated; use `segments`
-     * for in-scope frameworks.
+     * <p>The response includes `segments`, the audit's scope. It returns every
+     * in-scope program and system segment; more than one segment does not by
+     * itself imply more than one framework. The top-level `framework` field is
+     * deprecated; use `segments` for in-scope frameworks.
+     * 
+     * <p>This endpoint returns 404 for a soft-deleted audit.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -468,11 +479,12 @@ public class AsyncAudits {
      * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
      * and will be `undefined` for standard audits.
      * 
-     * <p>The response includes `segments`, the audit's scope. A live audit returns
-     * every in-scope program and system segment; more than one segment does not
-     * by itself imply more than one framework. Soft-deleted audits return an
-     * empty list. The top-level `framework` field is deprecated; use `segments`
-     * for in-scope frameworks.
+     * <p>The response includes `segments`, the audit's scope. It returns every
+     * in-scope program and system segment; more than one segment does not by
+     * itself imply more than one framework. The top-level `framework` field is
+     * deprecated; use `segments` for in-scope frameworks.
+     * 
+     * <p>This endpoint returns 404 for a soft-deleted audit.
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
@@ -1945,7 +1957,14 @@ public class AsyncAudits {
      * List information request activity
      * 
      * <p>Retrieves a paginated list of activity logs for an information request, providing
-     * a complete audit trail of all changes and actions.
+     * an audit trail of the changes and actions taken on it.
+     * 
+     * <p>Activity recording Vanta's automated preparation of a request is never returned by
+     * this endpoint, so `fillOutcome` is always null here. Some internal status transitions
+     * are also withheld, and those are removed after a page is selected, so a page can
+     * contain fewer entries than `pageSize` — or none at all — while more pages remain.
+     * Follow `results.pageInfo.hasNextPage` rather than treating a short or empty page as
+     * the end of the list.
      * 
      * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
      * allowing efficient polling for changes without retrieving the entire dataset.
@@ -1975,7 +1994,14 @@ public class AsyncAudits {
      * List information request activity
      * 
      * <p>Retrieves a paginated list of activity logs for an information request, providing
-     * a complete audit trail of all changes and actions.
+     * an audit trail of the changes and actions taken on it.
+     * 
+     * <p>Activity recording Vanta's automated preparation of a request is never returned by
+     * this endpoint, so `fillOutcome` is always null here. Some internal status transitions
+     * are also withheld, and those are removed after a page is selected, so a page can
+     * contain fewer entries than `pageSize` — or none at all — while more pages remain.
+     * Follow `results.pageInfo.hasNextPage` rather than treating a short or empty page as
+     * the end of the list.
      * 
      * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
      * allowing efficient polling for changes without retrieving the entire dataset.

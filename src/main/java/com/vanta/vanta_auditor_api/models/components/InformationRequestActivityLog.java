@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -20,10 +21,11 @@ import java.util.Optional;
  * 
  * <p>Activity log entry tracking changes and actions on an information request.
  * 
- * <p>The activity log provides a complete audit trail of all operations performed
- * on an information request, including status changes, evidence uploads, edits,
+ * <p>The activity log provides an audit trail of operations performed on an
+ * information request, including status changes, evidence uploads, edits,
  * and evidence sharing. This enables tracking compliance activities and understanding
- * the request's history.
+ * the request's history. Which entries are visible depends on the endpoint returning
+ * them; see the endpoint's own description.
  */
 public class InformationRequestActivityLog {
     /**
@@ -79,11 +81,15 @@ public class InformationRequestActivityLog {
     private Optional<String> reason;
 
     /**
-     * Result of an automated evidence fill.
-     * Only populated for evidence fill activities. Null for all other activity types.
+     * Result of an automated evidence fill. Always null: only evidence fill activities
+     * could populate it, and those are never returned, so nothing can set it. Do not
+     * branch on it.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.ALWAYS)
     @JsonProperty("fillOutcome")
+    @Deprecated
     private Optional<? extends FillOutcome> fillOutcome;
 
     /**
@@ -213,9 +219,13 @@ public class InformationRequestActivityLog {
     }
 
     /**
-     * Result of an automated evidence fill.
-     * Only populated for evidence fill activities. Null for all other activity types.
+     * Result of an automated evidence fill. Always null: only evidence fill activities
+     * could populate it, and those are never returned, so nothing can set it. Do not
+     * branch on it.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<FillOutcome> fillOutcome() {
@@ -363,9 +373,13 @@ public class InformationRequestActivityLog {
     }
 
     /**
-     * Result of an automated evidence fill.
-     * Only populated for evidence fill activities. Null for all other activity types.
+     * Result of an automated evidence fill. Always null: only evidence fill activities
+     * could populate it, and those are never returned, so nothing can set it. Do not
+     * branch on it.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public InformationRequestActivityLog withFillOutcome(FillOutcome fillOutcome) {
         Utils.checkNotNull(fillOutcome, "fillOutcome");
         this.fillOutcome = Optional.ofNullable(fillOutcome);
@@ -374,9 +388,13 @@ public class InformationRequestActivityLog {
 
 
     /**
-     * Result of an automated evidence fill.
-     * Only populated for evidence fill activities. Null for all other activity types.
+     * Result of an automated evidence fill. Always null: only evidence fill activities
+     * could populate it, and those are never returned, so nothing can set it. Do not
+     * branch on it.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public InformationRequestActivityLog withFillOutcome(Optional<? extends FillOutcome> fillOutcome) {
         Utils.checkNotNull(fillOutcome, "fillOutcome");
         this.fillOutcome = fillOutcome;
@@ -494,6 +512,7 @@ public class InformationRequestActivityLog {
 
         private Optional<String> reason = Optional.empty();
 
+        @Deprecated
         private Optional<? extends FillOutcome> fillOutcome = Optional.empty();
 
         private Optional<String> sourceInformationRequestId = Optional.empty();
@@ -623,9 +642,13 @@ public class InformationRequestActivityLog {
 
 
         /**
-         * Result of an automated evidence fill.
-         * Only populated for evidence fill activities. Null for all other activity types.
+         * Result of an automated evidence fill. Always null: only evidence fill activities
+         * could populate it, and those are never returned, so nothing can set it. Do not
+         * branch on it.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder fillOutcome(FillOutcome fillOutcome) {
             Utils.checkNotNull(fillOutcome, "fillOutcome");
             this.fillOutcome = Optional.ofNullable(fillOutcome);
@@ -633,9 +656,13 @@ public class InformationRequestActivityLog {
         }
 
         /**
-         * Result of an automated evidence fill.
-         * Only populated for evidence fill activities. Null for all other activity types.
+         * Result of an automated evidence fill. Always null: only evidence fill activities
+         * could populate it, and those are never returned, so nothing can set it. Do not
+         * branch on it.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder fillOutcome(Optional<? extends FillOutcome> fillOutcome) {
             Utils.checkNotNull(fillOutcome, "fillOutcome");
             this.fillOutcome = fillOutcome;
