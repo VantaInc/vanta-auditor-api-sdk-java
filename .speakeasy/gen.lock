@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: f42d74f5-5725-46fa-b13c-649b7ef895c3
 management:
-  docChecksum: f2e7c2aa00f8e4e8b350eea0cac3e14f
+  docChecksum: eb748cbff9b8f2f19942f383182f3a95
   docVersion: 1.0.0
   speakeasyVersion: 1.797.0
   generationVersion: 2.937.18
-  releaseVersion: 0.7.7
-  configChecksum: b334b25ee92ad3f00a8c1b767262865f
+  releaseVersion: 0.7.8
+  configChecksum: 3ddd6784fb3bcd0a4292414b1840bd7c
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   installationURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java
   published: true
 persistentEdits:
-  generation_id: 8e4bab8c-d8dc-475a-a274-c5939de816cb
-  pristine_commit_hash: 039f1d7bd5594415dee94dc5879f7e0bb2a9499b
-  pristine_tree_hash: b844a9cfae454626107144da782da2cbc0372c24
+  generation_id: b60b5264-54c0-45e3-9ef8-d5bde79bf98e
+  pristine_commit_hash: 0ec021ed13267317049c5a5be17f9bb0c5a46b27
+  pristine_tree_hash: 51dda65bfb97027936f0ececcf6124288edf8b0a
 features:
   java:
     additionalDependencies: 0.1.0
@@ -100,8 +100,8 @@ trackedFiles:
     pristine_git_object: 37adc35fae5e6b36a4495d0cf0260b2195b69ae5
   docs/models/components/Audit.md:
     id: e4a55898fa16
-    last_write_checksum: sha1:ab58a0b12330ad9941f4e9b95c46def83615c625
-    pristine_git_object: 9757d05a7470d092613eb0e83eddffc0fd4de026
+    last_write_checksum: sha1:742617cd02ed2c407fd14700479de458bd19c967
+    pristine_git_object: 81c8082d6b6ed23080538c59c9c66e0f2a767917
   docs/models/components/AuditControlAssessment.md:
     id: 912f37d45d66
     last_write_checksum: sha1:54c813325b345aded23525a9aca5d6e76a3b6ba9
@@ -506,6 +506,10 @@ trackedFiles:
     id: 8123e704c372
     last_write_checksum: sha1:f4c9b84963f5e39c6a74ca94777b1f97e9eabec2
     pristine_git_object: 745a1e5a4a997948a7eb4c6102126c8235584a73
+  docs/models/components/IrlGenerationStatus.md:
+    id: 428fe2fb5e31
+    last_write_checksum: sha1:b3e83a9ed8f972ce8af11e5cc21cbf55cd6d9c41
+    pristine_git_object: ec1ac948ad6ccd0d6c6bee54001b406c05493e72
   docs/models/components/IssueSnapshotItem.md:
     id: 32e706e025a0
     last_write_checksum: sha1:b342257e09c9e72d5b373a5c35fe7779fc88a8df
@@ -1644,8 +1648,8 @@ trackedFiles:
     pristine_git_object: de7d1b163d5926363b94e775645373b750f65b30
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:06e9b183ed0aba02c8ec8c9aa8d2fec93d93acb3
-    pristine_git_object: 5a857050843d59aaf0f39a250cc286794faebb62
+    last_write_checksum: sha1:b6ceb0cacbb19d0e7f87c01098819fb25f809879
+    pristine_git_object: 06c7d8499fa09a1411a7f873585aa3a24111539b
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -1692,8 +1696,8 @@ trackedFiles:
     pristine_git_object: db493698afe77b5764ba8bada58ca84f1be70897
   src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java:
     id: ce55360c720c
-    last_write_checksum: sha1:d3a66a159c2e77ff9ba5c617faf7c1a2ac2ce453
-    pristine_git_object: 6469fb208d37b139a1a8a7fd1fbbcd5e425d44e4
+    last_write_checksum: sha1:38cdfa3243050f0c253d1c65fb867db87bc6e907
+    pristine_git_object: cce7928377b4c1732564fef7d371e0867a0df286
   src/main/java/com/vanta/vanta_auditor_api/SecuritySource.java:
     id: 18c0da44b51f
     last_write_checksum: sha1:55dc5f4240c7317c9a5a4080b6e17dc1b6fdd403
@@ -1760,8 +1764,8 @@ trackedFiles:
     pristine_git_object: 3a4fdac4fc082d27feb5e8b3735b3ec7581f11f4
   src/main/java/com/vanta/vanta_auditor_api/models/components/Audit.java:
     id: 1a12e3b13579
-    last_write_checksum: sha1:36d304eef16edeb968a322257c6f05319d333476
-    pristine_git_object: bc93d83a10be83e267c8a7207a71fc2be295927b
+    last_write_checksum: sha1:3ac7e1027546bcc8cebafa0c146da5f95594ab79
+    pristine_git_object: 2686ef50461887909a033ed2640631282b50067c
   src/main/java/com/vanta/vanta_auditor_api/models/components/AuditControlAssessment.java:
     id: c2f1a0337769
     last_write_checksum: sha1:c1fc7aa43bc8a329a6c48a428e26fdde0e3b24bb
@@ -2166,6 +2170,10 @@ trackedFiles:
     id: 6c7cdcac1018
     last_write_checksum: sha1:5aa07e6572920d37a3926d4ecac21297e01c3a6b
     pristine_git_object: e4ee418f7899114b313edb2cc2aed721f2bb665f
+  src/main/java/com/vanta/vanta_auditor_api/models/components/IrlGenerationStatus.java:
+    id: fa03f249c0f6
+    last_write_checksum: sha1:9f376210617b7816ea2cebdc66bc843d6eaad044
+    pristine_git_object: 11e8ffb9ba2aa798910a5c9d1b014272a47dad3d
   src/main/java/com/vanta/vanta_auditor_api/models/components/IssueSnapshotItem.java:
     id: 6e6ea8619347
     last_write_checksum: sha1:7906bb5cae2b7cf8c2f1cce71c46f4022ab427b3
@@ -4498,7 +4506,7 @@ examples:
           pageSize: 10
       responses:
         "200":
-          application/json: {"results": {"data": [{"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56.000Z", "auditEndDate": "2024-03-14T21:25:56.000Z", "earlyAccessStartsAt": "2024-03-07T21:25:56.000Z", "framework": "SOC 2 Type II", "displayName": "Q1 2024 SOC 2 Audit", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": null, "creationDate": "2024-03-07T21:25:56.000Z", "modificationDate": "2024-03-07T21:25:56.000Z", "completionDate": "2024-03-07T21:25:56.000Z", "auditFocus": "EXTERNAL", "auditorRequestListMetadata": {"requestsSharedWithCustomer": "2024-03-07T21:25:56.000Z"}, "segments": [{"id": "65fc81a3359c8508c9af8810", "kind": "PROGRAM", "displayName": "SOC 2 Type II", "framework": {"displayName": "SOC 2 Type II"}, "businessUnit": null, "system": null, "soc2Deliverable": {"reportType": "soc2type2", "tscs": ["SECURITY", "AVAILABILITY"]}}]}], "pageInfo": {"endCursor": "YXJyYXljb25uZWN0aW9uOjE=", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "YXJyYXljb25uZWN0aW9uOjA="}}}
+          application/json: {"results": {"data": [{"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56.000Z", "auditEndDate": "2024-03-14T21:25:56.000Z", "earlyAccessStartsAt": "2024-03-07T21:25:56.000Z", "framework": "SOC 2 Type II", "displayName": "Q1 2024 SOC 2 Audit", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": null, "creationDate": "2024-03-07T21:25:56.000Z", "modificationDate": "2024-03-07T21:25:56.000Z", "completionDate": "2024-03-07T21:25:56.000Z", "auditFocus": "EXTERNAL", "irlGenerationStatus": "READY", "auditorRequestListMetadata": {"requestsSharedWithCustomer": "2024-03-07T21:25:56.000Z"}, "segments": [{"id": "65fc81a3359c8508c9af8810", "kind": "PROGRAM", "displayName": "SOC 2 Type II", "framework": {"displayName": "SOC 2 Type II"}, "businessUnit": null, "system": null, "soc2Deliverable": {"reportType": "soc2type2", "tscs": ["SECURITY", "AVAILABILITY"]}}]}], "pageInfo": {"endCursor": "YXJyYXljb25uZWN0aW9uOjE=", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "YXJyYXljb25uZWN0aW9uOjA="}}}
   ListAuditEvidenceUrls:
     Example 1:
       parameters:
@@ -4596,7 +4604,7 @@ examples:
           auditId: "<id>"
       responses:
         "200":
-          application/json: {"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56.000Z", "auditEndDate": "2024-03-14T21:25:56.000Z", "earlyAccessStartsAt": "2024-03-07T21:25:56.000Z", "framework": "SOC 2 Type II", "displayName": "Q1 2024 SOC 2 Audit", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": null, "creationDate": "2024-03-07T21:25:56.000Z", "modificationDate": "2024-03-07T21:25:56.000Z", "completionDate": "2024-03-07T21:25:56.000Z", "auditFocus": "EXTERNAL", "auditorRequestListMetadata": {"requestsSharedWithCustomer": "2024-03-07T21:25:56.000Z"}, "segments": [{"id": "65fc81a3359c8508c9af8810", "kind": "PROGRAM", "displayName": "SOC 2 Type II", "framework": {"displayName": "SOC 2 Type II"}, "businessUnit": null, "system": null, "soc2Deliverable": {"reportType": "soc2type2", "tscs": ["SECURITY", "AVAILABILITY"]}}]}
+          application/json: {"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56.000Z", "auditEndDate": "2024-03-14T21:25:56.000Z", "earlyAccessStartsAt": "2024-03-07T21:25:56.000Z", "framework": "SOC 2 Type II", "displayName": "Q1 2024 SOC 2 Audit", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": null, "creationDate": "2024-03-07T21:25:56.000Z", "modificationDate": "2024-03-07T21:25:56.000Z", "completionDate": "2024-03-07T21:25:56.000Z", "auditFocus": "EXTERNAL", "irlGenerationStatus": "READY", "auditorRequestListMetadata": {"requestsSharedWithCustomer": "2024-03-07T21:25:56.000Z"}, "segments": [{"id": "65fc81a3359c8508c9af8810", "kind": "PROGRAM", "displayName": "SOC 2 Type II", "framework": {"displayName": "SOC 2 Type II"}, "businessUnit": null, "system": null, "soc2Deliverable": {"reportType": "soc2type2", "tscs": ["SECURITY", "AVAILABILITY"]}}]}
   ListInformationRequestsForControl:
     Example 1:
       parameters:
@@ -4786,7 +4794,7 @@ examples:
           auditId: "<id>"
       responses:
         "200":
-          application/json: {"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56.000Z", "auditEndDate": "2024-03-14T21:25:56.000Z", "earlyAccessStartsAt": "2024-03-07T21:25:56.000Z", "framework": "SOC 2 Type II", "displayName": "Q1 2024 SOC 2 Audit", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": null, "creationDate": "2024-03-07T21:25:56.000Z", "modificationDate": "2024-03-07T21:25:56.000Z", "completionDate": "2024-03-07T21:25:56.000Z", "auditFocus": "EXTERNAL", "auditorRequestListMetadata": {"requestsSharedWithCustomer": "2024-03-07T21:25:56.000Z"}, "segments": [{"id": "65fc81a3359c8508c9af8810", "kind": "PROGRAM", "displayName": "SOC 2 Type II", "framework": {"displayName": "SOC 2 Type II"}, "businessUnit": null, "system": null, "soc2Deliverable": {"reportType": "soc2type2", "tscs": ["SECURITY", "AVAILABILITY"]}}]}
+          application/json: {"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56.000Z", "auditEndDate": "2024-03-14T21:25:56.000Z", "earlyAccessStartsAt": "2024-03-07T21:25:56.000Z", "framework": "SOC 2 Type II", "displayName": "Q1 2024 SOC 2 Audit", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": null, "creationDate": "2024-03-07T21:25:56.000Z", "modificationDate": "2024-03-07T21:25:56.000Z", "completionDate": "2024-03-07T21:25:56.000Z", "auditFocus": "EXTERNAL", "irlGenerationStatus": "READY", "auditorRequestListMetadata": {"requestsSharedWithCustomer": "2024-03-07T21:25:56.000Z"}, "segments": [{"id": "65fc81a3359c8508c9af8810", "kind": "PROGRAM", "displayName": "SOC 2 Type II", "framework": {"displayName": "SOC 2 Type II"}, "businessUnit": null, "system": null, "soc2Deliverable": {"reportType": "soc2type2", "tscs": ["SECURITY", "AVAILABILITY"]}}]}
   ListCodeChanges:
     Example 1:
       parameters:
@@ -5004,7 +5012,7 @@ examples:
         application/json: {"sourceAuditId": "<id>", "displayName": "Orpha.Schoen", "auditStartDate": "2024-01-02T08:34:53.150Z", "auditEndDate": "2024-10-06T07:06:05.931Z", "earlyAccessStartsAt": "2025-05-31T02:08:59.254Z", "allowAuditorEmails": ["<value 1>", "<value 2>", "<value 3>"]}
       responses:
         "200":
-          application/json: {"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56.000Z", "auditEndDate": "2024-03-14T21:25:56.000Z", "earlyAccessStartsAt": "2024-03-07T21:25:56.000Z", "framework": "SOC 2 Type II", "displayName": "Q1 2024 SOC 2 Audit", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": null, "creationDate": "2024-03-07T21:25:56.000Z", "modificationDate": "2024-03-07T21:25:56.000Z", "completionDate": "2024-03-07T21:25:56.000Z", "auditFocus": "EXTERNAL", "auditorRequestListMetadata": {"requestsSharedWithCustomer": "2024-03-07T21:25:56.000Z"}, "segments": [{"id": "65fc81a3359c8508c9af8810", "kind": "PROGRAM", "displayName": "SOC 2 Type II", "framework": {"displayName": "SOC 2 Type II"}, "businessUnit": null, "system": null, "soc2Deliverable": {"reportType": "soc2type2", "tscs": ["SECURITY", "AVAILABILITY"]}}]}
+          application/json: {"id": "65fc81a3359c8508c9af880f", "customerOrganizationName": "corporation.com", "customerDisplayName": "Corporation Company", "customerOrganizationId": "65fc81a3359c8508c9af880f", "auditStartDate": "2024-03-07T21:25:56.000Z", "auditEndDate": "2024-03-14T21:25:56.000Z", "earlyAccessStartsAt": "2024-03-07T21:25:56.000Z", "framework": "SOC 2 Type II", "displayName": "Q1 2024 SOC 2 Audit", "allowAuditorEmails": ["sam@auditor.com"], "allowAllAuditors": true, "deletionDate": null, "creationDate": "2024-03-07T21:25:56.000Z", "modificationDate": "2024-03-07T21:25:56.000Z", "completionDate": "2024-03-07T21:25:56.000Z", "auditFocus": "EXTERNAL", "irlGenerationStatus": "READY", "auditorRequestListMetadata": {"requestsSharedWithCustomer": "2024-03-07T21:25:56.000Z"}, "segments": [{"id": "65fc81a3359c8508c9af8810", "kind": "PROGRAM", "displayName": "SOC 2 Type II", "framework": {"displayName": "SOC 2 Type II"}, "businessUnit": null, "system": null, "soc2Deliverable": {"reportType": "soc2type2", "tscs": ["SECURITY", "AVAILABILITY"]}}]}
   UpsertAssessmentForControl:
     Example 1:
       parameters:

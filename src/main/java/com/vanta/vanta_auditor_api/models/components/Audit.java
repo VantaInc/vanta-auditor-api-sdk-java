@@ -125,6 +125,15 @@ public class Audit {
     private AuditFocus auditFocus;
 
     /**
+     * Generation status of this audit's Vanta-generated information request list
+     * (IRL). `PENDING`/`RUNNING` defer initial sync, `READY` permits a full sync,
+     * and `FAILED` is terminal. Null means the audit has no generated IRL.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("irlGenerationStatus")
+    private Optional<? extends IrlGenerationStatus> irlGenerationStatus;
+
+    /**
      * Metadata about the auditor request list. This field is only present for IRL (Information
      * Request List) based audits and will be undefined for standard audits. Use the presence
      * of this field to differentiate between IRL and non-IRL audits.
@@ -161,6 +170,7 @@ public class Audit {
             @JsonProperty("modificationDate") Optional<OffsetDateTime> modificationDate,
             @JsonProperty("completionDate") Optional<OffsetDateTime> completionDate,
             @JsonProperty("auditFocus") AuditFocus auditFocus,
+            @JsonProperty("irlGenerationStatus") Optional<? extends IrlGenerationStatus> irlGenerationStatus,
             @JsonProperty("auditorRequestListMetadata") Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata,
             @JsonProperty("segments") List<AuditSegment> segments) {
         Utils.checkNotNull(id, "id");
@@ -179,6 +189,7 @@ public class Audit {
         Utils.checkNotNull(modificationDate, "modificationDate");
         Utils.checkNotNull(completionDate, "completionDate");
         Utils.checkNotNull(auditFocus, "auditFocus");
+        Utils.checkNotNull(irlGenerationStatus, "irlGenerationStatus");
         Utils.checkNotNull(auditorRequestListMetadata, "auditorRequestListMetadata");
         Utils.checkNotNull(segments, "segments");
         this.id = id;
@@ -197,6 +208,7 @@ public class Audit {
         this.modificationDate = modificationDate;
         this.completionDate = completionDate;
         this.auditFocus = auditFocus;
+        this.irlGenerationStatus = irlGenerationStatus;
         this.auditorRequestListMetadata = auditorRequestListMetadata;
         this.segments = segments;
     }
@@ -219,7 +231,8 @@ public class Audit {
             Optional.empty(), framework, displayName,
             allowAuditorEmails, allowAllAuditors, Optional.empty(),
             creationDate, Optional.empty(), Optional.empty(),
-            auditFocus, Optional.empty(), segments);
+            auditFocus, Optional.empty(), Optional.empty(),
+            segments);
     }
 
     /**
@@ -350,6 +363,17 @@ public class Audit {
     @JsonIgnore
     public AuditFocus auditFocus() {
         return auditFocus;
+    }
+
+    /**
+     * Generation status of this audit's Vanta-generated information request list
+     * (IRL). `PENDING`/`RUNNING` defer initial sync, `READY` permits a full sync,
+     * and `FAILED` is terminal. Null means the audit has no generated IRL.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<IrlGenerationStatus> irlGenerationStatus() {
+        return (Optional<IrlGenerationStatus>) irlGenerationStatus;
     }
 
     /**
@@ -577,6 +601,29 @@ public class Audit {
     }
 
     /**
+     * Generation status of this audit's Vanta-generated information request list
+     * (IRL). `PENDING`/`RUNNING` defer initial sync, `READY` permits a full sync,
+     * and `FAILED` is terminal. Null means the audit has no generated IRL.
+     */
+    public Audit withIrlGenerationStatus(IrlGenerationStatus irlGenerationStatus) {
+        Utils.checkNotNull(irlGenerationStatus, "irlGenerationStatus");
+        this.irlGenerationStatus = Optional.ofNullable(irlGenerationStatus);
+        return this;
+    }
+
+
+    /**
+     * Generation status of this audit's Vanta-generated information request list
+     * (IRL). `PENDING`/`RUNNING` defer initial sync, `READY` permits a full sync,
+     * and `FAILED` is terminal. Null means the audit has no generated IRL.
+     */
+    public Audit withIrlGenerationStatus(Optional<? extends IrlGenerationStatus> irlGenerationStatus) {
+        Utils.checkNotNull(irlGenerationStatus, "irlGenerationStatus");
+        this.irlGenerationStatus = irlGenerationStatus;
+        return this;
+    }
+
+    /**
      * Metadata about the auditor request list. This field is only present for IRL (Information
      * Request List) based audits and will be undefined for standard audits. Use the presence
      * of this field to differentiate between IRL and non-IRL audits.
@@ -638,6 +685,7 @@ public class Audit {
             Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
             Utils.enhancedDeepEquals(this.completionDate, other.completionDate) &&
             Utils.enhancedDeepEquals(this.auditFocus, other.auditFocus) &&
+            Utils.enhancedDeepEquals(this.irlGenerationStatus, other.irlGenerationStatus) &&
             Utils.enhancedDeepEquals(this.auditorRequestListMetadata, other.auditorRequestListMetadata) &&
             Utils.enhancedDeepEquals(this.segments, other.segments);
     }
@@ -650,7 +698,8 @@ public class Audit {
             earlyAccessStartsAt, framework, displayName,
             allowAuditorEmails, allowAllAuditors, deletionDate,
             creationDate, modificationDate, completionDate,
-            auditFocus, auditorRequestListMetadata, segments);
+            auditFocus, irlGenerationStatus, auditorRequestListMetadata,
+            segments);
     }
     
     @Override
@@ -672,6 +721,7 @@ public class Audit {
                 "modificationDate", modificationDate,
                 "completionDate", completionDate,
                 "auditFocus", auditFocus,
+                "irlGenerationStatus", irlGenerationStatus,
                 "auditorRequestListMetadata", auditorRequestListMetadata,
                 "segments", segments);
     }
@@ -711,6 +761,8 @@ public class Audit {
         private Optional<OffsetDateTime> completionDate = Optional.empty();
 
         private AuditFocus auditFocus;
+
+        private Optional<? extends IrlGenerationStatus> irlGenerationStatus = Optional.empty();
 
         private Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata = Optional.empty();
 
@@ -929,6 +981,29 @@ public class Audit {
 
 
         /**
+         * Generation status of this audit's Vanta-generated information request list
+         * (IRL). `PENDING`/`RUNNING` defer initial sync, `READY` permits a full sync,
+         * and `FAILED` is terminal. Null means the audit has no generated IRL.
+         */
+        public Builder irlGenerationStatus(IrlGenerationStatus irlGenerationStatus) {
+            Utils.checkNotNull(irlGenerationStatus, "irlGenerationStatus");
+            this.irlGenerationStatus = Optional.ofNullable(irlGenerationStatus);
+            return this;
+        }
+
+        /**
+         * Generation status of this audit's Vanta-generated information request list
+         * (IRL). `PENDING`/`RUNNING` defer initial sync, `READY` permits a full sync,
+         * and `FAILED` is terminal. Null means the audit has no generated IRL.
+         */
+        public Builder irlGenerationStatus(Optional<? extends IrlGenerationStatus> irlGenerationStatus) {
+            Utils.checkNotNull(irlGenerationStatus, "irlGenerationStatus");
+            this.irlGenerationStatus = irlGenerationStatus;
+            return this;
+        }
+
+
+        /**
          * Metadata about the auditor request list. This field is only present for IRL (Information
          * Request List) based audits and will be undefined for standard audits. Use the presence
          * of this field to differentiate between IRL and non-IRL audits.
@@ -972,7 +1047,8 @@ public class Audit {
                 earlyAccessStartsAt, framework, displayName,
                 allowAuditorEmails, allowAllAuditors, deletionDate,
                 creationDate, modificationDate, completionDate,
-                auditFocus, auditorRequestListMetadata, segments);
+                auditFocus, irlGenerationStatus, auditorRequestListMetadata,
+                segments);
         }
 
     }
