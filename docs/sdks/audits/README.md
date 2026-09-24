@@ -1435,6 +1435,14 @@ This endpoint always includes soft-deleted records (where `deletionDate !== null
 Clients should check the `deletionDate` field to identify and handle deleted records
 appropriately in their systems.
 
+This is the only endpoint that returns a deleted information request. No
+webhook fires when a request is deleted. Endpoints under
+`/audits/{auditId}/information-requests/{requestId}` return a 4xx HTTP error
+for a deleted request. To confirm deletion, check the request's `deletionDate`
+in this list. Deleting a request does not set `deletionDate` on its comments
+or evidence or send delete events for them. Once this list confirms the
+request was deleted, treat its comments and evidence as deleted too.
+
 This endpoint supports delta synchronization via the `changedSinceDate` parameter,
 allowing efficient polling for changes without retrieving the entire dataset.
 
@@ -1582,8 +1590,11 @@ Retrieves a single information request by its ID for an audit, allowing external
 audit management systems to fetch the latest state of a specific request without
 paginating through the full list.
 
-Soft-deleted records (where `deletionDate !== null`) are included in the response.
-Clients should check `deletionDate` to determine whether the request has been deleted.
+This endpoint returns a 4xx HTTP error for a soft-deleted information
+request. To confirm deletion, use
+`GET /audits/{auditId}/information-requests`, which supports
+`changedSinceDate` and includes soft-deleted requests with `deletionDate`
+set.
 
 Rate limit: 50 requests / minute.
 
@@ -1712,8 +1723,9 @@ Soft deletion allows:
 - Retrieving deleted requests via `changedSinceDate` for synchronization
 
 After deletion:
-- The request will not appear in normal list responses (without `changedSinceDate`)
-- The request's `deletionDate` field will be populated
+- The request remains in list responses with `deletionDate` set, even when
+
+  `changedSinceDate` is omitted
 
 Rate limit: 50 requests / minute.
 
@@ -1845,6 +1857,9 @@ contain fewer entries than `pageSize` — or none at all — while more pages re
 Follow `results.pageInfo.hasNextPage` rather than treating a short or empty page as
 the end of the list.
 
+If the information request has been deleted, this endpoint returns a 4xx
+HTTP error instead of its activity.
+
 This endpoint supports delta synchronization via the `changedSinceDate` parameter,
 allowing efficient polling for changes without retrieving the entire dataset.
 
@@ -1922,6 +1937,9 @@ auditors to view communication history and collaborate with customers.
 This endpoint always includes soft-deleted records (where `deletionDate !== null`).
 Clients should check the `deletionDate` field to identify and handle deleted records
 appropriately in their systems.
+
+If the information request itself has been deleted, this endpoint returns a
+4xx HTTP error instead of its comments.
 
 This endpoint supports delta synchronization via the `changedSinceDate` parameter,
 allowing efficient polling for changes without retrieving the entire dataset.
@@ -2065,9 +2083,11 @@ comment has been deleted. This matches
 `GET /audits/{auditId}/information-requests/{requestId}/comments`, which
 supports `changedSinceDate` and returns soft-deleted comments for delta sync.
 
-Comments remain fetchable when the parent information request has been
-soft-deleted, so delayed webhook consumers can still resolve a comment ID
-after the request is deleted.
+Comments are only resolvable while their information request exists. Once
+the request itself is deleted, this endpoint returns a 4xx HTTP error
+instead of the comment. Check the request's `deletionDate` using
+`GET /audits/{auditId}/information-requests` before treating its comments
+as deleted too.
 
 Rate limit: 50 requests / minute.
 
@@ -2252,6 +2272,9 @@ This endpoint always includes soft-deleted records (where `deletionDate !== null
 Clients should check the `deletionDate` field to identify and handle deleted records
 appropriately in their systems.
 
+If the information request itself has been deleted, this endpoint returns a
+4xx HTTP error instead of its evidence.
+
 This endpoint supports delta synchronization via the `changedSinceDate` parameter,
 allowing efficient polling for changes without retrieving the entire dataset.
 
@@ -2331,9 +2354,10 @@ the evidence is deleted. Clients should check the `deletionDate` field to identi
 and handle deleted records appropriately in their systems.
 
 Evidence is only resolvable while its information request exists. Once the
-request itself is deleted, this endpoint reports the request as not found —
-matching `GET /audits/{auditId}/information-requests/{requestId}/evidence`.
-Clients reconciling a deleted request should treat its evidence as gone with it.
+request itself is deleted, this endpoint returns a 4xx HTTP error instead
+of the evidence. Check the request's `deletionDate` using
+`GET /audits/{auditId}/information-requests` before treating its evidence
+as deleted too.
 
 Evidence that the customer has not shared with the auditor is reported as not
 found, rather than distinguishing it from an ID that does not exist.
