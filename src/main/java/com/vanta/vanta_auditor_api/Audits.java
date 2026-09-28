@@ -747,7 +747,7 @@ public class Audits {
      * <p>Returns 404 when the control is not part of the audit or the auditor email
      * does not resolve to a firm user. Returns 422 when `segmentId` is missing on
      * a multi-program audit, is not a program segment on the audit, or the
-     * control is not assessment-eligible in that segment. Applies to both Full
+     * control is not assigned to that segment for this audit. Applies to both Full
      * and Controlled Audit View audits.
      * 
      * <p>Rate limit: 10 requests / minute.
@@ -775,7 +775,7 @@ public class Audits {
      * <p>Returns 404 when the control is not part of the audit or the auditor email
      * does not resolve to a firm user. Returns 422 when `segmentId` is missing on
      * a multi-program audit, is not a program segment on the audit, or the
-     * control is not assessment-eligible in that segment. Applies to both Full
+     * control is not assigned to that segment for this audit. Applies to both Full
      * and Controlled Audit View audits.
      * 
      * <p>Rate limit: 10 requests / minute.
