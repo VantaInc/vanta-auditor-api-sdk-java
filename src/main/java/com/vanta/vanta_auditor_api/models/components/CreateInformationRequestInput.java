@@ -91,7 +91,7 @@ public class CreateInformationRequestInput {
      * Control IDs to link directly to this request, beyond those automatically
      * mapped from framework codes. Each must be the `id` of an existing control in
      * the customer's organization (the identifier returned by the controls endpoints).
-     * The request is rejected if any ID does not match a control.
+     * Unknown IDs and controls without an active mapping to a framework in the audit are skipped.
      * Omit or pass an empty array for no direct control links.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -219,7 +219,7 @@ public class CreateInformationRequestInput {
      * Control IDs to link directly to this request, beyond those automatically
      * mapped from framework codes. Each must be the `id` of an existing control in
      * the customer's organization (the identifier returned by the controls endpoints).
-     * The request is rejected if any ID does not match a control.
+     * Unknown IDs and controls without an active mapping to a framework in the audit are skipped.
      * Omit or pass an empty array for no direct control links.
      */
     @SuppressWarnings("unchecked")
@@ -360,7 +360,7 @@ public class CreateInformationRequestInput {
      * Control IDs to link directly to this request, beyond those automatically
      * mapped from framework codes. Each must be the `id` of an existing control in
      * the customer's organization (the identifier returned by the controls endpoints).
-     * The request is rejected if any ID does not match a control.
+     * Unknown IDs and controls without an active mapping to a framework in the audit are skipped.
      * Omit or pass an empty array for no direct control links.
      */
     public CreateInformationRequestInput withAdditionalControlIds(List<String> additionalControlIds) {
@@ -374,7 +374,7 @@ public class CreateInformationRequestInput {
      * Control IDs to link directly to this request, beyond those automatically
      * mapped from framework codes. Each must be the `id` of an existing control in
      * the customer's organization (the identifier returned by the controls endpoints).
-     * The request is rejected if any ID does not match a control.
+     * Unknown IDs and controls without an active mapping to a framework in the audit are skipped.
      * Omit or pass an empty array for no direct control links.
      */
     public CreateInformationRequestInput withAdditionalControlIds(Optional<? extends List<String>> additionalControlIds) {
@@ -587,7 +587,7 @@ public class CreateInformationRequestInput {
          * Control IDs to link directly to this request, beyond those automatically
          * mapped from framework codes. Each must be the `id` of an existing control in
          * the customer's organization (the identifier returned by the controls endpoints).
-         * The request is rejected if any ID does not match a control.
+         * Unknown IDs and controls without an active mapping to a framework in the audit are skipped.
          * Omit or pass an empty array for no direct control links.
          */
         public Builder additionalControlIds(List<String> additionalControlIds) {
@@ -600,7 +600,7 @@ public class CreateInformationRequestInput {
          * Control IDs to link directly to this request, beyond those automatically
          * mapped from framework codes. Each must be the `id` of an existing control in
          * the customer's organization (the identifier returned by the controls endpoints).
-         * The request is rejected if any ID does not match a control.
+         * Unknown IDs and controls without an active mapping to a framework in the audit are skipped.
          * Omit or pass an empty array for no direct control links.
          */
         public Builder additionalControlIds(Optional<? extends List<String>> additionalControlIds) {
