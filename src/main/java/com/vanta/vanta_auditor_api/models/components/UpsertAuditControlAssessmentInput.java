@@ -17,13 +17,14 @@ import java.util.Optional;
  * UpsertAuditControlAssessmentInput
  * 
  * <p>Input for upserting a control's auditor assessment within an audit. Overwrites
- * the assessment for this control in the chosen program segment.
+ * the assessment for this control in the chosen audit segment.
  */
 public class UpsertAuditControlAssessmentInput {
     /**
-     * The program segment to assess. Required when the audit has more than one
-     * program segment. Optional on a single-program audit (the only program is
-     * used). Must be a program segment on the audit; system segments are rejected.
+     * The segment to assess. If the audit has any `PROGRAM` segments, this must be
+     * one of them; `SYSTEM` segment IDs are rejected. If the audit has only
+     * `SYSTEM` segments, this must be one of those. May be omitted only when
+     * exactly one segment accepts assessments; required otherwise.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("segmentId")
@@ -31,9 +32,9 @@ public class UpsertAuditControlAssessmentInput {
 
     /**
      * An auditor's assessment of a control within an audit. This is the full flat
-     * union of every framework's assessment states (the superset); a given audit's
-     * framework only uses its own subset. `NOT_ASSESSED` is shared by all
-     * frameworks and is the default for a control that has not yet been assessed.
+     * union of every framework's assessment states (the superset); the selected
+     * segment's framework determines which subset applies. `NOT_ASSESSED` is shared
+     * by all frameworks and is the default for a control that has not yet been assessed.
      * 
      * <p>Which states apply to which framework:
      * - Most frameworks (e.g. SOC 2): `IN_PLACE`, `NOT_IN_PLACE`, `PARTIAL`, `NOT_ASSESSED`
@@ -85,9 +86,10 @@ public class UpsertAuditControlAssessmentInput {
     }
 
     /**
-     * The program segment to assess. Required when the audit has more than one
-     * program segment. Optional on a single-program audit (the only program is
-     * used). Must be a program segment on the audit; system segments are rejected.
+     * The segment to assess. If the audit has any `PROGRAM` segments, this must be
+     * one of them; `SYSTEM` segment IDs are rejected. If the audit has only
+     * `SYSTEM` segments, this must be one of those. May be omitted only when
+     * exactly one segment accepts assessments; required otherwise.
      */
     @JsonIgnore
     public Optional<String> segmentId() {
@@ -96,9 +98,9 @@ public class UpsertAuditControlAssessmentInput {
 
     /**
      * An auditor's assessment of a control within an audit. This is the full flat
-     * union of every framework's assessment states (the superset); a given audit's
-     * framework only uses its own subset. `NOT_ASSESSED` is shared by all
-     * frameworks and is the default for a control that has not yet been assessed.
+     * union of every framework's assessment states (the superset); the selected
+     * segment's framework determines which subset applies. `NOT_ASSESSED` is shared
+     * by all frameworks and is the default for a control that has not yet been assessed.
      * 
      * <p>Which states apply to which framework:
      * - Most frameworks (e.g. SOC 2): `IN_PLACE`, `NOT_IN_PLACE`, `PARTIAL`, `NOT_ASSESSED`
@@ -137,9 +139,10 @@ public class UpsertAuditControlAssessmentInput {
 
 
     /**
-     * The program segment to assess. Required when the audit has more than one
-     * program segment. Optional on a single-program audit (the only program is
-     * used). Must be a program segment on the audit; system segments are rejected.
+     * The segment to assess. If the audit has any `PROGRAM` segments, this must be
+     * one of them; `SYSTEM` segment IDs are rejected. If the audit has only
+     * `SYSTEM` segments, this must be one of those. May be omitted only when
+     * exactly one segment accepts assessments; required otherwise.
      */
     public UpsertAuditControlAssessmentInput withSegmentId(String segmentId) {
         Utils.checkNotNull(segmentId, "segmentId");
@@ -149,9 +152,10 @@ public class UpsertAuditControlAssessmentInput {
 
 
     /**
-     * The program segment to assess. Required when the audit has more than one
-     * program segment. Optional on a single-program audit (the only program is
-     * used). Must be a program segment on the audit; system segments are rejected.
+     * The segment to assess. If the audit has any `PROGRAM` segments, this must be
+     * one of them; `SYSTEM` segment IDs are rejected. If the audit has only
+     * `SYSTEM` segments, this must be one of those. May be omitted only when
+     * exactly one segment accepts assessments; required otherwise.
      */
     public UpsertAuditControlAssessmentInput withSegmentId(Optional<String> segmentId) {
         Utils.checkNotNull(segmentId, "segmentId");
@@ -161,9 +165,9 @@ public class UpsertAuditControlAssessmentInput {
 
     /**
      * An auditor's assessment of a control within an audit. This is the full flat
-     * union of every framework's assessment states (the superset); a given audit's
-     * framework only uses its own subset. `NOT_ASSESSED` is shared by all
-     * frameworks and is the default for a control that has not yet been assessed.
+     * union of every framework's assessment states (the superset); the selected
+     * segment's framework determines which subset applies. `NOT_ASSESSED` is shared
+     * by all frameworks and is the default for a control that has not yet been assessed.
      * 
      * <p>Which states apply to which framework:
      * - Most frameworks (e.g. SOC 2): `IN_PLACE`, `NOT_IN_PLACE`, `PARTIAL`, `NOT_ASSESSED`
@@ -248,9 +252,10 @@ public class UpsertAuditControlAssessmentInput {
 
 
         /**
-         * The program segment to assess. Required when the audit has more than one
-         * program segment. Optional on a single-program audit (the only program is
-         * used). Must be a program segment on the audit; system segments are rejected.
+         * The segment to assess. If the audit has any `PROGRAM` segments, this must be
+         * one of them; `SYSTEM` segment IDs are rejected. If the audit has only
+         * `SYSTEM` segments, this must be one of those. May be omitted only when
+         * exactly one segment accepts assessments; required otherwise.
          */
         public Builder segmentId(String segmentId) {
             Utils.checkNotNull(segmentId, "segmentId");
@@ -259,9 +264,10 @@ public class UpsertAuditControlAssessmentInput {
         }
 
         /**
-         * The program segment to assess. Required when the audit has more than one
-         * program segment. Optional on a single-program audit (the only program is
-         * used). Must be a program segment on the audit; system segments are rejected.
+         * The segment to assess. If the audit has any `PROGRAM` segments, this must be
+         * one of them; `SYSTEM` segment IDs are rejected. If the audit has only
+         * `SYSTEM` segments, this must be one of those. May be omitted only when
+         * exactly one segment accepts assessments; required otherwise.
          */
         public Builder segmentId(Optional<String> segmentId) {
             Utils.checkNotNull(segmentId, "segmentId");
@@ -272,9 +278,9 @@ public class UpsertAuditControlAssessmentInput {
 
         /**
          * An auditor's assessment of a control within an audit. This is the full flat
-         * union of every framework's assessment states (the superset); a given audit's
-         * framework only uses its own subset. `NOT_ASSESSED` is shared by all
-         * frameworks and is the default for a control that has not yet been assessed.
+         * union of every framework's assessment states (the superset); the selected
+         * segment's framework determines which subset applies. `NOT_ASSESSED` is shared
+         * by all frameworks and is the default for a control that has not yet been assessed.
          * 
          * <p>Which states apply to which framework:
          * - Most frameworks (e.g. SOC 2): `IN_PLACE`, `NOT_IN_PLACE`, `PARTIAL`, `NOT_ASSESSED`

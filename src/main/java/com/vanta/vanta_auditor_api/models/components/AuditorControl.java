@@ -114,12 +114,13 @@ public class AuditorControl {
     private List<String> inScopeSegmentIds;
 
     /**
-     * The auditor's assessments of this control, with one entry for each program
-     * segment in which the control is in scope. More than one entry does not by
-     * itself imply more than one framework. Populated only for IRL audits when
-     * assessment access is allowed; empty otherwise. Within an in-scope
-     * segment a control with no recorded assessment coerces to `NOT_ASSESSED`; a
-     * segment the control is not in scope for contributes no entry.
+     * The auditor's assessments of this control, with one entry for each segment
+     * in `inScopeSegmentIds` that accepts assessments: the `PROGRAM` segments when
+     * the audit has any, otherwise its `SYSTEM` segments. On an audit with both,
+     * `SYSTEM` segments can appear in `inScopeSegmentIds` without an assessment
+     * entry. Populated only for IRL audits when assessment access is allowed;
+     * empty otherwise. A segment with no recorded assessment returns
+     * `NOT_ASSESSED`.
      */
     @JsonProperty("assessments")
     private List<AuditControlAssessment> assessments;
@@ -308,12 +309,13 @@ public class AuditorControl {
     }
 
     /**
-     * The auditor's assessments of this control, with one entry for each program
-     * segment in which the control is in scope. More than one entry does not by
-     * itself imply more than one framework. Populated only for IRL audits when
-     * assessment access is allowed; empty otherwise. Within an in-scope
-     * segment a control with no recorded assessment coerces to `NOT_ASSESSED`; a
-     * segment the control is not in scope for contributes no entry.
+     * The auditor's assessments of this control, with one entry for each segment
+     * in `inScopeSegmentIds` that accepts assessments: the `PROGRAM` segments when
+     * the audit has any, otherwise its `SYSTEM` segments. On an audit with both,
+     * `SYSTEM` segments can appear in `inScopeSegmentIds` without an assessment
+     * entry. Populated only for IRL audits when assessment access is allowed;
+     * empty otherwise. A segment with no recorded assessment returns
+     * `NOT_ASSESSED`.
      */
     @JsonIgnore
     public List<AuditControlAssessment> assessments() {
@@ -504,12 +506,13 @@ public class AuditorControl {
     }
 
     /**
-     * The auditor's assessments of this control, with one entry for each program
-     * segment in which the control is in scope. More than one entry does not by
-     * itself imply more than one framework. Populated only for IRL audits when
-     * assessment access is allowed; empty otherwise. Within an in-scope
-     * segment a control with no recorded assessment coerces to `NOT_ASSESSED`; a
-     * segment the control is not in scope for contributes no entry.
+     * The auditor's assessments of this control, with one entry for each segment
+     * in `inScopeSegmentIds` that accepts assessments: the `PROGRAM` segments when
+     * the audit has any, otherwise its `SYSTEM` segments. On an audit with both,
+     * `SYSTEM` segments can appear in `inScopeSegmentIds` without an assessment
+     * entry. Populated only for IRL audits when assessment access is allowed;
+     * empty otherwise. A segment with no recorded assessment returns
+     * `NOT_ASSESSED`.
      */
     public AuditorControl withAssessments(List<AuditControlAssessment> assessments) {
         Utils.checkNotNull(assessments, "assessments");
@@ -802,12 +805,13 @@ public class AuditorControl {
 
 
         /**
-         * The auditor's assessments of this control, with one entry for each program
-         * segment in which the control is in scope. More than one entry does not by
-         * itself imply more than one framework. Populated only for IRL audits when
-         * assessment access is allowed; empty otherwise. Within an in-scope
-         * segment a control with no recorded assessment coerces to `NOT_ASSESSED`; a
-         * segment the control is not in scope for contributes no entry.
+         * The auditor's assessments of this control, with one entry for each segment
+         * in `inScopeSegmentIds` that accepts assessments: the `PROGRAM` segments when
+         * the audit has any, otherwise its `SYSTEM` segments. On an audit with both,
+         * `SYSTEM` segments can appear in `inScopeSegmentIds` without an assessment
+         * entry. Populated only for IRL audits when assessment access is allowed;
+         * empty otherwise. A segment with no recorded assessment returns
+         * `NOT_ASSESSED`.
          */
         public Builder assessments(List<AuditControlAssessment> assessments) {
             Utils.checkNotNull(assessments, "assessments");

@@ -13,8 +13,7 @@ import java.lang.String;
 /**
  * AuditorControlAssessment
  * 
- * <p>A control's auditor assessment, as persisted. Returned by the assessment
- * write endpoint so the caller sees exactly what was recorded.
+ * <p>A control's auditor assessment returned by the assessment write endpoint.
  */
 public class AuditorControlAssessment {
     /**
@@ -24,16 +23,16 @@ public class AuditorControlAssessment {
     private String controlId;
 
     /**
-     * The program segment this assessment was written to.
+     * The audit segment this assessment was written to.
      */
     @JsonProperty("segmentId")
     private String segmentId;
 
     /**
      * An auditor's assessment of a control within an audit. This is the full flat
-     * union of every framework's assessment states (the superset); a given audit's
-     * framework only uses its own subset. `NOT_ASSESSED` is shared by all
-     * frameworks and is the default for a control that has not yet been assessed.
+     * union of every framework's assessment states (the superset); the selected
+     * segment's framework determines which subset applies. `NOT_ASSESSED` is shared
+     * by all frameworks and is the default for a control that has not yet been assessed.
      * 
      * <p>Which states apply to which framework:
      * - Most frameworks (e.g. SOC 2): `IN_PLACE`, `NOT_IN_PLACE`, `PARTIAL`, `NOT_ASSESSED`
@@ -78,7 +77,7 @@ public class AuditorControlAssessment {
     }
 
     /**
-     * The program segment this assessment was written to.
+     * The audit segment this assessment was written to.
      */
     @JsonIgnore
     public String segmentId() {
@@ -87,9 +86,9 @@ public class AuditorControlAssessment {
 
     /**
      * An auditor's assessment of a control within an audit. This is the full flat
-     * union of every framework's assessment states (the superset); a given audit's
-     * framework only uses its own subset. `NOT_ASSESSED` is shared by all
-     * frameworks and is the default for a control that has not yet been assessed.
+     * union of every framework's assessment states (the superset); the selected
+     * segment's framework determines which subset applies. `NOT_ASSESSED` is shared
+     * by all frameworks and is the default for a control that has not yet been assessed.
      * 
      * <p>Which states apply to which framework:
      * - Most frameworks (e.g. SOC 2): `IN_PLACE`, `NOT_IN_PLACE`, `PARTIAL`, `NOT_ASSESSED`
@@ -128,7 +127,7 @@ public class AuditorControlAssessment {
     }
 
     /**
-     * The program segment this assessment was written to.
+     * The audit segment this assessment was written to.
      */
     public AuditorControlAssessment withSegmentId(String segmentId) {
         Utils.checkNotNull(segmentId, "segmentId");
@@ -138,9 +137,9 @@ public class AuditorControlAssessment {
 
     /**
      * An auditor's assessment of a control within an audit. This is the full flat
-     * union of every framework's assessment states (the superset); a given audit's
-     * framework only uses its own subset. `NOT_ASSESSED` is shared by all
-     * frameworks and is the default for a control that has not yet been assessed.
+     * union of every framework's assessment states (the superset); the selected
+     * segment's framework determines which subset applies. `NOT_ASSESSED` is shared
+     * by all frameworks and is the default for a control that has not yet been assessed.
      * 
      * <p>Which states apply to which framework:
      * - Most frameworks (e.g. SOC 2): `IN_PLACE`, `NOT_IN_PLACE`, `PARTIAL`, `NOT_ASSESSED`
@@ -225,7 +224,7 @@ public class AuditorControlAssessment {
 
 
         /**
-         * The program segment this assessment was written to.
+         * The audit segment this assessment was written to.
          */
         public Builder segmentId(String segmentId) {
             Utils.checkNotNull(segmentId, "segmentId");
@@ -236,9 +235,9 @@ public class AuditorControlAssessment {
 
         /**
          * An auditor's assessment of a control within an audit. This is the full flat
-         * union of every framework's assessment states (the superset); a given audit's
-         * framework only uses its own subset. `NOT_ASSESSED` is shared by all
-         * frameworks and is the default for a control that has not yet been assessed.
+         * union of every framework's assessment states (the superset); the selected
+         * segment's framework determines which subset applies. `NOT_ASSESSED` is shared
+         * by all frameworks and is the default for a control that has not yet been assessed.
          * 
          * <p>Which states apply to which framework:
          * - Most frameworks (e.g. SOC 2): `IN_PLACE`, `NOT_IN_PLACE`, `PARTIAL`, `NOT_ASSESSED`
