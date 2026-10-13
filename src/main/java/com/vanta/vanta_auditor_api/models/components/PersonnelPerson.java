@@ -46,6 +46,14 @@ public class PersonnelPerson {
     private String email;
 
     /**
+     * IDs of the audit segments this person is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("segmentIds")
+    private Optional<? extends List<String>> segmentIds;
+
+    /**
      * Job title from HR system, or null if not available.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -160,6 +168,7 @@ public class PersonnelPerson {
             @JsonProperty("id") String id,
             @JsonProperty("name") String name,
             @JsonProperty("email") String email,
+            @JsonProperty("segmentIds") Optional<? extends List<String>> segmentIds,
             @JsonProperty("jobTitle") JsonNullable<String> jobTitle,
             @JsonProperty("employmentStatus") JsonNullable<? extends PersonnelPersonEmploymentStatus> employmentStatus,
             @JsonProperty("startDate") JsonNullable<String> startDate,
@@ -177,6 +186,7 @@ public class PersonnelPerson {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(email, "email");
+        Utils.checkNotNull(segmentIds, "segmentIds");
         Utils.checkNotNull(jobTitle, "jobTitle");
         Utils.checkNotNull(employmentStatus, "employmentStatus");
         Utils.checkNotNull(startDate, "startDate");
@@ -194,6 +204,7 @@ public class PersonnelPerson {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.segmentIds = segmentIds;
         this.jobTitle = jobTitle;
         this.employmentStatus = employmentStatus;
         this.startDate = startDate;
@@ -215,11 +226,11 @@ public class PersonnelPerson {
             String name,
             String email) {
         this(id, name, email,
+            Optional.empty(), JsonNullable.undefined(), JsonNullable.undefined(),
+            JsonNullable.undefined(), JsonNullable.undefined(), Optional.empty(),
             JsonNullable.undefined(), JsonNullable.undefined(), JsonNullable.undefined(),
-            JsonNullable.undefined(), Optional.empty(), JsonNullable.undefined(),
             JsonNullable.undefined(), JsonNullable.undefined(), JsonNullable.undefined(),
-            JsonNullable.undefined(), JsonNullable.undefined(), JsonNullable.undefined(),
-            JsonNullable.undefined(), JsonNullable.undefined());
+            JsonNullable.undefined(), JsonNullable.undefined(), JsonNullable.undefined());
     }
 
     /**
@@ -244,6 +255,16 @@ public class PersonnelPerson {
     @JsonIgnore
     public String email() {
         return email;
+    }
+
+    /**
+     * IDs of the audit segments this person is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> segmentIds() {
+        return (Optional<List<String>>) segmentIds;
     }
 
     /**
@@ -409,6 +430,27 @@ public class PersonnelPerson {
     public PersonnelPerson withEmail(String email) {
         Utils.checkNotNull(email, "email");
         this.email = email;
+        return this;
+    }
+
+    /**
+     * IDs of the audit segments this person is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    public PersonnelPerson withSegmentIds(List<String> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = Optional.ofNullable(segmentIds);
+        return this;
+    }
+
+
+    /**
+     * IDs of the audit segments this person is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    public PersonnelPerson withSegmentIds(Optional<? extends List<String>> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = segmentIds;
         return this;
     }
 
@@ -702,6 +744,7 @@ public class PersonnelPerson {
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
             Utils.enhancedDeepEquals(this.email, other.email) &&
+            Utils.enhancedDeepEquals(this.segmentIds, other.segmentIds) &&
             Utils.enhancedDeepEquals(this.jobTitle, other.jobTitle) &&
             Utils.enhancedDeepEquals(this.employmentStatus, other.employmentStatus) &&
             Utils.enhancedDeepEquals(this.startDate, other.startDate) &&
@@ -722,11 +765,11 @@ public class PersonnelPerson {
     public int hashCode() {
         return Utils.enhancedHash(
             id, name, email,
-            jobTitle, employmentStatus, startDate,
-            endDate, groups, source,
-            taskStatus, lastReminded, policies,
-            trainings, backgroundChecks, deviceMonitoring,
-            customOnboarding, customOffboarding);
+            segmentIds, jobTitle, employmentStatus,
+            startDate, endDate, groups,
+            source, taskStatus, lastReminded,
+            policies, trainings, backgroundChecks,
+            deviceMonitoring, customOnboarding, customOffboarding);
     }
     
     @Override
@@ -735,6 +778,7 @@ public class PersonnelPerson {
                 "id", id,
                 "name", name,
                 "email", email,
+                "segmentIds", segmentIds,
                 "jobTitle", jobTitle,
                 "employmentStatus", employmentStatus,
                 "startDate", startDate,
@@ -759,6 +803,8 @@ public class PersonnelPerson {
         private String name;
 
         private String email;
+
+        private Optional<? extends List<String>> segmentIds = Optional.empty();
 
         private JsonNullable<String> jobTitle = JsonNullable.undefined();
 
@@ -819,6 +865,27 @@ public class PersonnelPerson {
         public Builder email(String email) {
             Utils.checkNotNull(email, "email");
             this.email = email;
+            return this;
+        }
+
+
+        /**
+         * IDs of the audit segments this person is in scope for.
+         * Omitted when segment scoping is disabled.
+         */
+        public Builder segmentIds(List<String> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = Optional.ofNullable(segmentIds);
+            return this;
+        }
+
+        /**
+         * IDs of the audit segments this person is in scope for.
+         * Omitted when segment scoping is disabled.
+         */
+        public Builder segmentIds(Optional<? extends List<String>> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = segmentIds;
             return this;
         }
 
@@ -1116,11 +1183,11 @@ public class PersonnelPerson {
 
             return new PersonnelPerson(
                 id, name, email,
-                jobTitle, employmentStatus, startDate,
-                endDate, groups, source,
-                taskStatus, lastReminded, policies,
-                trainings, backgroundChecks, deviceMonitoring,
-                customOnboarding, customOffboarding);
+                segmentIds, jobTitle, employmentStatus,
+                startDate, endDate, groups,
+                source, taskStatus, lastReminded,
+                policies, trainings, backgroundChecks,
+                deviceMonitoring, customOnboarding, customOffboarding);
         }
 
     }

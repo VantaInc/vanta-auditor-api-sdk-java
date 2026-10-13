@@ -48,6 +48,14 @@ public class AccountAccess {
     private String accountName;
 
     /**
+     * IDs of the audit segments this account is in scope for.
+     * Omitted when segment attribution is unavailable or scoping is disabled.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("segmentIds")
+    private Optional<? extends List<String>> segmentIds;
+
+    /**
      * Display name of the account owner, or null when the column is visible but unknown.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -95,6 +103,7 @@ public class AccountAccess {
     public AccountAccess(
             @JsonProperty("id") String id,
             @JsonProperty("accountName") String accountName,
+            @JsonProperty("segmentIds") Optional<? extends List<String>> segmentIds,
             @JsonProperty("owner") JsonNullable<String> owner,
             @JsonProperty("role") Optional<? extends List<String>> role,
             @JsonProperty("status") Optional<? extends AccountAccessStatus> status,
@@ -103,6 +112,7 @@ public class AccountAccess {
             @JsonProperty("deactivatedDate") JsonNullable<OffsetDateTime> deactivatedDate) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(accountName, "accountName");
+        Utils.checkNotNull(segmentIds, "segmentIds");
         Utils.checkNotNull(owner, "owner");
         Utils.checkNotNull(role, "role");
         Utils.checkNotNull(status, "status");
@@ -111,6 +121,7 @@ public class AccountAccess {
         Utils.checkNotNull(deactivatedDate, "deactivatedDate");
         this.id = id;
         this.accountName = accountName;
+        this.segmentIds = segmentIds;
         this.owner = owner;
         this.role = role;
         this.status = status;
@@ -122,9 +133,9 @@ public class AccountAccess {
     public AccountAccess(
             String id,
             String accountName) {
-        this(id, accountName, JsonNullable.undefined(),
-            Optional.empty(), Optional.empty(), JsonNullable.undefined(),
-            JsonNullable.undefined(), JsonNullable.undefined());
+        this(id, accountName, Optional.empty(),
+            JsonNullable.undefined(), Optional.empty(), Optional.empty(),
+            JsonNullable.undefined(), JsonNullable.undefined(), JsonNullable.undefined());
     }
 
     /**
@@ -141,6 +152,16 @@ public class AccountAccess {
     @JsonIgnore
     public String accountName() {
         return accountName;
+    }
+
+    /**
+     * IDs of the audit segments this account is in scope for.
+     * Omitted when segment attribution is unavailable or scoping is disabled.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> segmentIds() {
+        return (Optional<List<String>>) segmentIds;
     }
 
     /**
@@ -215,6 +236,27 @@ public class AccountAccess {
     public AccountAccess withAccountName(String accountName) {
         Utils.checkNotNull(accountName, "accountName");
         this.accountName = accountName;
+        return this;
+    }
+
+    /**
+     * IDs of the audit segments this account is in scope for.
+     * Omitted when segment attribution is unavailable or scoping is disabled.
+     */
+    public AccountAccess withSegmentIds(List<String> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = Optional.ofNullable(segmentIds);
+        return this;
+    }
+
+
+    /**
+     * IDs of the audit segments this account is in scope for.
+     * Omitted when segment attribution is unavailable or scoping is disabled.
+     */
+    public AccountAccess withSegmentIds(Optional<? extends List<String>> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = segmentIds;
         return this;
     }
 
@@ -344,6 +386,7 @@ public class AccountAccess {
         return 
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.accountName, other.accountName) &&
+            Utils.enhancedDeepEquals(this.segmentIds, other.segmentIds) &&
             Utils.enhancedDeepEquals(this.owner, other.owner) &&
             Utils.enhancedDeepEquals(this.role, other.role) &&
             Utils.enhancedDeepEquals(this.status, other.status) &&
@@ -355,9 +398,9 @@ public class AccountAccess {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, accountName, owner,
-            role, status, mfa,
-            createdDate, deactivatedDate);
+            id, accountName, segmentIds,
+            owner, role, status,
+            mfa, createdDate, deactivatedDate);
     }
     
     @Override
@@ -365,6 +408,7 @@ public class AccountAccess {
         return Utils.toString(AccountAccess.class,
                 "id", id,
                 "accountName", accountName,
+                "segmentIds", segmentIds,
                 "owner", owner,
                 "role", role,
                 "status", status,
@@ -379,6 +423,8 @@ public class AccountAccess {
         private String id;
 
         private String accountName;
+
+        private Optional<? extends List<String>> segmentIds = Optional.empty();
 
         private JsonNullable<String> owner = JsonNullable.undefined();
 
@@ -413,6 +459,27 @@ public class AccountAccess {
         public Builder accountName(String accountName) {
             Utils.checkNotNull(accountName, "accountName");
             this.accountName = accountName;
+            return this;
+        }
+
+
+        /**
+         * IDs of the audit segments this account is in scope for.
+         * Omitted when segment attribution is unavailable or scoping is disabled.
+         */
+        public Builder segmentIds(List<String> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = Optional.ofNullable(segmentIds);
+            return this;
+        }
+
+        /**
+         * IDs of the audit segments this account is in scope for.
+         * Omitted when segment attribution is unavailable or scoping is disabled.
+         */
+        public Builder segmentIds(Optional<? extends List<String>> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = segmentIds;
             return this;
         }
 
@@ -537,9 +604,9 @@ public class AccountAccess {
         public AccountAccess build() {
 
             return new AccountAccess(
-                id, accountName, owner,
-                role, status, mfa,
-                createdDate, deactivatedDate);
+                id, accountName, segmentIds,
+                owner, role, status,
+                mfa, createdDate, deactivatedDate);
         }
 
     }

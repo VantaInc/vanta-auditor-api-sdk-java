@@ -14,6 +14,7 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.openapitools.jackson.nullable.JsonNullable;
 
@@ -38,6 +39,14 @@ public class AuditVendor {
      */
     @JsonProperty("name")
     private String name;
+
+    /**
+     * IDs of the audit segments this vendor is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("segmentIds")
+    private Optional<? extends List<String>> segmentIds;
 
 
     @JsonInclude(Include.NON_ABSENT)
@@ -97,6 +106,7 @@ public class AuditVendor {
     public AuditVendor(
             @JsonProperty("id") String id,
             @JsonProperty("name") String name,
+            @JsonProperty("segmentIds") Optional<? extends List<String>> segmentIds,
             @JsonProperty("inherentRisk") Optional<? extends AuditVendorRiskLevel> inherentRisk,
             @JsonProperty("status") Optional<? extends AuditVendorStatus> status,
             @JsonProperty("findings") Optional<Double> findings,
@@ -107,6 +117,7 @@ public class AuditVendor {
             @JsonProperty("dataAgreements") JsonNullable<? extends DataAgreements> dataAgreements) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(name, "name");
+        Utils.checkNotNull(segmentIds, "segmentIds");
         Utils.checkNotNull(inherentRisk, "inherentRisk");
         Utils.checkNotNull(status, "status");
         Utils.checkNotNull(findings, "findings");
@@ -117,6 +128,7 @@ public class AuditVendor {
         Utils.checkNotNull(dataAgreements, "dataAgreements");
         this.id = id;
         this.name = name;
+        this.segmentIds = segmentIds;
         this.inherentRisk = inherentRisk;
         this.status = status;
         this.findings = findings;
@@ -131,9 +143,9 @@ public class AuditVendor {
             String id,
             String name) {
         this(id, name, Optional.empty(),
-            Optional.empty(), Optional.empty(), JsonNullable.undefined(),
+            Optional.empty(), Optional.empty(), Optional.empty(),
             JsonNullable.undefined(), JsonNullable.undefined(), JsonNullable.undefined(),
-            JsonNullable.undefined());
+            JsonNullable.undefined(), JsonNullable.undefined());
     }
 
     /**
@@ -150,6 +162,16 @@ public class AuditVendor {
     @JsonIgnore
     public String name() {
         return name;
+    }
+
+    /**
+     * IDs of the audit segments this vendor is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> segmentIds() {
+        return (Optional<List<String>>) segmentIds;
     }
 
     @SuppressWarnings("unchecked")
@@ -236,6 +258,27 @@ public class AuditVendor {
     public AuditVendor withName(String name) {
         Utils.checkNotNull(name, "name");
         this.name = name;
+        return this;
+    }
+
+    /**
+     * IDs of the audit segments this vendor is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    public AuditVendor withSegmentIds(List<String> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = Optional.ofNullable(segmentIds);
+        return this;
+    }
+
+
+    /**
+     * IDs of the audit segments this vendor is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    public AuditVendor withSegmentIds(Optional<? extends List<String>> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = segmentIds;
         return this;
     }
 
@@ -390,6 +433,7 @@ public class AuditVendor {
         return 
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.segmentIds, other.segmentIds) &&
             Utils.enhancedDeepEquals(this.inherentRisk, other.inherentRisk) &&
             Utils.enhancedDeepEquals(this.status, other.status) &&
             Utils.enhancedDeepEquals(this.findings, other.findings) &&
@@ -403,10 +447,10 @@ public class AuditVendor {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, name, inherentRisk,
-            status, findings, lastReviewedCompleted,
-            nextSecurityReviewDueDate, vendorCategory, residualRisk,
-            dataAgreements);
+            id, name, segmentIds,
+            inherentRisk, status, findings,
+            lastReviewedCompleted, nextSecurityReviewDueDate, vendorCategory,
+            residualRisk, dataAgreements);
     }
     
     @Override
@@ -414,6 +458,7 @@ public class AuditVendor {
         return Utils.toString(AuditVendor.class,
                 "id", id,
                 "name", name,
+                "segmentIds", segmentIds,
                 "inherentRisk", inherentRisk,
                 "status", status,
                 "findings", findings,
@@ -430,6 +475,8 @@ public class AuditVendor {
         private String id;
 
         private String name;
+
+        private Optional<? extends List<String>> segmentIds = Optional.empty();
 
         private Optional<? extends AuditVendorRiskLevel> inherentRisk = Optional.empty();
 
@@ -468,6 +515,27 @@ public class AuditVendor {
         public Builder name(String name) {
             Utils.checkNotNull(name, "name");
             this.name = name;
+            return this;
+        }
+
+
+        /**
+         * IDs of the audit segments this vendor is in scope for.
+         * Omitted when segment scoping is disabled.
+         */
+        public Builder segmentIds(List<String> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = Optional.ofNullable(segmentIds);
+            return this;
+        }
+
+        /**
+         * IDs of the audit segments this vendor is in scope for.
+         * Omitted when segment scoping is disabled.
+         */
+        public Builder segmentIds(Optional<? extends List<String>> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = segmentIds;
             return this;
         }
 
@@ -618,10 +686,10 @@ public class AuditVendor {
         public AuditVendor build() {
 
             return new AuditVendor(
-                id, name, inherentRisk,
-                status, findings, lastReviewedCompleted,
-                nextSecurityReviewDueDate, vendorCategory, residualRisk,
-                dataAgreements);
+                id, name, segmentIds,
+                inherentRisk, status, findings,
+                lastReviewedCompleted, nextSecurityReviewDueDate, vendorCategory,
+                residualRisk, dataAgreements);
         }
 
     }
