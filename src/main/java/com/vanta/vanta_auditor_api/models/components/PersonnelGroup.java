@@ -41,6 +41,14 @@ public class PersonnelGroup {
     private String name;
 
     /**
+     * IDs of the audit segments this group is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("segmentIds")
+    private Optional<? extends List<String>> segmentIds;
+
+    /**
      * Number of people in this group within the audit scope.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -82,6 +90,7 @@ public class PersonnelGroup {
     public PersonnelGroup(
             @JsonProperty("id") String id,
             @JsonProperty("name") String name,
+            @JsonProperty("segmentIds") Optional<? extends List<String>> segmentIds,
             @JsonProperty("members") Optional<Double> members,
             @JsonProperty("source") Optional<String> source,
             @JsonProperty("tasks") Optional<? extends List<PersonnelGroupTask>> tasks,
@@ -89,6 +98,7 @@ public class PersonnelGroup {
             @JsonProperty("pointOfContact") JsonNullable<String> pointOfContact) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(name, "name");
+        Utils.checkNotNull(segmentIds, "segmentIds");
         Utils.checkNotNull(members, "members");
         Utils.checkNotNull(source, "source");
         Utils.checkNotNull(tasks, "tasks");
@@ -96,6 +106,7 @@ public class PersonnelGroup {
         Utils.checkNotNull(pointOfContact, "pointOfContact");
         this.id = id;
         this.name = name;
+        this.segmentIds = segmentIds;
         this.members = members;
         this.source = source;
         this.tasks = tasks;
@@ -107,8 +118,8 @@ public class PersonnelGroup {
             String id,
             String name) {
         this(id, name, Optional.empty(),
-            Optional.empty(), Optional.empty(), JsonNullable.undefined(),
-            JsonNullable.undefined());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            JsonNullable.undefined(), JsonNullable.undefined());
     }
 
     /**
@@ -125,6 +136,16 @@ public class PersonnelGroup {
     @JsonIgnore
     public String name() {
         return name;
+    }
+
+    /**
+     * IDs of the audit segments this group is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> segmentIds() {
+        return (Optional<List<String>>) segmentIds;
     }
 
     /**
@@ -191,6 +212,27 @@ public class PersonnelGroup {
     public PersonnelGroup withName(String name) {
         Utils.checkNotNull(name, "name");
         this.name = name;
+        return this;
+    }
+
+    /**
+     * IDs of the audit segments this group is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    public PersonnelGroup withSegmentIds(List<String> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = Optional.ofNullable(segmentIds);
+        return this;
+    }
+
+
+    /**
+     * IDs of the audit segments this group is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    public PersonnelGroup withSegmentIds(Optional<? extends List<String>> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = segmentIds;
         return this;
     }
 
@@ -305,6 +347,7 @@ public class PersonnelGroup {
         return 
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.segmentIds, other.segmentIds) &&
             Utils.enhancedDeepEquals(this.members, other.members) &&
             Utils.enhancedDeepEquals(this.source, other.source) &&
             Utils.enhancedDeepEquals(this.tasks, other.tasks) &&
@@ -315,9 +358,9 @@ public class PersonnelGroup {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, name, members,
-            source, tasks, tasksLastUpdated,
-            pointOfContact);
+            id, name, segmentIds,
+            members, source, tasks,
+            tasksLastUpdated, pointOfContact);
     }
     
     @Override
@@ -325,6 +368,7 @@ public class PersonnelGroup {
         return Utils.toString(PersonnelGroup.class,
                 "id", id,
                 "name", name,
+                "segmentIds", segmentIds,
                 "members", members,
                 "source", source,
                 "tasks", tasks,
@@ -338,6 +382,8 @@ public class PersonnelGroup {
         private String id;
 
         private String name;
+
+        private Optional<? extends List<String>> segmentIds = Optional.empty();
 
         private Optional<Double> members = Optional.empty();
 
@@ -370,6 +416,27 @@ public class PersonnelGroup {
         public Builder name(String name) {
             Utils.checkNotNull(name, "name");
             this.name = name;
+            return this;
+        }
+
+
+        /**
+         * IDs of the audit segments this group is in scope for.
+         * Omitted when segment scoping is disabled.
+         */
+        public Builder segmentIds(List<String> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = Optional.ofNullable(segmentIds);
+            return this;
+        }
+
+        /**
+         * IDs of the audit segments this group is in scope for.
+         * Omitted when segment scoping is disabled.
+         */
+        public Builder segmentIds(Optional<? extends List<String>> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = segmentIds;
             return this;
         }
 
@@ -477,9 +544,9 @@ public class PersonnelGroup {
         public PersonnelGroup build() {
 
             return new PersonnelGroup(
-                id, name, members,
-                source, tasks, tasksLastUpdated,
-                pointOfContact);
+                id, name, segmentIds,
+                members, source, tasks,
+                tasksLastUpdated, pointOfContact);
         }
 
     }

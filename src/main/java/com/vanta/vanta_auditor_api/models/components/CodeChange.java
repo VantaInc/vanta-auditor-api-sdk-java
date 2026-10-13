@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
+import java.lang.SuppressWarnings;
 import java.time.OffsetDateTime;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -36,6 +38,14 @@ public class CodeChange {
      */
     @JsonProperty("codeChange")
     private String codeChange;
+
+    /**
+     * IDs of the audit segments this code change is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("segmentIds")
+    private Optional<? extends List<String>> segmentIds;
 
     /**
      * Code change identifier (e.g. PR number).
@@ -78,6 +88,7 @@ public class CodeChange {
     public CodeChange(
             @JsonProperty("id") String id,
             @JsonProperty("codeChange") String codeChange,
+            @JsonProperty("segmentIds") Optional<? extends List<String>> segmentIds,
             @JsonProperty("identifier") Optional<String> identifier,
             @JsonProperty("service") Optional<String> service,
             @JsonProperty("repository") Optional<String> repository,
@@ -85,6 +96,7 @@ public class CodeChange {
             @JsonProperty("closedAt") Optional<OffsetDateTime> closedAt) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(codeChange, "codeChange");
+        Utils.checkNotNull(segmentIds, "segmentIds");
         Utils.checkNotNull(identifier, "identifier");
         Utils.checkNotNull(service, "service");
         Utils.checkNotNull(repository, "repository");
@@ -92,6 +104,7 @@ public class CodeChange {
         Utils.checkNotNull(closedAt, "closedAt");
         this.id = id;
         this.codeChange = codeChange;
+        this.segmentIds = segmentIds;
         this.identifier = identifier;
         this.service = service;
         this.repository = repository;
@@ -104,7 +117,7 @@ public class CodeChange {
             String codeChange) {
         this(id, codeChange, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -121,6 +134,16 @@ public class CodeChange {
     @JsonIgnore
     public String codeChange() {
         return codeChange;
+    }
+
+    /**
+     * IDs of the audit segments this code change is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> segmentIds() {
+        return (Optional<List<String>>) segmentIds;
     }
 
     /**
@@ -185,6 +208,27 @@ public class CodeChange {
     public CodeChange withCodeChange(String codeChange) {
         Utils.checkNotNull(codeChange, "codeChange");
         this.codeChange = codeChange;
+        return this;
+    }
+
+    /**
+     * IDs of the audit segments this code change is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    public CodeChange withSegmentIds(List<String> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = Optional.ofNullable(segmentIds);
+        return this;
+    }
+
+
+    /**
+     * IDs of the audit segments this code change is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    public CodeChange withSegmentIds(Optional<? extends List<String>> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = segmentIds;
         return this;
     }
 
@@ -299,6 +343,7 @@ public class CodeChange {
         return 
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.codeChange, other.codeChange) &&
+            Utils.enhancedDeepEquals(this.segmentIds, other.segmentIds) &&
             Utils.enhancedDeepEquals(this.identifier, other.identifier) &&
             Utils.enhancedDeepEquals(this.service, other.service) &&
             Utils.enhancedDeepEquals(this.repository, other.repository) &&
@@ -309,9 +354,9 @@ public class CodeChange {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, codeChange, identifier,
-            service, repository, openedAt,
-            closedAt);
+            id, codeChange, segmentIds,
+            identifier, service, repository,
+            openedAt, closedAt);
     }
     
     @Override
@@ -319,6 +364,7 @@ public class CodeChange {
         return Utils.toString(CodeChange.class,
                 "id", id,
                 "codeChange", codeChange,
+                "segmentIds", segmentIds,
                 "identifier", identifier,
                 "service", service,
                 "repository", repository,
@@ -332,6 +378,8 @@ public class CodeChange {
         private String id;
 
         private String codeChange;
+
+        private Optional<? extends List<String>> segmentIds = Optional.empty();
 
         private Optional<String> identifier = Optional.empty();
 
@@ -364,6 +412,27 @@ public class CodeChange {
         public Builder codeChange(String codeChange) {
             Utils.checkNotNull(codeChange, "codeChange");
             this.codeChange = codeChange;
+            return this;
+        }
+
+
+        /**
+         * IDs of the audit segments this code change is in scope for.
+         * Omitted when segment scoping is disabled.
+         */
+        public Builder segmentIds(List<String> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = Optional.ofNullable(segmentIds);
+            return this;
+        }
+
+        /**
+         * IDs of the audit segments this code change is in scope for.
+         * Omitted when segment scoping is disabled.
+         */
+        public Builder segmentIds(Optional<? extends List<String>> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = segmentIds;
             return this;
         }
 
@@ -469,9 +538,9 @@ public class CodeChange {
         public CodeChange build() {
 
             return new CodeChange(
-                id, codeChange, identifier,
-                service, repository, openedAt,
-                closedAt);
+                id, codeChange, segmentIds,
+                identifier, service, repository,
+                openedAt, closedAt);
         }
 
     }

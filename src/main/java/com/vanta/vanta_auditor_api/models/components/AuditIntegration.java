@@ -37,6 +37,14 @@ public class AuditIntegration {
     private String name;
 
     /**
+     * IDs of the audit segments this integration is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("segmentIds")
+    private Optional<? extends List<String>> segmentIds;
+
+    /**
      * Integration tag display names describing what data this integration provides.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -54,14 +62,17 @@ public class AuditIntegration {
     public AuditIntegration(
             @JsonProperty("id") String id,
             @JsonProperty("name") String name,
+            @JsonProperty("segmentIds") Optional<? extends List<String>> segmentIds,
             @JsonProperty("tags") Optional<? extends List<String>> tags,
             @JsonProperty("categories") Optional<? extends List<String>> categories) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(name, "name");
+        Utils.checkNotNull(segmentIds, "segmentIds");
         Utils.checkNotNull(tags, "tags");
         Utils.checkNotNull(categories, "categories");
         this.id = id;
         this.name = name;
+        this.segmentIds = segmentIds;
         this.tags = tags;
         this.categories = categories;
     }
@@ -70,7 +81,7 @@ public class AuditIntegration {
             String id,
             String name) {
         this(id, name, Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -87,6 +98,16 @@ public class AuditIntegration {
     @JsonIgnore
     public String name() {
         return name;
+    }
+
+    /**
+     * IDs of the audit segments this integration is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> segmentIds() {
+        return (Optional<List<String>>) segmentIds;
     }
 
     /**
@@ -127,6 +148,27 @@ public class AuditIntegration {
     public AuditIntegration withName(String name) {
         Utils.checkNotNull(name, "name");
         this.name = name;
+        return this;
+    }
+
+    /**
+     * IDs of the audit segments this integration is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    public AuditIntegration withSegmentIds(List<String> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = Optional.ofNullable(segmentIds);
+        return this;
+    }
+
+
+    /**
+     * IDs of the audit segments this integration is in scope for.
+     * Omitted when segment scoping is disabled.
+     */
+    public AuditIntegration withSegmentIds(Optional<? extends List<String>> segmentIds) {
+        Utils.checkNotNull(segmentIds, "segmentIds");
+        this.segmentIds = segmentIds;
         return this;
     }
 
@@ -180,6 +222,7 @@ public class AuditIntegration {
         return 
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.name, other.name) &&
+            Utils.enhancedDeepEquals(this.segmentIds, other.segmentIds) &&
             Utils.enhancedDeepEquals(this.tags, other.tags) &&
             Utils.enhancedDeepEquals(this.categories, other.categories);
     }
@@ -187,8 +230,8 @@ public class AuditIntegration {
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
-            id, name, tags,
-            categories);
+            id, name, segmentIds,
+            tags, categories);
     }
     
     @Override
@@ -196,6 +239,7 @@ public class AuditIntegration {
         return Utils.toString(AuditIntegration.class,
                 "id", id,
                 "name", name,
+                "segmentIds", segmentIds,
                 "tags", tags,
                 "categories", categories);
     }
@@ -206,6 +250,8 @@ public class AuditIntegration {
         private String id;
 
         private String name;
+
+        private Optional<? extends List<String>> segmentIds = Optional.empty();
 
         private Optional<? extends List<String>> tags = Optional.empty();
 
@@ -232,6 +278,27 @@ public class AuditIntegration {
         public Builder name(String name) {
             Utils.checkNotNull(name, "name");
             this.name = name;
+            return this;
+        }
+
+
+        /**
+         * IDs of the audit segments this integration is in scope for.
+         * Omitted when segment scoping is disabled.
+         */
+        public Builder segmentIds(List<String> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = Optional.ofNullable(segmentIds);
+            return this;
+        }
+
+        /**
+         * IDs of the audit segments this integration is in scope for.
+         * Omitted when segment scoping is disabled.
+         */
+        public Builder segmentIds(Optional<? extends List<String>> segmentIds) {
+            Utils.checkNotNull(segmentIds, "segmentIds");
+            this.segmentIds = segmentIds;
             return this;
         }
 
@@ -276,8 +343,8 @@ public class AuditIntegration {
         public AuditIntegration build() {
 
             return new AuditIntegration(
-                id, name, tags,
-                categories);
+                id, name, segmentIds,
+                tags, categories);
         }
 
     }
