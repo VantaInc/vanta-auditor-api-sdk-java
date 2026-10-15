@@ -15,6 +15,12 @@ import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 
+/**
+ * FrameworkSectionFrameworkId
+ * 
+ * <p>The framework's id, such as `soc2` or the id of a custom framework. The `FrameworkId` enum values
+ * are deprecated aliases that are still accepted.
+ */
 @JsonDeserialize(using = FrameworkSectionFrameworkId._Deserializer.class)
 public class FrameworkSectionFrameworkId {
 

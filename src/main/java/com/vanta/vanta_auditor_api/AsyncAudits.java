@@ -526,8 +526,10 @@ public class AsyncAudits {
      * <p>Results are sorted by closed date (newest first). This sort order is
      * fixed and cannot be customized via query parameters.
      * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * <p>On an audit that covers more than one framework, each code change in
+     * scope for any of the audit's frameworks is returned once.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -559,8 +561,10 @@ public class AsyncAudits {
      * <p>Results are sorted by closed date (newest first). This sort order is
      * fixed and cannot be customized via query parameters.
      * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * <p>On an audit that covers more than one framework, each code change in
+     * scope for any of the audit's frameworks is returned once.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2684,6 +2688,9 @@ public class AsyncAudits {
      * <p>Results are sorted by integration display name (ascending). This sort order
      * is fixed and cannot be customized via query parameters.
      * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -2713,6 +2720,9 @@ public class AsyncAudits {
      * 
      * <p>Results are sorted by integration display name (ascending). This sort order
      * is fixed and cannot be customized via query parameters.
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2932,6 +2942,9 @@ public class AsyncAudits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -2961,6 +2974,9 @@ public class AsyncAudits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3231,8 +3247,10 @@ public class AsyncAudits {
      * <p>Results are returned in connection order. Sort order is not guaranteed
      * and cannot be customized via query parameters.
      * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * <p>On an audit that covers more than one framework, each service in scope
+     * for any of the audit's frameworks is listed once.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3262,8 +3280,10 @@ public class AsyncAudits {
      * <p>Results are returned in connection order. Sort order is not guaranteed
      * and cannot be customized via query parameters.
      * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * <p>On an audit that covers more than one framework, each service in scope
+     * for any of the audit's frameworks is listed once.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3294,8 +3314,10 @@ public class AsyncAudits {
      * <p>Results are returned in connection order. Sort order is not guaranteed
      * and cannot be customized via query parameters.
      * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * <p>On an audit that covers more than one framework, each service in scope
+     * for any of the audit's frameworks is listed once.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3366,8 +3388,10 @@ public class AsyncAudits {
      * 
      * <p>Sort order cannot be customized via query parameters.
      * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * <p>Returns 404 when `serviceId` is not listed by the
+     * `/personnel/account-access/services` endpoint for this audit.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3422,8 +3446,10 @@ public class AsyncAudits {
      * 
      * <p>Sort order cannot be customized via query parameters.
      * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * <p>Returns 404 when `serviceId` is not listed by the
+     * `/personnel/account-access/services` endpoint for this audit.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3464,6 +3490,9 @@ public class AsyncAudits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -3497,6 +3526,9 @@ public class AsyncAudits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3534,6 +3566,9 @@ public class AsyncAudits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -3564,6 +3599,9 @@ public class AsyncAudits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3597,6 +3635,9 @@ public class AsyncAudits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -3623,6 +3664,9 @@ public class AsyncAudits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3651,6 +3695,9 @@ public class AsyncAudits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3700,6 +3747,9 @@ public class AsyncAudits {
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
@@ -3731,6 +3781,9 @@ public class AsyncAudits {
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 

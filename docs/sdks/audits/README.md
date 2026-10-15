@@ -296,8 +296,10 @@ Uses cursor-based pagination. To paginate:
 Results are sorted by closed date (newest first). This sort order is
 fixed and cannot be customized via query parameters.
 
-Returns 422 when the audit does not have exactly one program segment
-(multi-framework audits are not supported on this endpoint).
+On an audit that covers more than one framework, each code change in
+scope for any of the audit's frameworks is returned once.
+
+Audits with system segments are not supported by this endpoint.
 
 Rate limit: 10 requests / minute.
 
@@ -2584,6 +2586,9 @@ Uses cursor-based pagination. To paginate:
 Results are sorted by integration display name (ascending). This sort order
 is fixed and cannot be customized via query parameters.
 
+Supports audits with one or more program segments.
+Audits with system segments are not supported by this endpoint.
+
 Rate limit: 10 requests / minute.
 
 ### Example Usage
@@ -2799,6 +2804,9 @@ Uses cursor-based pagination. To paginate:
 1. Make initial request with desired `pageSize`
 2. Check `results.pageInfo.hasNextPage`
 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+Supports audits with one or more program segments.
+Audits with system segments are not supported by this endpoint.
 
 Rate limit: 10 requests / minute.
 
@@ -3115,8 +3123,10 @@ Uses cursor-based pagination. To paginate:
 Results are returned in connection order. Sort order is not guaranteed
 and cannot be customized via query parameters.
 
-Returns 422 when the audit does not have exactly one program segment
-(multi-framework audits are not supported on this endpoint).
+On an audit that covers more than one framework, each service in scope
+for any of the audit's frameworks is listed once.
+
+Audits with system segments are not supported by this endpoint.
 
 Rate limit: 10 requests / minute.
 
@@ -3213,8 +3223,10 @@ The default sort order depends on the service type:
 
 Sort order cannot be customized via query parameters.
 
-Returns 422 when the audit does not have exactly one program segment
-(multi-framework audits are not supported on this endpoint).
+Returns 404 when `serviceId` is not listed by the
+`/personnel/account-access/services` endpoint for this audit.
+
+Audits with system segments are not supported by this endpoint.
 
 Rate limit: 10 requests / minute.
 
@@ -3294,6 +3306,9 @@ Uses cursor-based pagination. To paginate:
 2. Check `results.pageInfo.hasNextPage`
 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
 
+Supports audits with one or more program segments.
+Audits with system segments are not supported by this endpoint.
+
 Rate limit: 10 requests / minute.
 
 ### Example Usage
@@ -3368,6 +3383,9 @@ Uses cursor-based pagination. To paginate:
 2. Check `results.pageInfo.hasNextPage`
 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
 
+Supports audits with one or more program segments.
+Audits with system segments are not supported by this endpoint.
+
 Rate limit: 10 requests / minute.
 
 ### Example Usage
@@ -3437,6 +3455,9 @@ Uses cursor-based pagination. To paginate:
 1. Make initial request with desired `pageSize`
 2. Check `results.pageInfo.hasNextPage`
 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+Supports audits with one or more program segments.
+Audits with system segments are not supported by this endpoint.
 
 Rate limit: 10 requests / minute.
 
@@ -3510,6 +3531,9 @@ Uses cursor-based pagination. To paginate:
 1. Make initial request with desired `pageSize`
 2. Check `results.pageInfo.hasNextPage`
 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+
+Supports audits with one or more program segments.
+Audits with system segments are not supported by this endpoint.
 
 Rate limit: 10 requests / minute.
 
