@@ -12,7 +12,10 @@ import java.lang.String;
 
 
 public class FrameworkSection {
-
+    /**
+     * The framework's id, such as `soc2` or the id of a custom framework. The `FrameworkId` enum values
+     * are deprecated aliases that are still accepted.
+     */
     @JsonProperty("frameworkId")
     private FrameworkSectionFrameworkId frameworkId;
 
@@ -30,6 +33,10 @@ public class FrameworkSection {
         this.sectionId = sectionId;
     }
 
+    /**
+     * The framework's id, such as `soc2` or the id of a custom framework. The `FrameworkId` enum values
+     * are deprecated aliases that are still accepted.
+     */
     @JsonIgnore
     public FrameworkSectionFrameworkId frameworkId() {
         return frameworkId;
@@ -45,6 +52,10 @@ public class FrameworkSection {
     }
 
 
+    /**
+     * The framework's id, such as `soc2` or the id of a custom framework. The `FrameworkId` enum values
+     * are deprecated aliases that are still accepted.
+     */
     public FrameworkSection withFrameworkId(FrameworkSectionFrameworkId frameworkId) {
         Utils.checkNotNull(frameworkId, "frameworkId");
         this.frameworkId = frameworkId;
@@ -96,6 +107,10 @@ public class FrameworkSection {
         }
 
 
+        /**
+         * The framework's id, such as `soc2` or the id of a custom framework. The `FrameworkId` enum values
+         * are deprecated aliases that are still accepted.
+         */
         public Builder frameworkId(FrameworkSectionFrameworkId frameworkId) {
             Utils.checkNotNull(frameworkId, "frameworkId");
             this.frameworkId = frameworkId;
