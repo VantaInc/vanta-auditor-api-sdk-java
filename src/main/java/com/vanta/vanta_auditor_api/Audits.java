@@ -526,6 +526,10 @@ public class Audits {
      * 
      * <p>Audits with system segments are not supported by this endpoint.
      * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The call builder
@@ -560,6 +564,10 @@ public class Audits {
      * scope for any of the audit's frameworks is returned once.
      * 
      * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2652,6 +2660,10 @@ public class Audits {
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
      * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The call builder
@@ -2684,6 +2696,10 @@ public class Audits {
      * 
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -2903,6 +2919,10 @@ public class Audits {
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
      * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The call builder
@@ -2935,6 +2955,10 @@ public class Audits {
      * 
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3050,6 +3074,10 @@ public class Audits {
      * 
      * <p>Sorting and pagination are not applicable.
      * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The call builder
@@ -3067,6 +3095,10 @@ public class Audits {
      * business information visible to auditors during an audit engagement.
      * 
      * <p>Sorting and pagination are not applicable.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3096,8 +3128,11 @@ public class Audits {
      * (Compliance, Vendors, Access Reviews, Trust Center).
      * 
      * <p>The response is a single aggregate object per domain. Sorting and
-     * pagination are not applicable. Under a controlled audit view
-     * (TRIMMED_DOWN), only CAV-approved fields are included.
+     * pagination are not applicable. Only CAV-approved fields are included.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3118,8 +3153,11 @@ public class Audits {
      * (Compliance, Vendors, Access Reviews, Trust Center).
      * 
      * <p>The response is a single aggregate object per domain. Sorting and
-     * pagination are not applicable. Under a controlled audit view
-     * (TRIMMED_DOWN), only CAV-approved fields are included.
+     * pagination are not applicable. Only CAV-approved fields are included.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3205,6 +3243,10 @@ public class Audits {
      * 
      * <p>Audits with system segments are not supported by this endpoint.
      * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The call builder
@@ -3237,6 +3279,10 @@ public class Audits {
      * for any of the audit's frameworks is listed once.
      * 
      * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3272,6 +3318,10 @@ public class Audits {
      * for any of the audit's frameworks is listed once.
      * 
      * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3346,6 +3396,10 @@ public class Audits {
      * 
      * <p>Audits with system segments are not supported by this endpoint.
      * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The call builder
@@ -3404,6 +3458,10 @@ public class Audits {
      * 
      * <p>Audits with system segments are not supported by this endpoint.
      * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
@@ -3426,9 +3484,6 @@ public class Audits {
      * contain people, either imported from an identity provider (IDP) or
      * created manually in Vanta.
      * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit
-     * View audits are rejected with 403.
-     * 
      * <p>Supports filtering by:
      * - `search`: Searches group names (case-insensitive)
      * - `sourcesMatchesAny`: Filters by IDP source service names
@@ -3444,6 +3499,10 @@ public class Audits {
      * 
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3463,9 +3522,6 @@ public class Audits {
      * contain people, either imported from an identity provider (IDP) or
      * created manually in Vanta.
      * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit
-     * View audits are rejected with 403.
-     * 
      * <p>Supports filtering by:
      * - `search`: Searches group names (case-insensitive)
      * - `sourcesMatchesAny`: Filters by IDP source service names
@@ -3481,6 +3537,10 @@ public class Audits {
      * 
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3500,8 +3560,7 @@ public class Audits {
      * <p>Retrieves people population data for an audit.
      * 
      * <p>This endpoint provides access to the people records visible to auditors
-     * during an audit engagement. Only Controlled Audit View (CAV) audits
-     * are supported. Full Audit View audits are rejected with 403.
+     * during an audit engagement.
      * 
      * <p>Supports filtering by:
      * - `search`: Searches names and email addresses
@@ -3519,6 +3578,10 @@ public class Audits {
      * 
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3534,8 +3597,7 @@ public class Audits {
      * <p>Retrieves people population data for an audit.
      * 
      * <p>This endpoint provides access to the people records visible to auditors
-     * during an audit engagement. Only Controlled Audit View (CAV) audits
-     * are supported. Full Audit View audits are rejected with 403.
+     * during an audit engagement.
      * 
      * <p>Supports filtering by:
      * - `search`: Searches names and email addresses
@@ -3553,6 +3615,10 @@ public class Audits {
      * 
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3588,6 +3654,10 @@ public class Audits {
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
      * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The call builder
@@ -3617,6 +3687,10 @@ public class Audits {
      * 
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3650,6 +3724,10 @@ public class Audits {
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
      * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId The audit ID
@@ -3682,9 +3760,6 @@ public class Audits {
      * during an audit engagement. Risk data is scoped to a specific risk
      * assessment snapshot identified by the `snapshotId` parameter.
      * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit
-     * View audits are rejected with 403.
-     * 
      * <p>Supports filtering by:
      * - `search`: Searches risk scenario descriptions (case-insensitive)
      * 
@@ -3699,6 +3774,13 @@ public class Audits {
      * 
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors. Also returns 403 if the
+     * snapshot is not shared with auditors, and 404 if the snapshot does not
+     * exist. Use snapshot IDs from `GET /audits/{auditId}/risks/snapshots`,
+     * which lists only snapshots shared with auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
@@ -3717,9 +3799,6 @@ public class Audits {
      * during an audit engagement. Risk data is scoped to a specific risk
      * assessment snapshot identified by the `snapshotId` parameter.
      * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit
-     * View audits are rejected with 403.
-     * 
      * <p>Supports filtering by:
      * - `search`: Searches risk scenario descriptions (case-insensitive)
      * 
@@ -3734,6 +3813,13 @@ public class Audits {
      * 
      * <p>Supports audits with one or more program segments.
      * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors. Also returns 403 if the
+     * snapshot is not shared with auditors, and 404 if the snapshot does not
+     * exist. Use snapshot IDs from `GET /audits/{auditId}/risks/snapshots`,
+     * which lists only snapshots shared with auditors.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
