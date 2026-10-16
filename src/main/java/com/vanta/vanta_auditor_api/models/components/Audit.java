@@ -124,6 +124,10 @@ public class Audit {
     @JsonProperty("auditFocus")
     private AuditFocus auditFocus;
 
+
+    @JsonProperty("auditView")
+    private AuditView auditView;
+
     /**
      * Generation status of this audit's Vanta-generated information request list
      * (IRL). `PENDING`/`RUNNING` defer initial sync, `READY` permits a full sync,
@@ -170,6 +174,7 @@ public class Audit {
             @JsonProperty("modificationDate") Optional<OffsetDateTime> modificationDate,
             @JsonProperty("completionDate") Optional<OffsetDateTime> completionDate,
             @JsonProperty("auditFocus") AuditFocus auditFocus,
+            @JsonProperty("auditView") AuditView auditView,
             @JsonProperty("irlGenerationStatus") Optional<? extends IrlGenerationStatus> irlGenerationStatus,
             @JsonProperty("auditorRequestListMetadata") Optional<? extends AuditorRequestListMetadata> auditorRequestListMetadata,
             @JsonProperty("segments") List<AuditSegment> segments) {
@@ -189,6 +194,7 @@ public class Audit {
         Utils.checkNotNull(modificationDate, "modificationDate");
         Utils.checkNotNull(completionDate, "completionDate");
         Utils.checkNotNull(auditFocus, "auditFocus");
+        Utils.checkNotNull(auditView, "auditView");
         Utils.checkNotNull(irlGenerationStatus, "irlGenerationStatus");
         Utils.checkNotNull(auditorRequestListMetadata, "auditorRequestListMetadata");
         Utils.checkNotNull(segments, "segments");
@@ -208,6 +214,7 @@ public class Audit {
         this.modificationDate = modificationDate;
         this.completionDate = completionDate;
         this.auditFocus = auditFocus;
+        this.auditView = auditView;
         this.irlGenerationStatus = irlGenerationStatus;
         this.auditorRequestListMetadata = auditorRequestListMetadata;
         this.segments = segments;
@@ -225,14 +232,15 @@ public class Audit {
             boolean allowAllAuditors,
             OffsetDateTime creationDate,
             AuditFocus auditFocus,
+            AuditView auditView,
             List<AuditSegment> segments) {
         this(id, customerOrganizationName, Optional.empty(),
             customerOrganizationId, auditStartDate, auditEndDate,
             Optional.empty(), framework, displayName,
             allowAuditorEmails, allowAllAuditors, Optional.empty(),
             creationDate, Optional.empty(), Optional.empty(),
-            auditFocus, Optional.empty(), Optional.empty(),
-            segments);
+            auditFocus, auditView, Optional.empty(),
+            Optional.empty(), segments);
     }
 
     /**
@@ -363,6 +371,11 @@ public class Audit {
     @JsonIgnore
     public AuditFocus auditFocus() {
         return auditFocus;
+    }
+
+    @JsonIgnore
+    public AuditView auditView() {
+        return auditView;
     }
 
     /**
@@ -600,6 +613,12 @@ public class Audit {
         return this;
     }
 
+    public Audit withAuditView(AuditView auditView) {
+        Utils.checkNotNull(auditView, "auditView");
+        this.auditView = auditView;
+        return this;
+    }
+
     /**
      * Generation status of this audit's Vanta-generated information request list
      * (IRL). `PENDING`/`RUNNING` defer initial sync, `READY` permits a full sync,
@@ -685,6 +704,7 @@ public class Audit {
             Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
             Utils.enhancedDeepEquals(this.completionDate, other.completionDate) &&
             Utils.enhancedDeepEquals(this.auditFocus, other.auditFocus) &&
+            Utils.enhancedDeepEquals(this.auditView, other.auditView) &&
             Utils.enhancedDeepEquals(this.irlGenerationStatus, other.irlGenerationStatus) &&
             Utils.enhancedDeepEquals(this.auditorRequestListMetadata, other.auditorRequestListMetadata) &&
             Utils.enhancedDeepEquals(this.segments, other.segments);
@@ -698,8 +718,8 @@ public class Audit {
             earlyAccessStartsAt, framework, displayName,
             allowAuditorEmails, allowAllAuditors, deletionDate,
             creationDate, modificationDate, completionDate,
-            auditFocus, irlGenerationStatus, auditorRequestListMetadata,
-            segments);
+            auditFocus, auditView, irlGenerationStatus,
+            auditorRequestListMetadata, segments);
     }
     
     @Override
@@ -721,6 +741,7 @@ public class Audit {
                 "modificationDate", modificationDate,
                 "completionDate", completionDate,
                 "auditFocus", auditFocus,
+                "auditView", auditView,
                 "irlGenerationStatus", irlGenerationStatus,
                 "auditorRequestListMetadata", auditorRequestListMetadata,
                 "segments", segments);
@@ -761,6 +782,8 @@ public class Audit {
         private Optional<OffsetDateTime> completionDate = Optional.empty();
 
         private AuditFocus auditFocus;
+
+        private AuditView auditView;
 
         private Optional<? extends IrlGenerationStatus> irlGenerationStatus = Optional.empty();
 
@@ -980,6 +1003,13 @@ public class Audit {
         }
 
 
+        public Builder auditView(AuditView auditView) {
+            Utils.checkNotNull(auditView, "auditView");
+            this.auditView = auditView;
+            return this;
+        }
+
+
         /**
          * Generation status of this audit's Vanta-generated information request list
          * (IRL). `PENDING`/`RUNNING` defer initial sync, `READY` permits a full sync,
@@ -1047,8 +1077,8 @@ public class Audit {
                 earlyAccessStartsAt, framework, displayName,
                 allowAuditorEmails, allowAllAuditors, deletionDate,
                 creationDate, modificationDate, completionDate,
-                auditFocus, irlGenerationStatus, auditorRequestListMetadata,
-                segments);
+                auditFocus, auditView, irlGenerationStatus,
+                auditorRequestListMetadata, segments);
         }
 
     }
