@@ -509,3 +509,13 @@ Based on:
 - [java v0.7.17] .
 ### Releases
 - [Maven Central v0.7.17] https://central.sonatype.com/artifact/com.vanta/vanta-auditor-api/0.7.17 - .
+
+## 2026-10-22 00:02:36
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.803.1 (2.950.2) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [java v0.7.18] .
+### Releases
+- [Maven Central v0.7.18] https://central.sonatype.com/artifact/com.vanta/vanta-auditor-api/0.7.18 - .

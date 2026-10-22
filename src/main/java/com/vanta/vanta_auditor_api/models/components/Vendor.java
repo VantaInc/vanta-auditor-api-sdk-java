@@ -16,6 +16,7 @@ import java.lang.SuppressWarnings;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
+import org.openapitools.jackson.nullable.JsonNullable;
 
 
 public class Vendor {
@@ -214,6 +215,22 @@ public class Vendor {
     @JsonProperty("linkedTaskTrackerTaskProcurementRequest")
     private Optional<? extends LinkedTaskTrackerTaskProcurementRequest> linkedTaskTrackerTaskProcurementRequest;
 
+    /**
+     * Child vendors managed as engagements of this vendor, sorted by name.
+     * Includes accessible managed, in-procurement, and archived engagements.
+     * Empty when there are none.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("engagements")
+    private Optional<? extends List<VendorRelationshipSummary>> engagements;
+
+    /**
+     * The parent vendor of this engagement, or null when there is no accessible parent.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("parentVendor")
+    private JsonNullable<? extends ParentVendor> parentVendor;
+
     @JsonCreator
     public Vendor(
             @JsonProperty("id") String id,
@@ -242,7 +259,9 @@ public class Vendor {
             @JsonProperty("contractAmount") Optional<? extends ContractAmount> contractAmount,
             @JsonProperty("customFields") Optional<? extends List<CustomField>> customFields,
             @JsonProperty("latestDecision") Optional<? extends LatestDecision> latestDecision,
-            @JsonProperty("linkedTaskTrackerTaskProcurementRequest") Optional<? extends LinkedTaskTrackerTaskProcurementRequest> linkedTaskTrackerTaskProcurementRequest) {
+            @JsonProperty("linkedTaskTrackerTaskProcurementRequest") Optional<? extends LinkedTaskTrackerTaskProcurementRequest> linkedTaskTrackerTaskProcurementRequest,
+            @JsonProperty("engagements") Optional<? extends List<VendorRelationshipSummary>> engagements,
+            @JsonProperty("parentVendor") JsonNullable<? extends ParentVendor> parentVendor) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(name, "name");
         Utils.checkNotNull(websiteUrl, "websiteUrl");
@@ -270,6 +289,8 @@ public class Vendor {
         Utils.checkNotNull(customFields, "customFields");
         Utils.checkNotNull(latestDecision, "latestDecision");
         Utils.checkNotNull(linkedTaskTrackerTaskProcurementRequest, "linkedTaskTrackerTaskProcurementRequest");
+        Utils.checkNotNull(engagements, "engagements");
+        Utils.checkNotNull(parentVendor, "parentVendor");
         this.id = id;
         this.name = name;
         this.websiteUrl = websiteUrl;
@@ -297,6 +318,8 @@ public class Vendor {
         this.customFields = customFields;
         this.latestDecision = latestDecision;
         this.linkedTaskTrackerTaskProcurementRequest = linkedTaskTrackerTaskProcurementRequest;
+        this.engagements = engagements;
+        this.parentVendor = parentVendor;
     }
     
     public Vendor(
@@ -315,7 +338,8 @@ public class Vendor {
             Optional.empty(), riskAttributeIds, Optional.empty(),
             authDetails, status, inherentRiskLevel,
             residualRiskLevel, Optional.empty(), Optional.empty(),
-            Optional.empty(), Optional.empty(), Optional.empty());
+            Optional.empty(), Optional.empty(), Optional.empty(),
+            Optional.empty(), JsonNullable.undefined());
     }
 
     /**
@@ -551,6 +575,26 @@ public class Vendor {
     @JsonIgnore
     public Optional<LinkedTaskTrackerTaskProcurementRequest> linkedTaskTrackerTaskProcurementRequest() {
         return (Optional<LinkedTaskTrackerTaskProcurementRequest>) linkedTaskTrackerTaskProcurementRequest;
+    }
+
+    /**
+     * Child vendors managed as engagements of this vendor, sorted by name.
+     * Includes accessible managed, in-procurement, and archived engagements.
+     * Empty when there are none.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<VendorRelationshipSummary>> engagements() {
+        return (Optional<List<VendorRelationshipSummary>>) engagements;
+    }
+
+    /**
+     * The parent vendor of this engagement, or null when there is no accessible parent.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public JsonNullable<ParentVendor> parentVendor() {
+        return (JsonNullable<ParentVendor>) parentVendor;
     }
 
     public static Builder builder() {
@@ -1014,6 +1058,47 @@ public class Vendor {
         return this;
     }
 
+    /**
+     * Child vendors managed as engagements of this vendor, sorted by name.
+     * Includes accessible managed, in-procurement, and archived engagements.
+     * Empty when there are none.
+     */
+    public Vendor withEngagements(List<VendorRelationshipSummary> engagements) {
+        Utils.checkNotNull(engagements, "engagements");
+        this.engagements = Optional.ofNullable(engagements);
+        return this;
+    }
+
+
+    /**
+     * Child vendors managed as engagements of this vendor, sorted by name.
+     * Includes accessible managed, in-procurement, and archived engagements.
+     * Empty when there are none.
+     */
+    public Vendor withEngagements(Optional<? extends List<VendorRelationshipSummary>> engagements) {
+        Utils.checkNotNull(engagements, "engagements");
+        this.engagements = engagements;
+        return this;
+    }
+
+    /**
+     * The parent vendor of this engagement, or null when there is no accessible parent.
+     */
+    public Vendor withParentVendor(ParentVendor parentVendor) {
+        Utils.checkNotNull(parentVendor, "parentVendor");
+        this.parentVendor = JsonNullable.of(parentVendor);
+        return this;
+    }
+
+    /**
+     * The parent vendor of this engagement, or null when there is no accessible parent.
+     */
+    public Vendor withParentVendor(JsonNullable<? extends ParentVendor> parentVendor) {
+        Utils.checkNotNull(parentVendor, "parentVendor");
+        this.parentVendor = parentVendor;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -1050,7 +1135,9 @@ public class Vendor {
             Utils.enhancedDeepEquals(this.contractAmount, other.contractAmount) &&
             Utils.enhancedDeepEquals(this.customFields, other.customFields) &&
             Utils.enhancedDeepEquals(this.latestDecision, other.latestDecision) &&
-            Utils.enhancedDeepEquals(this.linkedTaskTrackerTaskProcurementRequest, other.linkedTaskTrackerTaskProcurementRequest);
+            Utils.enhancedDeepEquals(this.linkedTaskTrackerTaskProcurementRequest, other.linkedTaskTrackerTaskProcurementRequest) &&
+            Utils.enhancedDeepEquals(this.engagements, other.engagements) &&
+            Utils.enhancedDeepEquals(this.parentVendor, other.parentVendor);
     }
     
     @Override
@@ -1064,7 +1151,8 @@ public class Vendor {
             isRiskAutoScored, riskAttributeIds, category,
             authDetails, status, inherentRiskLevel,
             residualRiskLevel, vendorHeadquarters, contractAmount,
-            customFields, latestDecision, linkedTaskTrackerTaskProcurementRequest);
+            customFields, latestDecision, linkedTaskTrackerTaskProcurementRequest,
+            engagements, parentVendor);
     }
     
     @Override
@@ -1096,7 +1184,9 @@ public class Vendor {
                 "contractAmount", contractAmount,
                 "customFields", customFields,
                 "latestDecision", latestDecision,
-                "linkedTaskTrackerTaskProcurementRequest", linkedTaskTrackerTaskProcurementRequest);
+                "linkedTaskTrackerTaskProcurementRequest", linkedTaskTrackerTaskProcurementRequest,
+                "engagements", engagements,
+                "parentVendor", parentVendor);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -1155,6 +1245,10 @@ public class Vendor {
         private Optional<? extends LatestDecision> latestDecision = Optional.empty();
 
         private Optional<? extends LinkedTaskTrackerTaskProcurementRequest> linkedTaskTrackerTaskProcurementRequest = Optional.empty();
+
+        private Optional<? extends List<VendorRelationshipSummary>> engagements = Optional.empty();
+
+        private JsonNullable<? extends ParentVendor> parentVendor = JsonNullable.undefined();
 
         private Builder() {
           // force use of static builder() method
@@ -1623,6 +1717,48 @@ public class Vendor {
             return this;
         }
 
+
+        /**
+         * Child vendors managed as engagements of this vendor, sorted by name.
+         * Includes accessible managed, in-procurement, and archived engagements.
+         * Empty when there are none.
+         */
+        public Builder engagements(List<VendorRelationshipSummary> engagements) {
+            Utils.checkNotNull(engagements, "engagements");
+            this.engagements = Optional.ofNullable(engagements);
+            return this;
+        }
+
+        /**
+         * Child vendors managed as engagements of this vendor, sorted by name.
+         * Includes accessible managed, in-procurement, and archived engagements.
+         * Empty when there are none.
+         */
+        public Builder engagements(Optional<? extends List<VendorRelationshipSummary>> engagements) {
+            Utils.checkNotNull(engagements, "engagements");
+            this.engagements = engagements;
+            return this;
+        }
+
+
+        /**
+         * The parent vendor of this engagement, or null when there is no accessible parent.
+         */
+        public Builder parentVendor(ParentVendor parentVendor) {
+            Utils.checkNotNull(parentVendor, "parentVendor");
+            this.parentVendor = JsonNullable.of(parentVendor);
+            return this;
+        }
+
+        /**
+         * The parent vendor of this engagement, or null when there is no accessible parent.
+         */
+        public Builder parentVendor(JsonNullable<? extends ParentVendor> parentVendor) {
+            Utils.checkNotNull(parentVendor, "parentVendor");
+            this.parentVendor = parentVendor;
+            return this;
+        }
+
         public Vendor build() {
 
             return new Vendor(
@@ -1634,7 +1770,8 @@ public class Vendor {
                 isRiskAutoScored, riskAttributeIds, category,
                 authDetails, status, inherentRiskLevel,
                 residualRiskLevel, vendorHeadquarters, contractAmount,
-                customFields, latestDecision, linkedTaskTrackerTaskProcurementRequest);
+                customFields, latestDecision, linkedTaskTrackerTaskProcurementRequest,
+                engagements, parentVendor);
         }
 
     }
