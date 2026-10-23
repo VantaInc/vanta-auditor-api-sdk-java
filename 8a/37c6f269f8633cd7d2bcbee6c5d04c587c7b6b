@@ -1,0 +1,39 @@
+src/main/java/com/vanta/vanta_auditor_api/utils/Blob.java
+  s_14a609f62ecd12::t_cdfdb3ab6c7026 19,57,67-70,73,189-192,195,220,229-235,242-249,255-257,259-260,266-271
+smoke-test/src/test/java/com/vanta/smoke/LoopbackTest.java
+  s_14a609f62ecd12::t_627906f829e31f 1-71
+smoke-test/src/test/java/com/vanta/vanta_auditor_api/utils/BufferedBodyTest.java
+  s_14a609f62ecd12::t_627906f829e31f 1-100
+docs/utils/Blob.md
+  s_14a609f62ecd12::t_cdfdb3ab6c7026 136-138
+src/main/java/com/vanta/vanta_auditor_api/utils/Utils.java
+  s_14a609f62ecd12::t_cdfdb3ab6c7026 616-618,621,629-636,641,1054,1666,1672
+smoke-test/src/test/java/com/vanta/smoke/ResponseBodyBufferingTest.java
+  s_14a609f62ecd12::t_45f0ccd666f97e 78
+  s_14a609f62ecd12::t_627906f829e31f 1-77,79-107
+README.md
+  s_14a609f62ecd12::t_45f0ccd666f97e 751
+  s_14a609f62ecd12::t_cdfdb3ab6c7026 727-740
+src/main/java/com/vanta/vanta_auditor_api/utils/SpeakeasyHTTPClient.java
+  s_14a609f62ecd12::t_cdfdb3ab6c7026 39,146-147,177-180,184-186
+.speakeasy/gen.yaml
+  s_14a609f62ecd12::t_e2ef5407ef8d11 27-28
+src/main/java/com/vanta/vanta_auditor_api/models/errors/APIException.java
+  s_14a609f62ecd12::t_a14704237b3ebe 40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "8a37c6f269f8633cd7d2bcbee6c5d04c587c7b6b",
+  "prompts": {},
+  "sessions": {
+    "s_14a609f62ecd12": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a168ce-461a-74d0-a2f8-e1f480d09712",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Victor Noventa <victor@bitcomplete.io>"
+    }
+  }
+}
