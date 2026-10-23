@@ -16,6 +16,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Flow;
 import java.util.concurrent.SubmissionPublisher;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 import com.vanta.vanta_auditor_api.utils.reactive.ReactiveUtils;
 
 /**
@@ -53,6 +54,7 @@ import com.vanta.vanta_auditor_api.utils.reactive.ReactiveUtils;
 public class Blob implements HttpRequest.BodyPublisher {
     private final Flow.Publisher<ByteBuffer> publisher;
     private final long contentLength;
+    private final int maxBufferedBodyBytes;
     private final AtomicBoolean consumed = new AtomicBoolean(false); // Flag for single-use consumption
 
     /**
@@ -62,8 +64,13 @@ public class Blob implements HttpRequest.BodyPublisher {
      * @param contentLength the content length, or -1 if unknown
      */
     private Blob(Flow.Publisher<ByteBuffer> publisher, long contentLength) {
+        this(publisher, contentLength, Utils.MAX_BUFFERED_BODY_BYTES);
+    }
+
+    private Blob(Flow.Publisher<ByteBuffer> publisher, long contentLength, int maxBufferedBodyBytes) {
         this.publisher = Objects.requireNonNull(publisher, "Publisher cannot be null");
         this.contentLength = contentLength;
+        this.maxBufferedBodyBytes = maxBufferedBodyBytes;
     }
 
     /**
@@ -179,9 +186,13 @@ public class Blob implements HttpRequest.BodyPublisher {
      * @throws NullPointerException if {@code sourcePublisher} is {@code null}
      */
     public static Blob from(Flow.Publisher<List<ByteBuffer>> sourcePublisher) {
+        return from(sourcePublisher, Utils.MAX_BUFFERED_BODY_BYTES, -1);
+    }
+
+    static Blob from(Flow.Publisher<List<ByteBuffer>> sourcePublisher, int maxBufferedBodyBytes, long contentLength) {
         Objects.requireNonNull(sourcePublisher, "Source publisher cannot be null");
         Flow.Publisher<ByteBuffer> flattenedPublisher = ReactiveUtils.flatten(sourcePublisher);
-        return new Blob(flattenedPublisher, -1); // Unknown length for reactive publisher
+        return new Blob(flattenedPublisher, contentLength, maxBufferedBodyBytes);
     }
 
     // Consumption methods (single-use)
@@ -206,6 +217,7 @@ public class Blob implements HttpRequest.BodyPublisher {
      * <p>
      * The returned {@code CompletableFuture} completes when all data has been received and assembled into the byte array,
      * or completes exceptionally if an error occurs.
+     * Collection is limited to 100 MiB.
      *
      * @return a {@code CompletableFuture} containing the complete byte array.
      * @throws IllegalStateException if this instance has already been consumed.
@@ -214,30 +226,49 @@ public class Blob implements HttpRequest.BodyPublisher {
         Flow.Publisher<ByteBuffer> currentPublisher = ensureNotConsumedAndMark();
 
         CompletableFuture<byte[]> result = new CompletableFuture<>();
+        AtomicReference<Flow.Subscription> subscription = new AtomicReference<>();
+        result.whenComplete((bytes, error) -> {
+            Flow.Subscription upstream = subscription.get();
+            if (error != null && upstream != null) {
+                upstream.cancel();
+            }
+        });
         java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
         currentPublisher.subscribe(new Flow.Subscriber<ByteBuffer>() {
-            private Flow.Subscription subscription;
             private long total;
 
             @Override
             public void onSubscribe(Flow.Subscription s) {
-                this.subscription = s;
+                if (!subscription.compareAndSet(null, s) || result.isDone()) {
+                    s.cancel();
+                    return;
+                }
+                if (contentLength > maxBufferedBodyBytes) {
+                    failSizeLimit();
+                    return;
+                }
                 s.request(1);
             }
 
             @Override
             public void onNext(ByteBuffer item) {
+                if (result.isDone()) {
+                    return;
+                }
                 total += item.remaining();
-                if (total > Utils.MAX_BUFFERED_BODY_BYTES) {
-                    subscription.cancel();
-                    result.completeExceptionally(new java.io.IOException(
-                            "response body exceeds maximum buffered size of " + Utils.MAX_BUFFERED_BODY_BYTES + " bytes"));
+                if (total > maxBufferedBodyBytes) {
+                    failSizeLimit();
                     return;
                 }
                 byte[] chunk = new byte[item.remaining()];
                 item.get(chunk);
                 out.write(chunk, 0, chunk.length);
-                subscription.request(1);
+                subscription.get().request(1);
+            }
+
+            private void failSizeLimit() {
+                result.completeExceptionally(new java.io.IOException(
+                        "response body exceeds maximum buffered size of " + maxBufferedBodyBytes + " bytes"));
             }
 
             @Override

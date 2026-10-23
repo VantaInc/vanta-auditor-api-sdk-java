@@ -36,6 +36,7 @@ public class SpeakeasyHTTPClient implements HTTPClient {
     
     private static Consumer<? super String> logger = System.out::println;
 
+    private static final int MAX_DEBUG_BODY_BYTES = 64 * 1024;
     private final HttpClient client = HttpClient.newBuilder()
             .connectTimeout(java.time.Duration.ofSeconds(30))
             .build();
@@ -142,7 +143,8 @@ public class SpeakeasyHTTPClient implements HTTPClient {
         return client.sendAsync(request, HttpResponse.BodyHandlers.ofPublisher())
                 .thenApply(response ->
                         // TODO: log responses when helper for Blob is setup
-                        new ResponseWithBody<>(response, Blob::from));
+                        new ResponseWithBody<>(response, Blob.from(response.body(), Utils.MAX_BUFFERED_BODY_BYTES,
+                                response.headers().firstValueAsLong("Content-Length").orElse(-1))));
     }
 
     private HttpRequest logRequest(HttpRequest request, boolean logBody) {
@@ -172,26 +174,16 @@ public class SpeakeasyHTTPClient implements HTTPClient {
         log("Received response: " + response);
         log("Response headers: " + redactHeaders(response.headers()));
 
-        // skip caching for streaming responses - they may hang
-        if (isStreamingMediaType(contentType)) {
+        long contentLength = response.headers().firstValueAsLong("Content-Length").orElse(-1);
+        if (!logBody || isStreamingMediaType(contentType)
+                || !(contentType.startsWith("application/json") || contentType.startsWith("text/plain"))
+                || contentLength < 0 || contentLength > MAX_DEBUG_BODY_BYTES) {
             return response;
         }
 
-        // make the response re-readable by loading the response body into a byte array
-        // and allowing the InputStream to be read many times
-        response = Utils.cache(response);
-
-        // only log the response body if logBody is true and the content type is JSON or plain text
-        if (logBody && (contentType.startsWith("application/json") || contentType.startsWith("text/plain"))) {
-            // the response is re-readable so we can read and close it without
-            // affecting later processing of the response.
-
-            // note that in the case of text/plain a different encoding from UTF-8
-            // may be in use but we just log the bytes as UTF-8. Unexpected encodings
-            // do not throw (substitution happens).
-            log("Response body:\n" + Utils.toUtf8AndClose(response.body()));
-        }
-        return response;
+        Utils.HttpResponseCached cached = Utils.cache(response);
+        log("Response body:\n" + cached.bodyAsUtf8());
+        return cached;
     }
 
     private static String redactHeaders(HttpHeaders headers) {

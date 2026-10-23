@@ -613,10 +613,12 @@ public final class Utils {
     }
     
     public static byte[] extractByteArrayFromBody(HttpResponse<InputStream> response) throws IOException {
-        return toByteArrayAndClose(response.body());   
+        InputStream body = response.body();
+        return toByteArrayAndClose(body, MAX_BUFFERED_BODY_BYTES,
+                response.headers().firstValueAsLong("Content-Length").orElse(-1));
     }
     
-    /** Maximum number of response body bytes that will be buffered in memory. */
+    /** Maximum number of response body bytes buffered in memory. */
     public static final int MAX_BUFFERED_BODY_BYTES = 100 * 1024 * 1024;
 
     public static byte[] toByteArrayAndClose(InputStream in) throws IOException {
@@ -624,12 +626,19 @@ public final class Utils {
     }
 
     static byte[] toByteArrayAndClose(InputStream in, int maxBytes) throws IOException {
-        try {
+        return toByteArrayAndClose(in, maxBytes, -1);
+    }
+
+    private static byte[] toByteArrayAndClose(InputStream in, int maxBytes, long contentLength) throws IOException {
+        try (InputStream body = in) {
+            if (contentLength > maxBytes) {
+                throw new IOException("response body exceeds maximum buffered size of " + maxBytes + " bytes");
+            }
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             byte[] buffer = new byte[8192];
             long total = 0;
             int n;
-            while ((n = in.read(buffer)) != -1) {
+            while ((n = body.read(buffer)) != -1) {
                 total += n;
                 if (total > maxBytes) {
                     throw new IOException("response body exceeds maximum buffered size of " + maxBytes + " bytes");
@@ -637,8 +646,6 @@ public final class Utils {
                 out.write(buffer, 0, n);
             }
             return out.toByteArray();
-        } finally {
-            in.close();
         }
     }
     
@@ -1044,7 +1051,7 @@ public final class Utils {
         
         public HttpResponseCached(HttpResponse<InputStream> response) throws IOException {
             this.response = response;
-            this.bytes = toByteArrayAndClose(response.body());
+            this.bytes = extractByteArrayFromBody(response);
         }
 
         public String bodyAsUtf8() {
@@ -1656,13 +1663,13 @@ public final class Utils {
             HttpResponse<com.vanta.vanta_auditor_api.utils.Blob> response,
             String reason) {
         return response.body().toByteArray()
-                .thenApply(bodyBytes -> {
+                .handle((bodyBytes, error) -> {
                     throw new AsyncAPIException(
                             reason,
                             response.statusCode(),
                             bodyBytes,
                             response,
-                            null);
+                            error);
                 });
     }
 
