@@ -1,0 +1,21 @@
+smoke-test/src/test/java/com/vanta/smoke/AsyncResponseErrorTest.java
+  s_14a609f62ecd12::t_1902752d420d04 1-113
+src/main/java/com/vanta/vanta_auditor_api/utils/Utils.java
+  s_14a609f62ecd12::t_ba300028782459 1659,1665
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "55daa0bb1cd6784a4459ce9ce32f48f5960dae6a",
+  "prompts": {},
+  "sessions": {
+    "s_14a609f62ecd12": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a168ce-461a-74d0-a2f8-e1f480d09712",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Victor Noventa <victor@bitcomplete.io>"
+    }
+  }
+}
