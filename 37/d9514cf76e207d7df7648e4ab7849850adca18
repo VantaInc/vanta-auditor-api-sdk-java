@@ -1,0 +1,47 @@
+src/main/java/com/vanta/vanta_auditor_api/utils/ResponseBodyInputStream.java
+  s_14a609f62ecd12::t_96cb82166fcfd8 1-7,9-13,15-17,22-65,67-71,73-74,76-80,82-91,93-103
+  s_14a609f62ecd12::t_4c233374c76d16 8,14,18-21,66,72,75,81,92
+.speakeasy/gen.yaml
+  s_14a609f62ecd12::t_91089ecead6b9d 27-28
+src/main/java/com/vanta/vanta_auditor_api/utils/ResponseBodyPublisher.java
+  s_14a609f62ecd12::t_2ff97a7840aec5 6,12,17,20,25,52-54,60,78,125-138
+  s_14a609f62ecd12::t_96cb82166fcfd8 1-5,7-10,13-15,18-19,21-22,24,26-36,38-49,51,56-59,61-77,79-88,90-92,94-100,104,106,108-113,118-124,139-154,159-171
+  s_14a609f62ecd12::t_4c233374c76d16 11,23,114-117,155-158
+  s_14a609f62ecd12::t_5fc9acdfad4c4c 16,37,50,55,89,93,101-103,105,107
+src/main/java/com/vanta/vanta_auditor_api/models/errors/APIException.java
+  s_14a609f62ecd12::t_d86ef8c7008c6b 40
+docs/utils/Blob.md
+  s_14a609f62ecd12::t_91089ecead6b9d 136-140
+smoke-test/src/test/java/com/vanta/smoke/ResponseBodyLimitsTest.java
+  s_14a609f62ecd12::t_ee70e8ba22e117 1-283
+README.md
+  s_14a609f62ecd12::t_91089ecead6b9d 727-766
+src/main/java/com/vanta/vanta_auditor_api/utils/SpeakeasyHTTPClient.java
+  s_14a609f62ecd12::t_af041aff9ea58c 17,20,41-66,155-156,158-159,171-172,176-184,214-215,218-222,224-228
+src/main/java/com/vanta/vanta_auditor_api/utils/Blob.java
+  s_14a609f62ecd12::t_d86ef8c7008c6b 19,57,67-70,73,111,189-192,195,220,229-235,242-249,255-257,259-260,266-271,334-335
+smoke-test/src/test/java/com/vanta/vanta_auditor_api/utils/ResponseBodyDeadlineTest.java
+  s_14a609f62ecd12::t_a9e364b1bac3ba 160-228
+  s_14a609f62ecd12::t_91089ecead6b9d 138-159
+  s_14a609f62ecd12::t_ee70e8ba22e117 1-137,229-258
+src/main/java/com/vanta/vanta_auditor_api/utils/ResponseBodyDeadline.java
+  s_14a609f62ecd12::t_96cb82166fcfd8 1-41
+src/main/java/com/vanta/vanta_auditor_api/utils/Utils.java
+  s_14a609f62ecd12::t_d86ef8c7008c6b 616-618,621,625,629-636,641,1051,1055-1056,1089
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "37d9514cf76e207d7df7648e4ab7849850adca18",
+  "prompts": {},
+  "sessions": {
+    "s_14a609f62ecd12": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a168ce-461a-74d0-a2f8-e1f480d09712",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Victor Noventa <victor@bitcomplete.io>"
+    }
+  }
+}
