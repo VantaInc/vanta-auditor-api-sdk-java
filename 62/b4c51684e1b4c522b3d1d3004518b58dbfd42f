@@ -1,0 +1,31 @@
+README.md
+  s_14a609f62ecd12::t_ef6d9a75b682f9 727,729-732,734-740,742-761
+src/main/java/com/vanta/vanta_auditor_api/utils/SpeakeasyHTTPClient.java
+  s_14a609f62ecd12::t_c54e5741cf7540 215,218
+  s_14a609f62ecd12::t_ef6d9a75b682f9 17,20,42-66,155-156,158-159,171-172,176-177,181-185
+  s_14a609f62ecd12::t_bbe03f0013168a 186
+docs/utils/Blob.md
+  s_14a609f62ecd12::t_ef6d9a75b682f9 136-138,140
+src/main/java/com/vanta/vanta_auditor_api/utils/ResponseBodyInputStream.java
+  s_14a609f62ecd12::t_ef6d9a75b682f9 1-101
+smoke-test/src/test/java/com/vanta/vanta_auditor_api/utils/ResponseBodyDeadlineTest.java
+  s_14a609f62ecd12::t_ef6d9a75b682f9 1-245
+smoke-test/src/test/java/com/vanta/smoke/ResponseBodyPolicyTest.java
+  s_14a609f62ecd12::t_160ce66637e322 1-172
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "62b4c51684e1b4c522b3d1d3004518b58dbfd42f",
+  "prompts": {},
+  "sessions": {
+    "s_14a609f62ecd12": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a168ce-461a-74d0-a2f8-e1f480d09712",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Victor Noventa <victor@bitcomplete.io>"
+    }
+  }
+}
