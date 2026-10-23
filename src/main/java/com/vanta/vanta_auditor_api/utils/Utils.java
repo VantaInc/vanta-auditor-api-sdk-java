@@ -614,15 +614,15 @@ public final class Utils {
     
     public static byte[] extractByteArrayFromBody(HttpResponse<InputStream> response) throws IOException {
         InputStream body = response.body();
-        return toByteArrayAndClose(body, MAX_BUFFERED_BODY_BYTES,
+        return toByteArrayAndClose(body, ResponseBodyInputStream.bufferLimit(body),
                 response.headers().firstValueAsLong("Content-Length").orElse(-1));
     }
     
-    /** Maximum number of response body bytes buffered in memory. */
+    /** Default maximum number of response body bytes buffered in memory. */
     public static final int MAX_BUFFERED_BODY_BYTES = 100 * 1024 * 1024;
 
     public static byte[] toByteArrayAndClose(InputStream in) throws IOException {
-        return toByteArrayAndClose(in, MAX_BUFFERED_BODY_BYTES);
+        return toByteArrayAndClose(in, ResponseBodyInputStream.bufferLimit(in));
     }
 
     static byte[] toByteArrayAndClose(InputStream in, int maxBytes) throws IOException {
@@ -1048,9 +1048,11 @@ public final class Utils {
 
         private final HttpResponse<InputStream> response;
         private final byte[] bytes;
+        private final int maxBufferedBodyBytes;
         
         public HttpResponseCached(HttpResponse<InputStream> response) throws IOException {
             this.response = response;
+            this.maxBufferedBodyBytes = ResponseBodyInputStream.bufferLimit(response.body());
             this.bytes = extractByteArrayFromBody(response);
         }
 
@@ -1084,7 +1086,7 @@ public final class Utils {
 
         @Override
         public InputStream body() {
-            return new ByteArrayInputStream(bytes);
+            return new ResponseBodyInputStream(new ByteArrayInputStream(bytes), maxBufferedBodyBytes);
         }
 
         @Override
