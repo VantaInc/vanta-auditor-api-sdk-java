@@ -36,7 +36,9 @@ public class SpeakeasyHTTPClient implements HTTPClient {
     
     private static Consumer<? super String> logger = System.out::println;
 
-    private final HttpClient client = HttpClient.newHttpClient();
+    private final HttpClient client = HttpClient.newBuilder()
+            .connectTimeout(java.time.Duration.ofSeconds(30))
+            .build();
 
     private static final Set<String> STREAMING_MEDIA_TYPES =
             Set.of("text/event-stream", "application/x-ndjson", "application/jsonl");

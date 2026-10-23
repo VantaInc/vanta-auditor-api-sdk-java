@@ -213,13 +213,44 @@ public class Blob implements HttpRequest.BodyPublisher {
     public CompletableFuture<byte[]> toByteArray() {
         Flow.Publisher<ByteBuffer> currentPublisher = ensureNotConsumedAndMark();
 
-        // Convert Flow.Publisher<ByteBuffer> to Flow.Publisher<List<ByteBuffer>> for BodySubscriber
-        Flow.Publisher<List<ByteBuffer>> listPublisher = ReactiveUtils.wrapped(currentPublisher);
+        CompletableFuture<byte[]> result = new CompletableFuture<>();
+        java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+        currentPublisher.subscribe(new Flow.Subscriber<ByteBuffer>() {
+            private Flow.Subscription subscription;
+            private long total;
 
-        HttpResponse.BodySubscriber<byte[]> bodySubscriber = HttpResponse.BodySubscribers.ofByteArray();
-        listPublisher.subscribe(bodySubscriber);
+            @Override
+            public void onSubscribe(Flow.Subscription s) {
+                this.subscription = s;
+                s.request(1);
+            }
 
-        return bodySubscriber.getBody().toCompletableFuture();
+            @Override
+            public void onNext(ByteBuffer item) {
+                total += item.remaining();
+                if (total > Utils.MAX_BUFFERED_BODY_BYTES) {
+                    subscription.cancel();
+                    result.completeExceptionally(new java.io.IOException(
+                            "response body exceeds maximum buffered size of " + Utils.MAX_BUFFERED_BODY_BYTES + " bytes"));
+                    return;
+                }
+                byte[] chunk = new byte[item.remaining()];
+                item.get(chunk);
+                out.write(chunk, 0, chunk.length);
+                subscription.request(1);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                result.completeExceptionally(t);
+            }
+
+            @Override
+            public void onComplete() {
+                result.complete(out.toByteArray());
+            }
+        });
+        return result;
     }
 
     /**
