@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.lang.Deprecated;
 import java.lang.Double;
 import java.lang.Override;
 import java.lang.String;
@@ -81,10 +82,20 @@ public class AuditVendor {
 
     /**
      * Vendor category (e.g. cloud provider, SaaS).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("vendorCategory")
+    @Deprecated
     private JsonNullable<String> vendorCategory;
+
+    /**
+     * ID of the vendor's category.
+     */
+    @JsonInclude(Include.NON_ABSENT)
+    @JsonProperty("vendorCategoryId")
+    private JsonNullable<String> vendorCategoryId;
 
     /**
      * Residual risk level of the vendor.
@@ -113,6 +124,7 @@ public class AuditVendor {
             @JsonProperty("lastReviewedCompleted") JsonNullable<OffsetDateTime> lastReviewedCompleted,
             @JsonProperty("nextSecurityReviewDueDate") JsonNullable<OffsetDateTime> nextSecurityReviewDueDate,
             @JsonProperty("vendorCategory") JsonNullable<String> vendorCategory,
+            @JsonProperty("vendorCategoryId") JsonNullable<String> vendorCategoryId,
             @JsonProperty("residualRisk") JsonNullable<? extends ResidualRisk> residualRisk,
             @JsonProperty("dataAgreements") JsonNullable<? extends DataAgreements> dataAgreements) {
         Utils.checkNotNull(id, "id");
@@ -124,6 +136,7 @@ public class AuditVendor {
         Utils.checkNotNull(lastReviewedCompleted, "lastReviewedCompleted");
         Utils.checkNotNull(nextSecurityReviewDueDate, "nextSecurityReviewDueDate");
         Utils.checkNotNull(vendorCategory, "vendorCategory");
+        Utils.checkNotNull(vendorCategoryId, "vendorCategoryId");
         Utils.checkNotNull(residualRisk, "residualRisk");
         Utils.checkNotNull(dataAgreements, "dataAgreements");
         this.id = id;
@@ -135,6 +148,7 @@ public class AuditVendor {
         this.lastReviewedCompleted = lastReviewedCompleted;
         this.nextSecurityReviewDueDate = nextSecurityReviewDueDate;
         this.vendorCategory = vendorCategory;
+        this.vendorCategoryId = vendorCategoryId;
         this.residualRisk = residualRisk;
         this.dataAgreements = dataAgreements;
     }
@@ -145,7 +159,7 @@ public class AuditVendor {
         this(id, name, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             JsonNullable.undefined(), JsonNullable.undefined(), JsonNullable.undefined(),
-            JsonNullable.undefined(), JsonNullable.undefined());
+            JsonNullable.undefined(), JsonNullable.undefined(), JsonNullable.undefined());
     }
 
     /**
@@ -212,10 +226,21 @@ public class AuditVendor {
 
     /**
      * Vendor category (e.g. cloud provider, SaaS).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     @JsonIgnore
     public JsonNullable<String> vendorCategory() {
         return vendorCategory;
+    }
+
+    /**
+     * ID of the vendor's category.
+     */
+    @JsonIgnore
+    public JsonNullable<String> vendorCategoryId() {
+        return vendorCategoryId;
     }
 
     /**
@@ -365,7 +390,10 @@ public class AuditVendor {
 
     /**
      * Vendor category (e.g. cloud provider, SaaS).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public AuditVendor withVendorCategory(String vendorCategory) {
         Utils.checkNotNull(vendorCategory, "vendorCategory");
         this.vendorCategory = JsonNullable.of(vendorCategory);
@@ -374,10 +402,31 @@ public class AuditVendor {
 
     /**
      * Vendor category (e.g. cloud provider, SaaS).
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public AuditVendor withVendorCategory(JsonNullable<String> vendorCategory) {
         Utils.checkNotNull(vendorCategory, "vendorCategory");
         this.vendorCategory = vendorCategory;
+        return this;
+    }
+
+    /**
+     * ID of the vendor's category.
+     */
+    public AuditVendor withVendorCategoryId(String vendorCategoryId) {
+        Utils.checkNotNull(vendorCategoryId, "vendorCategoryId");
+        this.vendorCategoryId = JsonNullable.of(vendorCategoryId);
+        return this;
+    }
+
+    /**
+     * ID of the vendor's category.
+     */
+    public AuditVendor withVendorCategoryId(JsonNullable<String> vendorCategoryId) {
+        Utils.checkNotNull(vendorCategoryId, "vendorCategoryId");
+        this.vendorCategoryId = vendorCategoryId;
         return this;
     }
 
@@ -440,6 +489,7 @@ public class AuditVendor {
             Utils.enhancedDeepEquals(this.lastReviewedCompleted, other.lastReviewedCompleted) &&
             Utils.enhancedDeepEquals(this.nextSecurityReviewDueDate, other.nextSecurityReviewDueDate) &&
             Utils.enhancedDeepEquals(this.vendorCategory, other.vendorCategory) &&
+            Utils.enhancedDeepEquals(this.vendorCategoryId, other.vendorCategoryId) &&
             Utils.enhancedDeepEquals(this.residualRisk, other.residualRisk) &&
             Utils.enhancedDeepEquals(this.dataAgreements, other.dataAgreements);
     }
@@ -450,7 +500,7 @@ public class AuditVendor {
             id, name, segmentIds,
             inherentRisk, status, findings,
             lastReviewedCompleted, nextSecurityReviewDueDate, vendorCategory,
-            residualRisk, dataAgreements);
+            vendorCategoryId, residualRisk, dataAgreements);
     }
     
     @Override
@@ -465,6 +515,7 @@ public class AuditVendor {
                 "lastReviewedCompleted", lastReviewedCompleted,
                 "nextSecurityReviewDueDate", nextSecurityReviewDueDate,
                 "vendorCategory", vendorCategory,
+                "vendorCategoryId", vendorCategoryId,
                 "residualRisk", residualRisk,
                 "dataAgreements", dataAgreements);
     }
@@ -488,7 +539,10 @@ public class AuditVendor {
 
         private JsonNullable<OffsetDateTime> nextSecurityReviewDueDate = JsonNullable.undefined();
 
+        @Deprecated
         private JsonNullable<String> vendorCategory = JsonNullable.undefined();
+
+        private JsonNullable<String> vendorCategoryId = JsonNullable.undefined();
 
         private JsonNullable<? extends ResidualRisk> residualRisk = JsonNullable.undefined();
 
@@ -625,7 +679,10 @@ public class AuditVendor {
 
         /**
          * Vendor category (e.g. cloud provider, SaaS).
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder vendorCategory(String vendorCategory) {
             Utils.checkNotNull(vendorCategory, "vendorCategory");
             this.vendorCategory = JsonNullable.of(vendorCategory);
@@ -634,10 +691,32 @@ public class AuditVendor {
 
         /**
          * Vendor category (e.g. cloud provider, SaaS).
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder vendorCategory(JsonNullable<String> vendorCategory) {
             Utils.checkNotNull(vendorCategory, "vendorCategory");
             this.vendorCategory = vendorCategory;
+            return this;
+        }
+
+
+        /**
+         * ID of the vendor's category.
+         */
+        public Builder vendorCategoryId(String vendorCategoryId) {
+            Utils.checkNotNull(vendorCategoryId, "vendorCategoryId");
+            this.vendorCategoryId = JsonNullable.of(vendorCategoryId);
+            return this;
+        }
+
+        /**
+         * ID of the vendor's category.
+         */
+        public Builder vendorCategoryId(JsonNullable<String> vendorCategoryId) {
+            Utils.checkNotNull(vendorCategoryId, "vendorCategoryId");
+            this.vendorCategoryId = vendorCategoryId;
             return this;
         }
 
@@ -689,7 +768,7 @@ public class AuditVendor {
                 id, name, segmentIds,
                 inherentRisk, status, findings,
                 lastReviewedCompleted, nextSecurityReviewDueDate, vendorCategory,
-                residualRisk, dataAgreements);
+                vendorCategoryId, residualRisk, dataAgreements);
         }
 
     }
