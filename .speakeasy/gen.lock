@@ -1,24 +1,24 @@
 lockVersion: 2.0.0
 id: f42d74f5-5725-46fa-b13c-649b7ef895c3
 management:
-  docChecksum: f90a44cbe076fd7d4ca7bea37fb0f4f6
+  docChecksum: 692debb494c2738f62c55de5f60dfbe2
   docVersion: 1.0.0
-  speakeasyVersion: 1.803.1
-  generationVersion: 2.950.2
-  releaseVersion: 0.7.18
-  configChecksum: fae7b288e9784dcea44df940ae921b9c
+  speakeasyVersion: 1.804.0
+  generationVersion: 2.952.5
+  releaseVersion: 0.7.19
+  configChecksum: 991e774e03bcbe87a5aa69ed6bff702f
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   installationURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java
   published: true
 persistentEdits:
-  generation_id: e37799d0-33dc-40d2-8123-05694b6d2f6c
-  pristine_commit_hash: bbca66793998cf9d8246c0e845e6f8285678a711
-  pristine_tree_hash: 0876198e1bb5fd8fc02014ae9d5c6c7cb7e58d31
+  generation_id: d37fc600-7aaa-4e7a-a97a-2489c059757b
+  pristine_commit_hash: 28059b145d49531059e1bdad9b5b4834e139d67e
+  pristine_tree_hash: c401ee1c4133d172102738ec4485d1f85ff55c7f
 features:
   java:
     additionalDependencies: 0.1.0
     constsAndDefaults: 0.1.3
-    core: 3.57.2
+    core: 3.57.3
     deprecations: 2.81.2
     flattening: 2.81.1
     globalSecurity: 2.83.4
@@ -40,8 +40,8 @@ trackedFiles:
     pristine_git_object: e4c8b385c1e56c236c64e1ac6327b3cc5b3366f8
   build.gradle:
     id: f07866736216
-    last_write_checksum: sha1:10ed00940dc6d7150d53b8206c5f204c666491ff
-    pristine_git_object: 6e70a368772516a28a4766d217ffa14bfebc617e
+    last_write_checksum: sha1:ae54be68129b5bdebdf257f86767722eb9d61384
+    pristine_git_object: 0e10417aba47c613d8e94ca2c8748f32ceeb6138
   docs/models/components/AcceptInformationRequestEvidenceInput.md:
     id: cfb82d8652de
     last_write_checksum: sha1:334e7ed917fd70ad0a3e6f33a3f2c73582adecb4
@@ -188,8 +188,8 @@ trackedFiles:
     pristine_git_object: 2b439eedc63d48985b4cd31917be6a2bed8042fe
   docs/models/components/AuditVendor.md:
     id: 8cb5fd130140
-    last_write_checksum: sha1:495a9d502e9804b6e93fd37b6f7078982e910624
-    pristine_git_object: 2fd78d0e64d7791a1606839afd2d58f422cc2f4b
+    last_write_checksum: sha1:96a4bdcb7a84a9274447cf5db1201d92b5a06265
+    pristine_git_object: b9ca0d73470f4238e7391e96bef52f3e5364fa69
   docs/models/components/AuditVendorRiskLevel.md:
     id: 4d43361238eb
     last_write_checksum: sha1:04a1450fe6f059eb3148299444a13a0399342893
@@ -1152,8 +1152,8 @@ trackedFiles:
     pristine_git_object: 13e974d01ecc9c53f21654ad7b8a2b73f47bcf8c
   docs/models/components/Vendor.md:
     id: 2b9fc5263f52
-    last_write_checksum: sha1:f5f85e803b4e43bbc52fa61d6446227891d21f3d
-    pristine_git_object: f286e85ae3cc3ba41e36cfcbc237ba3f130184ae
+    last_write_checksum: sha1:e99f9822b0c09861b5f635eae3c5cae1eedebbb2
+    pristine_git_object: 72e5249262ac5a6b5b1add4419906429850767ad
   docs/models/components/VendorDecisionStatus.md:
     id: 386544c92079
     last_write_checksum: sha1:d04bcc3d7c28674fa1835576aec379c26b145c44
@@ -1660,8 +1660,8 @@ trackedFiles:
     pristine_git_object: de7d1b163d5926363b94e775645373b750f65b30
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:d8c3932c3621a3a7ce391d5311529cb27885fc80
-    pristine_git_object: 25787dd55bc999bef3c2285ac3503212216c7752
+    last_write_checksum: sha1:7969a5382541d5edd0496098d30ad6d614faad2d
+    pristine_git_object: 7058fbc0593387e923baaaf07b4fec0d3ae6883a
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -1708,8 +1708,8 @@ trackedFiles:
     pristine_git_object: d28b8eac83109b6b1ccae89c34742da61d3c3273
   src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java:
     id: ce55360c720c
-    last_write_checksum: sha1:4dccb40f321c32d49ba5f42a4be31d969098ae7a
-    pristine_git_object: 25231091fba818449cd1b63db6d1080597fada69
+    last_write_checksum: sha1:6a85f17c507ecd049cfc0ffaa654cf775b395ca7
+    pristine_git_object: b6697a164fbfb3f96bd5f1241417eed7c2330b4c
   src/main/java/com/vanta/vanta_auditor_api/SecuritySource.java:
     id: 18c0da44b51f
     last_write_checksum: sha1:55dc5f4240c7317c9a5a4080b6e17dc1b6fdd403
@@ -1864,8 +1864,8 @@ trackedFiles:
     pristine_git_object: 9bb6034022ed8de1d3d0a1da1e507dad812b448b
   src/main/java/com/vanta/vanta_auditor_api/models/components/AuditVendor.java:
     id: 76c14206c671
-    last_write_checksum: sha1:c2d5f6bdc55925532c430ad5283757b8405df6da
-    pristine_git_object: e4eb71ec8a5f15e6b1c423cc1a96c4cb98cd7bf8
+    last_write_checksum: sha1:c1ad4ff4d7d65b2a8196b37cb6f1585cf3de4d94
+    pristine_git_object: a56cb305ca650e9775abffef04f8fbad1f5da6b3
   src/main/java/com/vanta/vanta_auditor_api/models/components/AuditVendorRiskLevel.java:
     id: 932fa4deda72
     last_write_checksum: sha1:3599c4accffc999e260bffd31b02b974ae14b091
@@ -2828,8 +2828,8 @@ trackedFiles:
     pristine_git_object: 3cf24cdfb9bcef66ae1fad1665f900384b33d7e1
   src/main/java/com/vanta/vanta_auditor_api/models/components/Vendor.java:
     id: d6c8b68ddffa
-    last_write_checksum: sha1:b5ab12578fdbf0ce8d09e0d993c0525caf0a8cc9
-    pristine_git_object: 68a3a1c4443b2c9cd553c047decce6cefe5c36aa
+    last_write_checksum: sha1:da4a9bc56d2182f7fc26c7716b2629258ca3ed55
+    pristine_git_object: 1eb94a90ed39c6a51c49eb8cb68e4573725dd9da
   src/main/java/com/vanta/vanta_auditor_api/models/components/VendorDecisionStatus.java:
     id: c2c4de48d42e
     last_write_checksum: sha1:c3b76831ab4e9fd82c5646ed1e18799b01c1a627
@@ -4838,7 +4838,7 @@ examples:
           pageSize: 10
       responses:
         "200":
-          application/json: {"results": {"data": [{"id": "5f2c939a52855e725c8d5824", "name": "Acme Corp", "segmentIds": ["5f2c939a52855e725c8d5825"], "inherentRisk": "HIGH", "status": "ACTIVE", "findings": 3, "lastReviewedCompleted": "2025-01-15T10:00:00.000Z", "nextSecurityReviewDueDate": "2025-07-15T10:00:00.000Z", "vendorCategory": "SaaS", "residualRisk": "HIGH", "dataAgreements": {"total": 2, "complete": 1}}], "pageInfo": {"endCursor": "5f2c939a52855e725c8d5824", "hasNextPage": true, "hasPreviousPage": false, "startCursor": "5f2c939a52855e725c8d5824"}}}
+          application/json: {"results": {"data": [{"id": "5f2c939a52855e725c8d5824", "name": "Acme Corp", "segmentIds": ["5f2c939a52855e725c8d5825"], "inherentRisk": "HIGH", "status": "ACTIVE", "findings": 3, "lastReviewedCompleted": "2025-01-15T10:00:00.000Z", "nextSecurityReviewDueDate": "2025-07-15T10:00:00.000Z", "vendorCategory": "SaaS", "vendorCategoryId": "5f2c939a52855e725c8d5826", "residualRisk": "HIGH", "dataAgreements": {"total": 2, "complete": 1}}], "pageInfo": {"endCursor": "5f2c939a52855e725c8d5824", "hasNextPage": true, "hasPreviousPage": false, "startCursor": "5f2c939a52855e725c8d5824"}}}
   ListAccountAccessServices:
     Example 1:
       parameters:

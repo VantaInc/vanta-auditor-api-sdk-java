@@ -216,8 +216,9 @@ public class Vendor {
     private Optional<? extends LinkedTaskTrackerTaskProcurementRequest> linkedTaskTrackerTaskProcurementRequest;
 
     /**
-     * Child vendors managed as engagements of this vendor, sorted by name.
-     * Includes accessible managed, in-procurement, and archived engagements.
+     * A product, service, or subsidiary you use from a vendor. Each engagement
+     * belongs to one parent vendor, has its own risk score and assessments, and
+     * cannot have engagements of its own. Returned engagements are sorted by name.
      * Empty when there are none.
      */
     @JsonInclude(Include.NON_ABSENT)
@@ -578,8 +579,9 @@ public class Vendor {
     }
 
     /**
-     * Child vendors managed as engagements of this vendor, sorted by name.
-     * Includes accessible managed, in-procurement, and archived engagements.
+     * A product, service, or subsidiary you use from a vendor. Each engagement
+     * belongs to one parent vendor, has its own risk score and assessments, and
+     * cannot have engagements of its own. Returned engagements are sorted by name.
      * Empty when there are none.
      */
     @SuppressWarnings("unchecked")
@@ -1059,8 +1061,9 @@ public class Vendor {
     }
 
     /**
-     * Child vendors managed as engagements of this vendor, sorted by name.
-     * Includes accessible managed, in-procurement, and archived engagements.
+     * A product, service, or subsidiary you use from a vendor. Each engagement
+     * belongs to one parent vendor, has its own risk score and assessments, and
+     * cannot have engagements of its own. Returned engagements are sorted by name.
      * Empty when there are none.
      */
     public Vendor withEngagements(List<VendorRelationshipSummary> engagements) {
@@ -1071,8 +1074,9 @@ public class Vendor {
 
 
     /**
-     * Child vendors managed as engagements of this vendor, sorted by name.
-     * Includes accessible managed, in-procurement, and archived engagements.
+     * A product, service, or subsidiary you use from a vendor. Each engagement
+     * belongs to one parent vendor, has its own risk score and assessments, and
+     * cannot have engagements of its own. Returned engagements are sorted by name.
      * Empty when there are none.
      */
     public Vendor withEngagements(Optional<? extends List<VendorRelationshipSummary>> engagements) {
@@ -1719,8 +1723,9 @@ public class Vendor {
 
 
         /**
-         * Child vendors managed as engagements of this vendor, sorted by name.
-         * Includes accessible managed, in-procurement, and archived engagements.
+         * A product, service, or subsidiary you use from a vendor. Each engagement
+         * belongs to one parent vendor, has its own risk score and assessments, and
+         * cannot have engagements of its own. Returned engagements are sorted by name.
          * Empty when there are none.
          */
         public Builder engagements(List<VendorRelationshipSummary> engagements) {
@@ -1730,8 +1735,9 @@ public class Vendor {
         }
 
         /**
-         * Child vendors managed as engagements of this vendor, sorted by name.
-         * Includes accessible managed, in-procurement, and archived engagements.
+         * A product, service, or subsidiary you use from a vendor. Each engagement
+         * belongs to one parent vendor, has its own risk score and assessments, and
+         * cannot have engagements of its own. Returned engagements are sorted by name.
          * Empty when there are none.
          */
         public Builder engagements(Optional<? extends List<VendorRelationshipSummary>> engagements) {
