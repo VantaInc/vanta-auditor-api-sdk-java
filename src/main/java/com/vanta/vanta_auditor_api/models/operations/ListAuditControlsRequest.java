@@ -36,26 +36,39 @@ public class ListAuditControlsRequest {
     @SpeakeasyMetadata("queryParam:style=form,explode=true,name=externalIdMatchesAny")
     private Optional<? extends List<String>> externalIdMatchesAny;
 
+    /**
+     * Return only controls whose `inScopeSegmentIds` include at least one of
+     * these segment IDs from the audit's `segments[].id` (exact,
+     * case-sensitive). IDs that aren't segments on this audit match nothing.
+     * Repeat the parameter for several IDs, and send the same filters with
+     * every `pageCursor`.
+     */
+    @SpeakeasyMetadata("queryParam:style=form,explode=true,name=segmentIdsMatchesAny")
+    private Optional<? extends List<String>> segmentIdsMatchesAny;
+
     @JsonCreator
     public ListAuditControlsRequest(
             String auditId,
             Optional<Integer> pageSize,
             Optional<String> pageCursor,
-            Optional<? extends List<String>> externalIdMatchesAny) {
+            Optional<? extends List<String>> externalIdMatchesAny,
+            Optional<? extends List<String>> segmentIdsMatchesAny) {
         Utils.checkNotNull(auditId, "auditId");
         Utils.checkNotNull(pageSize, "pageSize");
         Utils.checkNotNull(pageCursor, "pageCursor");
         Utils.checkNotNull(externalIdMatchesAny, "externalIdMatchesAny");
+        Utils.checkNotNull(segmentIdsMatchesAny, "segmentIdsMatchesAny");
         this.auditId = auditId;
         this.pageSize = pageSize;
         this.pageCursor = pageCursor;
         this.externalIdMatchesAny = externalIdMatchesAny;
+        this.segmentIdsMatchesAny = segmentIdsMatchesAny;
     }
     
     public ListAuditControlsRequest(
             String auditId) {
         this(auditId, Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     @JsonIgnore
@@ -80,6 +93,19 @@ public class ListAuditControlsRequest {
     @JsonIgnore
     public Optional<List<String>> externalIdMatchesAny() {
         return (Optional<List<String>>) externalIdMatchesAny;
+    }
+
+    /**
+     * Return only controls whose `inScopeSegmentIds` include at least one of
+     * these segment IDs from the audit's `segments[].id` (exact,
+     * case-sensitive). IDs that aren't segments on this audit match nothing.
+     * Repeat the parameter for several IDs, and send the same filters with
+     * every `pageCursor`.
+     */
+    @SuppressWarnings("unchecked")
+    @JsonIgnore
+    public Optional<List<String>> segmentIdsMatchesAny() {
+        return (Optional<List<String>>) segmentIdsMatchesAny;
     }
 
     public static Builder builder() {
@@ -138,6 +164,33 @@ public class ListAuditControlsRequest {
         return this;
     }
 
+    /**
+     * Return only controls whose `inScopeSegmentIds` include at least one of
+     * these segment IDs from the audit's `segments[].id` (exact,
+     * case-sensitive). IDs that aren't segments on this audit match nothing.
+     * Repeat the parameter for several IDs, and send the same filters with
+     * every `pageCursor`.
+     */
+    public ListAuditControlsRequest withSegmentIdsMatchesAny(List<String> segmentIdsMatchesAny) {
+        Utils.checkNotNull(segmentIdsMatchesAny, "segmentIdsMatchesAny");
+        this.segmentIdsMatchesAny = Optional.ofNullable(segmentIdsMatchesAny);
+        return this;
+    }
+
+
+    /**
+     * Return only controls whose `inScopeSegmentIds` include at least one of
+     * these segment IDs from the audit's `segments[].id` (exact,
+     * case-sensitive). IDs that aren't segments on this audit match nothing.
+     * Repeat the parameter for several IDs, and send the same filters with
+     * every `pageCursor`.
+     */
+    public ListAuditControlsRequest withSegmentIdsMatchesAny(Optional<? extends List<String>> segmentIdsMatchesAny) {
+        Utils.checkNotNull(segmentIdsMatchesAny, "segmentIdsMatchesAny");
+        this.segmentIdsMatchesAny = segmentIdsMatchesAny;
+        return this;
+    }
+
     @Override
     public boolean equals(java.lang.Object o) {
         if (this == o) {
@@ -151,14 +204,15 @@ public class ListAuditControlsRequest {
             Utils.enhancedDeepEquals(this.auditId, other.auditId) &&
             Utils.enhancedDeepEquals(this.pageSize, other.pageSize) &&
             Utils.enhancedDeepEquals(this.pageCursor, other.pageCursor) &&
-            Utils.enhancedDeepEquals(this.externalIdMatchesAny, other.externalIdMatchesAny);
+            Utils.enhancedDeepEquals(this.externalIdMatchesAny, other.externalIdMatchesAny) &&
+            Utils.enhancedDeepEquals(this.segmentIdsMatchesAny, other.segmentIdsMatchesAny);
     }
     
     @Override
     public int hashCode() {
         return Utils.enhancedHash(
             auditId, pageSize, pageCursor,
-            externalIdMatchesAny);
+            externalIdMatchesAny, segmentIdsMatchesAny);
     }
     
     @Override
@@ -167,7 +221,8 @@ public class ListAuditControlsRequest {
                 "auditId", auditId,
                 "pageSize", pageSize,
                 "pageCursor", pageCursor,
-                "externalIdMatchesAny", externalIdMatchesAny);
+                "externalIdMatchesAny", externalIdMatchesAny,
+                "segmentIdsMatchesAny", segmentIdsMatchesAny);
     }
 
     @SuppressWarnings("UnusedReturnValue")
@@ -180,6 +235,8 @@ public class ListAuditControlsRequest {
         private Optional<String> pageCursor = Optional.empty();
 
         private Optional<? extends List<String>> externalIdMatchesAny = Optional.empty();
+
+        private Optional<? extends List<String>> segmentIdsMatchesAny = Optional.empty();
 
         private Builder() {
           // force use of static builder() method
@@ -237,6 +294,33 @@ public class ListAuditControlsRequest {
             return this;
         }
 
+
+        /**
+         * Return only controls whose `inScopeSegmentIds` include at least one of
+         * these segment IDs from the audit's `segments[].id` (exact,
+         * case-sensitive). IDs that aren't segments on this audit match nothing.
+         * Repeat the parameter for several IDs, and send the same filters with
+         * every `pageCursor`.
+         */
+        public Builder segmentIdsMatchesAny(List<String> segmentIdsMatchesAny) {
+            Utils.checkNotNull(segmentIdsMatchesAny, "segmentIdsMatchesAny");
+            this.segmentIdsMatchesAny = Optional.ofNullable(segmentIdsMatchesAny);
+            return this;
+        }
+
+        /**
+         * Return only controls whose `inScopeSegmentIds` include at least one of
+         * these segment IDs from the audit's `segments[].id` (exact,
+         * case-sensitive). IDs that aren't segments on this audit match nothing.
+         * Repeat the parameter for several IDs, and send the same filters with
+         * every `pageCursor`.
+         */
+        public Builder segmentIdsMatchesAny(Optional<? extends List<String>> segmentIdsMatchesAny) {
+            Utils.checkNotNull(segmentIdsMatchesAny, "segmentIdsMatchesAny");
+            this.segmentIdsMatchesAny = segmentIdsMatchesAny;
+            return this;
+        }
+
         public ListAuditControlsRequest build() {
             if (pageSize == null) {
                 pageSize = _SINGLETON_VALUE_PageSize.value();
@@ -244,7 +328,7 @@ public class ListAuditControlsRequest {
 
             return new ListAuditControlsRequest(
                 auditId, pageSize, pageCursor,
-                externalIdMatchesAny);
+                externalIdMatchesAny, segmentIdsMatchesAny);
         }
 
 

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 
@@ -14,7 +15,10 @@ import java.lang.String;
  * Category
  * 
  * <p>The vendor's category.
+ * 
+ * @deprecated class: This will be removed in a future release, please migrate away from it as soon as possible.
  */
+@Deprecated
 public class Category {
 
     @JsonProperty("displayName")

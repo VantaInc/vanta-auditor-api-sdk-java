@@ -18,6 +18,10 @@ import org.openapitools.jackson.nullable.JsonNullable;
 public class InformationRequestEvidence {
     /**
      * The unique identifier for the evidence within Vanta's system.
+     * Use it as the key when you sync evidence of any type.
+     * Each evidence item has at most one file. A file attached to two
+     * information requests appears as two evidence items with
+     * different IDs.
      * Format: ObjectId as a string (e.g., "6890e473dce1da5d8406f5e7").
      */
     @JsonProperty("id")
@@ -107,6 +111,10 @@ public class InformationRequestEvidence {
 
     /**
      * The unique identifier for the evidence within Vanta's system.
+     * Use it as the key when you sync evidence of any type.
+     * Each evidence item has at most one file. A file attached to two
+     * information requests appears as two evidence items with
+     * different IDs.
      * Format: ObjectId as a string (e.g., "6890e473dce1da5d8406f5e7").
      */
     @JsonIgnore
@@ -176,6 +184,10 @@ public class InformationRequestEvidence {
 
     /**
      * The unique identifier for the evidence within Vanta's system.
+     * Use it as the key when you sync evidence of any type.
+     * Each evidence item has at most one file. A file attached to two
+     * information requests appears as two evidence items with
+     * different IDs.
      * Format: ObjectId as a string (e.g., "6890e473dce1da5d8406f5e7").
      */
     public InformationRequestEvidence withId(String id) {
@@ -333,6 +345,10 @@ public class InformationRequestEvidence {
 
         /**
          * The unique identifier for the evidence within Vanta's system.
+         * Use it as the key when you sync evidence of any type.
+         * Each evidence item has at most one file. A file attached to two
+         * information requests appears as two evidence items with
+         * different IDs.
          * Format: ObjectId as a string (e.g., "6890e473dce1da5d8406f5e7").
          */
         public Builder id(String id) {

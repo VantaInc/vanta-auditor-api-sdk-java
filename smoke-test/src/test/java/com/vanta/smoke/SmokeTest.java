@@ -14,6 +14,7 @@ import com.vanta.vanta_auditor_api.models.components.PageInfo;
 import com.vanta.vanta_auditor_api.models.components.Results;
 import com.vanta.vanta_auditor_api.models.errors.APIException;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditCommentsResponse;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditControlsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditControlsResponse;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditEvidenceResponse;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditEvidenceUrlsResponse;
@@ -227,7 +228,8 @@ public class SmokeTest {
     @Test
     @Order(5)
     void listControls() throws Exception {
-        ListAuditControlsResponse res = sdk.audits().listControls(auditId);
+        ListAuditControlsResponse res = sdk.audits().listControls(
+            ListAuditControlsRequest.builder().auditId(auditId).build());
         assertEquals(200, res.statusCode());
         assertTrue(res.paginatedResponseAuditorControl().isPresent(), "expected paginated response body");
         assertNotNull(res.paginatedResponseAuditorControl().get().results().data(),

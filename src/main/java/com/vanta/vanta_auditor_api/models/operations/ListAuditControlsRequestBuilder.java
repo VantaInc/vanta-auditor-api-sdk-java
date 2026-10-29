@@ -5,26 +5,14 @@ package com.vanta.vanta_auditor_api.models.operations;
 
 import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.ListAuditControls;
 import com.vanta.vanta_auditor_api.utils.Headers;
-import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
 import com.vanta.vanta_auditor_api.utils.Utils;
-import java.lang.Integer;
-import java.lang.String;
-import java.util.List;
-import java.util.Optional;
 
 public class ListAuditControlsRequestBuilder {
 
-    private String auditId;
-    private Optional<Integer> pageSize = Utils.readDefaultOrConstValue(
-                            "pageSize",
-                            "10",
-                            new TypeReference<Optional<Integer>>() {});
-    private Optional<String> pageCursor = Optional.empty();
-    private Optional<? extends List<String>> externalIdMatchesAny = Optional.empty();
+    private ListAuditControlsRequest request;
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -32,74 +20,17 @@ public class ListAuditControlsRequestBuilder {
         this.sdkConfiguration = sdkConfiguration;
     }
 
-    public ListAuditControlsRequestBuilder auditId(String auditId) {
-        Utils.checkNotNull(auditId, "auditId");
-        this.auditId = auditId;
+    public ListAuditControlsRequestBuilder request(ListAuditControlsRequest request) {
+        Utils.checkNotNull(request, "request");
+        this.request = request;
         return this;
-    }
-                
-    public ListAuditControlsRequestBuilder pageSize(int pageSize) {
-        Utils.checkNotNull(pageSize, "pageSize");
-        this.pageSize = Optional.of(pageSize);
-        return this;
-    }
-
-    public ListAuditControlsRequestBuilder pageSize(Optional<Integer> pageSize) {
-        Utils.checkNotNull(pageSize, "pageSize");
-        this.pageSize = pageSize;
-        return this;
-    }
-                
-    public ListAuditControlsRequestBuilder pageCursor(String pageCursor) {
-        Utils.checkNotNull(pageCursor, "pageCursor");
-        this.pageCursor = Optional.of(pageCursor);
-        return this;
-    }
-
-    public ListAuditControlsRequestBuilder pageCursor(Optional<String> pageCursor) {
-        Utils.checkNotNull(pageCursor, "pageCursor");
-        this.pageCursor = pageCursor;
-        return this;
-    }
-                
-    public ListAuditControlsRequestBuilder externalIdMatchesAny(List<String> externalIdMatchesAny) {
-        Utils.checkNotNull(externalIdMatchesAny, "externalIdMatchesAny");
-        this.externalIdMatchesAny = Optional.of(externalIdMatchesAny);
-        return this;
-    }
-
-    public ListAuditControlsRequestBuilder externalIdMatchesAny(Optional<? extends List<String>> externalIdMatchesAny) {
-        Utils.checkNotNull(externalIdMatchesAny, "externalIdMatchesAny");
-        this.externalIdMatchesAny = externalIdMatchesAny;
-        return this;
-    }
-
-
-    private ListAuditControlsRequest buildRequest() {
-        if (pageSize == null) {
-            pageSize = _SINGLETON_VALUE_PageSize.value();
-        }
-
-        ListAuditControlsRequest request = new ListAuditControlsRequest(auditId,
-            pageSize,
-            pageCursor,
-            externalIdMatchesAny);
-
-        return request;
     }
 
     public ListAuditControlsResponse call() {
         
         RequestOperation<ListAuditControlsRequest, ListAuditControlsResponse> operation
               = new ListAuditControls.Sync(sdkConfiguration, _headers);
-        ListAuditControlsRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));
     }
-
-    private static final LazySingletonValue<Optional<Integer>> _SINGLETON_VALUE_PageSize =
-            new LazySingletonValue<>(
-                    "pageSize",
-                    "10",
-                    new TypeReference<Optional<Integer>>() {});
 }

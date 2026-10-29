@@ -47,7 +47,7 @@ afterEvaluate {
                     description = config.description
                     url = 'https://github.com/VantaInc/vanta-auditor-api-sdk-java'
                     scm {
-                        url = 'github.com/VantaInc/vanta-auditor-api-sdk-java'
+                        url = 'https://github.com/VantaInc/vanta-auditor-api-sdk-java'
                         connection = 'scm:git:ssh://git@github.com/VantaInc/vanta-auditor-api-sdk-java.git'
                     }
                     licenses {
