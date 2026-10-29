@@ -14,8 +14,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.time.Duration;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -37,9 +39,31 @@ public class SpeakeasyHTTPClient implements HTTPClient {
     private static Consumer<? super String> logger = System.out::println;
 
     private static final int MAX_DEBUG_BODY_BYTES = 64 * 1024;
-    private final HttpClient client = HttpClient.newBuilder()
-            .connectTimeout(java.time.Duration.ofSeconds(30))
-            .build();
+    private final HttpClient client;
+    private final int maxBufferedBodyBytes;
+    private final Duration requestTimeout;
+
+    public SpeakeasyHTTPClient() {
+        this(Utils.MAX_BUFFERED_BODY_BYTES, Duration.ofSeconds(60));
+    }
+
+    /**
+     * @param maxBufferedBodyBytes maximum buffered response size; streaming consumption is not size limited
+     * @param requestTimeout default deadline for each HTTP request, including response body consumption
+     */
+    public SpeakeasyHTTPClient(int maxBufferedBodyBytes, Duration requestTimeout) {
+        if (maxBufferedBodyBytes <= 0) {
+            throw new IllegalArgumentException("maxBufferedBodyBytes must be positive");
+        }
+        Objects.requireNonNull(requestTimeout, "requestTimeout");
+        if (requestTimeout.isNegative() || requestTimeout.isZero()) {
+            throw new IllegalArgumentException("requestTimeout must be positive");
+        }
+        requestTimeout.toNanos();
+        this.maxBufferedBodyBytes = maxBufferedBodyBytes;
+        this.requestTimeout = requestTimeout;
+        client = HttpClient.newBuilder().connectTimeout(Duration.ofSeconds(30)).build();
+    }
 
     private static final Set<String> STREAMING_MEDIA_TYPES =
             Set.of("text/event-stream", "application/x-ndjson", "application/jsonl");
@@ -128,7 +152,11 @@ public class SpeakeasyHTTPClient implements HTTPClient {
         if (isDebugLoggingEnabled()) {
             request = logRequest(request, true);
         }
+        request = withTimeout(request);
+        ResponseBodyDeadline deadline = new ResponseBodyDeadline(request.timeout().orElseThrow());
         var response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
+        response = new ResponseWithBody<>(response,
+                new ResponseBodyInputStream(response.body(), maxBufferedBodyBytes, deadline));
         if (isDebugLoggingEnabled()) {
             response = logResponse(response, true);
         }
@@ -140,11 +168,20 @@ public class SpeakeasyHTTPClient implements HTTPClient {
         if (isDebugLoggingEnabled()) {
             request = logRequest(request, true);
         }
+        request = withTimeout(request);
+        ResponseBodyDeadline deadline = new ResponseBodyDeadline(request.timeout().orElseThrow());
         return client.sendAsync(request, HttpResponse.BodyHandlers.ofPublisher())
                 .thenApply(response ->
                         // TODO: log responses when helper for Blob is setup
-                        new ResponseWithBody<>(response, Blob.from(response.body(), Utils.MAX_BUFFERED_BODY_BYTES,
+                        new ResponseWithBody<>(response, Blob.from(
+                                new ResponseBodyPublisher(response.body(), deadline), maxBufferedBodyBytes,
                                 response.headers().firstValueAsLong("Content-Length").orElse(-1))));
+    }
+
+    private HttpRequest withTimeout(HttpRequest request) {
+        return request.timeout().isPresent()
+                ? request
+                : Helpers.copy(request).timeout(requestTimeout).build();
     }
 
     private HttpRequest logRequest(HttpRequest request, boolean logBody) {
@@ -175,9 +212,10 @@ public class SpeakeasyHTTPClient implements HTTPClient {
         log("Response headers: " + redactHeaders(response.headers()));
 
         long contentLength = response.headers().firstValueAsLong("Content-Length").orElse(-1);
+        int debugLimit = Math.min(MAX_DEBUG_BODY_BYTES, ResponseBodyInputStream.bufferLimit(response.body()));
         if (!logBody || isStreamingMediaType(contentType)
                 || !(contentType.startsWith("application/json") || contentType.startsWith("text/plain"))
-                || contentLength < 0 || contentLength > MAX_DEBUG_BODY_BYTES) {
+                || contentLength < 0 || contentLength > debugLimit) {
             return response;
         }
 
