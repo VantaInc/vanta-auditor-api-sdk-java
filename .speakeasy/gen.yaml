@@ -30,7 +30,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 java:
-  version: 0.7.19
+  version: 0.7.20
   additionalDependencies: []
   additionalPlugins: []
   artifactID: vanta-auditor-api
