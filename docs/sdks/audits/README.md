@@ -425,6 +425,7 @@ Rate limit: 250 requests / minute.
 package hello.world;
 
 import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditControlsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditControlsResponse;
 import java.lang.Exception;
 
@@ -436,9 +437,12 @@ public class Application {
                 .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
-        ListAuditControlsResponse res = sdk.audits().listControls()
+        ListAuditControlsRequest req = ListAuditControlsRequest.builder()
                 .auditId("<id>")
-                .pageSize(10)
+                .build();
+
+        ListAuditControlsResponse res = sdk.audits().listControls()
+                .request(req)
                 .call();
 
         if (res.paginatedResponseAuditorControl().isPresent()) {
@@ -450,12 +454,9 @@ public class Application {
 
 ### Parameters
 
-| Parameter                                                                                          | Type                                                                                               | Required                                                                                           | Description                                                                                        |
-| -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| `auditId`                                                                                          | *String*                                                                                           | :heavy_check_mark:                                                                                 | N/A                                                                                                |
-| `pageSize`                                                                                         | *Optional\<Integer>*                                                                               | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
-| `pageCursor`                                                                                       | *Optional\<String>*                                                                                | :heavy_minus_sign:                                                                                 | N/A                                                                                                |
-| `externalIdMatchesAny`                                                                             | List\<*String*>                                                                                    | :heavy_minus_sign:                                                                                 | Filter controls whose externalId matches any of the provided values (exact, case-sensitive match). |
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [ListAuditControlsRequest](../../models/operations/ListAuditControlsRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
 
 ### Response
 
@@ -2297,6 +2298,17 @@ Delta sync usage:
 3. Only evidence created, modified, shared, or deleted since that timestamp is returned
 4. Process updates, including soft-deletes (deletionDate !== null)
 5. Update your last sync timestamp to the current time
+
+Identifying evidence and files:
+- Use `id` as the key for each evidence item, whatever its type.
+- To recognize the same file across information requests, use the
+
+  file key for the evidence type. UPLOADED_DOCUMENT uses `evidence.id`.
+  VANTA_DOCUMENT and VANTA_POLICY use `evidence.file.id`, which
+  identifies the source document or policy file. VANTA_TEST uses
+  `evidence.snapshotId` plus `evidence.fileType`. LINK, OBSERVATION,
+  and VANTA_TEST_SNAPSHOT evidence has no file.
+- Do not use `file.url` as a key. It is a temporary download link.
 
 Rate limit: 50 requests / minute.
 

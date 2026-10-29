@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Boolean;
+import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -137,10 +138,20 @@ public class Vendor {
     private List<String> riskAttributeIds;
 
     /**
+     * The ID of the vendor's category.
+     */
+    @JsonInclude(Include.ALWAYS)
+    @JsonProperty("categoryId")
+    private Optional<String> categoryId;
+
+    /**
      * The vendor's category.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonInclude(Include.ALWAYS)
     @JsonProperty("category")
+    @Deprecated
     private Optional<? extends Category> category;
 
     /**
@@ -251,6 +262,7 @@ public class Vendor {
             @JsonProperty("isVisibleToAuditors") Optional<Boolean> isVisibleToAuditors,
             @JsonProperty("isRiskAutoScored") Optional<Boolean> isRiskAutoScored,
             @JsonProperty("riskAttributeIds") List<String> riskAttributeIds,
+            @JsonProperty("categoryId") Optional<String> categoryId,
             @JsonProperty("category") Optional<? extends Category> category,
             @JsonProperty("authDetails") AuthDetails authDetails,
             @JsonProperty("status") VendorStatus status,
@@ -280,6 +292,7 @@ public class Vendor {
         Utils.checkNotNull(isVisibleToAuditors, "isVisibleToAuditors");
         Utils.checkNotNull(isRiskAutoScored, "isRiskAutoScored");
         Utils.checkNotNull(riskAttributeIds, "riskAttributeIds");
+        Utils.checkNotNull(categoryId, "categoryId");
         Utils.checkNotNull(category, "category");
         Utils.checkNotNull(authDetails, "authDetails");
         Utils.checkNotNull(status, "status");
@@ -309,6 +322,7 @@ public class Vendor {
         this.isVisibleToAuditors = isVisibleToAuditors;
         this.isRiskAutoScored = isRiskAutoScored;
         this.riskAttributeIds = riskAttributeIds;
+        this.categoryId = categoryId;
         this.category = category;
         this.authDetails = authDetails;
         this.status = status;
@@ -337,10 +351,10 @@ public class Vendor {
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
             Optional.empty(), riskAttributeIds, Optional.empty(),
-            authDetails, status, inherentRiskLevel,
-            residualRiskLevel, Optional.empty(), Optional.empty(),
+            Optional.empty(), authDetails, status,
+            inherentRiskLevel, residualRiskLevel, Optional.empty(),
             Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty(), JsonNullable.undefined());
+            Optional.empty(), Optional.empty(), JsonNullable.undefined());
     }
 
     /**
@@ -480,8 +494,19 @@ public class Vendor {
     }
 
     /**
-     * The vendor's category.
+     * The ID of the vendor's category.
      */
+    @JsonIgnore
+    public Optional<String> categoryId() {
+        return categoryId;
+    }
+
+    /**
+     * The vendor's category.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
     @SuppressWarnings("unchecked")
     @JsonIgnore
     public Optional<Category> category() {
@@ -898,8 +923,30 @@ public class Vendor {
     }
 
     /**
-     * The vendor's category.
+     * The ID of the vendor's category.
      */
+    public Vendor withCategoryId(String categoryId) {
+        Utils.checkNotNull(categoryId, "categoryId");
+        this.categoryId = Optional.ofNullable(categoryId);
+        return this;
+    }
+
+
+    /**
+     * The ID of the vendor's category.
+     */
+    public Vendor withCategoryId(Optional<String> categoryId) {
+        Utils.checkNotNull(categoryId, "categoryId");
+        this.categoryId = categoryId;
+        return this;
+    }
+
+    /**
+     * The vendor's category.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
     public Vendor withCategory(Category category) {
         Utils.checkNotNull(category, "category");
         this.category = Optional.ofNullable(category);
@@ -909,7 +956,10 @@ public class Vendor {
 
     /**
      * The vendor's category.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public Vendor withCategory(Optional<? extends Category> category) {
         Utils.checkNotNull(category, "category");
         this.category = category;
@@ -1130,6 +1180,7 @@ public class Vendor {
             Utils.enhancedDeepEquals(this.isVisibleToAuditors, other.isVisibleToAuditors) &&
             Utils.enhancedDeepEquals(this.isRiskAutoScored, other.isRiskAutoScored) &&
             Utils.enhancedDeepEquals(this.riskAttributeIds, other.riskAttributeIds) &&
+            Utils.enhancedDeepEquals(this.categoryId, other.categoryId) &&
             Utils.enhancedDeepEquals(this.category, other.category) &&
             Utils.enhancedDeepEquals(this.authDetails, other.authDetails) &&
             Utils.enhancedDeepEquals(this.status, other.status) &&
@@ -1152,11 +1203,11 @@ public class Vendor {
             additionalNotes, securityOwnerUserId, businessOwnerUserId,
             contractStartDate, contractRenewalDate, contractTerminationDate,
             nextSecurityReviewDueDate, lastSecurityReviewCompletionDate, isVisibleToAuditors,
-            isRiskAutoScored, riskAttributeIds, category,
-            authDetails, status, inherentRiskLevel,
-            residualRiskLevel, vendorHeadquarters, contractAmount,
-            customFields, latestDecision, linkedTaskTrackerTaskProcurementRequest,
-            engagements, parentVendor);
+            isRiskAutoScored, riskAttributeIds, categoryId,
+            category, authDetails, status,
+            inherentRiskLevel, residualRiskLevel, vendorHeadquarters,
+            contractAmount, customFields, latestDecision,
+            linkedTaskTrackerTaskProcurementRequest, engagements, parentVendor);
     }
     
     @Override
@@ -1179,6 +1230,7 @@ public class Vendor {
                 "isVisibleToAuditors", isVisibleToAuditors,
                 "isRiskAutoScored", isRiskAutoScored,
                 "riskAttributeIds", riskAttributeIds,
+                "categoryId", categoryId,
                 "category", category,
                 "authDetails", authDetails,
                 "status", status,
@@ -1230,6 +1282,9 @@ public class Vendor {
 
         private List<String> riskAttributeIds;
 
+        private Optional<String> categoryId = Optional.empty();
+
+        @Deprecated
         private Optional<? extends Category> category = Optional.empty();
 
         private AuthDetails authDetails;
@@ -1556,8 +1611,30 @@ public class Vendor {
 
 
         /**
-         * The vendor's category.
+         * The ID of the vendor's category.
          */
+        public Builder categoryId(String categoryId) {
+            Utils.checkNotNull(categoryId, "categoryId");
+            this.categoryId = Optional.ofNullable(categoryId);
+            return this;
+        }
+
+        /**
+         * The ID of the vendor's category.
+         */
+        public Builder categoryId(Optional<String> categoryId) {
+            Utils.checkNotNull(categoryId, "categoryId");
+            this.categoryId = categoryId;
+            return this;
+        }
+
+
+        /**
+         * The vendor's category.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
+         */
+        @Deprecated
         public Builder category(Category category) {
             Utils.checkNotNull(category, "category");
             this.category = Optional.ofNullable(category);
@@ -1566,7 +1643,10 @@ public class Vendor {
 
         /**
          * The vendor's category.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder category(Optional<? extends Category> category) {
             Utils.checkNotNull(category, "category");
             this.category = category;
@@ -1773,11 +1853,11 @@ public class Vendor {
                 additionalNotes, securityOwnerUserId, businessOwnerUserId,
                 contractStartDate, contractRenewalDate, contractTerminationDate,
                 nextSecurityReviewDueDate, lastSecurityReviewCompletionDate, isVisibleToAuditors,
-                isRiskAutoScored, riskAttributeIds, category,
-                authDetails, status, inherentRiskLevel,
-                residualRiskLevel, vendorHeadquarters, contractAmount,
-                customFields, latestDecision, linkedTaskTrackerTaskProcurementRequest,
-                engagements, parentVendor);
+                isRiskAutoScored, riskAttributeIds, categoryId,
+                category, authDetails, status,
+                inherentRiskLevel, residualRiskLevel, vendorHeadquarters,
+                contractAmount, customFields, latestDecision,
+                linkedTaskTrackerTaskProcurementRequest, engagements, parentVendor);
         }
 
     }

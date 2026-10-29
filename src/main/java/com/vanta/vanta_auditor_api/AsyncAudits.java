@@ -667,39 +667,10 @@ public class AsyncAudits {
      * 
      * <p>Rate limit: 250 requests / minute.
      * 
-     * @param auditId 
+     * @param request The request object containing all the parameters for the API call.
      * @return {@code CompletableFuture<ListAuditControlsResponse>} - The async response
      */
-    public CompletableFuture<ListAuditControlsResponse> listControls(String auditId) {
-        return listControls(
-                auditId, Optional.empty(), Optional.empty(),
-                Optional.empty());
-    }
-
-    /**
-     * List audit controls
-     * 
-     * <p>Returns a paginated list of controls for an audit.
-     * 
-     * <p>Rate limit: 250 requests / minute.
-     * 
-     * @param auditId 
-     * @param pageSize 
-     * @param pageCursor 
-     * @param externalIdMatchesAny Filter controls whose externalId matches any of the provided values (exact, case-sensitive match).
-     * @return {@code CompletableFuture<ListAuditControlsResponse>} - The async response
-     */
-    public CompletableFuture<ListAuditControlsResponse> listControls(
-            String auditId, Optional<Integer> pageSize,
-            Optional<String> pageCursor, Optional<? extends List<String>> externalIdMatchesAny) {
-        ListAuditControlsRequest request =
-            ListAuditControlsRequest
-                .builder()
-                .auditId(auditId)
-                .pageSize(pageSize)
-                .pageCursor(pageCursor)
-                .externalIdMatchesAny(externalIdMatchesAny)
-                .build();
+    public CompletableFuture<ListAuditControlsResponse> listControls(ListAuditControlsRequest request) {
         AsyncRequestOperation<ListAuditControlsRequest, ListAuditControlsResponse> operation
               = new ListAuditControls.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
@@ -2396,6 +2367,17 @@ public class AsyncAudits {
      * 4. Process updates, including soft-deletes (deletionDate !== null)
      * 5. Update your last sync timestamp to the current time
      * 
+     * <p>Identifying evidence and files:
+     * - Use `id` as the key for each evidence item, whatever its type.
+     * - To recognize the same file across information requests, use the
+     * 
+     * <p>file key for the evidence type. UPLOADED_DOCUMENT uses `evidence.id`.
+     * VANTA_DOCUMENT and VANTA_POLICY use `evidence.file.id`, which
+     * identifies the source document or policy file. VANTA_TEST uses
+     * `evidence.snapshotId` plus `evidence.fileType`. LINK, OBSERVATION,
+     * and VANTA_TEST_SNAPSHOT evidence has no file.
+     * - Do not use `file.url` as a key. It is a temporary download link.
+     * 
      * <p>Rate limit: 50 requests / minute.
      * 
      * @return The async call builder
@@ -2432,6 +2414,17 @@ public class AsyncAudits {
      * 3. Only evidence created, modified, shared, or deleted since that timestamp is returned
      * 4. Process updates, including soft-deletes (deletionDate !== null)
      * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Identifying evidence and files:
+     * - Use `id` as the key for each evidence item, whatever its type.
+     * - To recognize the same file across information requests, use the
+     * 
+     * <p>file key for the evidence type. UPLOADED_DOCUMENT uses `evidence.id`.
+     * VANTA_DOCUMENT and VANTA_POLICY use `evidence.file.id`, which
+     * identifies the source document or policy file. VANTA_TEST uses
+     * `evidence.snapshotId` plus `evidence.fileType`. LINK, OBSERVATION,
+     * and VANTA_TEST_SNAPSHOT evidence has no file.
+     * - Do not use `file.url` as a key. It is a temporary download link.
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
