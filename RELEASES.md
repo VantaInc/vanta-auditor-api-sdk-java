@@ -542,3 +542,13 @@ Breaking Java API changes: see [Migrating to 0.8.0](MIGRATING.md) for controls c
 
 ### Releases
 - [Maven Central v0.8.0] https://central.sonatype.com/artifact/com.vanta/vanta-auditor-api/0.8.0 - .
+
+## 2026-10-30 00:02:38
+### Changes
+Based on:
+- OpenAPI Doc  
+- Speakeasy CLI 1.805.0 (2.954.8) https://github.com/speakeasy-api/speakeasy
+### Generated
+- [java v0.8.1] .
+### Releases
+- [Maven Central v0.8.1] https://central.sonatype.com/artifact/com.vanta/vanta-auditor-api/0.8.1 - .

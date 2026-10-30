@@ -12,6 +12,7 @@ import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Override;
 import java.lang.String;
 import java.time.OffsetDateTime;
+import java.util.List;
 import org.openapitools.jackson.nullable.JsonNullable;
 
 
@@ -67,6 +68,14 @@ public class InformationRequestEvidence {
     private JsonNullable<OffsetDateTime> deletionDate;
 
     /**
+     * IDs of the audit segments this evidence was relevant to when captured.
+     * Empty for uploaded, link and observation evidence, and for evidence captured before attribution was
+     * recorded.
+     */
+    @JsonProperty("capturedSegmentIds")
+    private List<String> capturedSegmentIds;
+
+    /**
      * Union type representing the different forms of evidence content.
      * The specific type is determined by the `evidenceType` field in InformationRequestEvidence.
      */
@@ -81,6 +90,7 @@ public class InformationRequestEvidence {
             @JsonProperty("creationDate") OffsetDateTime creationDate,
             @JsonProperty("modificationDate") OffsetDateTime modificationDate,
             @JsonProperty("deletionDate") JsonNullable<OffsetDateTime> deletionDate,
+            @JsonProperty("capturedSegmentIds") List<String> capturedSegmentIds,
             @JsonProperty("evidence") InformationRequestEvidenceUnion evidence) {
         Utils.checkNotNull(id, "id");
         Utils.checkNotNull(evidenceType, "evidenceType");
@@ -88,6 +98,7 @@ public class InformationRequestEvidence {
         Utils.checkNotNull(creationDate, "creationDate");
         Utils.checkNotNull(modificationDate, "modificationDate");
         Utils.checkNotNull(deletionDate, "deletionDate");
+        Utils.checkNotNull(capturedSegmentIds, "capturedSegmentIds");
         Utils.checkNotNull(evidence, "evidence");
         this.id = id;
         this.evidenceType = evidenceType;
@@ -95,6 +106,7 @@ public class InformationRequestEvidence {
         this.creationDate = creationDate;
         this.modificationDate = modificationDate;
         this.deletionDate = deletionDate;
+        this.capturedSegmentIds = capturedSegmentIds;
         this.evidence = evidence;
     }
     
@@ -103,10 +115,11 @@ public class InformationRequestEvidence {
             InformationRequestSupportedEvidenceType evidenceType,
             OffsetDateTime creationDate,
             OffsetDateTime modificationDate,
+            List<String> capturedSegmentIds,
             InformationRequestEvidenceUnion evidence) {
         this(id, evidenceType, JsonNullable.undefined(),
             creationDate, modificationDate, JsonNullable.undefined(),
-            evidence);
+            capturedSegmentIds, evidence);
     }
 
     /**
@@ -166,6 +179,16 @@ public class InformationRequestEvidence {
     @JsonIgnore
     public JsonNullable<OffsetDateTime> deletionDate() {
         return deletionDate;
+    }
+
+    /**
+     * IDs of the audit segments this evidence was relevant to when captured.
+     * Empty for uploaded, link and observation evidence, and for evidence captured before attribution was
+     * recorded.
+     */
+    @JsonIgnore
+    public List<String> capturedSegmentIds() {
+        return capturedSegmentIds;
     }
 
     /**
@@ -273,6 +296,17 @@ public class InformationRequestEvidence {
     }
 
     /**
+     * IDs of the audit segments this evidence was relevant to when captured.
+     * Empty for uploaded, link and observation evidence, and for evidence captured before attribution was
+     * recorded.
+     */
+    public InformationRequestEvidence withCapturedSegmentIds(List<String> capturedSegmentIds) {
+        Utils.checkNotNull(capturedSegmentIds, "capturedSegmentIds");
+        this.capturedSegmentIds = capturedSegmentIds;
+        return this;
+    }
+
+    /**
      * Union type representing the different forms of evidence content.
      * The specific type is determined by the `evidenceType` field in InformationRequestEvidence.
      */
@@ -298,6 +332,7 @@ public class InformationRequestEvidence {
             Utils.enhancedDeepEquals(this.creationDate, other.creationDate) &&
             Utils.enhancedDeepEquals(this.modificationDate, other.modificationDate) &&
             Utils.enhancedDeepEquals(this.deletionDate, other.deletionDate) &&
+            Utils.enhancedDeepEquals(this.capturedSegmentIds, other.capturedSegmentIds) &&
             Utils.enhancedDeepEquals(this.evidence, other.evidence);
     }
     
@@ -306,7 +341,7 @@ public class InformationRequestEvidence {
         return Utils.enhancedHash(
             id, evidenceType, visibleToAuditorDate,
             creationDate, modificationDate, deletionDate,
-            evidence);
+            capturedSegmentIds, evidence);
     }
     
     @Override
@@ -318,6 +353,7 @@ public class InformationRequestEvidence {
                 "creationDate", creationDate,
                 "modificationDate", modificationDate,
                 "deletionDate", deletionDate,
+                "capturedSegmentIds", capturedSegmentIds,
                 "evidence", evidence);
     }
 
@@ -335,6 +371,8 @@ public class InformationRequestEvidence {
         private OffsetDateTime modificationDate;
 
         private JsonNullable<OffsetDateTime> deletionDate = JsonNullable.undefined();
+
+        private List<String> capturedSegmentIds;
 
         private InformationRequestEvidenceUnion evidence;
 
@@ -440,6 +478,18 @@ public class InformationRequestEvidence {
 
 
         /**
+         * IDs of the audit segments this evidence was relevant to when captured.
+         * Empty for uploaded, link and observation evidence, and for evidence captured before attribution was
+         * recorded.
+         */
+        public Builder capturedSegmentIds(List<String> capturedSegmentIds) {
+            Utils.checkNotNull(capturedSegmentIds, "capturedSegmentIds");
+            this.capturedSegmentIds = capturedSegmentIds;
+            return this;
+        }
+
+
+        /**
          * Union type representing the different forms of evidence content.
          * The specific type is determined by the `evidenceType` field in InformationRequestEvidence.
          */
@@ -454,7 +504,7 @@ public class InformationRequestEvidence {
             return new InformationRequestEvidence(
                 id, evidenceType, visibleToAuditorDate,
                 creationDate, modificationDate, deletionDate,
-                evidence);
+                capturedSegmentIds, evidence);
         }
 
     }
