@@ -17,7 +17,7 @@ targets:
         codeSamplesRevisionDigest: sha256:e5aebecc1ea7f9551aeeac8fd8ec8d4f202844841be809d6d919908b3da9e486
 workflow:
     workflowVersion: 1.0.0
-    speakeasyVersion: latest
+    speakeasyVersion: 1.805.0
     sources:
         Conduct an audit:
             inputs:
