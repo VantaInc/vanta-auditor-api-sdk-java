@@ -1,19 +1,19 @@
 lockVersion: 2.0.0
 id: f42d74f5-5725-46fa-b13c-649b7ef895c3
 management:
-  docChecksum: 0ae18c641ae6c64c143291585b16b31d
+  docChecksum: 7e9f4410d2c127b1bb038a36dd533153
   docVersion: 1.0.0
   speakeasyVersion: 1.805.0
   generationVersion: 2.954.8
-  releaseVersion: 0.8.0
-  configChecksum: 0f61b546a4dadfb088af67285b9b98ab
+  releaseVersion: 0.8.1
+  configChecksum: ca2006ac05e5d2de0130e2e766e96ead
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   installationURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java
   published: true
 persistentEdits:
-  generation_id: 7c3a8a13-60a1-4817-8e0f-88db18ee4539
-  pristine_commit_hash: 20db2b067e8d4e7a118dbb6903bee28fbc2c3c34
-  pristine_tree_hash: c8e3d15a89d0b59a17204e66ca9348c0af2c6061
+  generation_id: 7e75bea4-76c7-45f8-bc30-60cdb35c7a3b
+  pristine_commit_hash: f93561175c6aabb29de6a7f94413225a84962f43
+  pristine_tree_hash: 5eac70b8289345d988639241a1c51c1ec5fe6d1f
 features:
   java:
     additionalDependencies: 0.1.0
@@ -480,8 +480,8 @@ trackedFiles:
     pristine_git_object: 45b264405b32f3a8321a1c0d547d9e7a9d3f55b2
   docs/models/components/InformationRequestEvidence.md:
     id: b060a0c0d838
-    last_write_checksum: sha1:5fa8a58e9cc98e847bc55f3f9389b6fb1ff63299
-    pristine_git_object: 27f4e959fbcd0322d1a76ed4be8b23b955e0173b
+    last_write_checksum: sha1:252b620b0c64f1446cda47b1e0254c51dae7b1f3
+    pristine_git_object: 5a59ced522b9aa24a0524be34cde6956a4243723
   docs/models/components/InformationRequestEvidenceUnion.md:
     id: c1f593d7f2fd
     last_write_checksum: sha1:cebc96195d79c4c6c6b6d014ea76d1619050a3c2
@@ -1660,8 +1660,8 @@ trackedFiles:
     pristine_git_object: de7d1b163d5926363b94e775645373b750f65b30
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:0181e7181e59d6d95e5a0d06a80952d1d6fe98f2
-    pristine_git_object: b9e76ff84288b4773d427bfb165d746403a2e3ec
+    last_write_checksum: sha1:b4e126ab5b43c65bbb87c333c8afc5f3d86de0a2
+    pristine_git_object: 9c6b59c391ca62cd95eeb5e93967c88f6c3debb2
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -1708,8 +1708,8 @@ trackedFiles:
     pristine_git_object: 0287cd10db7fab7c2eee80cdd95378b91637e941
   src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java:
     id: ce55360c720c
-    last_write_checksum: sha1:3e43a1affe989650aea24e7aa4e30ae07da2066e
-    pristine_git_object: 407f53e982c182b9cfc3135a1705536dc4f9cf10
+    last_write_checksum: sha1:5758ccfaa3f0af1306b45e7ef4ef11217589de18
+    pristine_git_object: 5ed5ef4eba6fdf8522dad5b6b930034bed5b6be2
   src/main/java/com/vanta/vanta_auditor_api/SecuritySource.java:
     id: 18c0da44b51f
     last_write_checksum: sha1:55dc5f4240c7317c9a5a4080b6e17dc1b6fdd403
@@ -2156,8 +2156,8 @@ trackedFiles:
     pristine_git_object: 8c56e420d8d781e82d028fef367238e32208d35a
   src/main/java/com/vanta/vanta_auditor_api/models/components/InformationRequestEvidence.java:
     id: 375a1639183c
-    last_write_checksum: sha1:019035c34bc16ccda874b03c6ad7a1b699ca17f0
-    pristine_git_object: b657e2c5fe85d9e05c16e868e3570de217419fb1
+    last_write_checksum: sha1:20e4ef63f9096548100e67cd8fdff278e47440e2
+    pristine_git_object: 9ec2da99bbffb19cdd7d8c4926da401449f04be9
   src/main/java/com/vanta/vanta_auditor_api/models/components/InformationRequestEvidenceUnion.java:
     id: 9e0979ba99e5
     last_write_checksum: sha1:9d69f62e0454397068eb401f794cec40a680c1e2
@@ -4769,7 +4769,7 @@ examples:
           pageSize: 10
       responses:
         "200":
-          application/json: {"results": {"data": [{"id": "6890e473dce1da5d8406f5e8", "evidenceType": "UPLOADED_DOCUMENT", "visibleToAuditorDate": "2025-10-16T12:00:00.000Z", "creationDate": "2025-10-15T10:30:00.000Z", "modificationDate": "2025-10-16T12:00:00.000Z", "deletionDate": null, "evidence": {"id": "6890e473dce1da5d8406f5ea", "filename": "security-policy.pdf", "mimeType": "application/pdf", "url": "https://example.com/presigned-url"}}], "pageInfo": {"endCursor": "Njg5MGU0NzNkY2UxZGE1ZDg0MDZmNWU4", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "Njg5MGU0NzNkY2UxZGE1ZDg0MDZmNWU4"}}}
+          application/json: {"results": {"data": [{"id": "6890e473dce1da5d8406f5e8", "evidenceType": "VANTA_DOCUMENT", "visibleToAuditorDate": "2025-10-16T12:00:00.000Z", "creationDate": "2025-10-15T10:30:00.000Z", "modificationDate": "2025-10-16T12:00:00.000Z", "deletionDate": null, "capturedSegmentIds": ["6890e473dce1da5d8406f5ec"], "evidence": {"title": "System boundary diagram", "documentVersionId": "6890e473dce1da5d8406f5ee", "file": {"type": "uploaded", "id": "6890e473dce1da5d8406f5ef", "filename": "system-boundary.pdf", "mimeType": "application/pdf", "url": "https://example.com/presigned-url"}}}], "pageInfo": {"endCursor": "Njg5MGU0NzNkY2UxZGE1ZDg0MDZmNWU4", "hasNextPage": false, "hasPreviousPage": false, "startCursor": "Njg5MGU0NzNkY2UxZGE1ZDg0MDZmNWU4"}}}
   GetInformationRequestTestSnapshotEvidenceDetail:
     Example 1:
       parameters:
@@ -5086,7 +5086,7 @@ examples:
           evidenceId: "<id>"
       responses:
         "200":
-          application/json: {"id": "6890e473dce1da5d8406f5e8", "evidenceType": "UPLOADED_DOCUMENT", "visibleToAuditorDate": "2025-10-16T12:00:00.000Z", "creationDate": "2025-10-15T10:30:00.000Z", "modificationDate": "2025-10-16T12:00:00.000Z", "deletionDate": null, "evidence": {"id": "6890e473dce1da5d8406f5ea", "filename": "security-policy.pdf", "mimeType": "application/pdf", "url": "https://example.com/presigned-url"}}
+          application/json: {"id": "6890e473dce1da5d8406f5e8", "evidenceType": "VANTA_DOCUMENT", "visibleToAuditorDate": "2025-10-16T12:00:00.000Z", "creationDate": "2025-10-15T10:30:00.000Z", "modificationDate": "2025-10-16T12:00:00.000Z", "deletionDate": null, "capturedSegmentIds": ["6890e473dce1da5d8406f5ec"], "evidence": {"title": "System boundary diagram", "documentVersionId": "6890e473dce1da5d8406f5ee", "file": {"type": "uploaded", "id": "6890e473dce1da5d8406f5ef", "filename": "system-boundary.pdf", "mimeType": "application/pdf", "url": "https://example.com/presigned-url"}}}
 examplesVersion: 1.0.2
 generatedTests: {}
 generatedFiles:
