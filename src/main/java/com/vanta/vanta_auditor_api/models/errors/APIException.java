@@ -37,7 +37,7 @@ public class APIException extends VantaError {
             // Gracefully handle IOExceptions that occur while reading the body
             // by returning an error without a body.
             return new APIException(
-                    message, rawResponse.statusCode(), null, rawResponse, cause);
+                    message, rawResponse.statusCode(), null, rawResponse, cause == null ? e : cause);
         }
     }
     
