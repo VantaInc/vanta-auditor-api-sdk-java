@@ -1,0 +1,47 @@
+.github/actions/prepare-speakeasy/README.md
+  s_c393ed1c8a0ea4::t_4fdd6bc1f2403e 1-76
+.github/actions/prepare-speakeasy/action.yml
+  s_c393ed1c8a0ea4::t_ee379c82e141ba 1-13
+.github/actions/prepare-speakeasy/install_pinned_cli.py
+  s_c393ed1c8a0ea4::t_321257b1b6ecd3 1-36
+.github/actions/prepare-speakeasy/pinned-cli.json
+  s_c393ed1c8a0ea4::t_373970735df178 1-7
+.github/actions/prepare-speakeasy/prepare.sh
+  s_c393ed1c8a0ea4::t_2cf4abd72a9d9f 1-10
+.github/actions/prepare-speakeasy/runtime.patch
+  s_c393ed1c8a0ea4::t_f1ec7f2104ae86 1-443
+.github/actions/prepare-speakeasy/test.sh
+  s_c393ed1c8a0ea4::t_3c59815087bac4 1-20
+.github/actions/prepare-speakeasy/test_cli_pin.py
+  s_c393ed1c8a0ea4::t_315ed511d95c25 1-131
+.github/actions/prepare-speakeasy/update_cli.py
+  s_c393ed1c8a0ea4::t_d266b94e07573b 1-72
+.github/workflows/sdk_generation.yaml
+  s_c393ed1c8a0ea4::t_8697a6026a714f 22
+.github/workflows/sdk_publish.yaml
+  s_c393ed1c8a0ea4::t_a029d7cd9bff2a 17
+.github/workflows/speakeasy_action_test.yaml
+  s_c393ed1c8a0ea4::t_c986cf2c1d58e4 1-34
+.github/workflows/speakeasy_generate.yaml
+  s_c393ed1c8a0ea4::t_260c785885bf39 1-49
+.speakeasy/workflow.yaml
+  s_c393ed1c8a0ea4::t_5a80f4c7f1c701 2
+.github/workflows/speakeasy_publish.yaml
+  s_c393ed1c8a0ea4::t_e4d77530b64fe3 1-115
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "596f1f348e90a1e42e13963a70012705a7293e4f",
+  "prompts": {},
+  "sessions": {
+    "s_c393ed1c8a0ea4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1c153-0cc8-7271-b05d-a5cf700c5df3",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Victor Noventa <victor@bitcomplete.io>"
+    }
+  }
+}
