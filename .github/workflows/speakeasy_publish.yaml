@@ -1,0 +1,115 @@
+name: Speakeasy Publish
+on:
+  workflow_call:
+    inputs:
+      target:
+        type: string
+        required: true
+    secrets:
+      github_access_token:
+        required: true
+      speakeasy_api_key:
+        required: true
+      ossrh_username:
+        required: true
+      ossrh_password:
+        required: true
+      java_gpg_secret_key:
+        required: true
+      java_gpg_passphrase:
+        required: true
+jobs:
+  release:
+    runs-on: ubuntu-22.04
+    outputs:
+      java_regenerated: ${{ steps.release.outputs.java_regenerated }}
+      publish_java: ${{ steps.release.outputs.publish_java }}
+      java_directory: ${{ steps.release.outputs.java_directory }}
+      java_language_version: ${{ steps.release.outputs.java_language_version }}
+      use_sonatype_legacy: ${{ steps.release.outputs.use_sonatype_legacy }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+      - id: prepare
+        uses: ./.github/actions/prepare-speakeasy
+      - id: release
+        uses: ./.speakeasy/temp/action
+        with:
+          action: release
+          target: ${{ inputs.target }}
+          github_access_token: ${{ secrets.github_access_token }}
+          speakeasy_api_key: ${{ secrets.speakeasy_api_key }}
+          enable_sdk_changelog: "true"
+      - name: Log Release Result
+        if: always() && steps.prepare.outcome == 'success'
+        uses: ./.speakeasy/temp/action
+        with:
+          action: log-result
+          github_access_token: ${{ secrets.github_access_token }}
+          speakeasy_api_key: ${{ secrets.speakeasy_api_key }}
+        env:
+          GH_ACTION_RESULT: ${{ job.status }}
+          GH_ACTION_VERSION: ${{ github.sha }}
+          GH_ACTION_STEP: ${{ github.job }}
+          TARGET_TYPE: sdk
+  publish-java:
+    if: needs.release.outputs.java_regenerated == 'true' && needs.release.outputs.publish_java == 'true'
+    runs-on: ubuntu-22.04
+    needs: release
+    defaults:
+      run:
+        working-directory: ${{ needs.release.outputs.java_directory }}
+    steps:
+      - uses: actions/checkout@08eba0b27e820071cde6df949e0beb9ba4906955 # v4.3.0
+      - id: prepare
+        uses: ./.github/actions/prepare-speakeasy
+      - uses: actions/setup-java@c5195efecf7bdfc987ee8bae7a71cb8b11521c00 # v4.7.1
+        with:
+          distribution: corretto
+          java-version: ${{ needs.release.outputs.java_language_version || '11' }}
+      - uses: gradle/actions/setup-gradle@017a9effdb900e5b5b2fddfb590a105619dca3c3 # v4.4.2
+        with:
+          gradle-version: "8.14"
+      - name: Publish to Sonatype (legacy)
+        if: needs.release.outputs.use_sonatype_legacy == 'true'
+        run: |-
+          pwd
+          ./gradlew publish --no-daemon
+        env:
+          MAVEN_USERNAME: ${{ secrets.ossrh_username }}
+          MAVEN_PASSWORD: ${{ secrets.ossrh_password }}
+          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.java_gpg_secret_key }}
+          ORG_GRADLE_PROJECT_signingPassphrase: ${{ secrets.java_gpg_passphrase }}
+      - name: Publish to Sonatype Central
+        if: needs.release.outputs.use_sonatype_legacy != 'true'
+        run: |-
+          pwd
+          ./gradlew build sonatypeCentralUpload --no-daemon
+        env:
+          SONATYPE_USERNAME: ${{ secrets.ossrh_username }}
+          SONATYPE_PASSWORD: ${{ secrets.ossrh_password }}
+          SONATYPE_SIGNING_KEY: ${{ secrets.java_gpg_secret_key }}
+          SIGNING_KEY_PASSPHRASE: ${{ secrets.java_gpg_passphrase }}
+      - name: Record Publish Event
+        if: always() && steps.prepare.outcome == 'success'
+        uses: ./.speakeasy/temp/action
+        with:
+          action: publish-event
+          github_access_token: ${{ secrets.github_access_token }}
+          speakeasy_api_key: ${{ secrets.speakeasy_api_key }}
+          target_directory: ${{ needs.release.outputs.java_directory }}
+          registry_name: sonatype
+        env:
+          GH_ACTION_RESULT: ${{ job.status }}
+          GH_ACTION_VERSION: ${{ github.sha }}
+      - name: Log Publish Result
+        if: always() && steps.prepare.outcome == 'success'
+        uses: ./.speakeasy/temp/action
+        with:
+          action: log-result
+          github_access_token: ${{ secrets.github_access_token }}
+          speakeasy_api_key: ${{ secrets.speakeasy_api_key }}
+        env:
+          GH_ACTION_RESULT: ${{ job.status }}
+          GH_ACTION_VERSION: ${{ github.sha }}
+          GH_ACTION_STEP: ${{ github.job }}
+          TARGET_TYPE: sdk
