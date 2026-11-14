@@ -108,7 +108,7 @@ public class Blob implements HttpRequest.BodyPublisher {
     public static Blob from(InputStream inputStream) {
         Objects.requireNonNull(inputStream, "InputStream cannot be null");
         HttpRequest.BodyPublisher bodyPublisher = HttpRequest.BodyPublishers.ofInputStream(() -> inputStream);
-        return new Blob(bodyPublisher, -1); // Unknown length for InputStream
+        return new Blob(bodyPublisher, -1, ResponseBodyInputStream.bufferLimit(inputStream));
     }
 
     /**
@@ -217,7 +217,7 @@ public class Blob implements HttpRequest.BodyPublisher {
      * <p>
      * The returned {@code CompletableFuture} completes when all data has been received and assembled into the byte array,
      * or completes exceptionally if an error occurs.
-     * Collection is limited to 100 MiB.
+     * Collection is limited to 100 MiB by default, or the limit configured on the HTTP client for response blobs.
      *
      * @return a {@code CompletableFuture} containing the complete byte array.
      * @throws IllegalStateException if this instance has already been consumed.
@@ -331,7 +331,8 @@ public class Blob implements HttpRequest.BodyPublisher {
         HttpResponse.BodySubscriber<InputStream> bodySubscriber = HttpResponse.BodySubscribers.ofInputStream();
         listPublisher.subscribe(bodySubscriber);
 
-        return bodySubscriber.getBody().toCompletableFuture();
+        return bodySubscriber.getBody().toCompletableFuture()
+                .thenApply(body -> new ResponseBodyInputStream(body, maxBufferedBodyBytes));
     }
 
     /**

@@ -133,9 +133,11 @@ Flux<String> textChunks = flux
 ```
 
 ### `toByteArray()`
-Collects the stream into a byte array asynchronously, up to 100 MiB. If collection
-exceeds this limit, the future fails with an `IOException` and cancels the
+Collects the stream into a byte array asynchronously, up to 100 MiB by default.
+HTTP response blobs use the buffer limit configured on `SpeakeasyHTTPClient`.
+Exceeding the limit fails the future with an `IOException` and cancels the
 subscription. Use `toFile()` or `asPublisher()` to stream larger bodies.
+HTTP response blobs retain the request deadline through all consumption methods.
 
 ```java
 Blob blob = Blob.from(Paths.get("small-file.txt"));

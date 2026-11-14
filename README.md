@@ -724,19 +724,41 @@ String json = myMapper.writeValueAsString(response);
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
-## Response buffering
+## Response size limits and deadlines
 
-In-memory response collection is limited to 100 MiB. Larger bodies fail with an
-`IOException`; SDK operations retain the HTTP status and raw response in
-`APIException` or `AsyncAPIException`, with the read failure as the cause. File
-and publisher streaming do not have this collection limit.
+The default HTTP client limits buffered response bodies to 100 MiB and applies a
+60-second deadline to each HTTP request, covering response headers and body
+consumption. Each retry attempt has its own deadline. An explicit
+`HttpRequest.timeout()` overrides the default; the connection timeout is 30 seconds.
+
+Configure both synchronous and asynchronous SDK calls through the existing client
+option:
+
+```java
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.utils.SpeakeasyHTTPClient;
+import java.time.Duration;
+
+Vanta sdk = Vanta.builder()
+    .bearerAuth(System.getenv("BEARER_AUTH"))
+    .client(new SpeakeasyHTTPClient(8 * 1024 * 1024, Duration.ofSeconds(30)))
+    .build();
+```
+
+The buffer limit bounds payload size, rather than total heap use. Choose it for
+the application's available memory and concurrent requests. Size-limit and
+body-read failures retain the HTTP status, raw response, and read failure in
+`APIException` or `AsyncAPIException`.
+
+Raw streams and `Blob.toFile()` / `Blob.asPublisher()` can transfer more than the
+buffer limit. HTTP response bodies retain their deadline through these methods;
+expiry closes synchronous streams or cancels asynchronous subscriptions.
+Standalone blobs use the default collection limit and have no HTTP deadline.
+Custom `HTTPClient` implementations own their transport deadlines.
 
 Response debug logging caches only JSON or plain-text bodies with a known
-`Content-Length` of at most 64 KiB. It skips other bodies and leaves them available
-for normal consumption.
-
-The default client has a 30-second connection timeout. Response body reads have
-no deadline, so this size limit only partially mitigates slow or oversized responses.
+`Content-Length` of at most 64 KiB and within the configured buffer limit. It skips
+other bodies and leaves them available for normal consumption.
 
 # Development
 
