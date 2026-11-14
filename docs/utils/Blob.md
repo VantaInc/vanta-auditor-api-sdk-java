@@ -133,7 +133,9 @@ Flux<String> textChunks = flux
 ```
 
 ### `toByteArray()`
-Collects the entire stream into a byte array asynchronously.
+Collects the stream into a byte array asynchronously, up to 100 MiB. If collection
+exceeds this limit, the future fails with an `IOException` and cancels the
+subscription. Use `toFile()` or `asPublisher()` to stream larger bodies.
 
 ```java
 Blob blob = Blob.from(Paths.get("small-file.txt"));

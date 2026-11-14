@@ -724,6 +724,20 @@ String json = myMapper.writeValueAsString(response);
 
 <!-- Placeholder for Future Speakeasy SDK Sections -->
 
+## Response buffering
+
+In-memory response collection is limited to 100 MiB. Larger bodies fail with an
+`IOException`; SDK operations retain the HTTP status and raw response in
+`APIException` or `AsyncAPIException`, with the read failure as the cause. File
+and publisher streaming do not have this collection limit.
+
+Response debug logging caches only JSON or plain-text bodies with a known
+`Content-Length` of at most 64 KiB. It skips other bodies and leaves them available
+for normal consumption.
+
+The default client has a 30-second connection timeout. Response body reads have
+no deadline, so this size limit only partially mitigates slow or oversized responses.
+
 # Development
 
 ## Maturity
@@ -734,7 +748,7 @@ looking for the latest version.
 
 ## Contributions
 
-While we value open-source contributions to this SDK, this library is generated programmatically. Any manual changes added to internal files will be overwritten on the next generation. 
+While we value open-source contributions to this SDK, this library is generated programmatically. Persistent edits are enabled to carry manual changes through regeneration; review the generated diff to confirm they remain intact.
 We look forward to hearing your feedback. Feel free to open a PR or an issue with a proof of concept and we'll do our best to include it in a future release. 
 
 ### SDK Created by [Speakeasy](https://www.speakeasy.com/?utm_source=openapi&utm_campaign=java)
