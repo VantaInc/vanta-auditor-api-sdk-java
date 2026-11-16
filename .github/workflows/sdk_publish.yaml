@@ -1,9 +1,6 @@
 name: Publish
 permissions:
-  checks: write
   contents: write
-  pull-requests: write
-  statuses: write
   id-token: write
 "on":
   push:
@@ -14,13 +11,14 @@ permissions:
   workflow_dispatch: {}
 jobs:
   publish:
+    if: github.ref == 'refs/heads/main'
     uses: ./.github/workflows/speakeasy_publish.yaml
     with:
       target: vanta
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
-      java_gpg_passphrase: ${{ secrets.JAVA_GPG_PASSPHRASE }}
-      java_gpg_secret_key: ${{ secrets.JAVA_GPG_SECRET_KEY }}
-      ossrh_password: ${{ secrets.OSSRH_PASSWORD }}
-      ossrh_username: ${{ secrets.OSSRH_USERNAME }}
-      speakeasy_api_key: ${{ secrets.SPEAKEASY_API_KEY }}
+      JAVA_GPG_PASSPHRASE: ${{ secrets.JAVA_GPG_PASSPHRASE }}
+      JAVA_GPG_SECRET_KEY: ${{ secrets.JAVA_GPG_SECRET_KEY }}
+      OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      SPEAKEASY_API_KEY: ${{ secrets.SPEAKEASY_API_KEY }}
