@@ -38,7 +38,7 @@ jobs:
         run: |
           for name in SPEAKEASY_API_KEY; do
             if [[ -z "${!name}" ]]; then
-              echo "::error::Required environment secret ${name} is missing. See SDK_CREDENTIALS.md."
+              echo "::error::Required environment secret ${name} is missing. Configure it under Settings > Environments."
               exit 1
             fi
           done
@@ -86,7 +86,7 @@ jobs:
         run: |
           for name in SPEAKEASY_API_KEY OSSRH_USERNAME OSSRH_PASSWORD JAVA_GPG_SECRET_KEY JAVA_GPG_PASSPHRASE; do
             if [[ -z "${!name}" ]]; then
-              echo "::error::Required environment secret ${name} is missing. See SDK_CREDENTIALS.md."
+              echo "::error::Required environment secret ${name} is missing. Configure it under Settings > Environments."
               exit 1
             fi
           done
