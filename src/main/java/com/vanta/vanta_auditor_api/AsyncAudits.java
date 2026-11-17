@@ -15,9 +15,12 @@ import com.vanta.vanta_auditor_api.models.components.CreateCustomControlInput;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomEvidenceRequestInput;
 import com.vanta.vanta_auditor_api.models.components.CreateInformationRequestInput;
 import com.vanta.vanta_auditor_api.models.components.DeleteAuditControlCommentInput;
+import com.vanta.vanta_auditor_api.models.components.DeleteInformationRequestAuditorFileInput;
 import com.vanta.vanta_auditor_api.models.components.DeleteInformationRequestCommentInput;
 import com.vanta.vanta_auditor_api.models.components.DuplicateAuditRequest;
+import com.vanta.vanta_auditor_api.models.components.FinalizeAuditorFileUploadInput;
 import com.vanta.vanta_auditor_api.models.components.FlagInformationRequestEvidenceInput;
+import com.vanta.vanta_auditor_api.models.components.InitiateAuditorFileUploadInput;
 import com.vanta.vanta_auditor_api.models.components.PartialUpdateInformationRequest;
 import com.vanta.vanta_auditor_api.models.components.UpdateAuditControlCommentInput;
 import com.vanta.vanta_auditor_api.models.components.UpdateInformationRequestCommentInput;
@@ -31,7 +34,9 @@ import com.vanta.vanta_auditor_api.models.operations.CreateCustomEvidenceRequest
 import com.vanta.vanta_auditor_api.models.operations.CreateInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForInformationRequestRequest;
+import com.vanta.vanta_auditor_api.models.operations.DeleteInformationRequestAuditorFileRequest;
 import com.vanta.vanta_auditor_api.models.operations.DeleteInformationRequestRequest;
+import com.vanta.vanta_auditor_api.models.operations.FinalizeInformationRequestAuditorFileUploadRequest;
 import com.vanta.vanta_auditor_api.models.operations.FlagInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceCommentRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceRequest;
@@ -44,6 +49,7 @@ import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSn
 import com.vanta.vanta_auditor_api.models.operations.GetOrganizationInformationRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetOrganizationNotificationsRequest;
 import com.vanta.vanta_auditor_api.models.operations.GetVulnerableAssetsRequest;
+import com.vanta.vanta_auditor_api.models.operations.InitiateInformationRequestAuditorFileUploadRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAccountAccessServicesRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditCommentsRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListAuditControlsRequest;
@@ -57,6 +63,7 @@ import com.vanta.vanta_auditor_api.models.operations.ListCodeChangesRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListCommentsForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListCommentsForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestActivityRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestAuditorFilesRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsRequest;
@@ -95,10 +102,14 @@ import com.vanta.vanta_auditor_api.models.operations.async.DeleteCommentForContr
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteCommentForControlResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteCommentForInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteCommentForInformationRequestResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.DeleteInformationRequestAuditorFileRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.DeleteInformationRequestAuditorFileResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteInformationRequestRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.DeleteInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.DuplicateRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.DuplicateResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.FinalizeInformationRequestAuditorFileUploadRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.FinalizeInformationRequestAuditorFileUploadResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.FlagInformationRequestEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.FlagInformationRequestEvidenceResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetAuditEvidenceCommentRequestBuilder;
@@ -123,6 +134,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.GetOrganizationNotifi
 import com.vanta.vanta_auditor_api.models.operations.async.GetOrganizationNotificationsResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.GetVulnerableAssetsRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.GetVulnerableAssetsResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.InitiateInformationRequestAuditorFileUploadRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.InitiateInformationRequestAuditorFileUploadResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAccountAccessServicesRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAccountAccessServicesResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListAuditCommentsRequestBuilder;
@@ -149,6 +162,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.ListCommentsForInform
 import com.vanta.vanta_auditor_api.models.operations.async.ListCommentsForInformationRequestResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestActivityRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestActivityResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestAuditorFilesRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestAuditorFilesResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestEvidenceResponse;
 import com.vanta.vanta_auditor_api.models.operations.async.ListInformationRequestsForControlRequestBuilder;
@@ -199,7 +214,9 @@ import com.vanta.vanta_auditor_api.operations.CreateInformationRequest;
 import com.vanta.vanta_auditor_api.operations.DeleteCommentForControl;
 import com.vanta.vanta_auditor_api.operations.DeleteCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.DeleteInformationRequest;
+import com.vanta.vanta_auditor_api.operations.DeleteInformationRequestAuditorFile;
 import com.vanta.vanta_auditor_api.operations.Duplicate;
+import com.vanta.vanta_auditor_api.operations.FinalizeInformationRequestAuditorFileUpload;
 import com.vanta.vanta_auditor_api.operations.FlagInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.GetAudit;
 import com.vanta.vanta_auditor_api.operations.GetAuditEvidence;
@@ -212,6 +229,7 @@ import com.vanta.vanta_auditor_api.operations.GetInformationRequestTestSnapshotE
 import com.vanta.vanta_auditor_api.operations.GetOrganizationInformation;
 import com.vanta.vanta_auditor_api.operations.GetOrganizationNotifications;
 import com.vanta.vanta_auditor_api.operations.GetVulnerableAssets;
+import com.vanta.vanta_auditor_api.operations.InitiateInformationRequestAuditorFileUpload;
 import com.vanta.vanta_auditor_api.operations.ListAccountAccessServices;
 import com.vanta.vanta_auditor_api.operations.ListAuditComments;
 import com.vanta.vanta_auditor_api.operations.ListAuditControls;
@@ -225,6 +243,7 @@ import com.vanta.vanta_auditor_api.operations.ListCodeChanges;
 import com.vanta.vanta_auditor_api.operations.ListCommentsForControl;
 import com.vanta.vanta_auditor_api.operations.ListCommentsForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestActivity;
+import com.vanta.vanta_auditor_api.operations.ListInformationRequestAuditorFiles;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequests;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestsForControl;
@@ -376,77 +395,6 @@ public class AsyncAudits {
 
 
     /**
-     * Duplicate an IRL audit
-     * 
-     * <p>Duplicates an existing IRL audit into a new audit engagement with the supplied
-     * displayName, audit dates, early access date, and auditor roster. Company, audit
-     * type, and framework are copied from the source audit and cannot be changed.
-     * 
-     * <p>Each email in `allowAuditorEmails` must match an active user in the
-     * authenticated audit firm's domain. Provision auditors via `POST /auditors`
-     * before referencing them here, or copy emails from `GET /audits/{sourceAuditId}`
-     * → `allowAuditorEmails` when duplicating with the same roster.
-     * 
-     * <p>Information requests are copied from the source audit. After duplication:
-     * 
-     * <p>- Requests with Vanta evidence will be pre-filled and marked as internal review.
-     * 
-     * <p>Review them before sharing with your customer.
-     * - Requests where evidence was not available or was uploaded externally will need
-     * 
-     * <p>evidence added manually.
-     * - Evidence capture dates and due dates can be modified after duplication.
-     * 
-     * <p>Audits with generated information requests can be duplicated only after their information
-     * requests have been created successfully.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public DuplicateRequestBuilder duplicate() {
-        return new DuplicateRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Duplicate an IRL audit
-     * 
-     * <p>Duplicates an existing IRL audit into a new audit engagement with the supplied
-     * displayName, audit dates, early access date, and auditor roster. Company, audit
-     * type, and framework are copied from the source audit and cannot be changed.
-     * 
-     * <p>Each email in `allowAuditorEmails` must match an active user in the
-     * authenticated audit firm's domain. Provision auditors via `POST /auditors`
-     * before referencing them here, or copy emails from `GET /audits/{sourceAuditId}`
-     * → `allowAuditorEmails` when duplicating with the same roster.
-     * 
-     * <p>Information requests are copied from the source audit. After duplication:
-     * 
-     * <p>- Requests with Vanta evidence will be pre-filled and marked as internal review.
-     * 
-     * <p>Review them before sharing with your customer.
-     * - Requests where evidence was not available or was uploaded externally will need
-     * 
-     * <p>evidence added manually.
-     * - Evidence capture dates and due dates can be modified after duplication.
-     * 
-     * <p>Audits with generated information requests can be duplicated only after their information
-     * requests have been created successfully.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<DuplicateResponse>} - The async response
-     */
-    public CompletableFuture<DuplicateResponse> duplicate(DuplicateAuditRequest request) {
-        AsyncRequestOperation<DuplicateAuditRequest, DuplicateResponse> operation
-              = new Duplicate.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
      * Get audit by ID
      * 
      * <p>Returns a single audit by ID, scoped to the audit firm.
@@ -505,625 +453,344 @@ public class AsyncAudits {
 
 
     /**
-     * List code changes for an audit
+     * List of vendors who are in scope for this audit
      * 
-     * <p>Retrieves code changes population data for an audit.
+     * <p>Returns a list of vendors who are in scope for this audit.
      * 
-     * <p>This endpoint provides access to code change records (pull requests)
-     * visible to auditors during an audit engagement.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches code change titles and repository names (case-insensitive)
-     * - `sourcesMatchesAny`: Filters by version control source (accepted values: github, gitlab,
-     * bitbucket, azuredevops)
-     * - `closedAfterDate` / `closedBeforeDate`: Filters by the closed date range
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Results are sorted by closed date (newest first). This sort order is
-     * fixed and cannot be customized via query parameters.
-     * 
-     * <p>On an audit that covers more than one framework, each code change in
-     * scope for any of the audit's frameworks is returned once.
-     * 
-     * <p>Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
-    public ListCodeChangesRequestBuilder listCodeChanges() {
-        return new ListCodeChangesRequestBuilder(sdkConfiguration);
+    @Deprecated
+    public ListVendorsInAuditScopeRequestBuilder listVendorsInAuditScope() {
+        return new ListVendorsInAuditScopeRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * List code changes for an audit
+     * List of vendors who are in scope for this audit
      * 
-     * <p>Retrieves code changes population data for an audit.
+     * <p>Returns a list of vendors who are in scope for this audit.
      * 
-     * <p>This endpoint provides access to code change records (pull requests)
-     * visible to auditors during an audit engagement.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches code change titles and repository names (case-insensitive)
-     * - `sourcesMatchesAny`: Filters by version control source (accepted values: github, gitlab,
-     * bitbucket, azuredevops)
-     * - `closedAfterDate` / `closedBeforeDate`: Filters by the closed date range
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Results are sorted by closed date (newest first). This sort order is
-     * fixed and cannot be customized via query parameters.
-     * 
-     * <p>On an audit that covers more than one framework, each code change in
-     * scope for any of the audit's frameworks is returned once.
-     * 
-     * <p>Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListCodeChangesResponse>} - The async response
+     * @param auditId 
+     * @return {@code CompletableFuture<ListVendorsInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
-    public CompletableFuture<ListCodeChangesResponse> listCodeChanges(ListCodeChangesRequest request) {
-        AsyncRequestOperation<ListCodeChangesRequest, ListCodeChangesResponse> operation
-              = new ListCodeChanges.Async(sdkConfiguration, _headers);
+    @Deprecated
+    public CompletableFuture<ListVendorsInAuditScopeResponse> listVendorsInAuditScope(String auditId) {
+        return listVendorsInAuditScope(auditId, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * List of vendors who are in scope for this audit
+     * 
+     * <p>Returns a list of vendors who are in scope for this audit.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param pageSize 
+     * @param pageCursor 
+     * @return {@code CompletableFuture<ListVendorsInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public CompletableFuture<ListVendorsInAuditScopeResponse> listVendorsInAuditScope(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor) {
+        ListVendorsInAuditScopeRequest request =
+            ListVendorsInAuditScopeRequest
+                .builder()
+                .auditId(auditId)
+                .pageSize(pageSize)
+                .pageCursor(pageCursor)
+                .build();
+        AsyncRequestOperation<ListVendorsInAuditScopeRequest, ListVendorsInAuditScopeResponse> operation
+              = new ListVendorsInAuditScope.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * List audit comments
+     * List monitored computers
      * 
-     * <p>Returns a paginated list of comments for an audit.
+     * <p>Returns a list of computers monitored by an MDM (with an integration built
+     * by Vanta) or by Vanta Device Monitor. Currently this list does not include
+     * resources from partner or customer-built integrations.
      * 
-     * <p>Rate limit: 250 requests / minute.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
-    public ListAuditCommentsRequestBuilder listComments() {
-        return new ListAuditCommentsRequestBuilder(sdkConfiguration);
+    @Deprecated
+    public ListMonitoredComputersInAuditScopeRequestBuilder listMonitoredComputersInAuditScope() {
+        return new ListMonitoredComputersInAuditScopeRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * List audit comments
+     * List monitored computers
      * 
-     * <p>Returns a paginated list of comments for an audit.
+     * <p>Returns a list of computers monitored by an MDM (with an integration built
+     * by Vanta) or by Vanta Device Monitor. Currently this list does not include
+     * resources from partner or customer-built integrations.
      * 
-     * <p>Rate limit: 250 requests / minute.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
-     * @return {@code CompletableFuture<ListAuditCommentsResponse>} - The async response
+     * @return {@code CompletableFuture<ListMonitoredComputersInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
-    public CompletableFuture<ListAuditCommentsResponse> listComments(String auditId) {
-        return listComments(
+    @Deprecated
+    public CompletableFuture<ListMonitoredComputersInAuditScopeResponse> listMonitoredComputersInAuditScope(String auditId) {
+        return listMonitoredComputersInAuditScope(
                 auditId, Optional.empty(), Optional.empty(),
                 Optional.empty());
     }
 
     /**
-     * List audit comments
+     * List monitored computers
      * 
-     * <p>Returns a paginated list of comments for an audit.
+     * <p>Returns a list of computers monitored by an MDM (with an integration built
+     * by Vanta) or by Vanta Device Monitor. Currently this list does not include
+     * resources from partner or customer-built integrations.
      * 
-     * <p>Rate limit: 250 requests / minute.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
      * @param pageSize 
      * @param pageCursor 
-     * @param changedSinceDate Includes all comments that have changed since changedSinceDate.
-     * @return {@code CompletableFuture<ListAuditCommentsResponse>} - The async response
+     * @param complianceStatusFilterMatchesAny Filters for monitored computers matching any status declared in the filter.
+     * @return {@code CompletableFuture<ListMonitoredComputersInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
-    public CompletableFuture<ListAuditCommentsResponse> listComments(
+    @Deprecated
+    public CompletableFuture<ListMonitoredComputersInAuditScopeResponse> listMonitoredComputersInAuditScope(
             String auditId, Optional<Integer> pageSize,
-            Optional<String> pageCursor, Optional<OffsetDateTime> changedSinceDate) {
-        ListAuditCommentsRequest request =
-            ListAuditCommentsRequest
+            Optional<String> pageCursor, Optional<? extends List<ComputerStatusFilter>> complianceStatusFilterMatchesAny) {
+        ListMonitoredComputersInAuditScopeRequest request =
+            ListMonitoredComputersInAuditScopeRequest
                 .builder()
                 .auditId(auditId)
                 .pageSize(pageSize)
                 .pageCursor(pageCursor)
-                .changedSinceDate(changedSinceDate)
+                .complianceStatusFilterMatchesAny(complianceStatusFilterMatchesAny)
                 .build();
-        AsyncRequestOperation<ListAuditCommentsRequest, ListAuditCommentsResponse> operation
-              = new ListAuditComments.Async(sdkConfiguration, _headers);
+        AsyncRequestOperation<ListMonitoredComputersInAuditScopeRequest, ListMonitoredComputersInAuditScopeResponse> operation
+              = new ListMonitoredComputersInAuditScope.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * List audit controls
+     * List audit evidence url
      * 
-     * <p>Returns a paginated list of controls for an audit.
+     * <p>Returns a paginated list of evidence urls for an audit. This endpoint should be called whenever an
+     * evidence is created or has a statusUpdatedAt field that is more recent than the most recent polling
+     * event.
      * 
-     * <p>Rate limit: 250 requests / minute.
+     * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
+     * "Flagged", or "NA".
      * 
-     * @return The async call builder
-     */
-    public ListAuditControlsRequestBuilder listControls() {
-        return new ListAuditControlsRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List audit controls
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
-     * <p>Returns a paginated list of controls for an audit.
-     * 
-     * <p>Rate limit: 250 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListAuditControlsResponse>} - The async response
-     */
-    public CompletableFuture<ListAuditControlsResponse> listControls(ListAuditControlsRequest request) {
-        AsyncRequestOperation<ListAuditControlsRequest, ListAuditControlsResponse> operation
-              = new ListAuditControls.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * Create a custom control for an audit
-     * 
-     * <p>Create a custom control for an audit.
-     * 
-     * <p>This endpoint supports classic audits only. Audits that use information request
-     * lists (IRL) are not supported and return a 422 error.
-     * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 600 requests / minute.
      * 
      * @return The async call builder
      */
-    public CreateCustomControlRequestBuilder createCustomControl() {
-        return new CreateCustomControlRequestBuilder(sdkConfiguration);
+    public ListAuditEvidenceUrlsRequestBuilder getEvidenceUrls() {
+        return new ListAuditEvidenceUrlsRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Create a custom control for an audit
+     * List audit evidence url
      * 
-     * <p>Create a custom control for an audit.
+     * <p>Returns a paginated list of evidence urls for an audit. This endpoint should be called whenever an
+     * evidence is created or has a statusUpdatedAt field that is more recent than the most recent polling
+     * event.
      * 
-     * <p>This endpoint supports classic audits only. Audits that use information request
-     * lists (IRL) are not supported and return a 422 error.
+     * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
+     * "Flagged", or "NA".
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
+     * <p>Rate limit: 600 requests / minute.
      * 
      * @param auditId 
-     * @param createCustomControlInput 
-     * @return {@code CompletableFuture<CreateCustomControlResponse>} - The async response
+     * @param auditEvidenceId 
+     * @return {@code CompletableFuture<ListAuditEvidenceUrlsResponse>} - The async response
      */
-    public CompletableFuture<CreateCustomControlResponse> createCustomControl(String auditId, CreateCustomControlInput createCustomControlInput) {
-        CreateCustomControlRequest request =
-            CreateCustomControlRequest
-                .builder()
-                .auditId(auditId)
-                .createCustomControlInput(createCustomControlInput)
-                .build();
-        AsyncRequestOperation<CreateCustomControlRequest, CreateCustomControlResponse> operation
-              = new CreateCustomControl.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * Upsert a control's assessment within an audit
-     * 
-     * <p>Records (upserts) an auditor's assessment state and justification for a
-     * control within an IRL audit — the API equivalent of assessing a control in
-     * the web app. Overwrites the assessment for this control in the chosen
-     * audit segment.
-     * 
-     * <p>`segmentId` may be any segment on the audit, `PROGRAM` or `SYSTEM` (see
-     * `segments` on the audit). It may be omitted only when the audit has
-     * exactly one segment. The `assessmentState` must be valid for that
-     * segment's framework (the request is rejected otherwise). The acting
-     * auditor is identified by `auditorEmail`, which must belong to the audit
-     * firm making the request.
-     * 
-     * <p>Returns 404 when the control is not part of the audit or the auditor email
-     * does not resolve to a firm user. Returns 422 when `segmentId` is omitted
-     * on an audit with more than one segment, when `segmentId` is not a segment
-     * on this audit, or when the control is not assigned to that segment for
-     * this audit. Applies to both Full and Controlled Audit View audits.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public UpsertAssessmentForControlRequestBuilder upsertAssessmentForControl() {
-        return new UpsertAssessmentForControlRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Upsert a control's assessment within an audit
-     * 
-     * <p>Records (upserts) an auditor's assessment state and justification for a
-     * control within an IRL audit — the API equivalent of assessing a control in
-     * the web app. Overwrites the assessment for this control in the chosen
-     * audit segment.
-     * 
-     * <p>`segmentId` may be any segment on the audit, `PROGRAM` or `SYSTEM` (see
-     * `segments` on the audit). It may be omitted only when the audit has
-     * exactly one segment. The `assessmentState` must be valid for that
-     * segment's framework (the request is rejected otherwise). The acting
-     * auditor is identified by `auditorEmail`, which must belong to the audit
-     * firm making the request.
-     * 
-     * <p>Returns 404 when the control is not part of the audit or the auditor email
-     * does not resolve to a firm user. Returns 422 when `segmentId` is omitted
-     * on an audit with more than one segment, when `segmentId` is not a segment
-     * on this audit, or when the control is not assigned to that segment for
-     * this audit. Applies to both Full and Controlled Audit View audits.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId 
-     * @param controlId 
-     * @param upsertAuditControlAssessmentInput Input for upserting a control's auditor assessment within an audit. Overwrites
-     *         the assessment for this control in the chosen audit segment.
-     * @return {@code CompletableFuture<UpsertAssessmentForControlResponse>} - The async response
-     */
-    public CompletableFuture<UpsertAssessmentForControlResponse> upsertAssessmentForControl(
-            String auditId, String controlId,
-            UpsertAuditControlAssessmentInput upsertAuditControlAssessmentInput) {
-        UpsertAssessmentForControlRequest request =
-            UpsertAssessmentForControlRequest
-                .builder()
-                .auditId(auditId)
-                .controlId(controlId)
-                .upsertAuditControlAssessmentInput(upsertAuditControlAssessmentInput)
-                .build();
-        AsyncRequestOperation<UpsertAssessmentForControlRequest, UpsertAssessmentForControlResponse> operation
-              = new UpsertAssessmentForControl.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List comments for a control within an audit
-     * 
-     * <p>Retrieves a paginated list of comments on a control within an IRL audit,
-     * enabling auditors to view collaboration history on the control.
-     * 
-     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
-     * Clients should check the `deletionDate` field to identify and handle deleted records
-     * appropriately in their systems.
-     * 
-     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
-     * allowing efficient polling for changes without retrieving the entire dataset.
-     * 
-     * <p>Returns 404 when the control is not part of the audit.
-     * 
-     * <p>Pagination usage:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
-     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
-     * 4. Repeat until `hasNextPage` is false
-     * 
-     * <p>Delta sync usage:
-     * 1. Store the timestamp of your last sync
-     * 2. Pass that timestamp as `changedSinceDate`
-     * 3. Only comments created, modified, or deleted since that timestamp are returned
-     * 4. Process updates, including soft-deletes (deletionDate !== null)
-     * 5. Update your last sync timestamp to the current time
-     * 
-     * <p>Rate limit: 50 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ListCommentsForControlRequestBuilder listCommentsForControl() {
-        return new ListCommentsForControlRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List comments for a control within an audit
-     * 
-     * <p>Retrieves a paginated list of comments on a control within an IRL audit,
-     * enabling auditors to view collaboration history on the control.
-     * 
-     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
-     * Clients should check the `deletionDate` field to identify and handle deleted records
-     * appropriately in their systems.
-     * 
-     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
-     * allowing efficient polling for changes without retrieving the entire dataset.
-     * 
-     * <p>Returns 404 when the control is not part of the audit.
-     * 
-     * <p>Pagination usage:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
-     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
-     * 4. Repeat until `hasNextPage` is false
-     * 
-     * <p>Delta sync usage:
-     * 1. Store the timestamp of your last sync
-     * 2. Pass that timestamp as `changedSinceDate`
-     * 3. Only comments created, modified, or deleted since that timestamp are returned
-     * 4. Process updates, including soft-deletes (deletionDate !== null)
-     * 5. Update your last sync timestamp to the current time
-     * 
-     * <p>Rate limit: 50 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListCommentsForControlResponse>} - The async response
-     */
-    public CompletableFuture<ListCommentsForControlResponse> listCommentsForControl(ListCommentsForControlRequest request) {
-        AsyncRequestOperation<ListCommentsForControlRequest, ListCommentsForControlResponse> operation
-              = new ListCommentsForControl.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * Create a comment for a control within an audit
-     * 
-     * <p>Creates a new comment on a control within an IRL audit. The comment author
-     * must be an auditor in the audit firm making the request. The comment will be
-     * associated with the control and visible to all authorized users.
-     * 
-     * <p>Returns 404 when the control is not part of the audit.
-     * 
-     * <p>Rate limit: 50 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public CreateCommentForControlRequestBuilder createCommentForControl() {
-        return new CreateCommentForControlRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Create a comment for a control within an audit
-     * 
-     * <p>Creates a new comment on a control within an IRL audit. The comment author
-     * must be an auditor in the audit firm making the request. The comment will be
-     * associated with the control and visible to all authorized users.
-     * 
-     * <p>Returns 404 when the control is not part of the audit.
-     * 
-     * <p>Rate limit: 50 requests / minute.
-     * 
-     * @param auditId 
-     * @param controlId 
-     * @param addAuditControlCommentInput Comments enable auditors and customers to collaborate on a control within an
-     *         audit. All comments are immediately visible to authorized parties once created.
-     * @return {@code CompletableFuture<CreateCommentForControlResponse>} - The async response
-     */
-    public CompletableFuture<CreateCommentForControlResponse> createCommentForControl(
-            String auditId, String controlId,
-            AddAuditControlCommentInput addAuditControlCommentInput) {
-        CreateCommentForControlRequest request =
-            CreateCommentForControlRequest
-                .builder()
-                .auditId(auditId)
-                .controlId(controlId)
-                .addAuditControlCommentInput(addAuditControlCommentInput)
-                .build();
-        AsyncRequestOperation<CreateCommentForControlRequest, CreateCommentForControlResponse> operation
-              = new CreateCommentForControl.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * Update a comment for a control within an audit
-     * 
-     * <p>Updates an existing comment on a control. Only the original author
-     * of the comment can update it. The author is identified by their email address,
-     * which must match the email of the user who created the comment.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public UpdateCommentForControlRequestBuilder updateCommentForControl() {
-        return new UpdateCommentForControlRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Update a comment for a control within an audit
-     * 
-     * <p>Updates an existing comment on a control. Only the original author
-     * of the comment can update it. The author is identified by their email address,
-     * which must match the email of the user who created the comment.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId 
-     * @param controlId 
-     * @param commentId 
-     * @param updateAuditControlCommentInput Updates an existing comment on a control.
-     *         Only the original author of the comment can update it.
-     * @return {@code CompletableFuture<UpdateCommentForControlResponse>} - The async response
-     */
-    public CompletableFuture<UpdateCommentForControlResponse> updateCommentForControl(
-            String auditId, String controlId,
-            String commentId, UpdateAuditControlCommentInput updateAuditControlCommentInput) {
-        UpdateCommentForControlRequest request =
-            UpdateCommentForControlRequest
-                .builder()
-                .auditId(auditId)
-                .controlId(controlId)
-                .commentId(commentId)
-                .updateAuditControlCommentInput(updateAuditControlCommentInput)
-                .build();
-        AsyncRequestOperation<UpdateCommentForControlRequest, UpdateCommentForControlResponse> operation
-              = new UpdateCommentForControl.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * Delete a comment for a control within an audit
-     * 
-     * <p>Deletes an existing comment on a control. Only the original author
-     * of the comment can delete it. The author is identified by their email address,
-     * which must match the email of the user who created the comment.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public DeleteCommentForControlRequestBuilder deleteCommentForControl() {
-        return new DeleteCommentForControlRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Delete a comment for a control within an audit
-     * 
-     * <p>Deletes an existing comment on a control. Only the original author
-     * of the comment can delete it. The author is identified by their email address,
-     * which must match the email of the user who created the comment.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId 
-     * @param controlId 
-     * @param commentId 
-     * @param deleteAuditControlCommentInput Deletes an existing comment on a control.
-     *         Only the original author of the comment can delete it.
-     * @return {@code CompletableFuture<DeleteCommentForControlResponse>} - The async response
-     */
-    public CompletableFuture<DeleteCommentForControlResponse> deleteCommentForControl(
-            String auditId, String controlId,
-            String commentId, DeleteAuditControlCommentInput deleteAuditControlCommentInput) {
-        DeleteCommentForControlRequest request =
-            DeleteCommentForControlRequest
-                .builder()
-                .auditId(auditId)
-                .controlId(controlId)
-                .commentId(commentId)
-                .deleteAuditControlCommentInput(deleteAuditControlCommentInput)
-                .build();
-        AsyncRequestOperation<DeleteCommentForControlRequest, DeleteCommentForControlResponse> operation
-              = new DeleteCommentForControl.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List information requests linked to a control within an audit
-     * 
-     * <p>Returns a paginated list of active information requests linked to a specific
-     * control within an IRL audit. Only links saved on the audit's current
-     * control rows are included.
-     * 
-     * <p>Soft-deleted information requests are not included in the response. To
-     * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
-     * which supports `changedSinceDate` and includes soft-deleted records.
-     * 
-     * <p>Returns 404 when the control is not part of the audit. Returns an empty page
-     * when the control is part of the audit but has no active IRLs linked to it.
-     * 
-     * <p>Pagination usage:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
-     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
-     * 4. Repeat until `hasNextPage` is false
-     * 
-     * <p>Rate limit: 50 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ListInformationRequestsForControlRequestBuilder listInformationRequestsForControl() {
-        return new ListInformationRequestsForControlRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List information requests linked to a control within an audit
-     * 
-     * <p>Returns a paginated list of active information requests linked to a specific
-     * control within an IRL audit. Only links saved on the audit's current
-     * control rows are included.
-     * 
-     * <p>Soft-deleted information requests are not included in the response. To
-     * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
-     * which supports `changedSinceDate` and includes soft-deleted records.
-     * 
-     * <p>Returns 404 when the control is not part of the audit. Returns an empty page
-     * when the control is part of the audit but has no active IRLs linked to it.
-     * 
-     * <p>Pagination usage:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
-     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
-     * 4. Repeat until `hasNextPage` is false
-     * 
-     * <p>Rate limit: 50 requests / minute.
-     * 
-     * @param auditId 
-     * @param controlId 
-     * @return {@code CompletableFuture<ListInformationRequestsForControlResponse>} - The async response
-     */
-    public CompletableFuture<ListInformationRequestsForControlResponse> listInformationRequestsForControl(String auditId, String controlId) {
-        return listInformationRequestsForControl(
-                auditId, controlId, Optional.empty(),
+    public CompletableFuture<ListAuditEvidenceUrlsResponse> getEvidenceUrls(String auditId, String auditEvidenceId) {
+        return getEvidenceUrls(
+                auditId, auditEvidenceId, Optional.empty(),
                 Optional.empty());
     }
 
     /**
-     * List information requests linked to a control within an audit
+     * List audit evidence url
      * 
-     * <p>Returns a paginated list of active information requests linked to a specific
-     * control within an IRL audit. Only links saved on the audit's current
-     * control rows are included.
+     * <p>Returns a paginated list of evidence urls for an audit. This endpoint should be called whenever an
+     * evidence is created or has a statusUpdatedAt field that is more recent than the most recent polling
+     * event.
      * 
-     * <p>Soft-deleted information requests are not included in the response. To
-     * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
-     * which supports `changedSinceDate` and includes soft-deleted records.
+     * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
+     * "Flagged", or "NA".
      * 
-     * <p>Returns 404 when the control is not part of the audit. Returns an empty page
-     * when the control is part of the audit but has no active IRLs linked to it.
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
      * 
-     * <p>Pagination usage:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
-     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
-     * 4. Repeat until `hasNextPage` is false
-     * 
-     * <p>Rate limit: 50 requests / minute.
+     * <p>Rate limit: 600 requests / minute.
      * 
      * @param auditId 
-     * @param controlId 
-     * @param pageSize Maximum number of information requests to return per page.
-     * @param pageCursor Pagination cursor from a previous response. Provide to fetch the next page of results.
-     * @return {@code CompletableFuture<ListInformationRequestsForControlResponse>} - The async response
+     * @param auditEvidenceId 
+     * @param pageSize 
+     * @param pageCursor 
+     * @return {@code CompletableFuture<ListAuditEvidenceUrlsResponse>} - The async response
      */
-    public CompletableFuture<ListInformationRequestsForControlResponse> listInformationRequestsForControl(
-            String auditId, String controlId,
+    public CompletableFuture<ListAuditEvidenceUrlsResponse> getEvidenceUrls(
+            String auditId, String auditEvidenceId,
             Optional<Integer> pageSize, Optional<String> pageCursor) {
-        ListInformationRequestsForControlRequest request =
-            ListInformationRequestsForControlRequest
+        ListAuditEvidenceUrlsRequest request =
+            ListAuditEvidenceUrlsRequest
                 .builder()
                 .auditId(auditId)
-                .controlId(controlId)
+                .auditEvidenceId(auditEvidenceId)
                 .pageSize(pageSize)
                 .pageCursor(pageCursor)
                 .build();
-        AsyncRequestOperation<ListInformationRequestsForControlRequest, ListInformationRequestsForControlResponse> operation
-              = new ListInformationRequestsForControl.Async(sdkConfiguration, _headers);
+        AsyncRequestOperation<ListAuditEvidenceUrlsRequest, ListAuditEvidenceUrlsResponse> operation
+              = new ListAuditEvidenceUrls.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List of people who are in scope for this audit
+     * 
+     * <p>Returns a list of people who are in scope for this audit.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public ListPeopleInAuditScopeRequestBuilder listPeopleInAuditScope() {
+        return new ListPeopleInAuditScopeRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List of people who are in scope for this audit
+     * 
+     * <p>Returns a list of people who are in scope for this audit.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListPeopleInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public CompletableFuture<ListPeopleInAuditScopeResponse> listPeopleInAuditScope(ListPeopleInAuditScopeRequest request) {
+        AsyncRequestOperation<ListPeopleInAuditScopeRequest, ListPeopleInAuditScopeResponse> operation
+              = new ListPeopleInAuditScope.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List vulnerability remediations that are in scope for this audit
+     * 
+     * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public ListVulnerabilityRemediationsInAuditScopeRequestBuilder listVulnerabilityRemediationsInAuditScope() {
+        return new ListVulnerabilityRemediationsInAuditScopeRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List vulnerability remediations that are in scope for this audit
+     * 
+     * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListVulnerabilityRemediationsInAuditScopeResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public CompletableFuture<ListVulnerabilityRemediationsInAuditScopeResponse> listVulnerabilityRemediationsInAuditScope(ListVulnerabilityRemediationsInAuditScopeRequest request) {
+        AsyncRequestOperation<ListVulnerabilityRemediationsInAuditScopeRequest, ListVulnerabilityRemediationsInAuditScopeResponse> operation
+              = new ListVulnerabilityRemediationsInAuditScope.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1190,38 +857,102 @@ public class AsyncAudits {
 
 
     /**
-     * Create a custom evidence request for an audit
+     * List audit comments
      * 
-     * <p>Create a custom evidence request for an audit.
+     * <p>Returns a paginated list of comments for an audit.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @return The async call builder
      */
-    public CreateCustomEvidenceRequestRequestBuilder createCustomEvidenceRequest() {
-        return new CreateCustomEvidenceRequestRequestBuilder(sdkConfiguration);
+    public ListAuditCommentsRequestBuilder listComments() {
+        return new ListAuditCommentsRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Create a custom evidence request for an audit
+     * List audit comments
      * 
-     * <p>Create a custom evidence request for an audit.
+     * <p>Returns a paginated list of comments for an audit.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 250 requests / minute.
      * 
      * @param auditId 
-     * @param createCustomEvidenceRequestInput 
-     * @return {@code CompletableFuture<CreateCustomEvidenceRequestResponse>} - The async response
+     * @return {@code CompletableFuture<ListAuditCommentsResponse>} - The async response
      */
-    public CompletableFuture<CreateCustomEvidenceRequestResponse> createCustomEvidenceRequest(String auditId, CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput) {
-        CreateCustomEvidenceRequestRequest request =
-            CreateCustomEvidenceRequestRequest
+    public CompletableFuture<ListAuditCommentsResponse> listComments(String auditId) {
+        return listComments(
+                auditId, Optional.empty(), Optional.empty(),
+                Optional.empty());
+    }
+
+    /**
+     * List audit comments
+     * 
+     * <p>Returns a paginated list of comments for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param auditId 
+     * @param pageSize 
+     * @param pageCursor 
+     * @param changedSinceDate Includes all comments that have changed since changedSinceDate.
+     * @return {@code CompletableFuture<ListAuditCommentsResponse>} - The async response
+     */
+    public CompletableFuture<ListAuditCommentsResponse> listComments(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<OffsetDateTime> changedSinceDate) {
+        ListAuditCommentsRequest request =
+            ListAuditCommentsRequest
                 .builder()
                 .auditId(auditId)
-                .createCustomEvidenceRequestInput(createCustomEvidenceRequestInput)
+                .pageSize(pageSize)
+                .pageCursor(pageCursor)
+                .changedSinceDate(changedSinceDate)
                 .build();
-        AsyncRequestOperation<CreateCustomEvidenceRequestRequest, CreateCustomEvidenceRequestResponse> operation
-              = new CreateCustomEvidenceRequest.Async(sdkConfiguration, _headers);
+        AsyncRequestOperation<ListAuditCommentsRequest, ListAuditCommentsResponse> operation
+              = new ListAuditComments.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Create a comment for audit evidence
+     * 
+     * <p>Create a comment in Vanta for a piece of evidence.
+     * 
+     * <p>Rate limit: 25 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public CreateCommentForAuditEvidenceRequestBuilder createCommentForEvidence() {
+        return new CreateCommentForAuditEvidenceRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Create a comment for audit evidence
+     * 
+     * <p>Create a comment in Vanta for a piece of evidence.
+     * 
+     * <p>Rate limit: 25 requests / minute.
+     * 
+     * @param auditId 
+     * @param auditEvidenceId 
+     * @param addCommentInput 
+     * @return {@code CompletableFuture<CreateCommentForAuditEvidenceResponse>} - The async response
+     */
+    public CompletableFuture<CreateCommentForAuditEvidenceResponse> createCommentForEvidence(
+            String auditId, String auditEvidenceId,
+            AddCommentInput addCommentInput) {
+        CreateCommentForAuditEvidenceRequest request =
+            CreateCommentForAuditEvidenceRequest
+                .builder()
+                .auditId(auditId)
+                .auditEvidenceId(auditEvidenceId)
+                .addCommentInput(addCommentInput)
+                .build();
+        AsyncRequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
+              = new CreateCommentForAuditEvidence.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1326,237 +1057,1198 @@ public class AsyncAudits {
 
 
     /**
-     * Create a comment for audit evidence
+     * Create a custom evidence request for an audit
      * 
-     * <p>Create a comment in Vanta for a piece of evidence.
+     * <p>Create a custom evidence request for an audit.
      * 
-     * <p>Rate limit: 25 requests / minute.
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
      */
-    public CreateCommentForAuditEvidenceRequestBuilder createCommentForEvidence() {
-        return new CreateCommentForAuditEvidenceRequestBuilder(sdkConfiguration);
+    public CreateCustomEvidenceRequestRequestBuilder createCustomEvidenceRequest() {
+        return new CreateCustomEvidenceRequestRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Create a comment for audit evidence
+     * Create a custom evidence request for an audit
      * 
-     * <p>Create a comment in Vanta for a piece of evidence.
+     * <p>Create a custom evidence request for an audit.
      * 
-     * <p>Rate limit: 25 requests / minute.
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
-     * @param auditEvidenceId 
-     * @param addCommentInput 
-     * @return {@code CompletableFuture<CreateCommentForAuditEvidenceResponse>} - The async response
+     * @param createCustomEvidenceRequestInput 
+     * @return {@code CompletableFuture<CreateCustomEvidenceRequestResponse>} - The async response
      */
-    public CompletableFuture<CreateCommentForAuditEvidenceResponse> createCommentForEvidence(
-            String auditId, String auditEvidenceId,
-            AddCommentInput addCommentInput) {
-        CreateCommentForAuditEvidenceRequest request =
-            CreateCommentForAuditEvidenceRequest
+    public CompletableFuture<CreateCustomEvidenceRequestResponse> createCustomEvidenceRequest(String auditId, CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput) {
+        CreateCustomEvidenceRequestRequest request =
+            CreateCustomEvidenceRequestRequest
                 .builder()
                 .auditId(auditId)
-                .auditEvidenceId(auditEvidenceId)
-                .addCommentInput(addCommentInput)
+                .createCustomEvidenceRequestInput(createCustomEvidenceRequestInput)
                 .build();
-        AsyncRequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
-              = new CreateCommentForAuditEvidence.Async(sdkConfiguration, _headers);
+        AsyncRequestOperation<CreateCustomEvidenceRequestRequest, CreateCustomEvidenceRequestResponse> operation
+              = new CreateCustomEvidenceRequest.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * Get an audit evidence comment by ID
+     * List vulnerabilities within the scope of a given audit
      * 
-     * <p>Retrieves a single comment on a classic audit evidence item by its ID.
+     * <p>List all vulnerabilities based on selected filters.
      * 
-     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
-     * response. Clients should check `deletionDate` to determine whether the
-     * comment has been deleted. This matches
-     * `GET /audits/{auditId}/comments`, which supports `changedSinceDate` and
-     * returns soft-deleted comments for delta sync.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
-     * <p>Comments remain fetchable when the parent evidence item has been
-     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
-     * after evidence deletion.
-     * 
-     * <p>Rate limit: 50 requests / minute.
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
-    public GetAuditEvidenceCommentRequestBuilder getAuditEvidenceComment() {
-        return new GetAuditEvidenceCommentRequestBuilder(sdkConfiguration);
+    @Deprecated
+    public ListVulnerabilitiesRequestBuilder listVulnerabilities() {
+        return new ListVulnerabilitiesRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Get an audit evidence comment by ID
+     * List vulnerabilities within the scope of a given audit
      * 
-     * <p>Retrieves a single comment on a classic audit evidence item by its ID.
+     * <p>List all vulnerabilities based on selected filters.
      * 
-     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
-     * response. Clients should check `deletionDate` to determine whether the
-     * comment has been deleted. This matches
-     * `GET /audits/{auditId}/comments`, which supports `changedSinceDate` and
-     * returns soft-deleted comments for delta sync.
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
-     * <p>Comments remain fetchable when the parent evidence item has been
-     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
-     * after evidence deletion.
+     * <p>Rate limit: 10 requests / minute.
      * 
-     * <p>Rate limit: 50 requests / minute.
-     * 
-     * @param auditId 
-     * @param auditEvidenceId 
-     * @param commentId 
-     * @return {@code CompletableFuture<GetAuditEvidenceCommentResponse>} - The async response
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListVulnerabilitiesResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
-    public CompletableFuture<GetAuditEvidenceCommentResponse> getAuditEvidenceComment(
-            String auditId, String auditEvidenceId,
-            String commentId) {
-        GetAuditEvidenceCommentRequest request =
-            GetAuditEvidenceCommentRequest
-                .builder()
-                .auditId(auditId)
-                .auditEvidenceId(auditEvidenceId)
-                .commentId(commentId)
-                .build();
-        AsyncRequestOperation<GetAuditEvidenceCommentRequest, GetAuditEvidenceCommentResponse> operation
-              = new GetAuditEvidenceComment.Async(sdkConfiguration, _headers);
+    @Deprecated
+    public CompletableFuture<ListVulnerabilitiesResponse> listVulnerabilities(ListVulnerabilitiesRequest request) {
+        AsyncRequestOperation<ListVulnerabilitiesRequest, ListVulnerabilitiesResponse> operation
+              = new ListVulnerabilities.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * List audit evidence url
+     * List assets associated with vulnerabilities
      * 
-     * <p>Returns a paginated list of evidence urls for an audit. This endpoint should be called whenever an
-     * evidence is created or has a statusUpdatedAt field that is more recent than the most recent polling
-     * event.
+     * <p>List assets that Vanta monitors that are associated with vulnerabilities.
      * 
-     * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
-     * "Flagged", or "NA".
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
-     * 
-     * <p>Rate limit: 600 requests / minute.
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
-    public ListAuditEvidenceUrlsRequestBuilder getEvidenceUrls() {
-        return new ListAuditEvidenceUrlsRequestBuilder(sdkConfiguration);
+    @Deprecated
+    public GetVulnerableAssetsRequestBuilder getVulnerableAssets() {
+        return new GetVulnerableAssetsRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * List audit evidence url
+     * List assets associated with vulnerabilities
      * 
-     * <p>Returns a paginated list of evidence urls for an audit. This endpoint should be called whenever an
-     * evidence is created or has a statusUpdatedAt field that is more recent than the most recent polling
-     * event.
+     * <p>List assets that Vanta monitors that are associated with vulnerabilities.
      * 
-     * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
-     * "Flagged", or "NA".
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
      * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * <p>Rate limit: 10 requests / minute.
      * 
-     * <p>Rate limit: 600 requests / minute.
-     * 
-     * @param auditId 
-     * @param auditEvidenceId 
-     * @return {@code CompletableFuture<ListAuditEvidenceUrlsResponse>} - The async response
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<GetVulnerableAssetsResponse>} - The async response
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
      */
-    public CompletableFuture<ListAuditEvidenceUrlsResponse> getEvidenceUrls(String auditId, String auditEvidenceId) {
-        return getEvidenceUrls(
-                auditId, auditEvidenceId, Optional.empty(),
+    @Deprecated
+    public CompletableFuture<GetVulnerableAssetsResponse> getVulnerableAssets(GetVulnerableAssetsRequest request) {
+        AsyncRequestOperation<GetVulnerableAssetsRequest, GetVulnerableAssetsResponse> operation
+              = new GetVulnerableAssets.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List vendors for an audit
+     * 
+     * <p>Retrieves vendor population data for an audit.
+     * 
+     * <p>This endpoint provides access to vendor records visible to auditors
+     * during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches vendor names (case-insensitive)
+     * - `vendorStatusesMatchesAny`: Filters by vendor status (ACTIVE, ARCHIVED, IN_PROCUREMENT)
+     * - `inherentRiskMatchesAny`: Filters by inherent risk level
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListVendorsRequestBuilder listVendors() {
+        return new ListVendorsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List vendors for an audit
+     * 
+     * <p>Retrieves vendor population data for an audit.
+     * 
+     * <p>This endpoint provides access to vendor records visible to auditors
+     * during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches vendor names (case-insensitive)
+     * - `vendorStatusesMatchesAny`: Filters by vendor status (ACTIVE, ARCHIVED, IN_PROCUREMENT)
+     * - `inherentRiskMatchesAny`: Filters by inherent risk level
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListVendorsResponse>} - The async response
+     */
+    public CompletableFuture<ListVendorsResponse> listVendors(ListVendorsRequest request) {
+        AsyncRequestOperation<ListVendorsRequest, ListVendorsResponse> operation
+              = new ListVendors.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List risk snapshots for an audit
+     * 
+     * <p>Returns a paginated list of risk assessment snapshots available for an audit.
+     * 
+     * <p>Risk snapshots capture the state of an organization's risk register at a
+     * point in time. Each snapshot has an `id` that can be used with the
+     * `/audits/{auditId}/risks` endpoint to retrieve the individual risk
+     * scenarios within that snapshot.
+     * 
+     * <p>Results are sorted by creation date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters. Only snapshots
+     * that are shared with auditors are included.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListRiskSnapshotsRequestBuilder listRiskSnapshots() {
+        return new ListRiskSnapshotsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List risk snapshots for an audit
+     * 
+     * <p>Returns a paginated list of risk assessment snapshots available for an audit.
+     * 
+     * <p>Risk snapshots capture the state of an organization's risk register at a
+     * point in time. Each snapshot has an `id` that can be used with the
+     * `/audits/{auditId}/risks` endpoint to retrieve the individual risk
+     * scenarios within that snapshot.
+     * 
+     * <p>Results are sorted by creation date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters. Only snapshots
+     * that are shared with auditors are included.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @return {@code CompletableFuture<ListRiskSnapshotsResponse>} - The async response
+     */
+    public CompletableFuture<ListRiskSnapshotsResponse> listRiskSnapshots(String auditId) {
+        return listRiskSnapshots(auditId, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * List risk snapshots for an audit
+     * 
+     * <p>Returns a paginated list of risk assessment snapshots available for an audit.
+     * 
+     * <p>Risk snapshots capture the state of an organization's risk register at a
+     * point in time. Each snapshot has an `id` that can be used with the
+     * `/audits/{auditId}/risks` endpoint to retrieve the individual risk
+     * scenarios within that snapshot.
+     * 
+     * <p>Results are sorted by creation date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters. Only snapshots
+     * that are shared with auditors are included.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @param pageSize Maximum number of results per page (1-100, default 10)
+     * @param pageCursor Pagination cursor from previous response
+     * @return {@code CompletableFuture<ListRiskSnapshotsResponse>} - The async response
+     */
+    public CompletableFuture<ListRiskSnapshotsResponse> listRiskSnapshots(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor) {
+        ListRiskSnapshotsRequest request =
+            ListRiskSnapshotsRequest
+                .builder()
+                .auditId(auditId)
+                .pageSize(pageSize)
+                .pageCursor(pageCursor)
+                .build();
+        AsyncRequestOperation<ListRiskSnapshotsRequest, ListRiskSnapshotsResponse> operation
+              = new ListRiskSnapshots.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List risks for an audit
+     * 
+     * <p>Retrieves risk population data for an audit.
+     * 
+     * <p>This endpoint provides access to the risk records visible to auditors
+     * during an audit engagement. Risk data is scoped to a specific risk
+     * assessment snapshot identified by the `snapshotId` parameter.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches risk scenario descriptions (case-insensitive)
+     * 
+     * <p>Results are sorted by identified date (newest first) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors. Also returns 403 if the
+     * snapshot is not shared with auditors, and 404 if the snapshot does not
+     * exist. Use snapshot IDs from `GET /audits/{auditId}/risks/snapshots`,
+     * which lists only snapshots shared with auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListAuditRisksRequestBuilder listAuditRisks() {
+        return new ListAuditRisksRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List risks for an audit
+     * 
+     * <p>Retrieves risk population data for an audit.
+     * 
+     * <p>This endpoint provides access to the risk records visible to auditors
+     * during an audit engagement. Risk data is scoped to a specific risk
+     * assessment snapshot identified by the `snapshotId` parameter.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches risk scenario descriptions (case-insensitive)
+     * 
+     * <p>Results are sorted by identified date (newest first) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors. Also returns 403 if the
+     * snapshot is not shared with auditors, and 404 if the snapshot does not
+     * exist. Use snapshot IDs from `GET /audits/{auditId}/risks/snapshots`,
+     * which lists only snapshots shared with auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListAuditRisksResponse>} - The async response
+     */
+    public CompletableFuture<ListAuditRisksResponse> listAuditRisks(ListAuditRisksRequest request) {
+        AsyncRequestOperation<ListAuditRisksRequest, ListAuditRisksResponse> operation
+              = new ListAuditRisks.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List groups for an audit
+     * 
+     * <p>Retrieves groups population data for an audit.
+     * 
+     * <p>This endpoint provides access to the group records visible to auditors
+     * during an audit engagement. Groups represent organizational units that
+     * contain people, either imported from an identity provider (IDP) or
+     * created manually in Vanta.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches group names (case-insensitive)
+     * - `sourcesMatchesAny`: Filters by IDP source service names
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListPersonnelGroupsRequestBuilder listPersonnelGroups() {
+        return new ListPersonnelGroupsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List groups for an audit
+     * 
+     * <p>Retrieves groups population data for an audit.
+     * 
+     * <p>This endpoint provides access to the group records visible to auditors
+     * during an audit engagement. Groups represent organizational units that
+     * contain people, either imported from an identity provider (IDP) or
+     * created manually in Vanta.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches group names (case-insensitive)
+     * - `sourcesMatchesAny`: Filters by IDP source service names
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListPersonnelGroupsResponse>} - The async response
+     */
+    public CompletableFuture<ListPersonnelGroupsResponse> listPersonnelGroups(ListPersonnelGroupsRequest request) {
+        AsyncRequestOperation<ListPersonnelGroupsRequest, ListPersonnelGroupsResponse> operation
+              = new ListPersonnelGroups.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List people for an audit
+     * 
+     * <p>Retrieves people population data for an audit.
+     * 
+     * <p>This endpoint provides access to the people records visible to auditors
+     * during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches names and email addresses
+     * - `status`: Filters by employment status
+     * - `groupsMatchesAny`: Filter people by group/role IDs
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListPersonnelPeopleRequestBuilder listPersonnelPeople() {
+        return new ListPersonnelPeopleRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List people for an audit
+     * 
+     * <p>Retrieves people population data for an audit.
+     * 
+     * <p>This endpoint provides access to the people records visible to auditors
+     * during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches names and email addresses
+     * - `status`: Filters by employment status
+     * - `groupsMatchesAny`: Filter people by group/role IDs
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListPersonnelPeopleResponse>} - The async response
+     */
+    public CompletableFuture<ListPersonnelPeopleResponse> listPersonnelPeople(ListPersonnelPeopleRequest request) {
+        AsyncRequestOperation<ListPersonnelPeopleRequest, ListPersonnelPeopleResponse> operation
+              = new ListPersonnelPeople.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List account access services for an audit
+     * 
+     * <p>Retrieves connected account access services for an audit.
+     * 
+     * <p>Returns the list of identity providers and access integrations (such as
+     * Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
+     * organization and provide account access data for personnel.
+     * 
+     * <p>These integrations are used to verify user access and identity management
+     * during an audit engagement.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are returned in connection order. Sort order is not guaranteed
+     * and cannot be customized via query parameters.
+     * 
+     * <p>On an audit that covers more than one framework, each service in scope
+     * for any of the audit's frameworks is listed once.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListAccountAccessServicesRequestBuilder listAccountAccessServices() {
+        return new ListAccountAccessServicesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List account access services for an audit
+     * 
+     * <p>Retrieves connected account access services for an audit.
+     * 
+     * <p>Returns the list of identity providers and access integrations (such as
+     * Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
+     * organization and provide account access data for personnel.
+     * 
+     * <p>These integrations are used to verify user access and identity management
+     * during an audit engagement.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are returned in connection order. Sort order is not guaranteed
+     * and cannot be customized via query parameters.
+     * 
+     * <p>On an audit that covers more than one framework, each service in scope
+     * for any of the audit's frameworks is listed once.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @return {@code CompletableFuture<ListAccountAccessServicesResponse>} - The async response
+     */
+    public CompletableFuture<ListAccountAccessServicesResponse> listAccountAccessServices(String auditId) {
+        return listAccountAccessServices(auditId, Optional.empty(), Optional.empty());
+    }
+
+    /**
+     * List account access services for an audit
+     * 
+     * <p>Retrieves connected account access services for an audit.
+     * 
+     * <p>Returns the list of identity providers and access integrations (such as
+     * Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
+     * organization and provide account access data for personnel.
+     * 
+     * <p>These integrations are used to verify user access and identity management
+     * during an audit engagement.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are returned in connection order. Sort order is not guaranteed
+     * and cannot be customized via query parameters.
+     * 
+     * <p>On an audit that covers more than one framework, each service in scope
+     * for any of the audit's frameworks is listed once.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @param pageSize Maximum number of results per page (1-100, default 10)
+     * @param pageCursor Pagination cursor from previous response
+     * @return {@code CompletableFuture<ListAccountAccessServicesResponse>} - The async response
+     */
+    public CompletableFuture<ListAccountAccessServicesResponse> listAccountAccessServices(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor) {
+        ListAccountAccessServicesRequest request =
+            ListAccountAccessServicesRequest
+                .builder()
+                .auditId(auditId)
+                .pageSize(pageSize)
+                .pageCursor(pageCursor)
+                .build();
+        AsyncRequestOperation<ListAccountAccessServicesRequest, ListAccountAccessServicesResponse> operation
+              = new ListAccountAccessServices.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List account access records for an audit
+     * 
+     * <p>Retrieves account access population data for an audit.
+     * 
+     * <p>This endpoint provides access to account access records visible to auditors
+     * during an audit engagement. Account access data comes from various sources:
+     * 
+     * <p>- **IDP Services** (Identity Providers): Okta, Azure AD, Google Workspace, OneLogin, PingOne
+     * 
+     * <p>- Returns user accounts from identity providers
+     * - Supports filtering by search and status
+     * 
+     * <p>- **Role Grants Services**: GCP, Azure (when role grants are enabled)
+     * 
+     * <p>- Returns accounts with role-based access grants
+     * - Supports filtering by search and status
+     * 
+     * <p>- **First-Party Account Services**: AWS, Oracle Cloud, Azure (when not using role grants), etc.
+     * 
+     * <p>- Returns cloud provider account access records
+     * - Supports filtering by search and status
+     * 
+     * <p>- **Received Account Services**: External applications (Jira, GitHub, Slack, etc.)
+     * 
+     * <p>- Returns user accounts from third-party integrations
+     * - Supports filtering by search and status
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches account names/emails (case-insensitive)
+     * - `status`: Filters by account status
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>The default sort order depends on the service type:
+     * - Identity provider services (e.g. Okta, Azure AD): sorted by email, ascending
+     * - Cloud provider services (e.g. AWS, GCP): sorted by account name, ascending
+     * - Role grant services: sorted by account name, ascending
+     * - Third-party application services (e.g. GitHub, Jira): sorted by account name, ascending
+     * 
+     * <p>Sort order cannot be customized via query parameters.
+     * 
+     * <p>Returns 404 when `serviceId` is not listed by the
+     * `/personnel/account-access/services` endpoint for this audit.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListPersonnelAccountAccessRequestBuilder listPersonnelAccountAccess() {
+        return new ListPersonnelAccountAccessRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List account access records for an audit
+     * 
+     * <p>Retrieves account access population data for an audit.
+     * 
+     * <p>This endpoint provides access to account access records visible to auditors
+     * during an audit engagement. Account access data comes from various sources:
+     * 
+     * <p>- **IDP Services** (Identity Providers): Okta, Azure AD, Google Workspace, OneLogin, PingOne
+     * 
+     * <p>- Returns user accounts from identity providers
+     * - Supports filtering by search and status
+     * 
+     * <p>- **Role Grants Services**: GCP, Azure (when role grants are enabled)
+     * 
+     * <p>- Returns accounts with role-based access grants
+     * - Supports filtering by search and status
+     * 
+     * <p>- **First-Party Account Services**: AWS, Oracle Cloud, Azure (when not using role grants), etc.
+     * 
+     * <p>- Returns cloud provider account access records
+     * - Supports filtering by search and status
+     * 
+     * <p>- **Received Account Services**: External applications (Jira, GitHub, Slack, etc.)
+     * 
+     * <p>- Returns user accounts from third-party integrations
+     * - Supports filtering by search and status
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches account names/emails (case-insensitive)
+     * - `status`: Filters by account status
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>The default sort order depends on the service type:
+     * - Identity provider services (e.g. Okta, Azure AD): sorted by email, ascending
+     * - Cloud provider services (e.g. AWS, GCP): sorted by account name, ascending
+     * - Role grant services: sorted by account name, ascending
+     * - Third-party application services (e.g. GitHub, Jira): sorted by account name, ascending
+     * 
+     * <p>Sort order cannot be customized via query parameters.
+     * 
+     * <p>Returns 404 when `serviceId` is not listed by the
+     * `/personnel/account-access/services` endpoint for this audit.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListPersonnelAccountAccessResponse>} - The async response
+     */
+    public CompletableFuture<ListPersonnelAccountAccessResponse> listPersonnelAccountAccess(ListPersonnelAccountAccessRequest request) {
+        AsyncRequestOperation<ListPersonnelAccountAccessRequest, ListPersonnelAccountAccessResponse> operation
+              = new ListPersonnelAccountAccess.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get organization notification settings for an audit
+     * 
+     * <p>Retrieves organization notification settings for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the auditee
+     * organization's notification configuration — schedule, personnel
+     * reminder settings, and external notification subscriptions
+     * (Compliance, Vendors, Access Reviews, Trust Center).
+     * 
+     * <p>The response is a single aggregate object per domain. Sorting and
+     * pagination are not applicable. Only CAV-approved fields are included.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetOrganizationNotificationsRequestBuilder getOrganizationNotifications() {
+        return new GetOrganizationNotificationsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get organization notification settings for an audit
+     * 
+     * <p>Retrieves organization notification settings for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the auditee
+     * organization's notification configuration — schedule, personnel
+     * reminder settings, and external notification subscriptions
+     * (Compliance, Vendors, Access Reviews, Trust Center).
+     * 
+     * <p>The response is a single aggregate object per domain. Sorting and
+     * pagination are not applicable. Only CAV-approved fields are included.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @return {@code CompletableFuture<GetOrganizationNotificationsResponse>} - The async response
+     */
+    public CompletableFuture<GetOrganizationNotificationsResponse> getOrganizationNotifications(String auditId) {
+        GetOrganizationNotificationsRequest request =
+            GetOrganizationNotificationsRequest
+                .builder()
+                .auditId(auditId)
+                .build();
+        AsyncRequestOperation<GetOrganizationNotificationsRequest, GetOrganizationNotificationsResponse> operation
+              = new GetOrganizationNotifications.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get organization information for an audit
+     * 
+     * <p>Retrieves organization information for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the organization's
+     * business information visible to auditors during an audit engagement.
+     * 
+     * <p>Sorting and pagination are not applicable.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetOrganizationInformationRequestBuilder getOrganizationInformation() {
+        return new GetOrganizationInformationRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get organization information for an audit
+     * 
+     * <p>Retrieves organization information for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the organization's
+     * business information visible to auditors during an audit engagement.
+     * 
+     * <p>Sorting and pagination are not applicable.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @return {@code CompletableFuture<GetOrganizationInformationResponse>} - The async response
+     */
+    public CompletableFuture<GetOrganizationInformationResponse> getOrganizationInformation(String auditId) {
+        GetOrganizationInformationRequest request =
+            GetOrganizationInformationRequest
+                .builder()
+                .auditId(auditId)
+                .build();
+        AsyncRequestOperation<GetOrganizationInformationRequest, GetOrganizationInformationResponse> operation
+              = new GetOrganizationInformation.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List snapshotted issues for an audit
+     * 
+     * <p>Retrieves a list of all issues that have been shared with an audit.
+     * 
+     * <p>The issues returned are immutable, point-in-time snapshots; there may be duplicates of issues that
+     * have been snapshotted at different times.
+     * The GET /audits/{auditId}/issues/snapshots endpoint can be used to retrieve metadata about the
+     * snapshots that issues belong to.
+     * Issues represent compliance findings from a variety of sources that need to be tracked and
+     * remediated.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: full text search across issue title and description
+     * - `snapshotId`: filtering to a specific snapshot or snapshots, which represent point-in-time
+     * captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs
+     * and metadata.
+     * - `createdAfterDate` / `createdBeforeDate`: filter to issues created within a date range (inclusive)
+     * - `detectedAfterDate` / `detectedBeforeDate`: filter to issues detected within a date range
+     * (inclusive)
+     * 
+     * <p>Results are sorted by issue creation date in descending order (newest first) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListAuditIssuesRequestBuilder listAuditIssues() {
+        return new ListAuditIssuesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List snapshotted issues for an audit
+     * 
+     * <p>Retrieves a list of all issues that have been shared with an audit.
+     * 
+     * <p>The issues returned are immutable, point-in-time snapshots; there may be duplicates of issues that
+     * have been snapshotted at different times.
+     * The GET /audits/{auditId}/issues/snapshots endpoint can be used to retrieve metadata about the
+     * snapshots that issues belong to.
+     * Issues represent compliance findings from a variety of sources that need to be tracked and
+     * remediated.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: full text search across issue title and description
+     * - `snapshotId`: filtering to a specific snapshot or snapshots, which represent point-in-time
+     * captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs
+     * and metadata.
+     * - `createdAfterDate` / `createdBeforeDate`: filter to issues created within a date range (inclusive)
+     * - `detectedAfterDate` / `detectedBeforeDate`: filter to issues detected within a date range
+     * (inclusive)
+     * 
+     * <p>Results are sorted by issue creation date in descending order (newest first) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListAuditIssuesResponse>} - The async response
+     */
+    public CompletableFuture<ListAuditIssuesResponse> listAuditIssues(ListAuditIssuesRequest request) {
+        AsyncRequestOperation<ListAuditIssuesRequest, ListAuditIssuesResponse> operation
+              = new ListAuditIssues.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List snapshotted issues for an audit
+     * 
+     * <p>Retrieves a list of snapshots that have been shared with an audit.
+     * 
+     * <p>The snapshots returned contain metadata about point-in-time captures of issues for an audit.
+     * This data can be used to filter down the list of issues to specific snapshots when querying the GET
+     * /audits/{auditId}/issues/items endpoint.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: full text search across snapshot title and description
+     * 
+     * <p>Results are sorted by snapshot creation date in descending order (newest first).
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListAuditSnapshotsRequestBuilder listAuditSnapshots() {
+        return new ListAuditSnapshotsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List snapshotted issues for an audit
+     * 
+     * <p>Retrieves a list of snapshots that have been shared with an audit.
+     * 
+     * <p>The snapshots returned contain metadata about point-in-time captures of issues for an audit.
+     * This data can be used to filter down the list of issues to specific snapshots when querying the GET
+     * /audits/{auditId}/issues/items endpoint.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: full text search across snapshot title and description
+     * 
+     * <p>Results are sorted by snapshot creation date in descending order (newest first).
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @return {@code CompletableFuture<ListAuditSnapshotsResponse>} - The async response
+     */
+    public CompletableFuture<ListAuditSnapshotsResponse> listAuditSnapshots(String auditId) {
+        return listAuditSnapshots(
+                auditId, Optional.empty(), Optional.empty(),
                 Optional.empty());
     }
 
     /**
-     * List audit evidence url
+     * List snapshotted issues for an audit
      * 
-     * <p>Returns a paginated list of evidence urls for an audit. This endpoint should be called whenever an
-     * evidence is created or has a statusUpdatedAt field that is more recent than the most recent polling
-     * event.
+     * <p>Retrieves a list of snapshots that have been shared with an audit.
      * 
-     * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
-     * "Flagged", or "NA".
+     * <p>The snapshots returned contain metadata about point-in-time captures of issues for an audit.
+     * This data can be used to filter down the list of issues to specific snapshots when querying the GET
+     * /audits/{auditId}/issues/items endpoint.
      * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * <p>Supports filtering by:
+     * - `search`: full text search across snapshot title and description
      * 
-     * <p>Rate limit: 600 requests / minute.
+     * <p>Results are sorted by snapshot creation date in descending order (newest first).
      * 
-     * @param auditId 
-     * @param auditEvidenceId 
-     * @param pageSize 
-     * @param pageCursor 
-     * @return {@code CompletableFuture<ListAuditEvidenceUrlsResponse>} - The async response
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @param pageSize Maximum number of results per page (1-100, default 10)
+     * @param pageCursor Pagination cursor from previous response
+     * @param search Search term for filtering by snapshot title and description
+     * @return {@code CompletableFuture<ListAuditSnapshotsResponse>} - The async response
      */
-    public CompletableFuture<ListAuditEvidenceUrlsResponse> getEvidenceUrls(
-            String auditId, String auditEvidenceId,
-            Optional<Integer> pageSize, Optional<String> pageCursor) {
-        ListAuditEvidenceUrlsRequest request =
-            ListAuditEvidenceUrlsRequest
+    public CompletableFuture<ListAuditSnapshotsResponse> listAuditSnapshots(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<String> search) {
+        ListAuditSnapshotsRequest request =
+            ListAuditSnapshotsRequest
                 .builder()
                 .auditId(auditId)
-                .auditEvidenceId(auditEvidenceId)
                 .pageSize(pageSize)
                 .pageCursor(pageCursor)
+                .search(search)
                 .build();
-        AsyncRequestOperation<ListAuditEvidenceUrlsRequest, ListAuditEvidenceUrlsResponse> operation
-              = new ListAuditEvidenceUrls.Async(sdkConfiguration, _headers);
+        AsyncRequestOperation<ListAuditSnapshotsRequest, ListAuditSnapshotsResponse> operation
+              = new ListAuditSnapshots.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * Get framework codes for an audit
+     * List integrations for an audit
      * 
-     * <p>Retrieves all valid framework codes for the specified audit. This endpoint helps users discover
-     * which framework codes are available for creating and updating information requests for this audit.
+     * <p>Retrieves integration population data for an audit.
      * 
-     * <p>Use this endpoint to:
-     * - Discover available framework codes (`frameworkCodes`, the original flat list)
-     * - Validate framework codes against the audit's frameworks
-     * - See which codes belong to which in-scope framework (`codesByFramework`)
+     * <p>This endpoint provides access to integration records visible to auditors
+     * during an audit engagement. Integrations represent connected services
+     * (e.g., GitHub, AWS, Slack) that provide data for the audit.
      * 
-     * <p>Rate limit: 50 requests / minute.
+     * <p>Supports filtering by:
+     * - `search`: Searches integration names (case-insensitive)
+     * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
+     * - `categoriesMatchesAny`: Filters by category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are sorted by integration display name (ascending). This sort order
+     * is fixed and cannot be customized via query parameters.
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
      */
-    public GetFrameworkCodesRequestBuilder getFrameworkCodes() {
-        return new GetFrameworkCodesRequestBuilder(sdkConfiguration);
+    public ListIntegrationsRequestBuilder listIntegrations() {
+        return new ListIntegrationsRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Get framework codes for an audit
+     * List integrations for an audit
      * 
-     * <p>Retrieves all valid framework codes for the specified audit. This endpoint helps users discover
-     * which framework codes are available for creating and updating information requests for this audit.
+     * <p>Retrieves integration population data for an audit.
      * 
-     * <p>Use this endpoint to:
-     * - Discover available framework codes (`frameworkCodes`, the original flat list)
-     * - Validate framework codes against the audit's frameworks
-     * - See which codes belong to which in-scope framework (`codesByFramework`)
+     * <p>This endpoint provides access to integration records visible to auditors
+     * during an audit engagement. Integrations represent connected services
+     * (e.g., GitHub, AWS, Slack) that provide data for the audit.
      * 
-     * <p>Rate limit: 50 requests / minute.
+     * <p>Supports filtering by:
+     * - `search`: Searches integration names (case-insensitive)
+     * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
+     * - `categoriesMatchesAny`: Filters by category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
      * 
-     * @param auditId 
-     * @return {@code CompletableFuture<GetFrameworkCodesResponse>} - The async response
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are sorted by integration display name (ascending). This sort order
+     * is fixed and cannot be customized via query parameters.
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListIntegrationsResponse>} - The async response
      */
-    public CompletableFuture<GetFrameworkCodesResponse> getFrameworkCodes(String auditId) {
-        GetFrameworkCodesRequest request =
-            GetFrameworkCodesRequest
-                .builder()
-                .auditId(auditId)
-                .build();
-        AsyncRequestOperation<GetFrameworkCodesRequest, GetFrameworkCodesResponse> operation
-              = new GetFrameworkCodes.Async(sdkConfiguration, _headers);
+    public CompletableFuture<ListIntegrationsResponse> listIntegrations(ListIntegrationsRequest request) {
+        AsyncRequestOperation<ListIntegrationsRequest, ListIntegrationsResponse> operation
+              = new ListIntegrations.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -1893,6 +2585,82 @@ public class AsyncAudits {
 
 
     /**
+     * Flag evidence for an information request
+     * 
+     * <p>Flags evidence for an information request when it doesn't meet audit requirements,
+     * marking issues that need to be addressed before approval. This action changes the
+     * request's approvalStatus to a flagged state and creates an activity log entry.
+     * 
+     * <p>Flagging workflow:
+     * 1. Auditor reviews submitted evidence
+     * 2. If issues are found, auditor calls this endpoint with detailed reason
+     * 3. Request status changes to flagged state
+     * 4. Customer is notified and can see the reason in activity logs
+     * 5. Customer addresses issues and updates evidence
+     * 6. When ready, customer changes status back to awaiting review
+     * 7. Auditor reviews again and either flags again or accepts
+     * 
+     * <p>The `reason` field should clearly explain what's missing or incorrect so the
+     * customer knows exactly what to fix. This reason is visible to the customer
+     * and appears in the activity log.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public FlagInformationRequestEvidenceRequestBuilder flagInformationRequestEvidence() {
+        return new FlagInformationRequestEvidenceRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Flag evidence for an information request
+     * 
+     * <p>Flags evidence for an information request when it doesn't meet audit requirements,
+     * marking issues that need to be addressed before approval. This action changes the
+     * request's approvalStatus to a flagged state and creates an activity log entry.
+     * 
+     * <p>Flagging workflow:
+     * 1. Auditor reviews submitted evidence
+     * 2. If issues are found, auditor calls this endpoint with detailed reason
+     * 3. Request status changes to flagged state
+     * 4. Customer is notified and can see the reason in activity logs
+     * 5. Customer addresses issues and updates evidence
+     * 6. When ready, customer changes status back to awaiting review
+     * 7. Auditor reviews again and either flags again or accepts
+     * 
+     * <p>The `reason` field should clearly explain what's missing or incorrect so the
+     * customer knows exactly what to fix. This reason is visible to the customer
+     * and appears in the activity log.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param flagInformationRequestEvidenceInput Input for flagging evidence on an information request, indicating issues
+     *         that need to be addressed. This changes the request's approvalStatus to
+     *         a flagged state and creates an activity log entry.
+     *         
+     *         The customer will be notified and can resubmit evidence after addressing the issues.
+     * @return {@code CompletableFuture<FlagInformationRequestEvidenceResponse>} - The async response
+     */
+    public CompletableFuture<FlagInformationRequestEvidenceResponse> flagInformationRequestEvidence(
+            String auditId, String requestId,
+            FlagInformationRequestEvidenceInput flagInformationRequestEvidenceInput) {
+        FlagInformationRequestEvidenceRequest request =
+            FlagInformationRequestEvidenceRequest
+                .builder()
+                .auditId(auditId)
+                .requestId(requestId)
+                .flagInformationRequestEvidenceInput(flagInformationRequestEvidenceInput)
+                .build();
+        AsyncRequestOperation<FlagInformationRequestEvidenceRequest, FlagInformationRequestEvidenceResponse> operation
+              = new FlagInformationRequestEvidence.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
      * Accept evidence for an information request
      * 
      * <p>Accepts evidence for an information request, confirming that all submitted evidence
@@ -1963,60 +2731,105 @@ public class AsyncAudits {
 
 
     /**
-     * List information request activity
+     * Share information request list with customer
      * 
-     * <p>Retrieves a paginated list of activity logs for an information request, providing
-     * an audit trail of the changes and actions taken on it.
-     * 
-     * <p>Activity recording Vanta's automated preparation of a request is never returned by
-     * this endpoint, so `fillOutcome` is always null here. Some internal status transitions
-     * are also withheld, and those are removed after a page is selected, so a page can
-     * contain fewer entries than `pageSize` — or none at all — while more pages remain.
-     * Follow `results.pageInfo.hasNextPage` rather than treating a short or empty page as
-     * the end of the list.
-     * 
-     * <p>If the information request has been deleted, this endpoint returns a 4xx
-     * HTTP error instead of its activity.
-     * 
-     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
-     * allowing efficient polling for changes without retrieving the entire dataset.
-     * 
-     * <p>Pagination usage:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
-     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
-     * 4. Repeat until `hasNextPage` is false
-     * 
-     * <p>Delta sync usage:
-     * 1. Store the timestamp of your last sync
-     * 2. Pass that timestamp as `changedSinceDate`
-     * 3. Only activity created since that timestamp is returned
-     * 4. Process updates to track all changes to the information request
-     * 5. Update your last sync timestamp to the current time
+     * <p>Shares the current information request list for an audit with the customer organization,
+     * making it visible in their portal. This action allows the customer to see all information
+     * requests that have been created for their audit. Only IRL audits are supported.
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
      * @return The async call builder
      */
-    public ListInformationRequestActivityRequestBuilder listInformationRequestActivity() {
-        return new ListInformationRequestActivityRequestBuilder(sdkConfiguration);
+    public ShareInformationRequestListRequestBuilder shareInformationRequestList() {
+        return new ShareInformationRequestListRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * List information request activity
+     * Share information request list with customer
      * 
-     * <p>Retrieves a paginated list of activity logs for an information request, providing
-     * an audit trail of the changes and actions taken on it.
+     * <p>Shares the current information request list for an audit with the customer organization,
+     * making it visible in their portal. This action allows the customer to see all information
+     * requests that have been created for their audit. Only IRL audits are supported.
      * 
-     * <p>Activity recording Vanta's automated preparation of a request is never returned by
-     * this endpoint, so `fillOutcome` is always null here. Some internal status transitions
-     * are also withheld, and those are removed after a page is selected, so a page can
-     * contain fewer entries than `pageSize` — or none at all — while more pages remain.
-     * Follow `results.pageInfo.hasNextPage` rather than treating a short or empty page as
-     * the end of the list.
+     * <p>Rate limit: 50 requests / minute.
      * 
-     * <p>If the information request has been deleted, this endpoint returns a 4xx
-     * HTTP error instead of its activity.
+     * @param auditId 
+     * @return {@code CompletableFuture<ShareInformationRequestListResponse>} - The async response
+     */
+    public CompletableFuture<ShareInformationRequestListResponse> shareInformationRequestList(String auditId) {
+        ShareInformationRequestListRequest request =
+            ShareInformationRequestListRequest
+                .builder()
+                .auditId(auditId)
+                .build();
+        AsyncRequestOperation<ShareInformationRequestListRequest, ShareInformationRequestListResponse> operation
+              = new ShareInformationRequestList.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get framework codes for an audit
+     * 
+     * <p>Retrieves all valid framework codes for the specified audit. This endpoint helps users discover
+     * which framework codes are available for creating and updating information requests for this audit.
+     * 
+     * <p>Use this endpoint to:
+     * - Discover available framework codes (`frameworkCodes`, the original flat list)
+     * - Validate framework codes against the audit's frameworks
+     * - See which codes belong to which in-scope framework (`codesByFramework`)
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetFrameworkCodesRequestBuilder getFrameworkCodes() {
+        return new GetFrameworkCodesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get framework codes for an audit
+     * 
+     * <p>Retrieves all valid framework codes for the specified audit. This endpoint helps users discover
+     * which framework codes are available for creating and updating information requests for this audit.
+     * 
+     * <p>Use this endpoint to:
+     * - Discover available framework codes (`frameworkCodes`, the original flat list)
+     * - Validate framework codes against the audit's frameworks
+     * - See which codes belong to which in-scope framework (`codesByFramework`)
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @return {@code CompletableFuture<GetFrameworkCodesResponse>} - The async response
+     */
+    public CompletableFuture<GetFrameworkCodesResponse> getFrameworkCodes(String auditId) {
+        GetFrameworkCodesRequest request =
+            GetFrameworkCodesRequest
+                .builder()
+                .auditId(auditId)
+                .build();
+        AsyncRequestOperation<GetFrameworkCodesRequest, GetFrameworkCodesResponse> operation
+              = new GetFrameworkCodes.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List evidence for an information request
+     * 
+     * <p>Retrieves a paginated list of all evidence attached to an information request,
+     * enabling auditors to review evidence submitted by customers.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>If the information request itself has been deleted, this endpoint returns a
+     * 4xx HTTP error instead of its evidence.
      * 
      * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
      * allowing efficient polling for changes without retrieving the entire dataset.
@@ -2030,18 +2843,229 @@ public class AsyncAudits {
      * <p>Delta sync usage:
      * 1. Store the timestamp of your last sync
      * 2. Pass that timestamp as `changedSinceDate`
-     * 3. Only activity created since that timestamp is returned
-     * 4. Process updates to track all changes to the information request
+     * 3. Only evidence created, modified, shared, or deleted since that timestamp is returned
+     * 4. Process updates, including soft-deletes (deletionDate !== null)
      * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Identifying evidence and files:
+     * - Use `id` as the key for each evidence item, whatever its type.
+     * - To recognize the same file across information requests, use the
+     * 
+     * <p>file key for the evidence type. UPLOADED_DOCUMENT uses `evidence.id`.
+     * VANTA_DOCUMENT and VANTA_POLICY use `evidence.file.id`, which
+     * identifies the source document or policy file. VANTA_TEST uses
+     * `evidence.snapshotId` plus `evidence.fileType`. LINK, OBSERVATION,
+     * and VANTA_TEST_SNAPSHOT evidence has no file.
+     * - Do not use `file.url` as a key. It is a temporary download link.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListInformationRequestEvidenceRequestBuilder listInformationRequestEvidence() {
+        return new ListInformationRequestEvidenceRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List evidence for an information request
+     * 
+     * <p>Retrieves a paginated list of all evidence attached to an information request,
+     * enabling auditors to review evidence submitted by customers.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>If the information request itself has been deleted, this endpoint returns a
+     * 4xx HTTP error instead of its evidence.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only evidence created, modified, shared, or deleted since that timestamp is returned
+     * 4. Process updates, including soft-deletes (deletionDate !== null)
+     * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Identifying evidence and files:
+     * - Use `id` as the key for each evidence item, whatever its type.
+     * - To recognize the same file across information requests, use the
+     * 
+     * <p>file key for the evidence type. UPLOADED_DOCUMENT uses `evidence.id`.
+     * VANTA_DOCUMENT and VANTA_POLICY use `evidence.file.id`, which
+     * identifies the source document or policy file. VANTA_TEST uses
+     * `evidence.snapshotId` plus `evidence.fileType`. LINK, OBSERVATION,
+     * and VANTA_TEST_SNAPSHOT evidence has no file.
+     * - Do not use `file.url` as a key. It is a temporary download link.
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListInformationRequestActivityResponse>} - The async response
+     * @return {@code CompletableFuture<ListInformationRequestEvidenceResponse>} - The async response
      */
-    public CompletableFuture<ListInformationRequestActivityResponse> listInformationRequestActivity(ListInformationRequestActivityRequest request) {
-        AsyncRequestOperation<ListInformationRequestActivityRequest, ListInformationRequestActivityResponse> operation
-              = new ListInformationRequestActivity.Async(sdkConfiguration, _headers);
+    public CompletableFuture<ListInformationRequestEvidenceResponse> listInformationRequestEvidence(ListInformationRequestEvidenceRequest request) {
+        AsyncRequestOperation<ListInformationRequestEvidenceRequest, ListInformationRequestEvidenceResponse> operation
+              = new ListInformationRequestEvidence.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get information request evidence by ID
+     * 
+     * <p>Retrieves a single evidence item attached to an information request by its ID.
+     * 
+     * <p>This endpoint always includes soft-deleted evidence (where `deletionDate !== null`),
+     * so an evidence ID surfaced by a `changedSinceDate` delta sync stays fetchable after
+     * the evidence is deleted. Clients should check the `deletionDate` field to identify
+     * and handle deleted records appropriately in their systems.
+     * 
+     * <p>Evidence is only resolvable while its information request exists. Once the
+     * request itself is deleted, this endpoint returns a 4xx HTTP error instead
+     * of the evidence. Check the request's `deletionDate` using
+     * `GET /audits/{auditId}/information-requests` before treating its evidence
+     * as deleted too.
+     * 
+     * <p>Evidence that the customer has not shared with the auditor is reported as not
+     * found, rather than distinguishing it from an ID that does not exist.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetInformationRequestEvidenceRequestBuilder getInformationRequestEvidence() {
+        return new GetInformationRequestEvidenceRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get information request evidence by ID
+     * 
+     * <p>Retrieves a single evidence item attached to an information request by its ID.
+     * 
+     * <p>This endpoint always includes soft-deleted evidence (where `deletionDate !== null`),
+     * so an evidence ID surfaced by a `changedSinceDate` delta sync stays fetchable after
+     * the evidence is deleted. Clients should check the `deletionDate` field to identify
+     * and handle deleted records appropriately in their systems.
+     * 
+     * <p>Evidence is only resolvable while its information request exists. Once the
+     * request itself is deleted, this endpoint returns a 4xx HTTP error instead
+     * of the evidence. Check the request's `deletionDate` using
+     * `GET /audits/{auditId}/information-requests` before treating its evidence
+     * as deleted too.
+     * 
+     * <p>Evidence that the customer has not shared with the auditor is reported as not
+     * found, rather than distinguishing it from an ID that does not exist.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param evidenceId 
+     * @return {@code CompletableFuture<GetInformationRequestEvidenceResponse>} - The async response
+     */
+    public CompletableFuture<GetInformationRequestEvidenceResponse> getInformationRequestEvidence(
+            String auditId, String requestId,
+            String evidenceId) {
+        GetInformationRequestEvidenceRequest request =
+            GetInformationRequestEvidenceRequest
+                .builder()
+                .auditId(auditId)
+                .requestId(requestId)
+                .evidenceId(evidenceId)
+                .build();
+        AsyncRequestOperation<GetInformationRequestEvidenceRequest, GetInformationRequestEvidenceResponse> operation
+              = new GetInformationRequestEvidence.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get test snapshot detail for an evidence row
+     * 
+     * <p>Retrieves the rich detail for a single VANTA_TEST_SNAPSHOT evidence row
+     * attached to an information request. The response includes test-level
+     * metadata (description, integrations, SLA), the raw test data captured
+     * at snapshot time, and the resources that were excluded from the test
+     * (out-of-scope resources).
+     * 
+     * <p>For structured snapshots, the `rawTestData` array contains one row per
+     * resource the test ran against; each row carries `resourceId`,
+     * `resourceType`, and the raw JSON for that resource.
+     * 
+     * <p>For unstructured snapshots, the `rawTestData` array contains a single
+     * row with `resourceId` and `resourceType` set to `null` and `rawJson`
+     * containing the entire test-run JSON blob.
+     * 
+     * <p>The `outOfScopeResources` field lists resources excluded at the test
+     * level (customer-disabled) and the framework level (segment
+     * configuration). Empty exclusion groups are filtered out.
+     * 
+     * <p>The `apiRequests` array contains the HTTP requests captured during API
+     * introspection tests. Empty when the test does not perform API
+     * introspection.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder getInformationRequestTestSnapshotEvidenceDetail() {
+        return new GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get test snapshot detail for an evidence row
+     * 
+     * <p>Retrieves the rich detail for a single VANTA_TEST_SNAPSHOT evidence row
+     * attached to an information request. The response includes test-level
+     * metadata (description, integrations, SLA), the raw test data captured
+     * at snapshot time, and the resources that were excluded from the test
+     * (out-of-scope resources).
+     * 
+     * <p>For structured snapshots, the `rawTestData` array contains one row per
+     * resource the test ran against; each row carries `resourceId`,
+     * `resourceType`, and the raw JSON for that resource.
+     * 
+     * <p>For unstructured snapshots, the `rawTestData` array contains a single
+     * row with `resourceId` and `resourceType` set to `null` and `rawJson`
+     * containing the entire test-run JSON blob.
+     * 
+     * <p>The `outOfScopeResources` field lists resources excluded at the test
+     * level (customer-disabled) and the framework level (segment
+     * configuration). Empty exclusion groups are filtered out.
+     * 
+     * <p>The `apiRequests` array contains the HTTP requests captured during API
+     * introspection tests. Empty when the test does not perform API
+     * introspection.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param evidenceId 
+     * @return {@code CompletableFuture<GetInformationRequestTestSnapshotEvidenceDetailResponse>} - The async response
+     */
+    public CompletableFuture<GetInformationRequestTestSnapshotEvidenceDetailResponse> getInformationRequestTestSnapshotEvidenceDetail(
+            String auditId, String requestId,
+            String evidenceId) {
+        GetInformationRequestTestSnapshotEvidenceDetailRequest request =
+            GetInformationRequestTestSnapshotEvidenceDetailRequest
+                .builder()
+                .auditId(auditId)
+                .requestId(requestId)
+                .evidenceId(evidenceId)
+                .build();
+        AsyncRequestOperation<GetInformationRequestTestSnapshotEvidenceDetailRequest, GetInformationRequestTestSnapshotEvidenceDetailResponse> operation
+              = new GetInformationRequestTestSnapshotEvidenceDetail.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
@@ -2339,17 +3363,360 @@ public class AsyncAudits {
 
 
     /**
-     * List evidence for an information request
+     * List auditor files for an information request
      * 
-     * <p>Retrieves a paginated list of all evidence attached to an information request,
-     * enabling auditors to review evidence submitted by customers.
+     * <p>Lists the files auditors shared with the customer on an information
+     * request, newest upload first, with ties ordered by ID so pages are stable.
+     * Deleted files are not returned; list again to see the current set.
      * 
-     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
-     * Clients should check the `deletionDate` field to identify and handle deleted records
-     * appropriately in their systems.
+     * <p>Each `url` is a download link that expires one hour after it is issued.
+     * List the files again to get fresh download URLs. Do not use `url` as a key.
      * 
-     * <p>If the information request itself has been deleted, this endpoint returns a
-     * 4xx HTTP error instead of its evidence.
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListInformationRequestAuditorFilesRequestBuilder listInformationRequestAuditorFiles() {
+        return new ListInformationRequestAuditorFilesRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List auditor files for an information request
+     * 
+     * <p>Lists the files auditors shared with the customer on an information
+     * request, newest upload first, with ties ordered by ID so pages are stable.
+     * Deleted files are not returned; list again to see the current set.
+     * 
+     * <p>Each `url` is a download link that expires one hour after it is issued.
+     * List the files again to get fresh download URLs. Do not use `url` as a key.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @return {@code CompletableFuture<ListInformationRequestAuditorFilesResponse>} - The async response
+     */
+    public CompletableFuture<ListInformationRequestAuditorFilesResponse> listInformationRequestAuditorFiles(String auditId, String requestId) {
+        return listInformationRequestAuditorFiles(
+                auditId, requestId, Optional.empty(),
+                Optional.empty());
+    }
+
+    /**
+     * List auditor files for an information request
+     * 
+     * <p>Lists the files auditors shared with the customer on an information
+     * request, newest upload first, with ties ordered by ID so pages are stable.
+     * Deleted files are not returned; list again to see the current set.
+     * 
+     * <p>Each `url` is a download link that expires one hour after it is issued.
+     * List the files again to get fresh download URLs. Do not use `url` as a key.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param pageSize Maximum number of files to return per page.
+     * @param pageCursor Pagination cursor from a previous response. Provide to fetch the next page of files.
+     * @return {@code CompletableFuture<ListInformationRequestAuditorFilesResponse>} - The async response
+     */
+    public CompletableFuture<ListInformationRequestAuditorFilesResponse> listInformationRequestAuditorFiles(
+            String auditId, String requestId,
+            Optional<Integer> pageSize, Optional<String> pageCursor) {
+        ListInformationRequestAuditorFilesRequest request =
+            ListInformationRequestAuditorFilesRequest
+                .builder()
+                .auditId(auditId)
+                .requestId(requestId)
+                .pageSize(pageSize)
+                .pageCursor(pageCursor)
+                .build();
+        AsyncRequestOperation<ListInformationRequestAuditorFilesRequest, ListInformationRequestAuditorFilesResponse> operation
+              = new ListInformationRequestAuditorFiles.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Delete an auditor file from an information request
+     * 
+     * <p>Deletes an auditor file from an information request. Any auditor assigned
+     * to the audit may delete any auditor's file, not only their own. Identify
+     * the deleting auditor by `email`: they must be an active user in your audit
+     * firm and assigned to the audit, otherwise this returns 403.
+     * 
+     * <p>A completed audit returns 409; reopen the audit before deleting files.
+     * Approving the request does not lock its files. An unknown or already
+     * deleted file returns 404.
+     * 
+     * <p>Lists no longer return the file or new download URLs for it. Download URLs
+     * issued before the delete stay valid until they expire, at most one hour.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public DeleteInformationRequestAuditorFileRequestBuilder deleteInformationRequestAuditorFile() {
+        return new DeleteInformationRequestAuditorFileRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Delete an auditor file from an information request
+     * 
+     * <p>Deletes an auditor file from an information request. Any auditor assigned
+     * to the audit may delete any auditor's file, not only their own. Identify
+     * the deleting auditor by `email`: they must be an active user in your audit
+     * firm and assigned to the audit, otherwise this returns 403.
+     * 
+     * <p>A completed audit returns 409; reopen the audit before deleting files.
+     * Approving the request does not lock its files. An unknown or already
+     * deleted file returns 404.
+     * 
+     * <p>Lists no longer return the file or new download URLs for it. Download URLs
+     * issued before the delete stay valid until they expire, at most one hour.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param auditorFileId 
+     * @param deleteInformationRequestAuditorFileInput 
+     * @return {@code CompletableFuture<DeleteInformationRequestAuditorFileResponse>} - The async response
+     */
+    public CompletableFuture<DeleteInformationRequestAuditorFileResponse> deleteInformationRequestAuditorFile(
+            String auditId, String requestId,
+            String auditorFileId, DeleteInformationRequestAuditorFileInput deleteInformationRequestAuditorFileInput) {
+        DeleteInformationRequestAuditorFileRequest request =
+            DeleteInformationRequestAuditorFileRequest
+                .builder()
+                .auditId(auditId)
+                .requestId(requestId)
+                .auditorFileId(auditorFileId)
+                .deleteInformationRequestAuditorFileInput(deleteInformationRequestAuditorFileInput)
+                .build();
+        AsyncRequestOperation<DeleteInformationRequestAuditorFileRequest, DeleteInformationRequestAuditorFileResponse> operation
+              = new DeleteInformationRequestAuditorFile.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Start an auditor file upload
+     * 
+     * <p>Starts an upload of a file an auditor provides for the customer, such as
+     * instructions or a template, on an information request. This does not upload
+     * customer evidence. Use this three-step flow:
+     * 
+     * <p>1. Call this endpoint with `email`, `filename` and `contentType` to receive
+     * 
+     * <p>an `uploadId`, a temporary `url` and form `fields`.
+     * 2. POST the file to `url` as `multipart/form-data` before `transferExpiresAt`.
+     * 
+     * <p>Copy every returned field name and value unchanged, then append the file
+     * under `file` as the final part. Do not hard-code the field names or send
+     * your Vanta bearer token to this URL. Let your HTTP client set the
+     * multipart Content-Type header and boundary. Wait for a 2xx response;
+     * the response body may be empty.
+     * 3. POST `{ "uploadId": "&lt;returned uploadId&gt;" }` to
+     * 
+     * <p>`/v1/audits/{auditId}/information-requests/{requestId}/auditor-files/uploads/finalize`
+     * and complete finalization before `finalizationExpiresAt`.
+     * 
+     * <p>The file is attached only after finalization succeeds. Each upload accepts
+     * one file up to 50MB, inclusive. The auditor identified
+     * by `email` is credited as the uploader and must be an active user in your
+     * firm with access to the audit. A completed audit returns 409.
+     * 
+     * <p>Each application is limited to 10 unfinished auditor file uploads per
+     * customer, across all audits and requests. Uploads count toward this limit
+     * until they are finalized, fail, or expire. Starting another upload at this
+     * limit returns 429, even if the earlier file transfers have succeeded.
+     * Repeating this start operation creates a new upload; it does not recover
+     * an earlier upload whose response was lost.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public InitiateInformationRequestAuditorFileUploadRequestBuilder initiateInformationRequestAuditorFileUpload() {
+        return new InitiateInformationRequestAuditorFileUploadRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Start an auditor file upload
+     * 
+     * <p>Starts an upload of a file an auditor provides for the customer, such as
+     * instructions or a template, on an information request. This does not upload
+     * customer evidence. Use this three-step flow:
+     * 
+     * <p>1. Call this endpoint with `email`, `filename` and `contentType` to receive
+     * 
+     * <p>an `uploadId`, a temporary `url` and form `fields`.
+     * 2. POST the file to `url` as `multipart/form-data` before `transferExpiresAt`.
+     * 
+     * <p>Copy every returned field name and value unchanged, then append the file
+     * under `file` as the final part. Do not hard-code the field names or send
+     * your Vanta bearer token to this URL. Let your HTTP client set the
+     * multipart Content-Type header and boundary. Wait for a 2xx response;
+     * the response body may be empty.
+     * 3. POST `{ "uploadId": "&lt;returned uploadId&gt;" }` to
+     * 
+     * <p>`/v1/audits/{auditId}/information-requests/{requestId}/auditor-files/uploads/finalize`
+     * and complete finalization before `finalizationExpiresAt`.
+     * 
+     * <p>The file is attached only after finalization succeeds. Each upload accepts
+     * one file up to 50MB, inclusive. The auditor identified
+     * by `email` is credited as the uploader and must be an active user in your
+     * firm with access to the audit. A completed audit returns 409.
+     * 
+     * <p>Each application is limited to 10 unfinished auditor file uploads per
+     * customer, across all audits and requests. Uploads count toward this limit
+     * until they are finalized, fail, or expire. Starting another upload at this
+     * limit returns 429, even if the earlier file transfers have succeeded.
+     * Repeating this start operation creates a new upload; it does not recover
+     * an earlier upload whose response was lost.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param initiateAuditorFileUploadInput 
+     * @return {@code CompletableFuture<InitiateInformationRequestAuditorFileUploadResponse>} - The async response
+     */
+    public CompletableFuture<InitiateInformationRequestAuditorFileUploadResponse> initiateInformationRequestAuditorFileUpload(
+            String auditId, String requestId,
+            InitiateAuditorFileUploadInput initiateAuditorFileUploadInput) {
+        InitiateInformationRequestAuditorFileUploadRequest request =
+            InitiateInformationRequestAuditorFileUploadRequest
+                .builder()
+                .auditId(auditId)
+                .requestId(requestId)
+                .initiateAuditorFileUploadInput(initiateAuditorFileUploadInput)
+                .build();
+        AsyncRequestOperation<InitiateInformationRequestAuditorFileUploadRequest, InitiateInformationRequestAuditorFileUploadResponse> operation
+              = new InitiateInformationRequestAuditorFileUpload.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Complete an auditor file upload and attach the file
+     * 
+     * <p>Completes an auditor file upload by validating the file and attaching it
+     * to the information request. First start an upload with
+     * `POST /v1/audits/{auditId}/information-requests/{requestId}/auditor-files/uploads`,
+     * then transfer the file to the returned `url` and wait for its 2xx response.
+     * Calling finalize before the file arrives ends that upload; start a new one.
+     * 
+     * <p>Send `{ "uploadId": "&lt;returned uploadId&gt;" }` using the same application,
+     * audit and information request that started the upload. Vanta uses the
+     * auditor identified by `email` at the start; that auditor must still be an
+     * active user in your firm with audit access. Unsupported file types return
+     * `422` during finalization.
+     * 
+     * <p>A 201 response contains the attached file's `id`, which differs from
+     * `uploadId`. Use `GET /v1/audits/{auditId}/information-requests/{requestId}/auditor-files`
+     * to find that ID and obtain a temporary download URL.
+     * 
+     * <p>Retry the same upload ID with backoff after a lost response, a 5xx or a 429.
+     * Stop retrying at `finalizationExpiresAt`. A 409 means the audit is
+     * completed; stop this attempt. For 404, 413 or 422, stop this attempt and
+     * correct the input or start a new upload.
+     * 
+     * <p>A 429 can mean too many requests, another finalization of this upload is
+     * still running, or too many files are being finalized for this application
+     * and customer.
+     * After a failed attempt, you may need to wait up to 60 seconds before
+     * retrying. Expired uploads, missing files and unsupported files return 422;
+     * files over 50MB return 413. Retrying a finalization
+     * that already succeeded returns the original auditor file ID, even if the
+     * file was later deleted; it does not attach the file again. Current access
+     * is still required.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public FinalizeInformationRequestAuditorFileUploadRequestBuilder finalizeInformationRequestAuditorFileUpload() {
+        return new FinalizeInformationRequestAuditorFileUploadRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Complete an auditor file upload and attach the file
+     * 
+     * <p>Completes an auditor file upload by validating the file and attaching it
+     * to the information request. First start an upload with
+     * `POST /v1/audits/{auditId}/information-requests/{requestId}/auditor-files/uploads`,
+     * then transfer the file to the returned `url` and wait for its 2xx response.
+     * Calling finalize before the file arrives ends that upload; start a new one.
+     * 
+     * <p>Send `{ "uploadId": "&lt;returned uploadId&gt;" }` using the same application,
+     * audit and information request that started the upload. Vanta uses the
+     * auditor identified by `email` at the start; that auditor must still be an
+     * active user in your firm with audit access. Unsupported file types return
+     * `422` during finalization.
+     * 
+     * <p>A 201 response contains the attached file's `id`, which differs from
+     * `uploadId`. Use `GET /v1/audits/{auditId}/information-requests/{requestId}/auditor-files`
+     * to find that ID and obtain a temporary download URL.
+     * 
+     * <p>Retry the same upload ID with backoff after a lost response, a 5xx or a 429.
+     * Stop retrying at `finalizationExpiresAt`. A 409 means the audit is
+     * completed; stop this attempt. For 404, 413 or 422, stop this attempt and
+     * correct the input or start a new upload.
+     * 
+     * <p>A 429 can mean too many requests, another finalization of this upload is
+     * still running, or too many files are being finalized for this application
+     * and customer.
+     * After a failed attempt, you may need to wait up to 60 seconds before
+     * retrying. Expired uploads, missing files and unsupported files return 422;
+     * files over 50MB return 413. Retrying a finalization
+     * that already succeeded returns the original auditor file ID, even if the
+     * file was later deleted; it does not attach the file again. Current access
+     * is still required.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param finalizeAuditorFileUploadInput 
+     * @return {@code CompletableFuture<FinalizeInformationRequestAuditorFileUploadResponse>} - The async response
+     */
+    public CompletableFuture<FinalizeInformationRequestAuditorFileUploadResponse> finalizeInformationRequestAuditorFileUpload(
+            String auditId, String requestId,
+            FinalizeAuditorFileUploadInput finalizeAuditorFileUploadInput) {
+        FinalizeInformationRequestAuditorFileUploadRequest request =
+            FinalizeInformationRequestAuditorFileUploadRequest
+                .builder()
+                .auditId(auditId)
+                .requestId(requestId)
+                .finalizeAuditorFileUploadInput(finalizeAuditorFileUploadInput)
+                .build();
+        AsyncRequestOperation<FinalizeInformationRequestAuditorFileUploadRequest, FinalizeInformationRequestAuditorFileUploadResponse> operation
+              = new FinalizeInformationRequestAuditorFileUpload.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List information request activity
+     * 
+     * <p>Retrieves a paginated list of activity logs for an information request, providing
+     * an audit trail of the changes and actions taken on it.
+     * 
+     * <p>Activity recording Vanta's automated preparation of a request is never returned by
+     * this endpoint, so `fillOutcome` is always null here. Some internal status transitions
+     * are also withheld, and those are removed after a page is selected, so a page can
+     * contain fewer entries than `pageSize` — or none at all — while more pages remain.
+     * Follow `results.pageInfo.hasNextPage` rather than treating a short or empty page as
+     * the end of the list.
+     * 
+     * <p>If the information request has been deleted, this endpoint returns a 4xx
+     * HTTP error instead of its activity.
      * 
      * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
      * allowing efficient polling for changes without retrieving the entire dataset.
@@ -2363,41 +3730,33 @@ public class AsyncAudits {
      * <p>Delta sync usage:
      * 1. Store the timestamp of your last sync
      * 2. Pass that timestamp as `changedSinceDate`
-     * 3. Only evidence created, modified, shared, or deleted since that timestamp is returned
-     * 4. Process updates, including soft-deletes (deletionDate !== null)
+     * 3. Only activity created since that timestamp is returned
+     * 4. Process updates to track all changes to the information request
      * 5. Update your last sync timestamp to the current time
-     * 
-     * <p>Identifying evidence and files:
-     * - Use `id` as the key for each evidence item, whatever its type.
-     * - To recognize the same file across information requests, use the
-     * 
-     * <p>file key for the evidence type. UPLOADED_DOCUMENT uses `evidence.id`.
-     * VANTA_DOCUMENT and VANTA_POLICY use `evidence.file.id`, which
-     * identifies the source document or policy file. VANTA_TEST uses
-     * `evidence.snapshotId` plus `evidence.fileType`. LINK, OBSERVATION,
-     * and VANTA_TEST_SNAPSHOT evidence has no file.
-     * - Do not use `file.url` as a key. It is a temporary download link.
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
      * @return The async call builder
      */
-    public ListInformationRequestEvidenceRequestBuilder listInformationRequestEvidence() {
-        return new ListInformationRequestEvidenceRequestBuilder(sdkConfiguration);
+    public ListInformationRequestActivityRequestBuilder listInformationRequestActivity() {
+        return new ListInformationRequestActivityRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * List evidence for an information request
+     * List information request activity
      * 
-     * <p>Retrieves a paginated list of all evidence attached to an information request,
-     * enabling auditors to review evidence submitted by customers.
+     * <p>Retrieves a paginated list of activity logs for an information request, providing
+     * an audit trail of the changes and actions taken on it.
      * 
-     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
-     * Clients should check the `deletionDate` field to identify and handle deleted records
-     * appropriately in their systems.
+     * <p>Activity recording Vanta's automated preparation of a request is never returned by
+     * this endpoint, so `fillOutcome` is always null here. Some internal status transitions
+     * are also withheld, and those are removed after a page is selected, so a page can
+     * contain fewer entries than `pageSize` — or none at all — while more pages remain.
+     * Follow `results.pageInfo.hasNextPage` rather than treating a short or empty page as
+     * the end of the list.
      * 
-     * <p>If the information request itself has been deleted, this endpoint returns a
-     * 4xx HTTP error instead of its evidence.
+     * <p>If the information request has been deleted, this endpoint returns a 4xx
+     * HTTP error instead of its activity.
      * 
      * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
      * allowing efficient polling for changes without retrieving the entire dataset.
@@ -2411,875 +3770,662 @@ public class AsyncAudits {
      * <p>Delta sync usage:
      * 1. Store the timestamp of your last sync
      * 2. Pass that timestamp as `changedSinceDate`
-     * 3. Only evidence created, modified, shared, or deleted since that timestamp is returned
+     * 3. Only activity created since that timestamp is returned
+     * 4. Process updates to track all changes to the information request
+     * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListInformationRequestActivityResponse>} - The async response
+     */
+    public CompletableFuture<ListInformationRequestActivityResponse> listInformationRequestActivity(ListInformationRequestActivityRequest request) {
+        AsyncRequestOperation<ListInformationRequestActivityRequest, ListInformationRequestActivityResponse> operation
+              = new ListInformationRequestActivity.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Get an audit evidence comment by ID
+     * 
+     * <p>Retrieves a single comment on a classic audit evidence item by its ID.
+     * 
+     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
+     * response. Clients should check `deletionDate` to determine whether the
+     * comment has been deleted. This matches
+     * `GET /audits/{auditId}/comments`, which supports `changedSinceDate` and
+     * returns soft-deleted comments for delta sync.
+     * 
+     * <p>Comments remain fetchable when the parent evidence item has been
+     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
+     * after evidence deletion.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public GetAuditEvidenceCommentRequestBuilder getAuditEvidenceComment() {
+        return new GetAuditEvidenceCommentRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Get an audit evidence comment by ID
+     * 
+     * <p>Retrieves a single comment on a classic audit evidence item by its ID.
+     * 
+     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
+     * response. Clients should check `deletionDate` to determine whether the
+     * comment has been deleted. This matches
+     * `GET /audits/{auditId}/comments`, which supports `changedSinceDate` and
+     * returns soft-deleted comments for delta sync.
+     * 
+     * <p>Comments remain fetchable when the parent evidence item has been
+     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
+     * after evidence deletion.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param auditEvidenceId 
+     * @param commentId 
+     * @return {@code CompletableFuture<GetAuditEvidenceCommentResponse>} - The async response
+     */
+    public CompletableFuture<GetAuditEvidenceCommentResponse> getAuditEvidenceComment(
+            String auditId, String auditEvidenceId,
+            String commentId) {
+        GetAuditEvidenceCommentRequest request =
+            GetAuditEvidenceCommentRequest
+                .builder()
+                .auditId(auditId)
+                .auditEvidenceId(auditEvidenceId)
+                .commentId(commentId)
+                .build();
+        AsyncRequestOperation<GetAuditEvidenceCommentRequest, GetAuditEvidenceCommentResponse> operation
+              = new GetAuditEvidenceComment.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Duplicate an IRL audit
+     * 
+     * <p>Duplicates an existing IRL audit into a new audit engagement with the supplied
+     * displayName, audit dates, early access date, and auditor roster. Company, audit
+     * type, and framework are copied from the source audit and cannot be changed.
+     * 
+     * <p>Each email in `allowAuditorEmails` must match an active user in the
+     * authenticated audit firm's domain. Provision auditors via `POST /auditors`
+     * before referencing them here, or copy emails from `GET /audits/{sourceAuditId}`
+     * → `allowAuditorEmails` when duplicating with the same roster.
+     * 
+     * <p>Information requests are copied from the source audit. After duplication:
+     * 
+     * <p>- Requests with Vanta evidence will be pre-filled and marked as internal review.
+     * 
+     * <p>Review them before sharing with your customer.
+     * - Requests where evidence was not available or was uploaded externally will need
+     * 
+     * <p>evidence added manually.
+     * - Evidence capture dates and due dates can be modified after duplication.
+     * 
+     * <p>Audits with generated information requests can be duplicated only after their information
+     * requests have been created successfully.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public DuplicateRequestBuilder duplicate() {
+        return new DuplicateRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Duplicate an IRL audit
+     * 
+     * <p>Duplicates an existing IRL audit into a new audit engagement with the supplied
+     * displayName, audit dates, early access date, and auditor roster. Company, audit
+     * type, and framework are copied from the source audit and cannot be changed.
+     * 
+     * <p>Each email in `allowAuditorEmails` must match an active user in the
+     * authenticated audit firm's domain. Provision auditors via `POST /auditors`
+     * before referencing them here, or copy emails from `GET /audits/{sourceAuditId}`
+     * → `allowAuditorEmails` when duplicating with the same roster.
+     * 
+     * <p>Information requests are copied from the source audit. After duplication:
+     * 
+     * <p>- Requests with Vanta evidence will be pre-filled and marked as internal review.
+     * 
+     * <p>Review them before sharing with your customer.
+     * - Requests where evidence was not available or was uploaded externally will need
+     * 
+     * <p>evidence added manually.
+     * - Evidence capture dates and due dates can be modified after duplication.
+     * 
+     * <p>Audits with generated information requests can be duplicated only after their information
+     * requests have been created successfully.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<DuplicateResponse>} - The async response
+     */
+    public CompletableFuture<DuplicateResponse> duplicate(DuplicateAuditRequest request) {
+        AsyncRequestOperation<DuplicateAuditRequest, DuplicateResponse> operation
+              = new Duplicate.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List audit controls
+     * 
+     * <p>Returns a paginated list of controls for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListAuditControlsRequestBuilder listControls() {
+        return new ListAuditControlsRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List audit controls
+     * 
+     * <p>Returns a paginated list of controls for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return {@code CompletableFuture<ListAuditControlsResponse>} - The async response
+     */
+    public CompletableFuture<ListAuditControlsResponse> listControls(ListAuditControlsRequest request) {
+        AsyncRequestOperation<ListAuditControlsRequest, ListAuditControlsResponse> operation
+              = new ListAuditControls.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Create a custom control for an audit
+     * 
+     * <p>Create a custom control for an audit.
+     * 
+     * <p>This endpoint supports classic audits only. Audits that use information request
+     * lists (IRL) are not supported and return a 422 error.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public CreateCustomControlRequestBuilder createCustomControl() {
+        return new CreateCustomControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * Create a custom control for an audit
+     * 
+     * <p>Create a custom control for an audit.
+     * 
+     * <p>This endpoint supports classic audits only. Audits that use information request
+     * lists (IRL) are not supported and return a 422 error.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param createCustomControlInput 
+     * @return {@code CompletableFuture<CreateCustomControlResponse>} - The async response
+     */
+    public CompletableFuture<CreateCustomControlResponse> createCustomControl(String auditId, CreateCustomControlInput createCustomControlInput) {
+        CreateCustomControlRequest request =
+            CreateCustomControlRequest
+                .builder()
+                .auditId(auditId)
+                .createCustomControlInput(createCustomControlInput)
+                .build();
+        AsyncRequestOperation<CreateCustomControlRequest, CreateCustomControlResponse> operation
+              = new CreateCustomControl.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List information requests linked to a control within an audit
+     * 
+     * <p>Returns a paginated list of active information requests linked to a specific
+     * control within an IRL audit. Only links saved on the audit's current
+     * control rows are included.
+     * 
+     * <p>Soft-deleted information requests are not included in the response. To
+     * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
+     * which supports `changedSinceDate` and includes soft-deleted records.
+     * 
+     * <p>Returns 404 when the control is not part of the audit. Returns an empty page
+     * when the control is part of the audit but has no active IRLs linked to it.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public ListInformationRequestsForControlRequestBuilder listInformationRequestsForControl() {
+        return new ListInformationRequestsForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List information requests linked to a control within an audit
+     * 
+     * <p>Returns a paginated list of active information requests linked to a specific
+     * control within an IRL audit. Only links saved on the audit's current
+     * control rows are included.
+     * 
+     * <p>Soft-deleted information requests are not included in the response. To
+     * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
+     * which supports `changedSinceDate` and includes soft-deleted records.
+     * 
+     * <p>Returns 404 when the control is not part of the audit. Returns an empty page
+     * when the control is part of the audit but has no active IRLs linked to it.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @return {@code CompletableFuture<ListInformationRequestsForControlResponse>} - The async response
+     */
+    public CompletableFuture<ListInformationRequestsForControlResponse> listInformationRequestsForControl(String auditId, String controlId) {
+        return listInformationRequestsForControl(
+                auditId, controlId, Optional.empty(),
+                Optional.empty());
+    }
+
+    /**
+     * List information requests linked to a control within an audit
+     * 
+     * <p>Returns a paginated list of active information requests linked to a specific
+     * control within an IRL audit. Only links saved on the audit's current
+     * control rows are included.
+     * 
+     * <p>Soft-deleted information requests are not included in the response. To
+     * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
+     * which supports `changedSinceDate` and includes soft-deleted records.
+     * 
+     * <p>Returns 404 when the control is not part of the audit. Returns an empty page
+     * when the control is part of the audit but has no active IRLs linked to it.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param pageSize Maximum number of information requests to return per page.
+     * @param pageCursor Pagination cursor from a previous response. Provide to fetch the next page of results.
+     * @return {@code CompletableFuture<ListInformationRequestsForControlResponse>} - The async response
+     */
+    public CompletableFuture<ListInformationRequestsForControlResponse> listInformationRequestsForControl(
+            String auditId, String controlId,
+            Optional<Integer> pageSize, Optional<String> pageCursor) {
+        ListInformationRequestsForControlRequest request =
+            ListInformationRequestsForControlRequest
+                .builder()
+                .auditId(auditId)
+                .controlId(controlId)
+                .pageSize(pageSize)
+                .pageCursor(pageCursor)
+                .build();
+        AsyncRequestOperation<ListInformationRequestsForControlRequest, ListInformationRequestsForControlResponse> operation
+              = new ListInformationRequestsForControl.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * List comments for a control within an audit
+     * 
+     * <p>Retrieves a paginated list of comments on a control within an IRL audit,
+     * enabling auditors to view collaboration history on the control.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only comments created, modified, or deleted since that timestamp are returned
      * 4. Process updates, including soft-deletes (deletionDate !== null)
      * 5. Update your last sync timestamp to the current time
      * 
-     * <p>Identifying evidence and files:
-     * - Use `id` as the key for each evidence item, whatever its type.
-     * - To recognize the same file across information requests, use the
+     * <p>Rate limit: 50 requests / minute.
      * 
-     * <p>file key for the evidence type. UPLOADED_DOCUMENT uses `evidence.id`.
-     * VANTA_DOCUMENT and VANTA_POLICY use `evidence.file.id`, which
-     * identifies the source document or policy file. VANTA_TEST uses
-     * `evidence.snapshotId` plus `evidence.fileType`. LINK, OBSERVATION,
-     * and VANTA_TEST_SNAPSHOT evidence has no file.
-     * - Do not use `file.url` as a key. It is a temporary download link.
+     * @return The async call builder
+     */
+    public ListCommentsForControlRequestBuilder listCommentsForControl() {
+        return new ListCommentsForControlRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List comments for a control within an audit
+     * 
+     * <p>Retrieves a paginated list of comments on a control within an IRL audit,
+     * enabling auditors to view collaboration history on the control.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only comments created, modified, or deleted since that timestamp are returned
+     * 4. Process updates, including soft-deletes (deletionDate !== null)
+     * 5. Update your last sync timestamp to the current time
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListInformationRequestEvidenceResponse>} - The async response
+     * @return {@code CompletableFuture<ListCommentsForControlResponse>} - The async response
      */
-    public CompletableFuture<ListInformationRequestEvidenceResponse> listInformationRequestEvidence(ListInformationRequestEvidenceRequest request) {
-        AsyncRequestOperation<ListInformationRequestEvidenceRequest, ListInformationRequestEvidenceResponse> operation
-              = new ListInformationRequestEvidence.Async(sdkConfiguration, _headers);
+    public CompletableFuture<ListCommentsForControlResponse> listCommentsForControl(ListCommentsForControlRequest request) {
+        AsyncRequestOperation<ListCommentsForControlRequest, ListCommentsForControlResponse> operation
+              = new ListCommentsForControl.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * Get information request evidence by ID
+     * Create a comment for a control within an audit
      * 
-     * <p>Retrieves a single evidence item attached to an information request by its ID.
+     * <p>Creates a new comment on a control within an IRL audit. The comment author
+     * must be an auditor in the audit firm making the request. The comment will be
+     * associated with the control and visible to all authorized users.
      * 
-     * <p>This endpoint always includes soft-deleted evidence (where `deletionDate !== null`),
-     * so an evidence ID surfaced by a `changedSinceDate` delta sync stays fetchable after
-     * the evidence is deleted. Clients should check the `deletionDate` field to identify
-     * and handle deleted records appropriately in their systems.
-     * 
-     * <p>Evidence is only resolvable while its information request exists. Once the
-     * request itself is deleted, this endpoint returns a 4xx HTTP error instead
-     * of the evidence. Check the request's `deletionDate` using
-     * `GET /audits/{auditId}/information-requests` before treating its evidence
-     * as deleted too.
-     * 
-     * <p>Evidence that the customer has not shared with the auditor is reported as not
-     * found, rather than distinguishing it from an ID that does not exist.
-     * 
-     * <p>Rate limit: 250 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public GetInformationRequestEvidenceRequestBuilder getInformationRequestEvidence() {
-        return new GetInformationRequestEvidenceRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Get information request evidence by ID
-     * 
-     * <p>Retrieves a single evidence item attached to an information request by its ID.
-     * 
-     * <p>This endpoint always includes soft-deleted evidence (where `deletionDate !== null`),
-     * so an evidence ID surfaced by a `changedSinceDate` delta sync stays fetchable after
-     * the evidence is deleted. Clients should check the `deletionDate` field to identify
-     * and handle deleted records appropriately in their systems.
-     * 
-     * <p>Evidence is only resolvable while its information request exists. Once the
-     * request itself is deleted, this endpoint returns a 4xx HTTP error instead
-     * of the evidence. Check the request's `deletionDate` using
-     * `GET /audits/{auditId}/information-requests` before treating its evidence
-     * as deleted too.
-     * 
-     * <p>Evidence that the customer has not shared with the auditor is reported as not
-     * found, rather than distinguishing it from an ID that does not exist.
-     * 
-     * <p>Rate limit: 250 requests / minute.
-     * 
-     * @param auditId 
-     * @param requestId 
-     * @param evidenceId 
-     * @return {@code CompletableFuture<GetInformationRequestEvidenceResponse>} - The async response
-     */
-    public CompletableFuture<GetInformationRequestEvidenceResponse> getInformationRequestEvidence(
-            String auditId, String requestId,
-            String evidenceId) {
-        GetInformationRequestEvidenceRequest request =
-            GetInformationRequestEvidenceRequest
-                .builder()
-                .auditId(auditId)
-                .requestId(requestId)
-                .evidenceId(evidenceId)
-                .build();
-        AsyncRequestOperation<GetInformationRequestEvidenceRequest, GetInformationRequestEvidenceResponse> operation
-              = new GetInformationRequestEvidence.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * Get test snapshot detail for an evidence row
-     * 
-     * <p>Retrieves the rich detail for a single VANTA_TEST_SNAPSHOT evidence row
-     * attached to an information request. The response includes test-level
-     * metadata (description, integrations, SLA), the raw test data captured
-     * at snapshot time, and the resources that were excluded from the test
-     * (out-of-scope resources).
-     * 
-     * <p>For structured snapshots, the `rawTestData` array contains one row per
-     * resource the test ran against; each row carries `resourceId`,
-     * `resourceType`, and the raw JSON for that resource.
-     * 
-     * <p>For unstructured snapshots, the `rawTestData` array contains a single
-     * row with `resourceId` and `resourceType` set to `null` and `rawJson`
-     * containing the entire test-run JSON blob.
-     * 
-     * <p>The `outOfScopeResources` field lists resources excluded at the test
-     * level (customer-disabled) and the framework level (segment
-     * configuration). Empty exclusion groups are filtered out.
-     * 
-     * <p>The `apiRequests` array contains the HTTP requests captured during API
-     * introspection tests. Empty when the test does not perform API
-     * introspection.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder getInformationRequestTestSnapshotEvidenceDetail() {
-        return new GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Get test snapshot detail for an evidence row
-     * 
-     * <p>Retrieves the rich detail for a single VANTA_TEST_SNAPSHOT evidence row
-     * attached to an information request. The response includes test-level
-     * metadata (description, integrations, SLA), the raw test data captured
-     * at snapshot time, and the resources that were excluded from the test
-     * (out-of-scope resources).
-     * 
-     * <p>For structured snapshots, the `rawTestData` array contains one row per
-     * resource the test ran against; each row carries `resourceId`,
-     * `resourceType`, and the raw JSON for that resource.
-     * 
-     * <p>For unstructured snapshots, the `rawTestData` array contains a single
-     * row with `resourceId` and `resourceType` set to `null` and `rawJson`
-     * containing the entire test-run JSON blob.
-     * 
-     * <p>The `outOfScopeResources` field lists resources excluded at the test
-     * level (customer-disabled) and the framework level (segment
-     * configuration). Empty exclusion groups are filtered out.
-     * 
-     * <p>The `apiRequests` array contains the HTTP requests captured during API
-     * introspection tests. Empty when the test does not perform API
-     * introspection.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId 
-     * @param requestId 
-     * @param evidenceId 
-     * @return {@code CompletableFuture<GetInformationRequestTestSnapshotEvidenceDetailResponse>} - The async response
-     */
-    public CompletableFuture<GetInformationRequestTestSnapshotEvidenceDetailResponse> getInformationRequestTestSnapshotEvidenceDetail(
-            String auditId, String requestId,
-            String evidenceId) {
-        GetInformationRequestTestSnapshotEvidenceDetailRequest request =
-            GetInformationRequestTestSnapshotEvidenceDetailRequest
-                .builder()
-                .auditId(auditId)
-                .requestId(requestId)
-                .evidenceId(evidenceId)
-                .build();
-        AsyncRequestOperation<GetInformationRequestTestSnapshotEvidenceDetailRequest, GetInformationRequestTestSnapshotEvidenceDetailResponse> operation
-              = new GetInformationRequestTestSnapshotEvidenceDetail.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * Flag evidence for an information request
-     * 
-     * <p>Flags evidence for an information request when it doesn't meet audit requirements,
-     * marking issues that need to be addressed before approval. This action changes the
-     * request's approvalStatus to a flagged state and creates an activity log entry.
-     * 
-     * <p>Flagging workflow:
-     * 1. Auditor reviews submitted evidence
-     * 2. If issues are found, auditor calls this endpoint with detailed reason
-     * 3. Request status changes to flagged state
-     * 4. Customer is notified and can see the reason in activity logs
-     * 5. Customer addresses issues and updates evidence
-     * 6. When ready, customer changes status back to awaiting review
-     * 7. Auditor reviews again and either flags again or accepts
-     * 
-     * <p>The `reason` field should clearly explain what's missing or incorrect so the
-     * customer knows exactly what to fix. This reason is visible to the customer
-     * and appears in the activity log.
+     * <p>Returns 404 when the control is not part of the audit.
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
      * @return The async call builder
      */
-    public FlagInformationRequestEvidenceRequestBuilder flagInformationRequestEvidence() {
-        return new FlagInformationRequestEvidenceRequestBuilder(sdkConfiguration);
+    public CreateCommentForControlRequestBuilder createCommentForControl() {
+        return new CreateCommentForControlRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Flag evidence for an information request
+     * Create a comment for a control within an audit
      * 
-     * <p>Flags evidence for an information request when it doesn't meet audit requirements,
-     * marking issues that need to be addressed before approval. This action changes the
-     * request's approvalStatus to a flagged state and creates an activity log entry.
+     * <p>Creates a new comment on a control within an IRL audit. The comment author
+     * must be an auditor in the audit firm making the request. The comment will be
+     * associated with the control and visible to all authorized users.
      * 
-     * <p>Flagging workflow:
-     * 1. Auditor reviews submitted evidence
-     * 2. If issues are found, auditor calls this endpoint with detailed reason
-     * 3. Request status changes to flagged state
-     * 4. Customer is notified and can see the reason in activity logs
-     * 5. Customer addresses issues and updates evidence
-     * 6. When ready, customer changes status back to awaiting review
-     * 7. Auditor reviews again and either flags again or accepts
-     * 
-     * <p>The `reason` field should clearly explain what's missing or incorrect so the
-     * customer knows exactly what to fix. This reason is visible to the customer
-     * and appears in the activity log.
+     * <p>Returns 404 when the control is not part of the audit.
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
-     * @param requestId 
-     * @param flagInformationRequestEvidenceInput Input for flagging evidence on an information request, indicating issues
-     *         that need to be addressed. This changes the request's approvalStatus to
-     *         a flagged state and creates an activity log entry.
-     *         
-     *         The customer will be notified and can resubmit evidence after addressing the issues.
-     * @return {@code CompletableFuture<FlagInformationRequestEvidenceResponse>} - The async response
+     * @param controlId 
+     * @param addAuditControlCommentInput Comments enable auditors and customers to collaborate on a control within an
+     *         audit. All comments are immediately visible to authorized parties once created.
+     * @return {@code CompletableFuture<CreateCommentForControlResponse>} - The async response
      */
-    public CompletableFuture<FlagInformationRequestEvidenceResponse> flagInformationRequestEvidence(
-            String auditId, String requestId,
-            FlagInformationRequestEvidenceInput flagInformationRequestEvidenceInput) {
-        FlagInformationRequestEvidenceRequest request =
-            FlagInformationRequestEvidenceRequest
+    public CompletableFuture<CreateCommentForControlResponse> createCommentForControl(
+            String auditId, String controlId,
+            AddAuditControlCommentInput addAuditControlCommentInput) {
+        CreateCommentForControlRequest request =
+            CreateCommentForControlRequest
                 .builder()
                 .auditId(auditId)
-                .requestId(requestId)
-                .flagInformationRequestEvidenceInput(flagInformationRequestEvidenceInput)
+                .controlId(controlId)
+                .addAuditControlCommentInput(addAuditControlCommentInput)
                 .build();
-        AsyncRequestOperation<FlagInformationRequestEvidenceRequest, FlagInformationRequestEvidenceResponse> operation
-              = new FlagInformationRequestEvidence.Async(sdkConfiguration, _headers);
+        AsyncRequestOperation<CreateCommentForControlRequest, CreateCommentForControlResponse> operation
+              = new CreateCommentForControl.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * List integrations for an audit
+     * Update a comment for a control within an audit
      * 
-     * <p>Retrieves integration population data for an audit.
-     * 
-     * <p>This endpoint provides access to integration records visible to auditors
-     * during an audit engagement. Integrations represent connected services
-     * (e.g., GitHub, AWS, Slack) that provide data for the audit.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches integration names (case-insensitive)
-     * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
-     * - `categoriesMatchesAny`: Filters by category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Results are sorted by integration display name (ascending). This sort order
-     * is fixed and cannot be customized via query parameters.
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
+     * <p>Updates an existing comment on a control. Only the original author
+     * of the comment can update it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
      */
-    public ListIntegrationsRequestBuilder listIntegrations() {
-        return new ListIntegrationsRequestBuilder(sdkConfiguration);
+    public UpdateCommentForControlRequestBuilder updateCommentForControl() {
+        return new UpdateCommentForControlRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * List integrations for an audit
-     * 
-     * <p>Retrieves integration population data for an audit.
-     * 
-     * <p>This endpoint provides access to integration records visible to auditors
-     * during an audit engagement. Integrations represent connected services
-     * (e.g., GitHub, AWS, Slack) that provide data for the audit.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches integration names (case-insensitive)
-     * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
-     * - `categoriesMatchesAny`: Filters by category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Results are sorted by integration display name (ascending). This sort order
-     * is fixed and cannot be customized via query parameters.
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListIntegrationsResponse>} - The async response
-     */
-    public CompletableFuture<ListIntegrationsResponse> listIntegrations(ListIntegrationsRequest request) {
-        AsyncRequestOperation<ListIntegrationsRequest, ListIntegrationsResponse> operation
-              = new ListIntegrations.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List snapshotted issues for an audit
-     * 
-     * <p>Retrieves a list of all issues that have been shared with an audit.
-     * 
-     * <p>The issues returned are immutable, point-in-time snapshots; there may be duplicates of issues that
-     * have been snapshotted at different times.
-     * The GET /audits/{auditId}/issues/snapshots endpoint can be used to retrieve metadata about the
-     * snapshots that issues belong to.
-     * Issues represent compliance findings from a variety of sources that need to be tracked and
-     * remediated.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: full text search across issue title and description
-     * - `snapshotId`: filtering to a specific snapshot or snapshots, which represent point-in-time
-     * captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs
-     * and metadata.
-     * - `createdAfterDate` / `createdBeforeDate`: filter to issues created within a date range (inclusive)
-     * - `detectedAfterDate` / `detectedBeforeDate`: filter to issues detected within a date range
-     * (inclusive)
-     * 
-     * <p>Results are sorted by issue creation date in descending order (newest first) by default.
-     * Use `orderBy` and `orderDirection` to customize sorting.
-     * Sort parameters must remain consistent across paginated requests.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ListAuditIssuesRequestBuilder listAuditIssues() {
-        return new ListAuditIssuesRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List snapshotted issues for an audit
-     * 
-     * <p>Retrieves a list of all issues that have been shared with an audit.
-     * 
-     * <p>The issues returned are immutable, point-in-time snapshots; there may be duplicates of issues that
-     * have been snapshotted at different times.
-     * The GET /audits/{auditId}/issues/snapshots endpoint can be used to retrieve metadata about the
-     * snapshots that issues belong to.
-     * Issues represent compliance findings from a variety of sources that need to be tracked and
-     * remediated.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: full text search across issue title and description
-     * - `snapshotId`: filtering to a specific snapshot or snapshots, which represent point-in-time
-     * captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs
-     * and metadata.
-     * - `createdAfterDate` / `createdBeforeDate`: filter to issues created within a date range (inclusive)
-     * - `detectedAfterDate` / `detectedBeforeDate`: filter to issues detected within a date range
-     * (inclusive)
-     * 
-     * <p>Results are sorted by issue creation date in descending order (newest first) by default.
-     * Use `orderBy` and `orderDirection` to customize sorting.
-     * Sort parameters must remain consistent across paginated requests.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListAuditIssuesResponse>} - The async response
-     */
-    public CompletableFuture<ListAuditIssuesResponse> listAuditIssues(ListAuditIssuesRequest request) {
-        AsyncRequestOperation<ListAuditIssuesRequest, ListAuditIssuesResponse> operation
-              = new ListAuditIssues.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List snapshotted issues for an audit
-     * 
-     * <p>Retrieves a list of snapshots that have been shared with an audit.
-     * 
-     * <p>The snapshots returned contain metadata about point-in-time captures of issues for an audit.
-     * This data can be used to filter down the list of issues to specific snapshots when querying the GET
-     * /audits/{auditId}/issues/items endpoint.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: full text search across snapshot title and description
-     * 
-     * <p>Results are sorted by snapshot creation date in descending order (newest first).
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ListAuditSnapshotsRequestBuilder listAuditSnapshots() {
-        return new ListAuditSnapshotsRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List snapshotted issues for an audit
-     * 
-     * <p>Retrieves a list of snapshots that have been shared with an audit.
-     * 
-     * <p>The snapshots returned contain metadata about point-in-time captures of issues for an audit.
-     * This data can be used to filter down the list of issues to specific snapshots when querying the GET
-     * /audits/{auditId}/issues/items endpoint.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: full text search across snapshot title and description
-     * 
-     * <p>Results are sorted by snapshot creation date in descending order (newest first).
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId The audit ID
-     * @return {@code CompletableFuture<ListAuditSnapshotsResponse>} - The async response
-     */
-    public CompletableFuture<ListAuditSnapshotsResponse> listAuditSnapshots(String auditId) {
-        return listAuditSnapshots(
-                auditId, Optional.empty(), Optional.empty(),
-                Optional.empty());
-    }
-
-    /**
-     * List snapshotted issues for an audit
-     * 
-     * <p>Retrieves a list of snapshots that have been shared with an audit.
-     * 
-     * <p>The snapshots returned contain metadata about point-in-time captures of issues for an audit.
-     * This data can be used to filter down the list of issues to specific snapshots when querying the GET
-     * /audits/{auditId}/issues/items endpoint.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: full text search across snapshot title and description
-     * 
-     * <p>Results are sorted by snapshot creation date in descending order (newest first).
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId The audit ID
-     * @param pageSize Maximum number of results per page (1-100, default 10)
-     * @param pageCursor Pagination cursor from previous response
-     * @param search Search term for filtering by snapshot title and description
-     * @return {@code CompletableFuture<ListAuditSnapshotsResponse>} - The async response
-     */
-    public CompletableFuture<ListAuditSnapshotsResponse> listAuditSnapshots(
-            String auditId, Optional<Integer> pageSize,
-            Optional<String> pageCursor, Optional<String> search) {
-        ListAuditSnapshotsRequest request =
-            ListAuditSnapshotsRequest
-                .builder()
-                .auditId(auditId)
-                .pageSize(pageSize)
-                .pageCursor(pageCursor)
-                .search(search)
-                .build();
-        AsyncRequestOperation<ListAuditSnapshotsRequest, ListAuditSnapshotsResponse> operation
-              = new ListAuditSnapshots.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List vendors for an audit
-     * 
-     * <p>Retrieves vendor population data for an audit.
-     * 
-     * <p>This endpoint provides access to vendor records visible to auditors
-     * during an audit engagement.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches vendor names (case-insensitive)
-     * - `vendorStatusesMatchesAny`: Filters by vendor status (ACTIVE, ARCHIVED, IN_PROCUREMENT)
-     * - `inherentRiskMatchesAny`: Filters by inherent risk level
-     * 
-     * <p>Results are sorted by name (ascending) by default.
-     * Use `orderBy` and `orderDirection` to customize sorting.
-     * Sort parameters must remain consistent across paginated requests.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ListVendorsRequestBuilder listVendors() {
-        return new ListVendorsRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List vendors for an audit
-     * 
-     * <p>Retrieves vendor population data for an audit.
-     * 
-     * <p>This endpoint provides access to vendor records visible to auditors
-     * during an audit engagement.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches vendor names (case-insensitive)
-     * - `vendorStatusesMatchesAny`: Filters by vendor status (ACTIVE, ARCHIVED, IN_PROCUREMENT)
-     * - `inherentRiskMatchesAny`: Filters by inherent risk level
-     * 
-     * <p>Results are sorted by name (ascending) by default.
-     * Use `orderBy` and `orderDirection` to customize sorting.
-     * Sort parameters must remain consistent across paginated requests.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListVendorsResponse>} - The async response
-     */
-    public CompletableFuture<ListVendorsResponse> listVendors(ListVendorsRequest request) {
-        AsyncRequestOperation<ListVendorsRequest, ListVendorsResponse> operation
-              = new ListVendors.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List monitored computers
-     * 
-     * <p>Returns a list of computers monitored by an MDM (with an integration built
-     * by Vanta) or by Vanta Device Monitor. Currently this list does not include
-     * resources from partner or customer-built integrations.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public ListMonitoredComputersInAuditScopeRequestBuilder listMonitoredComputersInAuditScope() {
-        return new ListMonitoredComputersInAuditScopeRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List monitored computers
-     * 
-     * <p>Returns a list of computers monitored by an MDM (with an integration built
-     * by Vanta) or by Vanta Device Monitor. Currently this list does not include
-     * resources from partner or customer-built integrations.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * Update a comment for a control within an audit
+     * 
+     * <p>Updates an existing comment on a control. Only the original author
+     * of the comment can update it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
-     * @return {@code CompletableFuture<ListMonitoredComputersInAuditScopeResponse>} - The async response
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     * @param controlId 
+     * @param commentId 
+     * @param updateAuditControlCommentInput Updates an existing comment on a control.
+     *         Only the original author of the comment can update it.
+     * @return {@code CompletableFuture<UpdateCommentForControlResponse>} - The async response
      */
-    @Deprecated
-    public CompletableFuture<ListMonitoredComputersInAuditScopeResponse> listMonitoredComputersInAuditScope(String auditId) {
-        return listMonitoredComputersInAuditScope(
-                auditId, Optional.empty(), Optional.empty(),
-                Optional.empty());
+    public CompletableFuture<UpdateCommentForControlResponse> updateCommentForControl(
+            String auditId, String controlId,
+            String commentId, UpdateAuditControlCommentInput updateAuditControlCommentInput) {
+        UpdateCommentForControlRequest request =
+            UpdateCommentForControlRequest
+                .builder()
+                .auditId(auditId)
+                .controlId(controlId)
+                .commentId(commentId)
+                .updateAuditControlCommentInput(updateAuditControlCommentInput)
+                .build();
+        AsyncRequestOperation<UpdateCommentForControlRequest, UpdateCommentForControlResponse> operation
+              = new UpdateCommentForControl.Async(sdkConfiguration, _headers);
+        return operation.doRequest(request)
+            .thenCompose(operation::handleResponse);
+    }
+
+
+    /**
+     * Delete a comment for a control within an audit
+     * 
+     * <p>Deletes an existing comment on a control. Only the original author
+     * of the comment can delete it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @return The async call builder
+     */
+    public DeleteCommentForControlRequestBuilder deleteCommentForControl() {
+        return new DeleteCommentForControlRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * List monitored computers
+     * Delete a comment for a control within an audit
      * 
-     * <p>Returns a list of computers monitored by an MDM (with an integration built
-     * by Vanta) or by Vanta Device Monitor. Currently this list does not include
-     * resources from partner or customer-built integrations.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
+     * <p>Deletes an existing comment on a control. Only the original author
+     * of the comment can delete it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @param auditId 
-     * @param pageSize 
-     * @param pageCursor 
-     * @param complianceStatusFilterMatchesAny Filters for monitored computers matching any status declared in the filter.
-     * @return {@code CompletableFuture<ListMonitoredComputersInAuditScopeResponse>} - The async response
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     * @param controlId 
+     * @param commentId 
+     * @param deleteAuditControlCommentInput Deletes an existing comment on a control.
+     *         Only the original author of the comment can delete it.
+     * @return {@code CompletableFuture<DeleteCommentForControlResponse>} - The async response
      */
-    @Deprecated
-    public CompletableFuture<ListMonitoredComputersInAuditScopeResponse> listMonitoredComputersInAuditScope(
-            String auditId, Optional<Integer> pageSize,
-            Optional<String> pageCursor, Optional<? extends List<ComputerStatusFilter>> complianceStatusFilterMatchesAny) {
-        ListMonitoredComputersInAuditScopeRequest request =
-            ListMonitoredComputersInAuditScopeRequest
+    public CompletableFuture<DeleteCommentForControlResponse> deleteCommentForControl(
+            String auditId, String controlId,
+            String commentId, DeleteAuditControlCommentInput deleteAuditControlCommentInput) {
+        DeleteCommentForControlRequest request =
+            DeleteCommentForControlRequest
                 .builder()
                 .auditId(auditId)
-                .pageSize(pageSize)
-                .pageCursor(pageCursor)
-                .complianceStatusFilterMatchesAny(complianceStatusFilterMatchesAny)
+                .controlId(controlId)
+                .commentId(commentId)
+                .deleteAuditControlCommentInput(deleteAuditControlCommentInput)
                 .build();
-        AsyncRequestOperation<ListMonitoredComputersInAuditScopeRequest, ListMonitoredComputersInAuditScopeResponse> operation
-              = new ListMonitoredComputersInAuditScope.Async(sdkConfiguration, _headers);
+        AsyncRequestOperation<DeleteCommentForControlRequest, DeleteCommentForControlResponse> operation
+              = new DeleteCommentForControl.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * Get organization information for an audit
+     * Upsert a control's assessment within an audit
      * 
-     * <p>Retrieves organization information for an audit.
+     * <p>Records (upserts) an auditor's assessment state and justification for a
+     * control within an IRL audit — the API equivalent of assessing a control in
+     * the web app. Overwrites the assessment for this control in the chosen
+     * audit segment.
      * 
-     * <p>This endpoint returns a single record containing the organization's
-     * business information visible to auditors during an audit engagement.
+     * <p>`segmentId` may be any segment on the audit, `PROGRAM` or `SYSTEM` (see
+     * `segments` on the audit). It may be omitted only when the audit has
+     * exactly one segment. The `assessmentState` must be valid for that
+     * segment's framework (the request is rejected otherwise). The acting
+     * auditor is identified by `auditorEmail`, which must belong to the audit
+     * firm making the request.
      * 
-     * <p>Sorting and pagination are not applicable.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
+     * <p>Returns 404 when the control is not part of the audit or the auditor email
+     * does not resolve to a firm user. Returns 422 when `segmentId` is omitted
+     * on an audit with more than one segment, when `segmentId` is not a segment
+     * on this audit, or when the control is not assigned to that segment for
+     * this audit. Applies to both Full and Controlled Audit View audits.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
      * @return The async call builder
      */
-    public GetOrganizationInformationRequestBuilder getOrganizationInformation() {
-        return new GetOrganizationInformationRequestBuilder(sdkConfiguration);
+    public UpsertAssessmentForControlRequestBuilder upsertAssessmentForControl() {
+        return new UpsertAssessmentForControlRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * Get organization information for an audit
+     * Upsert a control's assessment within an audit
      * 
-     * <p>Retrieves organization information for an audit.
+     * <p>Records (upserts) an auditor's assessment state and justification for a
+     * control within an IRL audit — the API equivalent of assessing a control in
+     * the web app. Overwrites the assessment for this control in the chosen
+     * audit segment.
      * 
-     * <p>This endpoint returns a single record containing the organization's
-     * business information visible to auditors during an audit engagement.
+     * <p>`segmentId` may be any segment on the audit, `PROGRAM` or `SYSTEM` (see
+     * `segments` on the audit). It may be omitted only when the audit has
+     * exactly one segment. The `assessmentState` must be valid for that
+     * segment's framework (the request is rejected otherwise). The acting
+     * auditor is identified by `auditorEmail`, which must belong to the audit
+     * firm making the request.
      * 
-     * <p>Sorting and pagination are not applicable.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
+     * <p>Returns 404 when the control is not part of the audit or the auditor email
+     * does not resolve to a firm user. Returns 422 when `segmentId` is omitted
+     * on an audit with more than one segment, when `segmentId` is not a segment
+     * on this audit, or when the control is not assigned to that segment for
+     * this audit. Applies to both Full and Controlled Audit View audits.
      * 
      * <p>Rate limit: 10 requests / minute.
      * 
-     * @param auditId The audit ID
-     * @return {@code CompletableFuture<GetOrganizationInformationResponse>} - The async response
+     * @param auditId 
+     * @param controlId 
+     * @param upsertAuditControlAssessmentInput Input for upserting a control's auditor assessment within an audit. Overwrites
+     *         the assessment for this control in the chosen audit segment.
+     * @return {@code CompletableFuture<UpsertAssessmentForControlResponse>} - The async response
      */
-    public CompletableFuture<GetOrganizationInformationResponse> getOrganizationInformation(String auditId) {
-        GetOrganizationInformationRequest request =
-            GetOrganizationInformationRequest
+    public CompletableFuture<UpsertAssessmentForControlResponse> upsertAssessmentForControl(
+            String auditId, String controlId,
+            UpsertAuditControlAssessmentInput upsertAuditControlAssessmentInput) {
+        UpsertAssessmentForControlRequest request =
+            UpsertAssessmentForControlRequest
                 .builder()
                 .auditId(auditId)
+                .controlId(controlId)
+                .upsertAuditControlAssessmentInput(upsertAuditControlAssessmentInput)
                 .build();
-        AsyncRequestOperation<GetOrganizationInformationRequest, GetOrganizationInformationResponse> operation
-              = new GetOrganizationInformation.Async(sdkConfiguration, _headers);
+        AsyncRequestOperation<UpsertAssessmentForControlRequest, UpsertAssessmentForControlResponse> operation
+              = new UpsertAssessmentForControl.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }
 
 
     /**
-     * Get organization notification settings for an audit
+     * List code changes for an audit
      * 
-     * <p>Retrieves organization notification settings for an audit.
+     * <p>Retrieves code changes population data for an audit.
      * 
-     * <p>This endpoint returns a single record containing the auditee
-     * organization's notification configuration — schedule, personnel
-     * reminder settings, and external notification subscriptions
-     * (Compliance, Vendors, Access Reviews, Trust Center).
+     * <p>This endpoint provides access to code change records (pull requests)
+     * visible to auditors during an audit engagement.
      * 
-     * <p>The response is a single aggregate object per domain. Sorting and
-     * pagination are not applicable. Only CAV-approved fields are included.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public GetOrganizationNotificationsRequestBuilder getOrganizationNotifications() {
-        return new GetOrganizationNotificationsRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Get organization notification settings for an audit
-     * 
-     * <p>Retrieves organization notification settings for an audit.
-     * 
-     * <p>This endpoint returns a single record containing the auditee
-     * organization's notification configuration — schedule, personnel
-     * reminder settings, and external notification subscriptions
-     * (Compliance, Vendors, Access Reviews, Trust Center).
-     * 
-     * <p>The response is a single aggregate object per domain. Sorting and
-     * pagination are not applicable. Only CAV-approved fields are included.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId The audit ID
-     * @return {@code CompletableFuture<GetOrganizationNotificationsResponse>} - The async response
-     */
-    public CompletableFuture<GetOrganizationNotificationsResponse> getOrganizationNotifications(String auditId) {
-        GetOrganizationNotificationsRequest request =
-            GetOrganizationNotificationsRequest
-                .builder()
-                .auditId(auditId)
-                .build();
-        AsyncRequestOperation<GetOrganizationNotificationsRequest, GetOrganizationNotificationsResponse> operation
-              = new GetOrganizationNotifications.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List of people who are in scope for this audit
-     * 
-     * <p>Returns a list of people who are in scope for this audit.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public ListPeopleInAuditScopeRequestBuilder listPeopleInAuditScope() {
-        return new ListPeopleInAuditScopeRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List of people who are in scope for this audit
-     * 
-     * <p>Returns a list of people who are in scope for this audit.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListPeopleInAuditScopeResponse>} - The async response
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public CompletableFuture<ListPeopleInAuditScopeResponse> listPeopleInAuditScope(ListPeopleInAuditScopeRequest request) {
-        AsyncRequestOperation<ListPeopleInAuditScopeRequest, ListPeopleInAuditScopeResponse> operation
-              = new ListPeopleInAuditScope.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List account access services for an audit
-     * 
-     * <p>Retrieves connected account access services for an audit.
-     * 
-     * <p>Returns the list of identity providers and access integrations (such as
-     * Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
-     * organization and provide account access data for personnel.
-     * 
-     * <p>These integrations are used to verify user access and identity management
-     * during an audit engagement.
+     * <p>Supports filtering by:
+     * - `search`: Searches code change titles and repository names (case-insensitive)
+     * - `sourcesMatchesAny`: Filters by version control source (accepted values: github, gitlab,
+     * bitbucket, azuredevops)
+     * - `closedAfterDate` / `closedBeforeDate`: Filters by the closed date range
      * 
      * <p>Uses cursor-based pagination. To paginate:
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
-     * <p>Results are returned in connection order. Sort order is not guaranteed
-     * and cannot be customized via query parameters.
+     * <p>Results are sorted by closed date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters.
      * 
-     * <p>On an audit that covers more than one framework, each service in scope
-     * for any of the audit's frameworks is listed once.
+     * <p>On an audit that covers more than one framework, each code change in
+     * scope for any of the audit's frameworks is returned once.
      * 
      * <p>Audits with system segments are not supported by this endpoint.
      * 
@@ -3291,210 +4437,34 @@ public class AsyncAudits {
      * 
      * @return The async call builder
      */
-    public ListAccountAccessServicesRequestBuilder listAccountAccessServices() {
-        return new ListAccountAccessServicesRequestBuilder(sdkConfiguration);
+    public ListCodeChangesRequestBuilder listCodeChanges() {
+        return new ListCodeChangesRequestBuilder(sdkConfiguration);
     }
 
     /**
-     * List account access services for an audit
+     * List code changes for an audit
      * 
-     * <p>Retrieves connected account access services for an audit.
+     * <p>Retrieves code changes population data for an audit.
      * 
-     * <p>Returns the list of identity providers and access integrations (such as
-     * Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
-     * organization and provide account access data for personnel.
-     * 
-     * <p>These integrations are used to verify user access and identity management
-     * during an audit engagement.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Results are returned in connection order. Sort order is not guaranteed
-     * and cannot be customized via query parameters.
-     * 
-     * <p>On an audit that covers more than one framework, each service in scope
-     * for any of the audit's frameworks is listed once.
-     * 
-     * <p>Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId The audit ID
-     * @return {@code CompletableFuture<ListAccountAccessServicesResponse>} - The async response
-     */
-    public CompletableFuture<ListAccountAccessServicesResponse> listAccountAccessServices(String auditId) {
-        return listAccountAccessServices(auditId, Optional.empty(), Optional.empty());
-    }
-
-    /**
-     * List account access services for an audit
-     * 
-     * <p>Retrieves connected account access services for an audit.
-     * 
-     * <p>Returns the list of identity providers and access integrations (such as
-     * Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
-     * organization and provide account access data for personnel.
-     * 
-     * <p>These integrations are used to verify user access and identity management
-     * during an audit engagement.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Results are returned in connection order. Sort order is not guaranteed
-     * and cannot be customized via query parameters.
-     * 
-     * <p>On an audit that covers more than one framework, each service in scope
-     * for any of the audit's frameworks is listed once.
-     * 
-     * <p>Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId The audit ID
-     * @param pageSize Maximum number of results per page (1-100, default 10)
-     * @param pageCursor Pagination cursor from previous response
-     * @return {@code CompletableFuture<ListAccountAccessServicesResponse>} - The async response
-     */
-    public CompletableFuture<ListAccountAccessServicesResponse> listAccountAccessServices(
-            String auditId, Optional<Integer> pageSize,
-            Optional<String> pageCursor) {
-        ListAccountAccessServicesRequest request =
-            ListAccountAccessServicesRequest
-                .builder()
-                .auditId(auditId)
-                .pageSize(pageSize)
-                .pageCursor(pageCursor)
-                .build();
-        AsyncRequestOperation<ListAccountAccessServicesRequest, ListAccountAccessServicesResponse> operation
-              = new ListAccountAccessServices.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List account access records for an audit
-     * 
-     * <p>Retrieves account access population data for an audit.
-     * 
-     * <p>This endpoint provides access to account access records visible to auditors
-     * during an audit engagement. Account access data comes from various sources:
-     * 
-     * <p>- **IDP Services** (Identity Providers): Okta, Azure AD, Google Workspace, OneLogin, PingOne
-     * 
-     * <p>- Returns user accounts from identity providers
-     * - Supports filtering by search and status
-     * 
-     * <p>- **Role Grants Services**: GCP, Azure (when role grants are enabled)
-     * 
-     * <p>- Returns accounts with role-based access grants
-     * - Supports filtering by search and status
-     * 
-     * <p>- **First-Party Account Services**: AWS, Oracle Cloud, Azure (when not using role grants), etc.
-     * 
-     * <p>- Returns cloud provider account access records
-     * - Supports filtering by search and status
-     * 
-     * <p>- **Received Account Services**: External applications (Jira, GitHub, Slack, etc.)
-     * 
-     * <p>- Returns user accounts from third-party integrations
-     * - Supports filtering by search and status
+     * <p>This endpoint provides access to code change records (pull requests)
+     * visible to auditors during an audit engagement.
      * 
      * <p>Supports filtering by:
-     * - `search`: Searches account names/emails (case-insensitive)
-     * - `status`: Filters by account status
+     * - `search`: Searches code change titles and repository names (case-insensitive)
+     * - `sourcesMatchesAny`: Filters by version control source (accepted values: github, gitlab,
+     * bitbucket, azuredevops)
+     * - `closedAfterDate` / `closedBeforeDate`: Filters by the closed date range
      * 
      * <p>Uses cursor-based pagination. To paginate:
      * 1. Make initial request with desired `pageSize`
      * 2. Check `results.pageInfo.hasNextPage`
      * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
      * 
-     * <p>The default sort order depends on the service type:
-     * - Identity provider services (e.g. Okta, Azure AD): sorted by email, ascending
-     * - Cloud provider services (e.g. AWS, GCP): sorted by account name, ascending
-     * - Role grant services: sorted by account name, ascending
-     * - Third-party application services (e.g. GitHub, Jira): sorted by account name, ascending
+     * <p>Results are sorted by closed date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters.
      * 
-     * <p>Sort order cannot be customized via query parameters.
-     * 
-     * <p>Returns 404 when `serviceId` is not listed by the
-     * `/personnel/account-access/services` endpoint for this audit.
-     * 
-     * <p>Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ListPersonnelAccountAccessRequestBuilder listPersonnelAccountAccess() {
-        return new ListPersonnelAccountAccessRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List account access records for an audit
-     * 
-     * <p>Retrieves account access population data for an audit.
-     * 
-     * <p>This endpoint provides access to account access records visible to auditors
-     * during an audit engagement. Account access data comes from various sources:
-     * 
-     * <p>- **IDP Services** (Identity Providers): Okta, Azure AD, Google Workspace, OneLogin, PingOne
-     * 
-     * <p>- Returns user accounts from identity providers
-     * - Supports filtering by search and status
-     * 
-     * <p>- **Role Grants Services**: GCP, Azure (when role grants are enabled)
-     * 
-     * <p>- Returns accounts with role-based access grants
-     * - Supports filtering by search and status
-     * 
-     * <p>- **First-Party Account Services**: AWS, Oracle Cloud, Azure (when not using role grants), etc.
-     * 
-     * <p>- Returns cloud provider account access records
-     * - Supports filtering by search and status
-     * 
-     * <p>- **Received Account Services**: External applications (Jira, GitHub, Slack, etc.)
-     * 
-     * <p>- Returns user accounts from third-party integrations
-     * - Supports filtering by search and status
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches account names/emails (case-insensitive)
-     * - `status`: Filters by account status
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>The default sort order depends on the service type:
-     * - Identity provider services (e.g. Okta, Azure AD): sorted by email, ascending
-     * - Cloud provider services (e.g. AWS, GCP): sorted by account name, ascending
-     * - Role grant services: sorted by account name, ascending
-     * - Third-party application services (e.g. GitHub, Jira): sorted by account name, ascending
-     * 
-     * <p>Sort order cannot be customized via query parameters.
-     * 
-     * <p>Returns 404 when `serviceId` is not listed by the
-     * `/personnel/account-access/services` endpoint for this audit.
+     * <p>On an audit that covers more than one framework, each code change in
+     * scope for any of the audit's frameworks is returned once.
      * 
      * <p>Audits with system segments are not supported by this endpoint.
      * 
@@ -3505,622 +4475,11 @@ public class AsyncAudits {
      * <p>Rate limit: 10 requests / minute.
      * 
      * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListPersonnelAccountAccessResponse>} - The async response
+     * @return {@code CompletableFuture<ListCodeChangesResponse>} - The async response
      */
-    public CompletableFuture<ListPersonnelAccountAccessResponse> listPersonnelAccountAccess(ListPersonnelAccountAccessRequest request) {
-        AsyncRequestOperation<ListPersonnelAccountAccessRequest, ListPersonnelAccountAccessResponse> operation
-              = new ListPersonnelAccountAccess.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List groups for an audit
-     * 
-     * <p>Retrieves groups population data for an audit.
-     * 
-     * <p>This endpoint provides access to the group records visible to auditors
-     * during an audit engagement. Groups represent organizational units that
-     * contain people, either imported from an identity provider (IDP) or
-     * created manually in Vanta.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches group names (case-insensitive)
-     * - `sourcesMatchesAny`: Filters by IDP source service names
-     * 
-     * <p>Results are sorted by name (ascending) by default.
-     * Use `orderBy` and `orderDirection` to customize sorting.
-     * Sort parameters must remain consistent across paginated requests.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ListPersonnelGroupsRequestBuilder listPersonnelGroups() {
-        return new ListPersonnelGroupsRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List groups for an audit
-     * 
-     * <p>Retrieves groups population data for an audit.
-     * 
-     * <p>This endpoint provides access to the group records visible to auditors
-     * during an audit engagement. Groups represent organizational units that
-     * contain people, either imported from an identity provider (IDP) or
-     * created manually in Vanta.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches group names (case-insensitive)
-     * - `sourcesMatchesAny`: Filters by IDP source service names
-     * 
-     * <p>Results are sorted by name (ascending) by default.
-     * Use `orderBy` and `orderDirection` to customize sorting.
-     * Sort parameters must remain consistent across paginated requests.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListPersonnelGroupsResponse>} - The async response
-     */
-    public CompletableFuture<ListPersonnelGroupsResponse> listPersonnelGroups(ListPersonnelGroupsRequest request) {
-        AsyncRequestOperation<ListPersonnelGroupsRequest, ListPersonnelGroupsResponse> operation
-              = new ListPersonnelGroups.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List people for an audit
-     * 
-     * <p>Retrieves people population data for an audit.
-     * 
-     * <p>This endpoint provides access to the people records visible to auditors
-     * during an audit engagement.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches names and email addresses
-     * - `status`: Filters by employment status
-     * - `groupsMatchesAny`: Filter people by group/role IDs
-     * 
-     * <p>Results are sorted by name (ascending) by default.
-     * Use `orderBy` and `orderDirection` to customize sorting.
-     * Sort parameters must remain consistent across paginated requests.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ListPersonnelPeopleRequestBuilder listPersonnelPeople() {
-        return new ListPersonnelPeopleRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List people for an audit
-     * 
-     * <p>Retrieves people population data for an audit.
-     * 
-     * <p>This endpoint provides access to the people records visible to auditors
-     * during an audit engagement.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches names and email addresses
-     * - `status`: Filters by employment status
-     * - `groupsMatchesAny`: Filter people by group/role IDs
-     * 
-     * <p>Results are sorted by name (ascending) by default.
-     * Use `orderBy` and `orderDirection` to customize sorting.
-     * Sort parameters must remain consistent across paginated requests.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListPersonnelPeopleResponse>} - The async response
-     */
-    public CompletableFuture<ListPersonnelPeopleResponse> listPersonnelPeople(ListPersonnelPeopleRequest request) {
-        AsyncRequestOperation<ListPersonnelPeopleRequest, ListPersonnelPeopleResponse> operation
-              = new ListPersonnelPeople.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List risk snapshots for an audit
-     * 
-     * <p>Returns a paginated list of risk assessment snapshots available for an audit.
-     * 
-     * <p>Risk snapshots capture the state of an organization's risk register at a
-     * point in time. Each snapshot has an `id` that can be used with the
-     * `/audits/{auditId}/risks` endpoint to retrieve the individual risk
-     * scenarios within that snapshot.
-     * 
-     * <p>Results are sorted by creation date (newest first). This sort order is
-     * fixed and cannot be customized via query parameters. Only snapshots
-     * that are shared with auditors are included.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ListRiskSnapshotsRequestBuilder listRiskSnapshots() {
-        return new ListRiskSnapshotsRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List risk snapshots for an audit
-     * 
-     * <p>Returns a paginated list of risk assessment snapshots available for an audit.
-     * 
-     * <p>Risk snapshots capture the state of an organization's risk register at a
-     * point in time. Each snapshot has an `id` that can be used with the
-     * `/audits/{auditId}/risks` endpoint to retrieve the individual risk
-     * scenarios within that snapshot.
-     * 
-     * <p>Results are sorted by creation date (newest first). This sort order is
-     * fixed and cannot be customized via query parameters. Only snapshots
-     * that are shared with auditors are included.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId The audit ID
-     * @return {@code CompletableFuture<ListRiskSnapshotsResponse>} - The async response
-     */
-    public CompletableFuture<ListRiskSnapshotsResponse> listRiskSnapshots(String auditId) {
-        return listRiskSnapshots(auditId, Optional.empty(), Optional.empty());
-    }
-
-    /**
-     * List risk snapshots for an audit
-     * 
-     * <p>Returns a paginated list of risk assessment snapshots available for an audit.
-     * 
-     * <p>Risk snapshots capture the state of an organization's risk register at a
-     * point in time. Each snapshot has an `id` that can be used with the
-     * `/audits/{auditId}/risks` endpoint to retrieve the individual risk
-     * scenarios within that snapshot.
-     * 
-     * <p>Results are sorted by creation date (newest first). This sort order is
-     * fixed and cannot be customized via query parameters. Only snapshots
-     * that are shared with auditors are included.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId The audit ID
-     * @param pageSize Maximum number of results per page (1-100, default 10)
-     * @param pageCursor Pagination cursor from previous response
-     * @return {@code CompletableFuture<ListRiskSnapshotsResponse>} - The async response
-     */
-    public CompletableFuture<ListRiskSnapshotsResponse> listRiskSnapshots(
-            String auditId, Optional<Integer> pageSize,
-            Optional<String> pageCursor) {
-        ListRiskSnapshotsRequest request =
-            ListRiskSnapshotsRequest
-                .builder()
-                .auditId(auditId)
-                .pageSize(pageSize)
-                .pageCursor(pageCursor)
-                .build();
-        AsyncRequestOperation<ListRiskSnapshotsRequest, ListRiskSnapshotsResponse> operation
-              = new ListRiskSnapshots.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List risks for an audit
-     * 
-     * <p>Retrieves risk population data for an audit.
-     * 
-     * <p>This endpoint provides access to the risk records visible to auditors
-     * during an audit engagement. Risk data is scoped to a specific risk
-     * assessment snapshot identified by the `snapshotId` parameter.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches risk scenario descriptions (case-insensitive)
-     * 
-     * <p>Results are sorted by identified date (newest first) by default.
-     * Use `orderBy` and `orderDirection` to customize sorting.
-     * Sort parameters must remain consistent across paginated requests.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors. Also returns 403 if the
-     * snapshot is not shared with auditors, and 404 if the snapshot does not
-     * exist. Use snapshot IDs from `GET /audits/{auditId}/risks/snapshots`,
-     * which lists only snapshots shared with auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ListAuditRisksRequestBuilder listAuditRisks() {
-        return new ListAuditRisksRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List risks for an audit
-     * 
-     * <p>Retrieves risk population data for an audit.
-     * 
-     * <p>This endpoint provides access to the risk records visible to auditors
-     * during an audit engagement. Risk data is scoped to a specific risk
-     * assessment snapshot identified by the `snapshotId` parameter.
-     * 
-     * <p>Supports filtering by:
-     * - `search`: Searches risk scenario descriptions (case-insensitive)
-     * 
-     * <p>Results are sorted by identified date (newest first) by default.
-     * Use `orderBy` and `orderDirection` to customize sorting.
-     * Sort parameters must remain consistent across paginated requests.
-     * 
-     * <p>Uses cursor-based pagination. To paginate:
-     * 1. Make initial request with desired `pageSize`
-     * 2. Check `results.pageInfo.hasNextPage`
-     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
-     * 
-     * <p>Supports audits with one or more program segments.
-     * Audits with system segments are not supported by this endpoint.
-     * 
-     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
-     * audits are rejected with 403. Returns 403 if the customer has not made
-     * this population page visible to auditors. Also returns 403 if the
-     * snapshot is not shared with auditors, and 404 if the snapshot does not
-     * exist. Use snapshot IDs from `GET /audits/{auditId}/risks/snapshots`,
-     * which lists only snapshots shared with auditors.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListAuditRisksResponse>} - The async response
-     */
-    public CompletableFuture<ListAuditRisksResponse> listAuditRisks(ListAuditRisksRequest request) {
-        AsyncRequestOperation<ListAuditRisksRequest, ListAuditRisksResponse> operation
-              = new ListAuditRisks.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * Share information request list with customer
-     * 
-     * <p>Shares the current information request list for an audit with the customer organization,
-     * making it visible in their portal. This action allows the customer to see all information
-     * requests that have been created for their audit. Only IRL audits are supported.
-     * 
-     * <p>Rate limit: 50 requests / minute.
-     * 
-     * @return The async call builder
-     */
-    public ShareInformationRequestListRequestBuilder shareInformationRequestList() {
-        return new ShareInformationRequestListRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * Share information request list with customer
-     * 
-     * <p>Shares the current information request list for an audit with the customer organization,
-     * making it visible in their portal. This action allows the customer to see all information
-     * requests that have been created for their audit. Only IRL audits are supported.
-     * 
-     * <p>Rate limit: 50 requests / minute.
-     * 
-     * @param auditId 
-     * @return {@code CompletableFuture<ShareInformationRequestListResponse>} - The async response
-     */
-    public CompletableFuture<ShareInformationRequestListResponse> shareInformationRequestList(String auditId) {
-        ShareInformationRequestListRequest request =
-            ShareInformationRequestListRequest
-                .builder()
-                .auditId(auditId)
-                .build();
-        AsyncRequestOperation<ShareInformationRequestListRequest, ShareInformationRequestListResponse> operation
-              = new ShareInformationRequestList.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List of vendors who are in scope for this audit
-     * 
-     * <p>Returns a list of vendors who are in scope for this audit.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public ListVendorsInAuditScopeRequestBuilder listVendorsInAuditScope() {
-        return new ListVendorsInAuditScopeRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List of vendors who are in scope for this audit
-     * 
-     * <p>Returns a list of vendors who are in scope for this audit.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId 
-     * @return {@code CompletableFuture<ListVendorsInAuditScopeResponse>} - The async response
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public CompletableFuture<ListVendorsInAuditScopeResponse> listVendorsInAuditScope(String auditId) {
-        return listVendorsInAuditScope(auditId, Optional.empty(), Optional.empty());
-    }
-
-    /**
-     * List of vendors who are in scope for this audit
-     * 
-     * <p>Returns a list of vendors who are in scope for this audit.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param auditId 
-     * @param pageSize 
-     * @param pageCursor 
-     * @return {@code CompletableFuture<ListVendorsInAuditScopeResponse>} - The async response
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public CompletableFuture<ListVendorsInAuditScopeResponse> listVendorsInAuditScope(
-            String auditId, Optional<Integer> pageSize,
-            Optional<String> pageCursor) {
-        ListVendorsInAuditScopeRequest request =
-            ListVendorsInAuditScopeRequest
-                .builder()
-                .auditId(auditId)
-                .pageSize(pageSize)
-                .pageCursor(pageCursor)
-                .build();
-        AsyncRequestOperation<ListVendorsInAuditScopeRequest, ListVendorsInAuditScopeResponse> operation
-              = new ListVendorsInAuditScope.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List vulnerabilities within the scope of a given audit
-     * 
-     * <p>List all vulnerabilities based on selected filters.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public ListVulnerabilitiesRequestBuilder listVulnerabilities() {
-        return new ListVulnerabilitiesRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List vulnerabilities within the scope of a given audit
-     * 
-     * <p>List all vulnerabilities based on selected filters.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListVulnerabilitiesResponse>} - The async response
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public CompletableFuture<ListVulnerabilitiesResponse> listVulnerabilities(ListVulnerabilitiesRequest request) {
-        AsyncRequestOperation<ListVulnerabilitiesRequest, ListVulnerabilitiesResponse> operation
-              = new ListVulnerabilities.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List vulnerability remediations that are in scope for this audit
-     * 
-     * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public ListVulnerabilityRemediationsInAuditScopeRequestBuilder listVulnerabilityRemediationsInAuditScope() {
-        return new ListVulnerabilityRemediationsInAuditScopeRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List vulnerability remediations that are in scope for this audit
-     * 
-     * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Returns 422 when the audit does not have exactly one program segment
-     * (multi-framework audits are not supported on this endpoint).
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<ListVulnerabilityRemediationsInAuditScopeResponse>} - The async response
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public CompletableFuture<ListVulnerabilityRemediationsInAuditScopeResponse> listVulnerabilityRemediationsInAuditScope(ListVulnerabilityRemediationsInAuditScopeRequest request) {
-        AsyncRequestOperation<ListVulnerabilityRemediationsInAuditScopeRequest, ListVulnerabilityRemediationsInAuditScopeResponse> operation
-              = new ListVulnerabilityRemediationsInAuditScope.Async(sdkConfiguration, _headers);
-        return operation.doRequest(request)
-            .thenCompose(operation::handleResponse);
-    }
-
-
-    /**
-     * List assets associated with vulnerabilities
-     * 
-     * <p>List assets that Vanta monitors that are associated with vulnerabilities.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @return The async call builder
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public GetVulnerableAssetsRequestBuilder getVulnerableAssets() {
-        return new GetVulnerableAssetsRequestBuilder(sdkConfiguration);
-    }
-
-    /**
-     * List assets associated with vulnerabilities
-     * 
-     * <p>List assets that Vanta monitors that are associated with vulnerabilities.
-     * 
-     * <p>End of life — this endpoint works for classic audits only; it does not support
-     * controlled audit view. It remains available for existing classic audits but will be removed once
-     * classic audits are fully phased out, so do not build new integrations on it.
-     * 
-     * <p>Rate limit: 10 requests / minute.
-     * 
-     * @param request The request object containing all the parameters for the API call.
-     * @return {@code CompletableFuture<GetVulnerableAssetsResponse>} - The async response
-     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
-     */
-    @Deprecated
-    public CompletableFuture<GetVulnerableAssetsResponse> getVulnerableAssets(GetVulnerableAssetsRequest request) {
-        AsyncRequestOperation<GetVulnerableAssetsRequest, GetVulnerableAssetsResponse> operation
-              = new GetVulnerableAssets.Async(sdkConfiguration, _headers);
+    public CompletableFuture<ListCodeChangesResponse> listCodeChanges(ListCodeChangesRequest request) {
+        AsyncRequestOperation<ListCodeChangesRequest, ListCodeChangesResponse> operation
+              = new ListCodeChanges.Async(sdkConfiguration, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

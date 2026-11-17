@@ -13,7 +13,7 @@ import java.lang.String;
 /**
  * Owner
  * 
- * <p>The control's owner.
+ * <p>The name, unique identifier, and email address of the computer's owner.
  */
 public class Owner {
     /**

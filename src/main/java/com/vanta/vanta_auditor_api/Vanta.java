@@ -42,19 +42,19 @@ public class Vanta {
     };
 
 
-    private final Auditors auditors;
-
-
     private final Audits audits;
 
 
-    public Auditors auditors() {
-        return auditors;
-    }
+    private final Auditors auditors;
 
 
     public Audits audits() {
         return audits;
+    }
+
+
+    public Auditors auditors() {
+        return auditors;
     }
     private final AsyncVanta asyncSDK;
 
@@ -206,8 +206,8 @@ public class Vanta {
 
     private Vanta(SDKConfiguration sdkConfiguration) {
         sdkConfiguration.initialize();
-        this.auditors = new Auditors(sdkConfiguration);
         this.audits = new Audits(sdkConfiguration);
+        this.auditors = new Auditors(sdkConfiguration);
         SdkInitData data = sdkConfiguration.hooks().sdkInit(
                 new SdkInitData(
                         sdkConfiguration.resolvedServerUrl(), 

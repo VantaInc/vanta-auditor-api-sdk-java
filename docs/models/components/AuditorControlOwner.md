@@ -1,6 +1,6 @@
-# MonitoredComputerOwner
+# AuditorControlOwner
 
-The name, unique identifier, and email address of the computer's owner.
+The control's owner.
 
 
 ## Fields

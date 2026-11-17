@@ -16,16 +16,16 @@ import com.vanta.vanta_auditor_api.utils.Headers;
 public class AsyncVanta {
     private static final Headers _headers = Headers.EMPTY;
 
-    private final AsyncAuditors auditors;
-
     private final AsyncAudits audits;
 
-    public AsyncAuditors auditors() {
-        return auditors;
-    }
+    private final AsyncAuditors auditors;
 
     public AsyncAudits audits() {
         return audits;
+    }
+
+    public AsyncAuditors auditors() {
+        return auditors;
     }
 
     private final SDKConfiguration sdkConfiguration;
@@ -34,8 +34,8 @@ public class AsyncVanta {
     AsyncVanta(Vanta syncSDK, SDKConfiguration sdkConfiguration) {
         this.syncSDK = syncSDK;
         this.sdkConfiguration = sdkConfiguration;
-        this.auditors = new AsyncAuditors(syncSDK.auditors(), sdkConfiguration);
         this.audits = new AsyncAudits(syncSDK.audits(), sdkConfiguration);
+        this.auditors = new AsyncAuditors(syncSDK.auditors(), sdkConfiguration);
     }
 
     /**

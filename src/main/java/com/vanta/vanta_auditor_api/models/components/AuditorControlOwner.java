@@ -11,11 +11,11 @@ import java.lang.Override;
 import java.lang.String;
 
 /**
- * MonitoredComputerOwner
+ * AuditorControlOwner
  * 
- * <p>The name, unique identifier, and email address of the computer's owner.
+ * <p>The control's owner.
  */
-public class MonitoredComputerOwner {
+public class AuditorControlOwner {
     /**
      * Unique identifier for the person.
      */
@@ -35,7 +35,7 @@ public class MonitoredComputerOwner {
     private String emailAddress;
 
     @JsonCreator
-    public MonitoredComputerOwner(
+    public AuditorControlOwner(
             @JsonProperty("id") String id,
             @JsonProperty("displayName") String displayName,
             @JsonProperty("emailAddress") String emailAddress) {
@@ -79,7 +79,7 @@ public class MonitoredComputerOwner {
     /**
      * Unique identifier for the person.
      */
-    public MonitoredComputerOwner withId(String id) {
+    public AuditorControlOwner withId(String id) {
         Utils.checkNotNull(id, "id");
         this.id = id;
         return this;
@@ -88,7 +88,7 @@ public class MonitoredComputerOwner {
     /**
      * Name of the person that is shown in product.
      */
-    public MonitoredComputerOwner withDisplayName(String displayName) {
+    public AuditorControlOwner withDisplayName(String displayName) {
         Utils.checkNotNull(displayName, "displayName");
         this.displayName = displayName;
         return this;
@@ -97,7 +97,7 @@ public class MonitoredComputerOwner {
     /**
      * Email address of the person.
      */
-    public MonitoredComputerOwner withEmailAddress(String emailAddress) {
+    public AuditorControlOwner withEmailAddress(String emailAddress) {
         Utils.checkNotNull(emailAddress, "emailAddress");
         this.emailAddress = emailAddress;
         return this;
@@ -111,7 +111,7 @@ public class MonitoredComputerOwner {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        MonitoredComputerOwner other = (MonitoredComputerOwner) o;
+        AuditorControlOwner other = (AuditorControlOwner) o;
         return 
             Utils.enhancedDeepEquals(this.id, other.id) &&
             Utils.enhancedDeepEquals(this.displayName, other.displayName) &&
@@ -126,7 +126,7 @@ public class MonitoredComputerOwner {
     
     @Override
     public String toString() {
-        return Utils.toString(MonitoredComputerOwner.class,
+        return Utils.toString(AuditorControlOwner.class,
                 "id", id,
                 "displayName", displayName,
                 "emailAddress", emailAddress);
@@ -175,9 +175,9 @@ public class MonitoredComputerOwner {
             return this;
         }
 
-        public MonitoredComputerOwner build() {
+        public AuditorControlOwner build() {
 
-            return new MonitoredComputerOwner(
+            return new AuditorControlOwner(
                 id, displayName, emailAddress);
         }
 

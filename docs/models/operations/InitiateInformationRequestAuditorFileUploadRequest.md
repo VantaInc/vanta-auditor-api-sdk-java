@@ -1,0 +1,10 @@
+# InitiateInformationRequestAuditorFileUploadRequest
+
+
+## Fields
+
+| Field                                                                                       | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `auditId`                                                                                   | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `requestId`                                                                                 | *String*                                                                                    | :heavy_check_mark:                                                                          | N/A                                                                                         |
+| `initiateAuditorFileUploadInput`                                                            | [InitiateAuditorFileUploadInput](../../models/components/InitiateAuditorFileUploadInput.md) | :heavy_check_mark:                                                                          | N/A                                                                                         |
