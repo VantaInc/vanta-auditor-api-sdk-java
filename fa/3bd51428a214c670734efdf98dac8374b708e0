@@ -1,0 +1,23 @@
+.github/workflows/speakeasy_generate.yaml
+  s_0c59641a5c45c9::t_b7d8462b666810 40-63
+.github/workflows/sdk_generation.yaml
+  s_0c59641a5c45c9::t_b7d8462b666810 19-58,61
+.speakeasy/workflow.yaml
+  s_0c59641a5c45c9::t_c4247bf3bdc5a5 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "fa3bd51428a214c670734efdf98dac8374b708e0",
+  "prompts": {},
+  "sessions": {
+    "s_0c59641a5c45c9": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1ea14-588f-7aa0-8d13-d35c4f97f16c",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Victor Noventa <victor@bitcomplete.io>"
+    }
+  }
+}
