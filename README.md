@@ -49,7 +49,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'com.vanta:vanta-auditor-api:0.8.5'
+implementation 'com.vanta:vanta-auditor-api:0.8.6'
 ```
 
 Maven:
@@ -57,7 +57,7 @@ Maven:
 <dependency>
     <groupId>com.vanta</groupId>
     <artifactId>vanta-auditor-api</artifactId>
-    <version>0.8.5</version>
+    <version>0.8.6</version>
 </dependency>
 ```
 
@@ -85,8 +85,7 @@ gradlew.bat publishToMavenLocal -Pskip.signing
 package hello.world;
 
 import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.components.AddAuditorInput;
-import com.vanta.vanta_auditor_api.models.operations.CreateAuditorResponse;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import java.lang.Exception;
 
 public class Application {
@@ -97,18 +96,12 @@ public class Application {
                 .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
-        AddAuditorInput req = AddAuditorInput.builder()
-                .email("Genesis_Kunze87@yahoo.com")
-                .givenName("<value>")
-                .familyName("<value>")
-                .build();
-
-        CreateAuditorResponse res = sdk.auditors().create()
-                .request(req)
+        ListAuditsResponse res = sdk.audits().list()
+                .pageSize(10)
                 .call();
 
-        if (res.auditor().isPresent()) {
-            System.out.println(res.auditor().get());
+        if (res.paginatedResponseAudit().isPresent()) {
+            System.out.println(res.paginatedResponseAudit().get());
         }
     }
 }
@@ -120,8 +113,7 @@ package hello.world;
 
 import com.vanta.vanta_auditor_api.AsyncVanta;
 import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.components.AddAuditorInput;
-import com.vanta.vanta_auditor_api.models.operations.async.CreateAuditorResponse;
+import com.vanta.vanta_auditor_api.models.operations.async.ListAuditsResponse;
 import java.util.concurrent.CompletableFuture;
 
 public class Application {
@@ -133,19 +125,13 @@ public class Application {
             .build()
             .async();
 
-        AddAuditorInput req = AddAuditorInput.builder()
-                .email("Genesis_Kunze87@yahoo.com")
-                .givenName("<value>")
-                .familyName("<value>")
-                .build();
-
-        CompletableFuture<CreateAuditorResponse> resFut = sdk.auditors().create()
-                .request(req)
+        CompletableFuture<ListAuditsResponse> resFut = sdk.audits().list()
+                .pageSize(10)
                 .call();
 
         resFut.thenAccept(res -> {
-            if (res.auditor().isPresent()) {
-                System.out.println(res.auditor().get());
+            if (res.paginatedResponseAudit().isPresent()) {
+                System.out.println(res.paginatedResponseAudit().get());
             }
         });
     }
@@ -246,8 +232,7 @@ To authenticate with the API the `bearerAuth` parameter must be set when initial
 package hello.world;
 
 import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.components.AddAuditorInput;
-import com.vanta.vanta_auditor_api.models.operations.CreateAuditorResponse;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import java.lang.Exception;
 
 public class Application {
@@ -258,18 +243,12 @@ public class Application {
                 .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
-        AddAuditorInput req = AddAuditorInput.builder()
-                .email("Genesis_Kunze87@yahoo.com")
-                .givenName("<value>")
-                .familyName("<value>")
-                .build();
-
-        CreateAuditorResponse res = sdk.auditors().create()
-                .request(req)
+        ListAuditsResponse res = sdk.audits().list()
+                .pageSize(10)
                 .call();
 
-        if (res.auditor().isPresent()) {
-            System.out.println(res.auditor().get());
+        if (res.paginatedResponseAudit().isPresent()) {
+            System.out.println(res.paginatedResponseAudit().get());
         }
     }
 }
@@ -289,61 +268,65 @@ public class Application {
 ### [Audits](docs/sdks/audits/README.md)
 
 * [list](docs/sdks/audits/README.md#list) - List audits
-* [duplicate](docs/sdks/audits/README.md#duplicate) - Duplicate an IRL audit
 * [getAudit](docs/sdks/audits/README.md#getaudit) - Get audit by ID
-* [listCodeChanges](docs/sdks/audits/README.md#listcodechanges) - List code changes for an audit
-* [listComments](docs/sdks/audits/README.md#listcomments) - List audit comments
-* [listControls](docs/sdks/audits/README.md#listcontrols) - List audit controls
-* [createCustomControl](docs/sdks/audits/README.md#createcustomcontrol) - Create a custom control for an audit
-* [upsertAssessmentForControl](docs/sdks/audits/README.md#upsertassessmentforcontrol) - Upsert a control's assessment within an audit
-* [listCommentsForControl](docs/sdks/audits/README.md#listcommentsforcontrol) - List comments for a control within an audit
-* [createCommentForControl](docs/sdks/audits/README.md#createcommentforcontrol) - Create a comment for a control within an audit
-* [updateCommentForControl](docs/sdks/audits/README.md#updatecommentforcontrol) - Update a comment for a control within an audit
-* [deleteCommentForControl](docs/sdks/audits/README.md#deletecommentforcontrol) - Delete a comment for a control within an audit
-* [listInformationRequestsForControl](docs/sdks/audits/README.md#listinformationrequestsforcontrol) - List information requests linked to a control within an audit
+* [~~listVendorsInAuditScope~~](docs/sdks/audits/README.md#listvendorsinauditscope) - List of vendors who are in scope for this audit :warning: **Deprecated**
+* [~~listMonitoredComputersInAuditScope~~](docs/sdks/audits/README.md#listmonitoredcomputersinauditscope) - List monitored computers :warning: **Deprecated**
+* [getEvidenceUrls](docs/sdks/audits/README.md#getevidenceurls) - List audit evidence url
+* [~~listPeopleInAuditScope~~](docs/sdks/audits/README.md#listpeopleinauditscope) - List of people who are in scope for this audit :warning: **Deprecated**
+* [~~listVulnerabilityRemediationsInAuditScope~~](docs/sdks/audits/README.md#listvulnerabilityremediationsinauditscope) - List vulnerability remediations that are in scope for this audit :warning: **Deprecated**
 * [listEvidence](docs/sdks/audits/README.md#listevidence) - List audit evidence
-* [createCustomEvidenceRequest](docs/sdks/audits/README.md#createcustomevidencerequest) - Create a custom evidence request for an audit
+* [listComments](docs/sdks/audits/README.md#listcomments) - List audit comments
+* [createCommentForEvidence](docs/sdks/audits/README.md#createcommentforevidence) - Create a comment for audit evidence
 * [updateEvidence](docs/sdks/audits/README.md#updateevidence) - Update audit evidence
 * [getAuditEvidence](docs/sdks/audits/README.md#getauditevidence) - Get an audit evidence item by ID
-* [createCommentForEvidence](docs/sdks/audits/README.md#createcommentforevidence) - Create a comment for audit evidence
-* [getAuditEvidenceComment](docs/sdks/audits/README.md#getauditevidencecomment) - Get an audit evidence comment by ID
-* [getEvidenceUrls](docs/sdks/audits/README.md#getevidenceurls) - List audit evidence url
-* [getFrameworkCodes](docs/sdks/audits/README.md#getframeworkcodes) - Get framework codes for an audit
+* [createCustomEvidenceRequest](docs/sdks/audits/README.md#createcustomevidencerequest) - Create a custom evidence request for an audit
+* [~~listVulnerabilities~~](docs/sdks/audits/README.md#listvulnerabilities) - List vulnerabilities within the scope of a given audit :warning: **Deprecated**
+* [~~getVulnerableAssets~~](docs/sdks/audits/README.md#getvulnerableassets) - List assets associated with vulnerabilities :warning: **Deprecated**
+* [listVendors](docs/sdks/audits/README.md#listvendors) - List vendors for an audit
+* [listRiskSnapshots](docs/sdks/audits/README.md#listrisksnapshots) - List risk snapshots for an audit
+* [listAuditRisks](docs/sdks/audits/README.md#listauditrisks) - List risks for an audit
+* [listPersonnelGroups](docs/sdks/audits/README.md#listpersonnelgroups) - List groups for an audit
+* [listPersonnelPeople](docs/sdks/audits/README.md#listpersonnelpeople) - List people for an audit
+* [listAccountAccessServices](docs/sdks/audits/README.md#listaccountaccessservices) - List account access services for an audit
+* [listPersonnelAccountAccess](docs/sdks/audits/README.md#listpersonnelaccountaccess) - List account access records for an audit
+* [getOrganizationNotifications](docs/sdks/audits/README.md#getorganizationnotifications) - Get organization notification settings for an audit
+* [getOrganizationInformation](docs/sdks/audits/README.md#getorganizationinformation) - Get organization information for an audit
+* [listAuditIssues](docs/sdks/audits/README.md#listauditissues) - List snapshotted issues for an audit
+* [listAuditSnapshots](docs/sdks/audits/README.md#listauditsnapshots) - List snapshotted issues for an audit
+* [listIntegrations](docs/sdks/audits/README.md#listintegrations) - List integrations for an audit
 * [listInformationRequests](docs/sdks/audits/README.md#listinformationrequests) - List information requests for an audit
 * [createInformationRequest](docs/sdks/audits/README.md#createinformationrequest) - Create a new information request
 * [getInformationRequest](docs/sdks/audits/README.md#getinformationrequest) - Get an information request by ID
 * [updateInformationRequest](docs/sdks/audits/README.md#updateinformationrequest) - Update an information request for an audit
 * [deleteInformationRequest](docs/sdks/audits/README.md#deleteinformationrequest) - Delete an information request for an audit
+* [flagInformationRequestEvidence](docs/sdks/audits/README.md#flaginformationrequestevidence) - Flag evidence for an information request
 * [acceptInformationRequestEvidence](docs/sdks/audits/README.md#acceptinformationrequestevidence) - Accept evidence for an information request
-* [listInformationRequestActivity](docs/sdks/audits/README.md#listinformationrequestactivity) - List information request activity
+* [shareInformationRequestList](docs/sdks/audits/README.md#shareinformationrequestlist) - Share information request list with customer
+* [getFrameworkCodes](docs/sdks/audits/README.md#getframeworkcodes) - Get framework codes for an audit
+* [listInformationRequestEvidence](docs/sdks/audits/README.md#listinformationrequestevidence) - List evidence for an information request
+* [getInformationRequestEvidence](docs/sdks/audits/README.md#getinformationrequestevidence) - Get information request evidence by ID
+* [getInformationRequestTestSnapshotEvidenceDetail](docs/sdks/audits/README.md#getinformationrequesttestsnapshotevidencedetail) - Get test snapshot detail for an evidence row
 * [listCommentsForInformationRequest](docs/sdks/audits/README.md#listcommentsforinformationrequest) - List comments for an information request
 * [createCommentForInformationRequest](docs/sdks/audits/README.md#createcommentforinformationrequest) - Create a comment for an information request
 * [getCommentForInformationRequest](docs/sdks/audits/README.md#getcommentforinformationrequest) - Get an information request comment by ID
 * [updateCommentForInformationRequest](docs/sdks/audits/README.md#updatecommentforinformationrequest) - Update a comment for an information request
 * [deleteCommentForInformationRequest](docs/sdks/audits/README.md#deletecommentforinformationrequest) - Delete a comment for an information request
-* [listInformationRequestEvidence](docs/sdks/audits/README.md#listinformationrequestevidence) - List evidence for an information request
-* [getInformationRequestEvidence](docs/sdks/audits/README.md#getinformationrequestevidence) - Get information request evidence by ID
-* [getInformationRequestTestSnapshotEvidenceDetail](docs/sdks/audits/README.md#getinformationrequesttestsnapshotevidencedetail) - Get test snapshot detail for an evidence row
-* [flagInformationRequestEvidence](docs/sdks/audits/README.md#flaginformationrequestevidence) - Flag evidence for an information request
-* [listIntegrations](docs/sdks/audits/README.md#listintegrations) - List integrations for an audit
-* [listAuditIssues](docs/sdks/audits/README.md#listauditissues) - List snapshotted issues for an audit
-* [listAuditSnapshots](docs/sdks/audits/README.md#listauditsnapshots) - List snapshotted issues for an audit
-* [listVendors](docs/sdks/audits/README.md#listvendors) - List vendors for an audit
-* [~~listMonitoredComputersInAuditScope~~](docs/sdks/audits/README.md#listmonitoredcomputersinauditscope) - List monitored computers :warning: **Deprecated**
-* [getOrganizationInformation](docs/sdks/audits/README.md#getorganizationinformation) - Get organization information for an audit
-* [getOrganizationNotifications](docs/sdks/audits/README.md#getorganizationnotifications) - Get organization notification settings for an audit
-* [~~listPeopleInAuditScope~~](docs/sdks/audits/README.md#listpeopleinauditscope) - List of people who are in scope for this audit :warning: **Deprecated**
-* [listAccountAccessServices](docs/sdks/audits/README.md#listaccountaccessservices) - List account access services for an audit
-* [listPersonnelAccountAccess](docs/sdks/audits/README.md#listpersonnelaccountaccess) - List account access records for an audit
-* [listPersonnelGroups](docs/sdks/audits/README.md#listpersonnelgroups) - List groups for an audit
-* [listPersonnelPeople](docs/sdks/audits/README.md#listpersonnelpeople) - List people for an audit
-* [listRiskSnapshots](docs/sdks/audits/README.md#listrisksnapshots) - List risk snapshots for an audit
-* [listAuditRisks](docs/sdks/audits/README.md#listauditrisks) - List risks for an audit
-* [shareInformationRequestList](docs/sdks/audits/README.md#shareinformationrequestlist) - Share information request list with customer
-* [~~listVendorsInAuditScope~~](docs/sdks/audits/README.md#listvendorsinauditscope) - List of vendors who are in scope for this audit :warning: **Deprecated**
-* [~~listVulnerabilities~~](docs/sdks/audits/README.md#listvulnerabilities) - List vulnerabilities within the scope of a given audit :warning: **Deprecated**
-* [~~listVulnerabilityRemediationsInAuditScope~~](docs/sdks/audits/README.md#listvulnerabilityremediationsinauditscope) - List vulnerability remediations that are in scope for this audit :warning: **Deprecated**
-* [~~getVulnerableAssets~~](docs/sdks/audits/README.md#getvulnerableassets) - List assets associated with vulnerabilities :warning: **Deprecated**
+* [listInformationRequestAuditorFiles](docs/sdks/audits/README.md#listinformationrequestauditorfiles) - List auditor files for an information request
+* [deleteInformationRequestAuditorFile](docs/sdks/audits/README.md#deleteinformationrequestauditorfile) - Delete an auditor file from an information request
+* [initiateInformationRequestAuditorFileUpload](docs/sdks/audits/README.md#initiateinformationrequestauditorfileupload) - Start an auditor file upload
+* [finalizeInformationRequestAuditorFileUpload](docs/sdks/audits/README.md#finalizeinformationrequestauditorfileupload) - Complete an auditor file upload and attach the file
+* [listInformationRequestActivity](docs/sdks/audits/README.md#listinformationrequestactivity) - List information request activity
+* [getAuditEvidenceComment](docs/sdks/audits/README.md#getauditevidencecomment) - Get an audit evidence comment by ID
+* [duplicate](docs/sdks/audits/README.md#duplicate) - Duplicate an IRL audit
+* [listControls](docs/sdks/audits/README.md#listcontrols) - List audit controls
+* [createCustomControl](docs/sdks/audits/README.md#createcustomcontrol) - Create a custom control for an audit
+* [listInformationRequestsForControl](docs/sdks/audits/README.md#listinformationrequestsforcontrol) - List information requests linked to a control within an audit
+* [listCommentsForControl](docs/sdks/audits/README.md#listcommentsforcontrol) - List comments for a control within an audit
+* [createCommentForControl](docs/sdks/audits/README.md#createcommentforcontrol) - Create a comment for a control within an audit
+* [updateCommentForControl](docs/sdks/audits/README.md#updatecommentforcontrol) - Update a comment for a control within an audit
+* [deleteCommentForControl](docs/sdks/audits/README.md#deletecommentforcontrol) - Delete a comment for a control within an audit
+* [upsertAssessmentForControl](docs/sdks/audits/README.md#upsertassessmentforcontrol) - Upsert a control's assessment within an audit
+* [listCodeChanges](docs/sdks/audits/README.md#listcodechanges) - List code changes for an audit
 
 </details>
 <!-- End Available Resources and Operations [operations] -->
@@ -370,34 +353,36 @@ Handling errors in this SDK should largely match your expectations. All operatio
 package hello.world;
 
 import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.components.AddAuditorInput;
+import com.vanta.vanta_auditor_api.models.components.InitiateAuditorFileUploadInput;
+import com.vanta.vanta_auditor_api.models.errors.OutboundError;
 import com.vanta.vanta_auditor_api.models.errors.VantaError;
-import com.vanta.vanta_auditor_api.models.operations.CreateAuditorResponse;
+import com.vanta.vanta_auditor_api.models.operations.InitiateInformationRequestAuditorFileUploadResponse;
 import java.io.UncheckedIOException;
 import java.lang.Exception;
+import java.lang.String;
 import java.util.Optional;
 
 public class Application {
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws OutboundError, Exception {
 
         Vanta sdk = Vanta.builder()
                 .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
         try {
 
-            AddAuditorInput req = AddAuditorInput.builder()
-                    .email("Genesis_Kunze87@yahoo.com")
-                    .givenName("<value>")
-                    .familyName("<value>")
-                    .build();
-
-            CreateAuditorResponse res = sdk.auditors().create()
-                    .request(req)
+            InitiateInformationRequestAuditorFileUploadResponse res = sdk.audits().initiateInformationRequestAuditorFileUpload()
+                    .auditId("<id>")
+                    .requestId("<id>")
+                    .initiateAuditorFileUploadInput(InitiateAuditorFileUploadInput.builder()
+                        .email("Kelly49@hotmail.com")
+                        .filename("example.file")
+                        .contentType("<value>")
+                        .build())
                     .call();
 
-            if (res.auditor().isPresent()) {
-                System.out.println(res.auditor().get());
+            if (res.auditorFileUploadGrant().isPresent()) {
+                System.out.println(res.auditorFileUploadGrant().get());
             }
         } catch (VantaError ex) { // all SDK exceptions inherit from VantaError
 
@@ -411,6 +396,23 @@ public class Application {
             var contentType = headers.first("Content-Type");
             int statusCode = ex.code();
             Optional<byte[]> responseBody = ex.body();
+
+            // different error subclasses may be thrown 
+            // depending on the service call
+            if (ex instanceof OutboundError) {
+                var e = (OutboundError) ex;
+                // Check error data fields
+                e.data().ifPresent(payload -> {
+                      String message = payload.message();
+                });
+            }
+
+            // An underlying cause may be provided. If the error payload 
+            // cannot be deserialized then the deserialization exception 
+            // will be set as the cause.
+            if (ex.getCause() != null) {
+                var cause = ex.getCause();
+            }
         } catch (UncheckedIOException ex) {
             // handle IO error (connection, timeout, etc)
         }    }
@@ -421,7 +423,7 @@ public class Application {
 **Primary error:**
 * [`VantaError`](./src/main/java/models/errors/VantaError.java): The base class for HTTP error responses.
 
-<details><summary>Less common errors (6)</summary>
+<details><summary>Less common errors (7)</summary>
 
 <br />
 
@@ -431,9 +433,12 @@ public class Application {
 many more subclasses in the JDK platform).
 
 **Inherit from [`VantaError`](./src/main/java/models/errors/VantaError.java)**:
+* [`com.vanta.vanta_auditor_api.models.errors.OutboundError`](./src/main/java/models/errors/com.vanta.vanta_auditor_api.models.errors.OutboundError.java): Applicable to 2 of 61 methods.*
 
 
 </details>
+
+\* Check [the method documentation](#available-resources-and-operations) to see if the error is applicable.
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
@@ -454,8 +459,7 @@ You can override the default server globally using the `.serverIndex(int serverI
 package hello.world;
 
 import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.components.AddAuditorInput;
-import com.vanta.vanta_auditor_api.models.operations.CreateAuditorResponse;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import java.lang.Exception;
 
 public class Application {
@@ -467,18 +471,12 @@ public class Application {
                 .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
-        AddAuditorInput req = AddAuditorInput.builder()
-                .email("Genesis_Kunze87@yahoo.com")
-                .givenName("<value>")
-                .familyName("<value>")
-                .build();
-
-        CreateAuditorResponse res = sdk.auditors().create()
-                .request(req)
+        ListAuditsResponse res = sdk.audits().list()
+                .pageSize(10)
                 .call();
 
-        if (res.auditor().isPresent()) {
-            System.out.println(res.auditor().get());
+        if (res.paginatedResponseAudit().isPresent()) {
+            System.out.println(res.paginatedResponseAudit().get());
         }
     }
 }
@@ -491,8 +489,7 @@ The default server can also be overridden globally using the `.serverURL(String 
 package hello.world;
 
 import com.vanta.vanta_auditor_api.Vanta;
-import com.vanta.vanta_auditor_api.models.components.AddAuditorInput;
-import com.vanta.vanta_auditor_api.models.operations.CreateAuditorResponse;
+import com.vanta.vanta_auditor_api.models.operations.ListAuditsResponse;
 import java.lang.Exception;
 
 public class Application {
@@ -504,18 +501,12 @@ public class Application {
                 .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
             .build();
 
-        AddAuditorInput req = AddAuditorInput.builder()
-                .email("Genesis_Kunze87@yahoo.com")
-                .givenName("<value>")
-                .familyName("<value>")
-                .build();
-
-        CreateAuditorResponse res = sdk.auditors().create()
-                .request(req)
+        ListAuditsResponse res = sdk.audits().list()
+                .pageSize(10)
                 .call();
 
-        if (res.auditor().isPresent()) {
-            System.out.println(res.auditor().get());
+        if (res.paginatedResponseAudit().isPresent()) {
+            System.out.println(res.paginatedResponseAudit().get());
         }
     }
 }

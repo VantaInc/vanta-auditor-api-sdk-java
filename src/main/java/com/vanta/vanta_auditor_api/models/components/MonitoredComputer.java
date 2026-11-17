@@ -76,7 +76,7 @@ public class MonitoredComputer {
      */
     @JsonInclude(Include.ALWAYS)
     @JsonProperty("owner")
-    private Optional<? extends MonitoredComputerOwner> owner;
+    private Optional<? extends Owner> owner;
 
     /**
      * The serial number of the computer. This value may be null if it is not reported by the device.
@@ -102,7 +102,7 @@ public class MonitoredComputer {
             @JsonProperty("passwordManager") ComputerStatus passwordManager,
             @JsonProperty("antivirusInstallation") ComputerStatus antivirusInstallation,
             @JsonProperty("operatingSystem") Optional<? extends OperatingSystem> operatingSystem,
-            @JsonProperty("owner") Optional<? extends MonitoredComputerOwner> owner,
+            @JsonProperty("owner") Optional<? extends Owner> owner,
             @JsonProperty("serialNumber") Optional<String> serialNumber,
             @JsonProperty("udid") Optional<String> udid) {
         Utils.checkNotNull(id, "id");
@@ -216,8 +216,8 @@ public class MonitoredComputer {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<MonitoredComputerOwner> owner() {
-        return (Optional<MonitoredComputerOwner>) owner;
+    public Optional<Owner> owner() {
+        return (Optional<Owner>) owner;
     }
 
     /**
@@ -340,7 +340,7 @@ public class MonitoredComputer {
     /**
      * The name, unique identifier, and email address of the computer's owner.
      */
-    public MonitoredComputer withOwner(MonitoredComputerOwner owner) {
+    public MonitoredComputer withOwner(Owner owner) {
         Utils.checkNotNull(owner, "owner");
         this.owner = Optional.ofNullable(owner);
         return this;
@@ -350,7 +350,7 @@ public class MonitoredComputer {
     /**
      * The name, unique identifier, and email address of the computer's owner.
      */
-    public MonitoredComputer withOwner(Optional<? extends MonitoredComputerOwner> owner) {
+    public MonitoredComputer withOwner(Optional<? extends Owner> owner) {
         Utils.checkNotNull(owner, "owner");
         this.owner = owner;
         return this;
@@ -461,7 +461,7 @@ public class MonitoredComputer {
 
         private Optional<? extends OperatingSystem> operatingSystem = Optional.empty();
 
-        private Optional<? extends MonitoredComputerOwner> owner = Optional.empty();
+        private Optional<? extends Owner> owner = Optional.empty();
 
         private Optional<String> serialNumber = Optional.empty();
 
@@ -577,7 +577,7 @@ public class MonitoredComputer {
         /**
          * The name, unique identifier, and email address of the computer's owner.
          */
-        public Builder owner(MonitoredComputerOwner owner) {
+        public Builder owner(Owner owner) {
             Utils.checkNotNull(owner, "owner");
             this.owner = Optional.ofNullable(owner);
             return this;
@@ -586,7 +586,7 @@ public class MonitoredComputer {
         /**
          * The name, unique identifier, and email address of the computer's owner.
          */
-        public Builder owner(Optional<? extends MonitoredComputerOwner> owner) {
+        public Builder owner(Optional<? extends Owner> owner) {
             Utils.checkNotNull(owner, "owner");
             this.owner = owner;
             return this;

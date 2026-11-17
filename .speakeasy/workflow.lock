@@ -2,8 +2,8 @@ speakeasyVersion: 1.805.0
 sources:
     Conduct an audit:
         sourceNamespace: conduct-an-audit
-        sourceRevisionDigest: sha256:8a3de8be917054e22b28c6f2c7d2e9c0721fd9fa04bb93ea7594f42137806d0c
-        sourceBlobDigest: sha256:d5acc027b72761d85234790babda063505bdab3d1ecd4981158e66217a6699d8
+        sourceRevisionDigest: sha256:5549914e0a68420a87165b331a761115d5c9f092cc5605e2978a552508996d69
+        sourceBlobDigest: sha256:dfcb0ae97019e935ad83a8c4f04abfb2a007c1bebbb233fd66dc5541ea68e1af
         tags:
             - latest
             - 1.0.0
@@ -11,17 +11,17 @@ targets:
     vanta:
         source: Conduct an audit
         sourceNamespace: conduct-an-audit
-        sourceRevisionDigest: sha256:8a3de8be917054e22b28c6f2c7d2e9c0721fd9fa04bb93ea7594f42137806d0c
-        sourceBlobDigest: sha256:d5acc027b72761d85234790babda063505bdab3d1ecd4981158e66217a6699d8
+        sourceRevisionDigest: sha256:5549914e0a68420a87165b331a761115d5c9f092cc5605e2978a552508996d69
+        sourceBlobDigest: sha256:dfcb0ae97019e935ad83a8c4f04abfb2a007c1bebbb233fd66dc5541ea68e1af
         codeSamplesNamespace: conduct-an-audit-java-code-samples
-        codeSamplesRevisionDigest: sha256:4ffa2e1df30260add44ae6b281b6b41489af007dc700d562f2ba92f45fb8c903
+        codeSamplesRevisionDigest: sha256:9c0bcf086d643ede71db51a45cf69d258c23986cd46d282ac3b19bb5148e3040
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: pinned
     sources:
         Conduct an audit:
             inputs:
-                - location: https://vanta.mintlify.app/reference/auditor-api.json
+                - location: ../auditor-spec/api-spec.yaml
             overlays:
                 - location: .speakeasy/speakeasy-modifications-overlay.yaml
             registry:

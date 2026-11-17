@@ -60,7 +60,7 @@ public class AuditorControl {
      */
     @JsonInclude(Include.ALWAYS)
     @JsonProperty("owner")
-    private Optional<? extends Owner> owner;
+    private Optional<? extends AuditorControlOwner> owner;
 
     /**
      * The control's GDPR role, if the control is a GDPR control.
@@ -131,7 +131,7 @@ public class AuditorControl {
             @JsonProperty("description") String description,
             @JsonProperty("source") ControlSource source,
             @JsonProperty("domains") List<String> domains,
-            @JsonProperty("owner") Optional<? extends Owner> owner,
+            @JsonProperty("owner") Optional<? extends AuditorControlOwner> owner,
             @JsonProperty("role") JsonNullable<String> role,
             @JsonProperty("customFields") List<CustomField> customFields,
             @JsonProperty("creationDate") Optional<OffsetDateTime> creationDate,
@@ -240,8 +240,8 @@ public class AuditorControl {
      */
     @SuppressWarnings("unchecked")
     @JsonIgnore
-    public Optional<Owner> owner() {
-        return (Optional<Owner>) owner;
+    public Optional<AuditorControlOwner> owner() {
+        return (Optional<AuditorControlOwner>) owner;
     }
 
     /**
@@ -387,7 +387,7 @@ public class AuditorControl {
     /**
      * The control's owner.
      */
-    public AuditorControl withOwner(Owner owner) {
+    public AuditorControl withOwner(AuditorControlOwner owner) {
         Utils.checkNotNull(owner, "owner");
         this.owner = Optional.ofNullable(owner);
         return this;
@@ -397,7 +397,7 @@ public class AuditorControl {
     /**
      * The control's owner.
      */
-    public AuditorControl withOwner(Optional<? extends Owner> owner) {
+    public AuditorControl withOwner(Optional<? extends AuditorControlOwner> owner) {
         Utils.checkNotNull(owner, "owner");
         this.owner = owner;
         return this;
@@ -586,7 +586,7 @@ public class AuditorControl {
 
         private List<String> domains;
 
-        private Optional<? extends Owner> owner = Optional.empty();
+        private Optional<? extends AuditorControlOwner> owner = Optional.empty();
 
         private JsonNullable<String> role = JsonNullable.undefined();
 
@@ -679,7 +679,7 @@ public class AuditorControl {
         /**
          * The control's owner.
          */
-        public Builder owner(Owner owner) {
+        public Builder owner(AuditorControlOwner owner) {
             Utils.checkNotNull(owner, "owner");
             this.owner = Optional.ofNullable(owner);
             return this;
@@ -688,7 +688,7 @@ public class AuditorControl {
         /**
          * The control's owner.
          */
-        public Builder owner(Optional<? extends Owner> owner) {
+        public Builder owner(Optional<? extends AuditorControlOwner> owner) {
             Utils.checkNotNull(owner, "owner");
             this.owner = owner;
             return this;
