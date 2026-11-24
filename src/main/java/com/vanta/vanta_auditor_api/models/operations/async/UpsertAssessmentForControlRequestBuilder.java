@@ -10,8 +10,11 @@ import com.vanta.vanta_auditor_api.models.components.UpsertAuditControlAssessmen
 import com.vanta.vanta_auditor_api.models.operations.UpsertAssessmentForControlRequest;
 import com.vanta.vanta_auditor_api.operations.UpsertAssessmentForControl;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class UpsertAssessmentForControlRequestBuilder {
@@ -19,6 +22,7 @@ public class UpsertAssessmentForControlRequestBuilder {
     private String auditId;
     private String controlId;
     private UpsertAuditControlAssessmentInput upsertAuditControlAssessmentInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -43,6 +47,18 @@ public class UpsertAssessmentForControlRequestBuilder {
         this.upsertAuditControlAssessmentInput = upsertAuditControlAssessmentInput;
         return this;
     }
+                
+    public UpsertAssessmentForControlRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public UpsertAssessmentForControlRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private UpsertAssessmentForControlRequest buildRequest() {
@@ -55,9 +71,12 @@ public class UpsertAssessmentForControlRequestBuilder {
     }
 
     public CompletableFuture<UpsertAssessmentForControlResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<UpsertAssessmentForControlRequest, UpsertAssessmentForControlResponse> operation
-              = new UpsertAssessmentForControl.Async(sdkConfiguration, _headers);
+              = new UpsertAssessmentForControl.Async(sdkConfiguration, options, _headers);
         UpsertAssessmentForControlRequest request = buildRequest();
 
         return operation.doRequest(request)

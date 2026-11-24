@@ -10,14 +10,18 @@ import com.vanta.vanta_auditor_api.models.components.CreateInformationRequestInp
 import com.vanta.vanta_auditor_api.models.operations.CreateInformationRequestRequest;
 import com.vanta.vanta_auditor_api.operations.CreateInformationRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class CreateInformationRequestRequestBuilder {
 
     private String auditId;
     private CreateInformationRequestInput createInformationRequestInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -36,6 +40,18 @@ public class CreateInformationRequestRequestBuilder {
         this.createInformationRequestInput = createInformationRequestInput;
         return this;
     }
+                
+    public CreateInformationRequestRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public CreateInformationRequestRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private CreateInformationRequestRequest buildRequest() {
@@ -47,9 +63,12 @@ public class CreateInformationRequestRequestBuilder {
     }
 
     public CompletableFuture<CreateInformationRequestResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<CreateInformationRequestRequest, CreateInformationRequestResponse> operation
-              = new CreateInformationRequest.Async(sdkConfiguration, _headers);
+              = new CreateInformationRequest.Async(sdkConfiguration, options, _headers);
         CreateInformationRequestRequest request = buildRequest();
 
         return operation.doRequest(request)

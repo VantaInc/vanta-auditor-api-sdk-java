@@ -11,9 +11,11 @@ import com.vanta.vanta_auditor_api.models.operations.ListAccountAccessServicesRe
 import com.vanta.vanta_auditor_api.operations.ListAccountAccessServices;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.String;
+import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -25,6 +27,7 @@ public class ListAccountAccessServicesRequestBuilder {
                             "10",
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -61,6 +64,18 @@ public class ListAccountAccessServicesRequestBuilder {
         this.pageCursor = pageCursor;
         return this;
     }
+                
+    public ListAccountAccessServicesRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListAccountAccessServicesRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private ListAccountAccessServicesRequest buildRequest() {
@@ -76,9 +91,12 @@ public class ListAccountAccessServicesRequestBuilder {
     }
 
     public CompletableFuture<ListAccountAccessServicesResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<ListAccountAccessServicesRequest, ListAccountAccessServicesResponse> operation
-              = new ListAccountAccessServices.Async(sdkConfiguration, _headers);
+              = new ListAccountAccessServices.Async(sdkConfiguration, options, _headers);
         ListAccountAccessServicesRequest request = buildRequest();
 
         return operation.doRequest(request)

@@ -9,13 +9,17 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.CreateCustomEvidenceRequestInput;
 import com.vanta.vanta_auditor_api.operations.CreateCustomEvidenceRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 
 public class CreateCustomEvidenceRequestRequestBuilder {
 
     private String auditId;
     private CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -34,6 +38,18 @@ public class CreateCustomEvidenceRequestRequestBuilder {
         this.createCustomEvidenceRequestInput = createCustomEvidenceRequestInput;
         return this;
     }
+                
+    public CreateCustomEvidenceRequestRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public CreateCustomEvidenceRequestRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private CreateCustomEvidenceRequestRequest buildRequest() {
@@ -45,9 +61,12 @@ public class CreateCustomEvidenceRequestRequestBuilder {
     }
 
     public CreateCustomEvidenceRequestResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<CreateCustomEvidenceRequestRequest, CreateCustomEvidenceRequestResponse> operation
-              = new CreateCustomEvidenceRequest.Sync(sdkConfiguration, _headers);
+              = new CreateCustomEvidenceRequest.Sync(sdkConfiguration, options, _headers);
         CreateCustomEvidenceRequestRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

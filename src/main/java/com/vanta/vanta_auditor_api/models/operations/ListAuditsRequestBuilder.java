@@ -10,10 +10,12 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.ListAudits;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Boolean;
 import java.lang.Integer;
 import java.lang.String;
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
@@ -26,6 +28,7 @@ public class ListAuditsRequestBuilder {
     private Optional<String> pageCursor = Optional.empty();
     private Optional<OffsetDateTime> changedSinceDate = Optional.empty();
     private Optional<Boolean> isActiveAudit = Optional.empty();
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -80,6 +83,18 @@ public class ListAuditsRequestBuilder {
         this.isActiveAudit = isActiveAudit;
         return this;
     }
+                
+    public ListAuditsRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListAuditsRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private ListAuditsRequest buildRequest() {
@@ -96,9 +111,12 @@ public class ListAuditsRequestBuilder {
     }
 
     public ListAuditsResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<ListAuditsRequest, ListAuditsResponse> operation
-              = new ListAudits.Sync(sdkConfiguration, _headers);
+              = new ListAudits.Sync(sdkConfiguration, options, _headers);
         ListAuditsRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

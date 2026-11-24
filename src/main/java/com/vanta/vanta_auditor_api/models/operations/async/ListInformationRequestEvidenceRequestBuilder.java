@@ -9,12 +9,16 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class ListInformationRequestEvidenceRequestBuilder {
 
     private ListInformationRequestEvidenceRequest request;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -27,11 +31,26 @@ public class ListInformationRequestEvidenceRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public ListInformationRequestEvidenceRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListInformationRequestEvidenceRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
     public CompletableFuture<ListInformationRequestEvidenceResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<ListInformationRequestEvidenceRequest, ListInformationRequestEvidenceResponse> operation
-              = new ListInformationRequestEvidence.Async(sdkConfiguration, _headers);
+              = new ListInformationRequestEvidence.Async(sdkConfiguration, options, _headers);
 
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);

@@ -10,6 +10,8 @@ import com.vanta.vanta_auditor_api.models.operations.async.CreateAuditorRequestB
 import com.vanta.vanta_auditor_api.models.operations.async.CreateAuditorResponse;
 import com.vanta.vanta_auditor_api.operations.CreateAuditor;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -57,8 +59,23 @@ public class AsyncAuditors {
      * @return {@code CompletableFuture<CreateAuditorResponse>} - The async response
      */
     public CompletableFuture<CreateAuditorResponse> create(AddAuditorInput request) {
+        return create(request, Optional.empty());
+    }
+
+    /**
+     * Create an auditor
+     * 
+     * <p>Create an auditor in Vanta.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return {@code CompletableFuture<CreateAuditorResponse>} - The async response
+     */
+    public CompletableFuture<CreateAuditorResponse> create(AddAuditorInput request, Optional<Options> options) {
         AsyncRequestOperation<AddAuditorInput, CreateAuditorResponse> operation
-              = new CreateAuditor.Async(sdkConfiguration, _headers);
+              = new CreateAuditor.Async(sdkConfiguration, options, _headers);
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);
     }

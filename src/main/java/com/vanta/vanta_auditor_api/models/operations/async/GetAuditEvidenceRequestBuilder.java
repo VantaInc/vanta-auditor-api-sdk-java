@@ -9,14 +9,18 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.operations.GetAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.operations.GetAuditEvidence;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class GetAuditEvidenceRequestBuilder {
 
     private String auditId;
     private String auditEvidenceId;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -35,6 +39,18 @@ public class GetAuditEvidenceRequestBuilder {
         this.auditEvidenceId = auditEvidenceId;
         return this;
     }
+                
+    public GetAuditEvidenceRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public GetAuditEvidenceRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private GetAuditEvidenceRequest buildRequest() {
@@ -46,9 +62,12 @@ public class GetAuditEvidenceRequestBuilder {
     }
 
     public CompletableFuture<GetAuditEvidenceResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<GetAuditEvidenceRequest, GetAuditEvidenceResponse> operation
-              = new GetAuditEvidence.Async(sdkConfiguration, _headers);
+              = new GetAuditEvidence.Async(sdkConfiguration, options, _headers);
         GetAuditEvidenceRequest request = buildRequest();
 
         return operation.doRequest(request)

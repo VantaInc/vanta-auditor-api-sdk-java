@@ -11,9 +11,11 @@ import com.vanta.vanta_auditor_api.models.components.ComputerStatusFilter;
 import com.vanta.vanta_auditor_api.operations.ListMonitoredComputersInAuditScope;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.String;
+import java.time.Duration;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +28,7 @@ public class ListMonitoredComputersInAuditScopeRequestBuilder {
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
     private Optional<? extends List<ComputerStatusFilter>> complianceStatusFilterMatchesAny = Optional.empty();
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -74,6 +77,18 @@ public class ListMonitoredComputersInAuditScopeRequestBuilder {
         this.complianceStatusFilterMatchesAny = complianceStatusFilterMatchesAny;
         return this;
     }
+                
+    public ListMonitoredComputersInAuditScopeRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListMonitoredComputersInAuditScopeRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private ListMonitoredComputersInAuditScopeRequest buildRequest() {
@@ -90,9 +105,12 @@ public class ListMonitoredComputersInAuditScopeRequestBuilder {
     }
 
     public ListMonitoredComputersInAuditScopeResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<ListMonitoredComputersInAuditScopeRequest, ListMonitoredComputersInAuditScopeResponse> operation
-              = new ListMonitoredComputersInAuditScope.Sync(sdkConfiguration, _headers);
+              = new ListMonitoredComputersInAuditScope.Sync(sdkConfiguration, options, _headers);
         ListMonitoredComputersInAuditScopeRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

@@ -8,14 +8,18 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.GetAuditEvidenceComment;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 
 public class GetAuditEvidenceCommentRequestBuilder {
 
     private String auditId;
     private String auditEvidenceId;
     private String commentId;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -40,6 +44,18 @@ public class GetAuditEvidenceCommentRequestBuilder {
         this.commentId = commentId;
         return this;
     }
+                
+    public GetAuditEvidenceCommentRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public GetAuditEvidenceCommentRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private GetAuditEvidenceCommentRequest buildRequest() {
@@ -52,9 +68,12 @@ public class GetAuditEvidenceCommentRequestBuilder {
     }
 
     public GetAuditEvidenceCommentResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<GetAuditEvidenceCommentRequest, GetAuditEvidenceCommentResponse> operation
-              = new GetAuditEvidenceComment.Sync(sdkConfiguration, _headers);
+              = new GetAuditEvidenceComment.Sync(sdkConfiguration, options, _headers);
         GetAuditEvidenceCommentRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

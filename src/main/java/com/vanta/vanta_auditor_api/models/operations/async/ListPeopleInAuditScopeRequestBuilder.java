@@ -9,12 +9,16 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.operations.ListPeopleInAuditScopeRequest;
 import com.vanta.vanta_auditor_api.operations.ListPeopleInAuditScope;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class ListPeopleInAuditScopeRequestBuilder {
 
     private ListPeopleInAuditScopeRequest request;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -27,11 +31,26 @@ public class ListPeopleInAuditScopeRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public ListPeopleInAuditScopeRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListPeopleInAuditScopeRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
     public CompletableFuture<ListPeopleInAuditScopeResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<ListPeopleInAuditScopeRequest, ListPeopleInAuditScopeResponse> operation
-              = new ListPeopleInAuditScope.Async(sdkConfiguration, _headers);
+              = new ListPeopleInAuditScope.Async(sdkConfiguration, options, _headers);
 
         return operation.doRequest(request)
             .thenCompose(operation::handleResponse);

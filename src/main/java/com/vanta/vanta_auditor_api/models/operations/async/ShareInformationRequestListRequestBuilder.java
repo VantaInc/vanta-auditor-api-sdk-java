@@ -9,13 +9,17 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.operations.ShareInformationRequestListRequest;
 import com.vanta.vanta_auditor_api.operations.ShareInformationRequestList;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class ShareInformationRequestListRequestBuilder {
 
     private String auditId;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -28,6 +32,18 @@ public class ShareInformationRequestListRequestBuilder {
         this.auditId = auditId;
         return this;
     }
+                
+    public ShareInformationRequestListRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ShareInformationRequestListRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private ShareInformationRequestListRequest buildRequest() {
@@ -38,9 +54,12 @@ public class ShareInformationRequestListRequestBuilder {
     }
 
     public CompletableFuture<ShareInformationRequestListResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<ShareInformationRequestListRequest, ShareInformationRequestListResponse> operation
-              = new ShareInformationRequestList.Async(sdkConfiguration, _headers);
+              = new ShareInformationRequestList.Async(sdkConfiguration, options, _headers);
         ShareInformationRequestListRequest request = buildRequest();
 
         return operation.doRequest(request)

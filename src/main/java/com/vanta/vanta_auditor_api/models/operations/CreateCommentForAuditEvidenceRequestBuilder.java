@@ -9,14 +9,18 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
 import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidence;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 
 public class CreateCommentForAuditEvidenceRequestBuilder {
 
     private String auditId;
     private String auditEvidenceId;
     private AddCommentInput addCommentInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -41,6 +45,18 @@ public class CreateCommentForAuditEvidenceRequestBuilder {
         this.addCommentInput = addCommentInput;
         return this;
     }
+                
+    public CreateCommentForAuditEvidenceRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public CreateCommentForAuditEvidenceRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private CreateCommentForAuditEvidenceRequest buildRequest() {
@@ -53,9 +69,12 @@ public class CreateCommentForAuditEvidenceRequestBuilder {
     }
 
     public CreateCommentForAuditEvidenceResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
-              = new CreateCommentForAuditEvidence.Sync(sdkConfiguration, _headers);
+              = new CreateCommentForAuditEvidence.Sync(sdkConfiguration, options, _headers);
         CreateCommentForAuditEvidenceRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

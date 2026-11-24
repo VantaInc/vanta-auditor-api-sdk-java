@@ -8,13 +8,17 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 
 public class GetInformationRequestRequestBuilder {
 
     private String auditId;
     private String requestId;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -33,6 +37,18 @@ public class GetInformationRequestRequestBuilder {
         this.requestId = requestId;
         return this;
     }
+                
+    public GetInformationRequestRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public GetInformationRequestRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private GetInformationRequestRequest buildRequest() {
@@ -44,9 +60,12 @@ public class GetInformationRequestRequestBuilder {
     }
 
     public GetInformationRequestResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<GetInformationRequestRequest, GetInformationRequestResponse> operation
-              = new GetInformationRequest.Sync(sdkConfiguration, _headers);
+              = new GetInformationRequest.Sync(sdkConfiguration, options, _headers);
         GetInformationRequestRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

@@ -10,8 +10,11 @@ import com.vanta.vanta_auditor_api.models.components.AcceptInformationRequestEvi
 import com.vanta.vanta_auditor_api.models.operations.AcceptInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.operations.AcceptInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class AcceptInformationRequestEvidenceRequestBuilder {
@@ -19,6 +22,7 @@ public class AcceptInformationRequestEvidenceRequestBuilder {
     private String auditId;
     private String requestId;
     private AcceptInformationRequestEvidenceInput acceptInformationRequestEvidenceInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -43,6 +47,18 @@ public class AcceptInformationRequestEvidenceRequestBuilder {
         this.acceptInformationRequestEvidenceInput = acceptInformationRequestEvidenceInput;
         return this;
     }
+                
+    public AcceptInformationRequestEvidenceRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public AcceptInformationRequestEvidenceRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private AcceptInformationRequestEvidenceRequest buildRequest() {
@@ -55,9 +71,12 @@ public class AcceptInformationRequestEvidenceRequestBuilder {
     }
 
     public CompletableFuture<AcceptInformationRequestEvidenceResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<AcceptInformationRequestEvidenceRequest, AcceptInformationRequestEvidenceResponse> operation
-              = new AcceptInformationRequestEvidence.Async(sdkConfiguration, _headers);
+              = new AcceptInformationRequestEvidence.Async(sdkConfiguration, options, _headers);
         AcceptInformationRequestEvidenceRequest request = buildRequest();
 
         return operation.doRequest(request)

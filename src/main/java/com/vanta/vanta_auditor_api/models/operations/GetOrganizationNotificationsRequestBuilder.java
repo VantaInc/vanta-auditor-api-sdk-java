@@ -8,12 +8,16 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.GetOrganizationNotifications;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 
 public class GetOrganizationNotificationsRequestBuilder {
 
     private String auditId;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -26,6 +30,18 @@ public class GetOrganizationNotificationsRequestBuilder {
         this.auditId = auditId;
         return this;
     }
+                
+    public GetOrganizationNotificationsRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public GetOrganizationNotificationsRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private GetOrganizationNotificationsRequest buildRequest() {
@@ -36,9 +52,12 @@ public class GetOrganizationNotificationsRequestBuilder {
     }
 
     public GetOrganizationNotificationsResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<GetOrganizationNotificationsRequest, GetOrganizationNotificationsResponse> operation
-              = new GetOrganizationNotifications.Sync(sdkConfiguration, _headers);
+              = new GetOrganizationNotifications.Sync(sdkConfiguration, options, _headers);
         GetOrganizationNotificationsRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

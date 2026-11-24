@@ -10,9 +10,11 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.ListRiskSnapshots;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.String;
+import java.time.Duration;
 import java.util.Optional;
 
 public class ListRiskSnapshotsRequestBuilder {
@@ -23,6 +25,7 @@ public class ListRiskSnapshotsRequestBuilder {
                             "10",
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -59,6 +62,18 @@ public class ListRiskSnapshotsRequestBuilder {
         this.pageCursor = pageCursor;
         return this;
     }
+                
+    public ListRiskSnapshotsRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListRiskSnapshotsRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private ListRiskSnapshotsRequest buildRequest() {
@@ -74,9 +89,12 @@ public class ListRiskSnapshotsRequestBuilder {
     }
 
     public ListRiskSnapshotsResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<ListRiskSnapshotsRequest, ListRiskSnapshotsResponse> operation
-              = new ListRiskSnapshots.Sync(sdkConfiguration, _headers);
+              = new ListRiskSnapshots.Sync(sdkConfiguration, options, _headers);
         ListRiskSnapshotsRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

@@ -10,8 +10,11 @@ import com.vanta.vanta_auditor_api.models.components.AddInformationRequestCommen
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.operations.CreateCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class CreateCommentForInformationRequestRequestBuilder {
@@ -19,6 +22,7 @@ public class CreateCommentForInformationRequestRequestBuilder {
     private String auditId;
     private String requestId;
     private AddInformationRequestCommentInput addInformationRequestCommentInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -43,6 +47,18 @@ public class CreateCommentForInformationRequestRequestBuilder {
         this.addInformationRequestCommentInput = addInformationRequestCommentInput;
         return this;
     }
+                
+    public CreateCommentForInformationRequestRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public CreateCommentForInformationRequestRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private CreateCommentForInformationRequestRequest buildRequest() {
@@ -55,9 +71,12 @@ public class CreateCommentForInformationRequestRequestBuilder {
     }
 
     public CompletableFuture<CreateCommentForInformationRequestResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<CreateCommentForInformationRequestRequest, CreateCommentForInformationRequestResponse> operation
-              = new CreateCommentForInformationRequest.Async(sdkConfiguration, _headers);
+              = new CreateCommentForInformationRequest.Async(sdkConfiguration, options, _headers);
         CreateCommentForInformationRequestRequest request = buildRequest();
 
         return operation.doRequest(request)

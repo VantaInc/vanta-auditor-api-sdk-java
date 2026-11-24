@@ -10,9 +10,11 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.ListAuditSnapshots;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.String;
+import java.time.Duration;
 import java.util.Optional;
 
 public class ListAuditSnapshotsRequestBuilder {
@@ -24,6 +26,7 @@ public class ListAuditSnapshotsRequestBuilder {
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
     private Optional<String> search = Optional.empty();
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -72,6 +75,18 @@ public class ListAuditSnapshotsRequestBuilder {
         this.search = search;
         return this;
     }
+                
+    public ListAuditSnapshotsRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListAuditSnapshotsRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private ListAuditSnapshotsRequest buildRequest() {
@@ -88,9 +103,12 @@ public class ListAuditSnapshotsRequestBuilder {
     }
 
     public ListAuditSnapshotsResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<ListAuditSnapshotsRequest, ListAuditSnapshotsResponse> operation
-              = new ListAuditSnapshots.Sync(sdkConfiguration, _headers);
+              = new ListAuditSnapshots.Sync(sdkConfiguration, options, _headers);
         ListAuditSnapshotsRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));
