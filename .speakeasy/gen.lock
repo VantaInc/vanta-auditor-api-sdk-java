@@ -5,15 +5,15 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.805.0
   generationVersion: 2.954.8
-  releaseVersion: 0.8.8
-  configChecksum: ed24e17787a9b35e3405480827d02338
+  releaseVersion: 0.8.9
+  configChecksum: 20d346057aaf109447e165e3e0a4ec97
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   installationURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java
   published: true
 persistentEdits:
-  generation_id: d26cd8fc-f001-401c-a2d9-4107ea3a1ae0
-  pristine_commit_hash: 9f37ec60f1a2aca31b10193117d39d75ee2d2637
-  pristine_tree_hash: ca9117ea489829c33eaf7a706548f5af31f092c6
+  generation_id: baa636a0-83d5-45fc-b11d-e9188433adae
+  pristine_commit_hash: b7e7fe35784f18d021539b07527c90541f26a1e7
+  pristine_tree_hash: 6cdedfd3c209d66879b2e559888791d935de9df8
 features:
   java:
     additionalDependencies: 0.1.0
@@ -1732,8 +1732,8 @@ trackedFiles:
     pristine_git_object: de7d1b163d5926363b94e775645373b750f65b30
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:8b93d50b485601205af7257d391c837324475d40
-    pristine_git_object: 4b3879a89564e1bcac9249deff333168d8ceedb2
+    last_write_checksum: sha1:1704f02d11685d8f70aadb37d6d284e8494d8506
+    pristine_git_object: 6a7f497c0f3286d43c6204d9af7f28c85e056826
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -1780,8 +1780,8 @@ trackedFiles:
     pristine_git_object: d361de0ec96a609d8bc5b90abe0907fe4943b3d5
   src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java:
     id: ce55360c720c
-    last_write_checksum: sha1:ee8204a412646c9a6713a15db66166682fcdca02
-    pristine_git_object: a51fcb701de1442550680f3da5f620e29c929831
+    last_write_checksum: sha1:447046bb85f023c38ab7394941bbb1634103062f
+    pristine_git_object: 3128c22587226d1cbaaf0b15897be37509173e86
   src/main/java/com/vanta/vanta_auditor_api/SecuritySource.java:
     id: 18c0da44b51f
     last_write_checksum: sha1:55dc5f4240c7317c9a5a4080b6e17dc1b6fdd403
