@@ -11,9 +11,11 @@ import com.vanta.vanta_auditor_api.models.operations.ListVendorsInAuditScopeRequ
 import com.vanta.vanta_auditor_api.operations.ListVendorsInAuditScope;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.String;
+import java.time.Duration;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
@@ -25,6 +27,7 @@ public class ListVendorsInAuditScopeRequestBuilder {
                             "10",
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -61,6 +64,18 @@ public class ListVendorsInAuditScopeRequestBuilder {
         this.pageCursor = pageCursor;
         return this;
     }
+                
+    public ListVendorsInAuditScopeRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListVendorsInAuditScopeRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private ListVendorsInAuditScopeRequest buildRequest() {
@@ -76,9 +91,12 @@ public class ListVendorsInAuditScopeRequestBuilder {
     }
 
     public CompletableFuture<ListVendorsInAuditScopeResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<ListVendorsInAuditScopeRequest, ListVendorsInAuditScopeResponse> operation
-              = new ListVendorsInAuditScope.Async(sdkConfiguration, _headers);
+              = new ListVendorsInAuditScope.Async(sdkConfiguration, options, _headers);
         ListVendorsInAuditScopeRequest request = buildRequest();
 
         return operation.doRequest(request)

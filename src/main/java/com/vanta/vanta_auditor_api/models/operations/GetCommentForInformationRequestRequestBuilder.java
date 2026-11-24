@@ -8,14 +8,18 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.GetCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 
 public class GetCommentForInformationRequestRequestBuilder {
 
     private String auditId;
     private String requestId;
     private String commentId;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -40,6 +44,18 @@ public class GetCommentForInformationRequestRequestBuilder {
         this.commentId = commentId;
         return this;
     }
+                
+    public GetCommentForInformationRequestRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public GetCommentForInformationRequestRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private GetCommentForInformationRequestRequest buildRequest() {
@@ -52,9 +68,12 @@ public class GetCommentForInformationRequestRequestBuilder {
     }
 
     public GetCommentForInformationRequestResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<GetCommentForInformationRequestRequest, GetCommentForInformationRequestResponse> operation
-              = new GetCommentForInformationRequest.Sync(sdkConfiguration, _headers);
+              = new GetCommentForInformationRequest.Sync(sdkConfiguration, options, _headers);
         GetCommentForInformationRequestRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

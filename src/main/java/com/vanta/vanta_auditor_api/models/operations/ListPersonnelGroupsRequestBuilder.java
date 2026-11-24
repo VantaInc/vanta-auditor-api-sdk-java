@@ -8,11 +8,15 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.ListPersonnelGroups;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.time.Duration;
+import java.util.Optional;
 
 public class ListPersonnelGroupsRequestBuilder {
 
     private ListPersonnelGroupsRequest request;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -25,11 +29,26 @@ public class ListPersonnelGroupsRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public ListPersonnelGroupsRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListPersonnelGroupsRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
     public ListPersonnelGroupsResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<ListPersonnelGroupsRequest, ListPersonnelGroupsResponse> operation
-              = new ListPersonnelGroups.Sync(sdkConfiguration, _headers);
+              = new ListPersonnelGroups.Sync(sdkConfiguration, options, _headers);
 
         return operation.handleResponse(operation.doRequest(request));
     }

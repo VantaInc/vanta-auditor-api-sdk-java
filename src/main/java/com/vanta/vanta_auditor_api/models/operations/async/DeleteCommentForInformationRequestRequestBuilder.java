@@ -10,8 +10,11 @@ import com.vanta.vanta_auditor_api.models.components.DeleteInformationRequestCom
 import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForInformationRequestRequest;
 import com.vanta.vanta_auditor_api.operations.DeleteCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class DeleteCommentForInformationRequestRequestBuilder {
@@ -20,6 +23,7 @@ public class DeleteCommentForInformationRequestRequestBuilder {
     private String requestId;
     private String commentId;
     private DeleteInformationRequestCommentInput deleteInformationRequestCommentInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -50,6 +54,18 @@ public class DeleteCommentForInformationRequestRequestBuilder {
         this.deleteInformationRequestCommentInput = deleteInformationRequestCommentInput;
         return this;
     }
+                
+    public DeleteCommentForInformationRequestRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public DeleteCommentForInformationRequestRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private DeleteCommentForInformationRequestRequest buildRequest() {
@@ -63,9 +79,12 @@ public class DeleteCommentForInformationRequestRequestBuilder {
     }
 
     public CompletableFuture<DeleteCommentForInformationRequestResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<DeleteCommentForInformationRequestRequest, DeleteCommentForInformationRequestResponse> operation
-              = new DeleteCommentForInformationRequest.Async(sdkConfiguration, _headers);
+              = new DeleteCommentForInformationRequest.Async(sdkConfiguration, options, _headers);
         DeleteCommentForInformationRequestRequest request = buildRequest();
 
         return operation.doRequest(request)

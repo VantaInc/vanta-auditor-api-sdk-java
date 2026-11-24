@@ -9,8 +9,11 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.operations.GetInformationRequestTestSnapshotEvidenceDetailRequest;
 import com.vanta.vanta_auditor_api.operations.GetInformationRequestTestSnapshotEvidenceDetail;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder {
@@ -18,6 +21,7 @@ public class GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder {
     private String auditId;
     private String requestId;
     private String evidenceId;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -42,6 +46,18 @@ public class GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder {
         this.evidenceId = evidenceId;
         return this;
     }
+                
+    public GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private GetInformationRequestTestSnapshotEvidenceDetailRequest buildRequest() {
@@ -54,9 +70,12 @@ public class GetInformationRequestTestSnapshotEvidenceDetailRequestBuilder {
     }
 
     public CompletableFuture<GetInformationRequestTestSnapshotEvidenceDetailResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<GetInformationRequestTestSnapshotEvidenceDetailRequest, GetInformationRequestTestSnapshotEvidenceDetailResponse> operation
-              = new GetInformationRequestTestSnapshotEvidenceDetail.Async(sdkConfiguration, _headers);
+              = new GetInformationRequestTestSnapshotEvidenceDetail.Async(sdkConfiguration, options, _headers);
         GetInformationRequestTestSnapshotEvidenceDetailRequest request = buildRequest();
 
         return operation.doRequest(request)

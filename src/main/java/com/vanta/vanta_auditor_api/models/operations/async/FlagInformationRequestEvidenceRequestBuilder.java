@@ -10,8 +10,11 @@ import com.vanta.vanta_auditor_api.models.components.FlagInformationRequestEvide
 import com.vanta.vanta_auditor_api.models.operations.FlagInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.operations.FlagInformationRequestEvidence;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class FlagInformationRequestEvidenceRequestBuilder {
@@ -19,6 +22,7 @@ public class FlagInformationRequestEvidenceRequestBuilder {
     private String auditId;
     private String requestId;
     private FlagInformationRequestEvidenceInput flagInformationRequestEvidenceInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -43,6 +47,18 @@ public class FlagInformationRequestEvidenceRequestBuilder {
         this.flagInformationRequestEvidenceInput = flagInformationRequestEvidenceInput;
         return this;
     }
+                
+    public FlagInformationRequestEvidenceRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public FlagInformationRequestEvidenceRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private FlagInformationRequestEvidenceRequest buildRequest() {
@@ -55,9 +71,12 @@ public class FlagInformationRequestEvidenceRequestBuilder {
     }
 
     public CompletableFuture<FlagInformationRequestEvidenceResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<FlagInformationRequestEvidenceRequest, FlagInformationRequestEvidenceResponse> operation
-              = new FlagInformationRequestEvidence.Async(sdkConfiguration, _headers);
+              = new FlagInformationRequestEvidence.Async(sdkConfiguration, options, _headers);
         FlagInformationRequestEvidenceRequest request = buildRequest();
 
         return operation.doRequest(request)

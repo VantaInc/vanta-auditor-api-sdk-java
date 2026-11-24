@@ -265,6 +265,7 @@ import com.vanta.vanta_auditor_api.operations.UpdateCommentForInformationRequest
 import com.vanta.vanta_auditor_api.operations.UpdateInformationRequest;
 import com.vanta.vanta_auditor_api.operations.UpsertAssessmentForControl;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import java.lang.Boolean;
 import java.lang.Deprecated;
 import java.lang.Integer;
@@ -344,7 +345,7 @@ public class Audits {
      */
     public ListAuditsResponse listDirect() {
         return list(Optional.empty(), Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -378,6 +379,43 @@ public class Audits {
     public ListAuditsResponse list(
             Optional<Integer> pageSize, Optional<String> pageCursor,
             Optional<OffsetDateTime> changedSinceDate, Optional<Boolean> isActiveAudit) {
+        return list(pageSize, pageCursor, changedSinceDate,
+            isActiveAudit, Optional.empty());
+    }
+
+    /**
+     * List audits
+     * 
+     * <p>Returns a paginated list of audits scoped to the audit firm.
+     * 
+     * <p>To identify IRL (Information Request List) audits, check for the presence of the
+     * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
+     * and will be `undefined` for standard audits.
+     * 
+     * <p>Each audit includes `segments`, the audit's scope. A live audit returns
+     * every in-scope program and system segment; more than one segment does not
+     * by itself imply more than one framework. The top-level `framework` field is
+     * deprecated; use `segments` for in-scope frameworks.
+     * 
+     * <p>This list may include soft-deleted audits so clients can reconcile
+     * deletions. Check `deletionDate`; a deleted audit has an empty `segments`
+     * list.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param pageSize 
+     * @param pageCursor 
+     * @param changedSinceDate Includes all audits that have changed since changedSinceDate, including
+     *         soft-deleted audits whose deletionDate is on or after that timestamp.
+     * @param isActiveAudit Includes only audits with no audit report uploaded
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAuditsResponse list(
+            Optional<Integer> pageSize, Optional<String> pageCursor,
+            Optional<OffsetDateTime> changedSinceDate, Optional<Boolean> isActiveAudit,
+            Optional<Options> options) {
         ListAuditsRequest request =
             ListAuditsRequest
                 .builder()
@@ -387,7 +425,7 @@ public class Audits {
                 .isActiveAudit(isActiveAudit)
                 .build();
         RequestOperation<ListAuditsRequest, ListAuditsResponse> operation
-              = new ListAudits.Sync(sdkConfiguration, _headers);
+              = new ListAudits.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -438,13 +476,40 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public GetAuditResponse getAudit(String auditId) {
+        return getAudit(auditId, Optional.empty());
+    }
+
+    /**
+     * Get audit by ID
+     * 
+     * <p>Returns a single audit by ID, scoped to the audit firm.
+     * 
+     * <p>To identify IRL (Information Request List) audits, check for the presence of the
+     * `auditorRequestListMetadata` field. This field is only present for IRL-based audits
+     * and will be `undefined` for standard audits.
+     * 
+     * <p>The response includes `segments`, the audit's scope. It returns every
+     * in-scope program and system segment; more than one segment does not by
+     * itself imply more than one framework. The top-level `framework` field is
+     * deprecated; use `segments` for in-scope frameworks.
+     * 
+     * <p>This endpoint returns 404 for a soft-deleted audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param auditId 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAuditResponse getAudit(String auditId, Optional<Options> options) {
         GetAuditRequest request =
             GetAuditRequest
                 .builder()
                 .auditId(auditId)
                 .build();
         RequestOperation<GetAuditRequest, GetAuditResponse> operation
-              = new GetAudit.Sync(sdkConfiguration, _headers);
+              = new GetAudit.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -485,7 +550,8 @@ public class Audits {
      */
     @Deprecated
     public ListVendorsInAuditScopeResponse listVendorsInAuditScope(String auditId) {
-        return listVendorsInAuditScope(auditId, Optional.empty(), Optional.empty());
+        return listVendorsInAuditScope(auditId, Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     /**
@@ -510,6 +576,33 @@ public class Audits {
     public ListVendorsInAuditScopeResponse listVendorsInAuditScope(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor) {
+        return listVendorsInAuditScope(auditId, pageSize, pageCursor,
+            Optional.empty());
+    }
+
+    /**
+     * List of vendors who are in scope for this audit
+     * 
+     * <p>Returns a list of vendors who are in scope for this audit.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param pageSize 
+     * @param pageCursor 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public ListVendorsInAuditScopeResponse listVendorsInAuditScope(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<Options> options) {
         ListVendorsInAuditScopeRequest request =
             ListVendorsInAuditScopeRequest
                 .builder()
@@ -518,7 +611,7 @@ public class Audits {
                 .pageCursor(pageCursor)
                 .build();
         RequestOperation<ListVendorsInAuditScopeRequest, ListVendorsInAuditScopeResponse> operation
-              = new ListVendorsInAuditScope.Sync(sdkConfiguration, _headers);
+              = new ListVendorsInAuditScope.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -570,7 +663,7 @@ public class Audits {
     @Deprecated
     public ListMonitoredComputersInAuditScopeResponse listMonitoredComputersInAuditScope(String auditId) {
         return listMonitoredComputersInAuditScope(auditId, Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -601,6 +694,40 @@ public class Audits {
     public ListMonitoredComputersInAuditScopeResponse listMonitoredComputersInAuditScope(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor, Optional<? extends List<ComputerStatusFilter>> complianceStatusFilterMatchesAny) {
+        return listMonitoredComputersInAuditScope(auditId, pageSize, pageCursor,
+            complianceStatusFilterMatchesAny, Optional.empty());
+    }
+
+    /**
+     * List monitored computers
+     * 
+     * <p>Returns a list of computers monitored by an MDM (with an integration built
+     * by Vanta) or by Vanta Device Monitor. Currently this list does not include
+     * resources from partner or customer-built integrations.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param pageSize 
+     * @param pageCursor 
+     * @param complianceStatusFilterMatchesAny Filters for monitored computers matching any status declared in the filter.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public ListMonitoredComputersInAuditScopeResponse listMonitoredComputersInAuditScope(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<? extends List<ComputerStatusFilter>> complianceStatusFilterMatchesAny,
+            Optional<Options> options) {
         ListMonitoredComputersInAuditScopeRequest request =
             ListMonitoredComputersInAuditScopeRequest
                 .builder()
@@ -610,7 +737,7 @@ public class Audits {
                 .complianceStatusFilterMatchesAny(complianceStatusFilterMatchesAny)
                 .build();
         RequestOperation<ListMonitoredComputersInAuditScopeRequest, ListMonitoredComputersInAuditScopeResponse> operation
-              = new ListMonitoredComputersInAuditScope.Sync(sdkConfiguration, _headers);
+              = new ListMonitoredComputersInAuditScope.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -657,7 +784,7 @@ public class Audits {
      */
     public ListAuditEvidenceUrlsResponse getEvidenceUrls(String auditId, String auditEvidenceId) {
         return getEvidenceUrls(auditId, auditEvidenceId, Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -685,6 +812,37 @@ public class Audits {
     public ListAuditEvidenceUrlsResponse getEvidenceUrls(
             String auditId, String auditEvidenceId,
             Optional<Integer> pageSize, Optional<String> pageCursor) {
+        return getEvidenceUrls(auditId, auditEvidenceId, pageSize,
+            pageCursor, Optional.empty());
+    }
+
+    /**
+     * List audit evidence url
+     * 
+     * <p>Returns a paginated list of evidence urls for an audit. This endpoint should be called whenever an
+     * evidence is created or has a statusUpdatedAt field that is more recent than the most recent polling
+     * event.
+     * 
+     * <p>Evidence must be in one of the following states to retrieve URLs: "Ready for audit", "Accepted",
+     * "Flagged", or "NA".
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
+     * <p>Rate limit: 600 requests / minute.
+     * 
+     * @param auditId 
+     * @param auditEvidenceId 
+     * @param pageSize 
+     * @param pageCursor 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAuditEvidenceUrlsResponse getEvidenceUrls(
+            String auditId, String auditEvidenceId,
+            Optional<Integer> pageSize, Optional<String> pageCursor,
+            Optional<Options> options) {
         ListAuditEvidenceUrlsRequest request =
             ListAuditEvidenceUrlsRequest
                 .builder()
@@ -694,7 +852,7 @@ public class Audits {
                 .pageCursor(pageCursor)
                 .build();
         RequestOperation<ListAuditEvidenceUrlsRequest, ListAuditEvidenceUrlsResponse> operation
-              = new ListAuditEvidenceUrls.Sync(sdkConfiguration, _headers);
+              = new ListAuditEvidenceUrls.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -735,8 +893,30 @@ public class Audits {
      */
     @Deprecated
     public ListPeopleInAuditScopeResponse listPeopleInAuditScope(ListPeopleInAuditScopeRequest request) {
+        return listPeopleInAuditScope(request, Optional.empty());
+    }
+
+    /**
+     * List of people who are in scope for this audit
+     * 
+     * <p>Returns a list of people who are in scope for this audit.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public ListPeopleInAuditScopeResponse listPeopleInAuditScope(ListPeopleInAuditScopeRequest request, Optional<Options> options) {
         RequestOperation<ListPeopleInAuditScopeRequest, ListPeopleInAuditScopeResponse> operation
-              = new ListPeopleInAuditScope.Sync(sdkConfiguration, _headers);
+              = new ListPeopleInAuditScope.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -783,8 +963,33 @@ public class Audits {
      */
     @Deprecated
     public ListVulnerabilityRemediationsInAuditScopeResponse listVulnerabilityRemediationsInAuditScope(ListVulnerabilityRemediationsInAuditScopeRequest request) {
+        return listVulnerabilityRemediationsInAuditScope(request, Optional.empty());
+    }
+
+    /**
+     * List vulnerability remediations that are in scope for this audit
+     * 
+     * <p>List all vulnerability remediations based on selected filters that are in scope for this audit.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Returns 422 when the audit does not have exactly one program segment
+     * (multi-framework audits are not supported on this endpoint).
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public ListVulnerabilityRemediationsInAuditScopeResponse listVulnerabilityRemediationsInAuditScope(ListVulnerabilityRemediationsInAuditScopeRequest request, Optional<Options> options) {
         RequestOperation<ListVulnerabilityRemediationsInAuditScopeRequest, ListVulnerabilityRemediationsInAuditScopeResponse> operation
-              = new ListVulnerabilityRemediationsInAuditScope.Sync(sdkConfiguration, _headers);
+              = new ListVulnerabilityRemediationsInAuditScope.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -814,7 +1019,7 @@ public class Audits {
      */
     public ListAuditEvidenceResponse listEvidence(String auditId) {
         return listEvidence(auditId, Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -834,6 +1039,29 @@ public class Audits {
     public ListAuditEvidenceResponse listEvidence(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor, Optional<OffsetDateTime> changedSinceDate) {
+        return listEvidence(auditId, pageSize, pageCursor,
+            changedSinceDate, Optional.empty());
+    }
+
+    /**
+     * List audit evidence
+     * 
+     * <p>Returns a paginated list of evidence for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param auditId 
+     * @param pageSize 
+     * @param pageCursor 
+     * @param changedSinceDate Includes all audit evidence that have changed since changedSinceDate.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAuditEvidenceResponse listEvidence(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<OffsetDateTime> changedSinceDate,
+            Optional<Options> options) {
         ListAuditEvidenceRequest request =
             ListAuditEvidenceRequest
                 .builder()
@@ -843,7 +1071,7 @@ public class Audits {
                 .changedSinceDate(changedSinceDate)
                 .build();
         RequestOperation<ListAuditEvidenceRequest, ListAuditEvidenceResponse> operation
-              = new ListAuditEvidence.Sync(sdkConfiguration, _headers);
+              = new ListAuditEvidence.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -873,7 +1101,7 @@ public class Audits {
      */
     public ListAuditCommentsResponse listComments(String auditId) {
         return listComments(auditId, Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -893,6 +1121,29 @@ public class Audits {
     public ListAuditCommentsResponse listComments(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor, Optional<OffsetDateTime> changedSinceDate) {
+        return listComments(auditId, pageSize, pageCursor,
+            changedSinceDate, Optional.empty());
+    }
+
+    /**
+     * List audit comments
+     * 
+     * <p>Returns a paginated list of comments for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param auditId 
+     * @param pageSize 
+     * @param pageCursor 
+     * @param changedSinceDate Includes all comments that have changed since changedSinceDate.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAuditCommentsResponse listComments(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<OffsetDateTime> changedSinceDate,
+            Optional<Options> options) {
         ListAuditCommentsRequest request =
             ListAuditCommentsRequest
                 .builder()
@@ -902,7 +1153,7 @@ public class Audits {
                 .changedSinceDate(changedSinceDate)
                 .build();
         RequestOperation<ListAuditCommentsRequest, ListAuditCommentsResponse> operation
-              = new ListAuditComments.Sync(sdkConfiguration, _headers);
+              = new ListAuditComments.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -935,6 +1186,27 @@ public class Audits {
     public CreateCommentForAuditEvidenceResponse createCommentForEvidence(
             String auditId, String auditEvidenceId,
             AddCommentInput addCommentInput) {
+        return createCommentForEvidence(auditId, auditEvidenceId, addCommentInput,
+            Optional.empty());
+    }
+
+    /**
+     * Create a comment for audit evidence
+     * 
+     * <p>Create a comment in Vanta for a piece of evidence.
+     * 
+     * <p>Rate limit: 25 requests / minute.
+     * 
+     * @param auditId 
+     * @param auditEvidenceId 
+     * @param addCommentInput 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateCommentForAuditEvidenceResponse createCommentForEvidence(
+            String auditId, String auditEvidenceId,
+            AddCommentInput addCommentInput, Optional<Options> options) {
         CreateCommentForAuditEvidenceRequest request =
             CreateCommentForAuditEvidenceRequest
                 .builder()
@@ -943,7 +1215,7 @@ public class Audits {
                 .addCommentInput(addCommentInput)
                 .build();
         RequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
-              = new CreateCommentForAuditEvidence.Sync(sdkConfiguration, _headers);
+              = new CreateCommentForAuditEvidence.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -976,6 +1248,27 @@ public class Audits {
     public UpdateAuditEvidenceResponse updateEvidence(
             String auditId, String auditEvidenceId,
             AuditEvidenceUpdateInput auditEvidenceUpdateInput) {
+        return updateEvidence(auditId, auditEvidenceId, auditEvidenceUpdateInput,
+            Optional.empty());
+    }
+
+    /**
+     * Update audit evidence
+     * 
+     * <p>Update audit evidence.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param auditEvidenceId 
+     * @param auditEvidenceUpdateInput 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateAuditEvidenceResponse updateEvidence(
+            String auditId, String auditEvidenceId,
+            AuditEvidenceUpdateInput auditEvidenceUpdateInput, Optional<Options> options) {
         UpdateAuditEvidenceRequest request =
             UpdateAuditEvidenceRequest
                 .builder()
@@ -984,7 +1277,7 @@ public class Audits {
                 .auditEvidenceUpdateInput(auditEvidenceUpdateInput)
                 .build();
         RequestOperation<UpdateAuditEvidenceRequest, UpdateAuditEvidenceResponse> operation
-              = new UpdateAuditEvidence.Sync(sdkConfiguration, _headers);
+              = new UpdateAuditEvidence.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1032,6 +1325,34 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public GetAuditEvidenceResponse getAuditEvidence(String auditId, String auditEvidenceId) {
+        return getAuditEvidence(auditId, auditEvidenceId, Optional.empty());
+    }
+
+    /**
+     * Get an audit evidence item by ID
+     * 
+     * <p>Retrieves a single classic audit evidence item by its ID, scoped to its
+     * audit. The response matches the entry `GET /audits/{auditId}/evidence`
+     * returns for the same item, so an evidence ID surfaced by a webhook can be
+     * resolved directly instead of paging the audit's full evidence list.
+     * 
+     * <p>Soft-deleted evidence (where `deletionDate !== null`) is included in the
+     * response. Clients should check `deletionDate` to determine whether the item
+     * has been deleted. This matches `GET /audits/{auditId}/evidence`, which
+     * supports `changedSinceDate` and returns soft-deleted evidence for delta
+     * sync. As on the list endpoint, `description` is null for deleted items.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param auditId 
+     * @param auditEvidenceId 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAuditEvidenceResponse getAuditEvidence(
+            String auditId, String auditEvidenceId,
+            Optional<Options> options) {
         GetAuditEvidenceRequest request =
             GetAuditEvidenceRequest
                 .builder()
@@ -1039,7 +1360,7 @@ public class Audits {
                 .auditEvidenceId(auditEvidenceId)
                 .build();
         RequestOperation<GetAuditEvidenceRequest, GetAuditEvidenceResponse> operation
-              = new GetAuditEvidence.Sync(sdkConfiguration, _headers);
+              = new GetAuditEvidence.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1069,6 +1390,25 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public CreateCustomEvidenceRequestResponse createCustomEvidenceRequest(String auditId, CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput) {
+        return createCustomEvidenceRequest(auditId, createCustomEvidenceRequestInput, Optional.empty());
+    }
+
+    /**
+     * Create a custom evidence request for an audit
+     * 
+     * <p>Create a custom evidence request for an audit.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param createCustomEvidenceRequestInput 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateCustomEvidenceRequestResponse createCustomEvidenceRequest(
+            String auditId, CreateCustomEvidenceRequestInput createCustomEvidenceRequestInput,
+            Optional<Options> options) {
         CreateCustomEvidenceRequestRequest request =
             CreateCustomEvidenceRequestRequest
                 .builder()
@@ -1076,7 +1416,7 @@ public class Audits {
                 .createCustomEvidenceRequestInput(createCustomEvidenceRequestInput)
                 .build();
         RequestOperation<CreateCustomEvidenceRequestRequest, CreateCustomEvidenceRequestResponse> operation
-              = new CreateCustomEvidenceRequest.Sync(sdkConfiguration, _headers);
+              = new CreateCustomEvidenceRequest.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1117,8 +1457,30 @@ public class Audits {
      */
     @Deprecated
     public ListVulnerabilitiesResponse listVulnerabilities(ListVulnerabilitiesRequest request) {
+        return listVulnerabilities(request, Optional.empty());
+    }
+
+    /**
+     * List vulnerabilities within the scope of a given audit
+     * 
+     * <p>List all vulnerabilities based on selected filters.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public ListVulnerabilitiesResponse listVulnerabilities(ListVulnerabilitiesRequest request, Optional<Options> options) {
         RequestOperation<ListVulnerabilitiesRequest, ListVulnerabilitiesResponse> operation
-              = new ListVulnerabilities.Sync(sdkConfiguration, _headers);
+              = new ListVulnerabilities.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1159,8 +1521,30 @@ public class Audits {
      */
     @Deprecated
     public GetVulnerableAssetsResponse getVulnerableAssets(GetVulnerableAssetsRequest request) {
+        return getVulnerableAssets(request, Optional.empty());
+    }
+
+    /**
+     * List assets associated with vulnerabilities
+     * 
+     * <p>List assets that Vanta monitors that are associated with vulnerabilities.
+     * 
+     * <p>End of life — this endpoint works for classic audits only; it does not support
+     * controlled audit view. It remains available for existing classic audits but will be removed once
+     * classic audits are fully phased out, so do not build new integrations on it.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     * @deprecated method: This will be removed in a future release, please migrate away from it as soon as possible.
+     */
+    @Deprecated
+    public GetVulnerableAssetsResponse getVulnerableAssets(GetVulnerableAssetsRequest request, Optional<Options> options) {
         RequestOperation<GetVulnerableAssetsRequest, GetVulnerableAssetsResponse> operation
-              = new GetVulnerableAssets.Sync(sdkConfiguration, _headers);
+              = new GetVulnerableAssets.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1237,8 +1621,48 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListVendorsResponse listVendors(ListVendorsRequest request) {
+        return listVendors(request, Optional.empty());
+    }
+
+    /**
+     * List vendors for an audit
+     * 
+     * <p>Retrieves vendor population data for an audit.
+     * 
+     * <p>This endpoint provides access to vendor records visible to auditors
+     * during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches vendor names (case-insensitive)
+     * - `vendorStatusesMatchesAny`: Filters by vendor status (ACTIVE, ARCHIVED, IN_PROCUREMENT)
+     * - `inherentRiskMatchesAny`: Filters by inherent risk level
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListVendorsResponse listVendors(ListVendorsRequest request, Optional<Options> options) {
         RequestOperation<ListVendorsRequest, ListVendorsResponse> operation
-              = new ListVendors.Sync(sdkConfiguration, _headers);
+              = new ListVendors.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1309,7 +1733,8 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListRiskSnapshotsResponse listRiskSnapshots(String auditId) {
-        return listRiskSnapshots(auditId, Optional.empty(), Optional.empty());
+        return listRiskSnapshots(auditId, Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     /**
@@ -1349,6 +1774,48 @@ public class Audits {
     public ListRiskSnapshotsResponse listRiskSnapshots(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor) {
+        return listRiskSnapshots(auditId, pageSize, pageCursor,
+            Optional.empty());
+    }
+
+    /**
+     * List risk snapshots for an audit
+     * 
+     * <p>Returns a paginated list of risk assessment snapshots available for an audit.
+     * 
+     * <p>Risk snapshots capture the state of an organization's risk register at a
+     * point in time. Each snapshot has an `id` that can be used with the
+     * `/audits/{auditId}/risks` endpoint to retrieve the individual risk
+     * scenarios within that snapshot.
+     * 
+     * <p>Results are sorted by creation date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters. Only snapshots
+     * that are shared with auditors are included.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @param pageSize Maximum number of results per page (1-100, default 10)
+     * @param pageCursor Pagination cursor from previous response
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListRiskSnapshotsResponse listRiskSnapshots(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<Options> options) {
         ListRiskSnapshotsRequest request =
             ListRiskSnapshotsRequest
                 .builder()
@@ -1357,7 +1824,7 @@ public class Audits {
                 .pageCursor(pageCursor)
                 .build();
         RequestOperation<ListRiskSnapshotsRequest, ListRiskSnapshotsResponse> operation
-              = new ListRiskSnapshots.Sync(sdkConfiguration, _headers);
+              = new ListRiskSnapshots.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1438,8 +1905,50 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListAuditRisksResponse listAuditRisks(ListAuditRisksRequest request) {
+        return listAuditRisks(request, Optional.empty());
+    }
+
+    /**
+     * List risks for an audit
+     * 
+     * <p>Retrieves risk population data for an audit.
+     * 
+     * <p>This endpoint provides access to the risk records visible to auditors
+     * during an audit engagement. Risk data is scoped to a specific risk
+     * assessment snapshot identified by the `snapshotId` parameter.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches risk scenario descriptions (case-insensitive)
+     * 
+     * <p>Results are sorted by identified date (newest first) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors. Also returns 403 if the
+     * snapshot is not shared with auditors, and 404 if the snapshot does not
+     * exist. Use snapshot IDs from `GET /audits/{auditId}/risks/snapshots`,
+     * which lists only snapshots shared with auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAuditRisksResponse listAuditRisks(ListAuditRisksRequest request, Optional<Options> options) {
         RequestOperation<ListAuditRisksRequest, ListAuditRisksResponse> operation
-              = new ListAuditRisks.Sync(sdkConfiguration, _headers);
+              = new ListAuditRisks.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1518,8 +2027,49 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListPersonnelGroupsResponse listPersonnelGroups(ListPersonnelGroupsRequest request) {
+        return listPersonnelGroups(request, Optional.empty());
+    }
+
+    /**
+     * List groups for an audit
+     * 
+     * <p>Retrieves groups population data for an audit.
+     * 
+     * <p>This endpoint provides access to the group records visible to auditors
+     * during an audit engagement. Groups represent organizational units that
+     * contain people, either imported from an identity provider (IDP) or
+     * created manually in Vanta.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches group names (case-insensitive)
+     * - `sourcesMatchesAny`: Filters by IDP source service names
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListPersonnelGroupsResponse listPersonnelGroups(ListPersonnelGroupsRequest request, Optional<Options> options) {
         RequestOperation<ListPersonnelGroupsRequest, ListPersonnelGroupsResponse> operation
-              = new ListPersonnelGroups.Sync(sdkConfiguration, _headers);
+              = new ListPersonnelGroups.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1596,8 +2146,48 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListPersonnelPeopleResponse listPersonnelPeople(ListPersonnelPeopleRequest request) {
+        return listPersonnelPeople(request, Optional.empty());
+    }
+
+    /**
+     * List people for an audit
+     * 
+     * <p>Retrieves people population data for an audit.
+     * 
+     * <p>This endpoint provides access to the people records visible to auditors
+     * during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches names and email addresses
+     * - `status`: Filters by employment status
+     * - `groupsMatchesAny`: Filter people by group/role IDs
+     * 
+     * <p>Results are sorted by name (ascending) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListPersonnelPeopleResponse listPersonnelPeople(ListPersonnelPeopleRequest request, Optional<Options> options) {
         RequestOperation<ListPersonnelPeopleRequest, ListPersonnelPeopleResponse> operation
-              = new ListPersonnelPeople.Sync(sdkConfiguration, _headers);
+              = new ListPersonnelPeople.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1674,7 +2264,8 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListAccountAccessServicesResponse listAccountAccessServices(String auditId) {
-        return listAccountAccessServices(auditId, Optional.empty(), Optional.empty());
+        return listAccountAccessServices(auditId, Optional.empty(), Optional.empty(),
+            Optional.empty());
     }
 
     /**
@@ -1717,6 +2308,51 @@ public class Audits {
     public ListAccountAccessServicesResponse listAccountAccessServices(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor) {
+        return listAccountAccessServices(auditId, pageSize, pageCursor,
+            Optional.empty());
+    }
+
+    /**
+     * List account access services for an audit
+     * 
+     * <p>Retrieves connected account access services for an audit.
+     * 
+     * <p>Returns the list of identity providers and access integrations (such as
+     * Okta, Azure AD, Google Workspace, AWS IAM) that are connected to the
+     * organization and provide account access data for personnel.
+     * 
+     * <p>These integrations are used to verify user access and identity management
+     * during an audit engagement.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are returned in connection order. Sort order is not guaranteed
+     * and cannot be customized via query parameters.
+     * 
+     * <p>On an audit that covers more than one framework, each service in scope
+     * for any of the audit's frameworks is listed once.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @param pageSize Maximum number of results per page (1-100, default 10)
+     * @param pageCursor Pagination cursor from previous response
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAccountAccessServicesResponse listAccountAccessServices(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<Options> options) {
         ListAccountAccessServicesRequest request =
             ListAccountAccessServicesRequest
                 .builder()
@@ -1725,7 +2361,7 @@ public class Audits {
                 .pageCursor(pageCursor)
                 .build();
         RequestOperation<ListAccountAccessServicesRequest, ListAccountAccessServicesResponse> operation
-              = new ListAccountAccessServices.Sync(sdkConfiguration, _headers);
+              = new ListAccountAccessServices.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1852,8 +2488,73 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListPersonnelAccountAccessResponse listPersonnelAccountAccess(ListPersonnelAccountAccessRequest request) {
+        return listPersonnelAccountAccess(request, Optional.empty());
+    }
+
+    /**
+     * List account access records for an audit
+     * 
+     * <p>Retrieves account access population data for an audit.
+     * 
+     * <p>This endpoint provides access to account access records visible to auditors
+     * during an audit engagement. Account access data comes from various sources:
+     * 
+     * <p>- **IDP Services** (Identity Providers): Okta, Azure AD, Google Workspace, OneLogin, PingOne
+     * 
+     * <p>- Returns user accounts from identity providers
+     * - Supports filtering by search and status
+     * 
+     * <p>- **Role Grants Services**: GCP, Azure (when role grants are enabled)
+     * 
+     * <p>- Returns accounts with role-based access grants
+     * - Supports filtering by search and status
+     * 
+     * <p>- **First-Party Account Services**: AWS, Oracle Cloud, Azure (when not using role grants), etc.
+     * 
+     * <p>- Returns cloud provider account access records
+     * - Supports filtering by search and status
+     * 
+     * <p>- **Received Account Services**: External applications (Jira, GitHub, Slack, etc.)
+     * 
+     * <p>- Returns user accounts from third-party integrations
+     * - Supports filtering by search and status
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches account names/emails (case-insensitive)
+     * - `status`: Filters by account status
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>The default sort order depends on the service type:
+     * - Identity provider services (e.g. Okta, Azure AD): sorted by email, ascending
+     * - Cloud provider services (e.g. AWS, GCP): sorted by account name, ascending
+     * - Role grant services: sorted by account name, ascending
+     * - Third-party application services (e.g. GitHub, Jira): sorted by account name, ascending
+     * 
+     * <p>Sort order cannot be customized via query parameters.
+     * 
+     * <p>Returns 404 when `serviceId` is not listed by the
+     * `/personnel/account-access/services` endpoint for this audit.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListPersonnelAccountAccessResponse listPersonnelAccountAccess(ListPersonnelAccountAccessRequest request, Optional<Options> options) {
         RequestOperation<ListPersonnelAccountAccessRequest, ListPersonnelAccountAccessResponse> operation
-              = new ListPersonnelAccountAccess.Sync(sdkConfiguration, _headers);
+              = new ListPersonnelAccountAccess.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1906,13 +2607,41 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public GetOrganizationNotificationsResponse getOrganizationNotifications(String auditId) {
+        return getOrganizationNotifications(auditId, Optional.empty());
+    }
+
+    /**
+     * Get organization notification settings for an audit
+     * 
+     * <p>Retrieves organization notification settings for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the auditee
+     * organization's notification configuration — schedule, personnel
+     * reminder settings, and external notification subscriptions
+     * (Compliance, Vendors, Access Reviews, Trust Center).
+     * 
+     * <p>The response is a single aggregate object per domain. Sorting and
+     * pagination are not applicable. Only CAV-approved fields are included.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetOrganizationNotificationsResponse getOrganizationNotifications(String auditId, Optional<Options> options) {
         GetOrganizationNotificationsRequest request =
             GetOrganizationNotificationsRequest
                 .builder()
                 .auditId(auditId)
                 .build();
         RequestOperation<GetOrganizationNotificationsRequest, GetOrganizationNotificationsResponse> operation
-              = new GetOrganizationNotifications.Sync(sdkConfiguration, _headers);
+              = new GetOrganizationNotifications.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -1959,13 +2688,38 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public GetOrganizationInformationResponse getOrganizationInformation(String auditId) {
+        return getOrganizationInformation(auditId, Optional.empty());
+    }
+
+    /**
+     * Get organization information for an audit
+     * 
+     * <p>Retrieves organization information for an audit.
+     * 
+     * <p>This endpoint returns a single record containing the organization's
+     * business information visible to auditors during an audit engagement.
+     * 
+     * <p>Sorting and pagination are not applicable.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetOrganizationInformationResponse getOrganizationInformation(String auditId, Optional<Options> options) {
         GetOrganizationInformationRequest request =
             GetOrganizationInformationRequest
                 .builder()
                 .auditId(auditId)
                 .build();
         RequestOperation<GetOrganizationInformationRequest, GetOrganizationInformationResponse> operation
-              = new GetOrganizationInformation.Sync(sdkConfiguration, _headers);
+              = new GetOrganizationInformation.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2044,8 +2798,49 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListAuditIssuesResponse listAuditIssues(ListAuditIssuesRequest request) {
+        return listAuditIssues(request, Optional.empty());
+    }
+
+    /**
+     * List snapshotted issues for an audit
+     * 
+     * <p>Retrieves a list of all issues that have been shared with an audit.
+     * 
+     * <p>The issues returned are immutable, point-in-time snapshots; there may be duplicates of issues that
+     * have been snapshotted at different times.
+     * The GET /audits/{auditId}/issues/snapshots endpoint can be used to retrieve metadata about the
+     * snapshots that issues belong to.
+     * Issues represent compliance findings from a variety of sources that need to be tracked and
+     * remediated.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: full text search across issue title and description
+     * - `snapshotId`: filtering to a specific snapshot or snapshots, which represent point-in-time
+     * captures of issues. Use the GET /audits/{auditId}/issues/snapshots endpoint to retrieve snapshot IDs
+     * and metadata.
+     * - `createdAfterDate` / `createdBeforeDate`: filter to issues created within a date range (inclusive)
+     * - `detectedAfterDate` / `detectedBeforeDate`: filter to issues detected within a date range
+     * (inclusive)
+     * 
+     * <p>Results are sorted by issue creation date in descending order (newest first) by default.
+     * Use `orderBy` and `orderDirection` to customize sorting.
+     * Sort parameters must remain consistent across paginated requests.
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAuditIssuesResponse listAuditIssues(ListAuditIssuesRequest request, Optional<Options> options) {
         RequestOperation<ListAuditIssuesRequest, ListAuditIssuesResponse> operation
-              = new ListAuditIssues.Sync(sdkConfiguration, _headers);
+              = new ListAuditIssues.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2103,7 +2898,7 @@ public class Audits {
      */
     public ListAuditSnapshotsResponse listAuditSnapshots(String auditId) {
         return listAuditSnapshots(auditId, Optional.empty(), Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -2137,6 +2932,43 @@ public class Audits {
     public ListAuditSnapshotsResponse listAuditSnapshots(
             String auditId, Optional<Integer> pageSize,
             Optional<String> pageCursor, Optional<String> search) {
+        return listAuditSnapshots(auditId, pageSize, pageCursor,
+            search, Optional.empty());
+    }
+
+    /**
+     * List snapshotted issues for an audit
+     * 
+     * <p>Retrieves a list of snapshots that have been shared with an audit.
+     * 
+     * <p>The snapshots returned contain metadata about point-in-time captures of issues for an audit.
+     * This data can be used to filter down the list of issues to specific snapshots when querying the GET
+     * /audits/{auditId}/issues/items endpoint.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: full text search across snapshot title and description
+     * 
+     * <p>Results are sorted by snapshot creation date in descending order (newest first).
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId The audit ID
+     * @param pageSize Maximum number of results per page (1-100, default 10)
+     * @param pageCursor Pagination cursor from previous response
+     * @param search Search term for filtering by snapshot title and description
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAuditSnapshotsResponse listAuditSnapshots(
+            String auditId, Optional<Integer> pageSize,
+            Optional<String> pageCursor, Optional<String> search,
+            Optional<Options> options) {
         ListAuditSnapshotsRequest request =
             ListAuditSnapshotsRequest
                 .builder()
@@ -2146,7 +2978,7 @@ public class Audits {
                 .search(search)
                 .build();
         RequestOperation<ListAuditSnapshotsRequest, ListAuditSnapshotsResponse> operation
-              = new ListAuditSnapshots.Sync(sdkConfiguration, _headers);
+              = new ListAuditSnapshots.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2223,8 +3055,48 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListIntegrationsResponse listIntegrations(ListIntegrationsRequest request) {
+        return listIntegrations(request, Optional.empty());
+    }
+
+    /**
+     * List integrations for an audit
+     * 
+     * <p>Retrieves integration population data for an audit.
+     * 
+     * <p>This endpoint provides access to integration records visible to auditors
+     * during an audit engagement. Integrations represent connected services
+     * (e.g., GitHub, AWS, Slack) that provide data for the audit.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches integration names (case-insensitive)
+     * - `tagsMatchesAny`: Filters by integration tag (ACCESS, COMPUTERS, etc.)
+     * - `categoriesMatchesAny`: Filters by category (CLOUD_PROVIDER, HR_PROVIDER, etc.)
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are sorted by integration display name (ascending). This sort order
+     * is fixed and cannot be customized via query parameters.
+     * 
+     * <p>Supports audits with one or more program segments.
+     * Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListIntegrationsResponse listIntegrations(ListIntegrationsRequest request, Optional<Options> options) {
         RequestOperation<ListIntegrationsRequest, ListIntegrationsResponse> operation
-              = new ListIntegrations.Sync(sdkConfiguration, _headers);
+              = new ListIntegrations.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2234,17 +3106,22 @@ public class Audits {
      * <p>Retrieves a paginated list of all information requests for an audit, enabling
      * external audit management systems to display and track evidence requests.
      * 
-     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
-     * Clients should check the `deletionDate` field to identify and handle deleted records
-     * appropriately in their systems.
+     * <p>This list includes soft-deleted requests (`deletionDate !== null`) even when
+     * `changedSinceDate` is omitted. When supplied, `changedSinceDate` filters both
+     * live and deleted requests.
      * 
-     * <p>This is the only endpoint that returns a deleted information request. No
-     * webhook fires when a request is deleted. Endpoints under
-     * `/audits/{auditId}/information-requests/{requestId}` return a 4xx HTTP error
-     * for a deleted request. To confirm deletion, check the request's `deletionDate`
-     * in this list. Deleting a request does not set `deletionDate` on its comments
-     * or evidence or send delete events for them. Once this list confirms the
-     * request was deleted, treat its comments and evidence as deleted too.
+     * <p>This is the only endpoint that returns a deleted information request.
+     * Deletion makes the request and its child endpoints inaccessible by ID.
+     * A `403` or `404` can also mean access was lost. Use `deletionDate` or the
+     * `v1.information-request.deleted` webhook to confirm deletion. Remove the
+     * deleted request and its comments and evidence from your local mirror.
+     * Deleting a request produces no separate deletion events or tombstones for
+     * its children.
+     * 
+     * <p>To recover from missed request deletion events, paginate this list without
+     * `changedSinceDate` or other optional filters.
+     * Reconcile missing records only after a successful, complete traversal with
+     * access to the audit.
      * 
      * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
      * allowing efficient polling for changes without retrieving the entire dataset.
@@ -2256,11 +3133,11 @@ public class Audits {
      * 4. Repeat until `hasNextPage` is false
      * 
      * <p>Delta sync usage:
-     * 1. Store the timestamp of your last sync
-     * 2. Pass that timestamp as `changedSinceDate`
-     * 3. Only requests created, modified, or deleted since that timestamp are returned
-     * 4. Process updates and soft-deletes by checking the `deletionDate` field
-     * 5. Update your last sync timestamp to the current time
+     * 1. Capture the timestamp before requesting the first page
+     * 2. Pass the previous successful sync's start timestamp as `changedSinceDate`
+     * 3. Keep the same filters across pages and use `deletionDate` to process deletes
+     * 4. Save the captured start timestamp only after every page succeeds
+     * 5. Handle records returned by more than one sync idempotently
      * 
      * <p>`segmentIds` on each returned request is resolved against the audit's
      * current scope. A scope-only change (a segment leaving or joining the audit
@@ -2281,17 +3158,22 @@ public class Audits {
      * <p>Retrieves a paginated list of all information requests for an audit, enabling
      * external audit management systems to display and track evidence requests.
      * 
-     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
-     * Clients should check the `deletionDate` field to identify and handle deleted records
-     * appropriately in their systems.
+     * <p>This list includes soft-deleted requests (`deletionDate !== null`) even when
+     * `changedSinceDate` is omitted. When supplied, `changedSinceDate` filters both
+     * live and deleted requests.
      * 
-     * <p>This is the only endpoint that returns a deleted information request. No
-     * webhook fires when a request is deleted. Endpoints under
-     * `/audits/{auditId}/information-requests/{requestId}` return a 4xx HTTP error
-     * for a deleted request. To confirm deletion, check the request's `deletionDate`
-     * in this list. Deleting a request does not set `deletionDate` on its comments
-     * or evidence or send delete events for them. Once this list confirms the
-     * request was deleted, treat its comments and evidence as deleted too.
+     * <p>This is the only endpoint that returns a deleted information request.
+     * Deletion makes the request and its child endpoints inaccessible by ID.
+     * A `403` or `404` can also mean access was lost. Use `deletionDate` or the
+     * `v1.information-request.deleted` webhook to confirm deletion. Remove the
+     * deleted request and its comments and evidence from your local mirror.
+     * Deleting a request produces no separate deletion events or tombstones for
+     * its children.
+     * 
+     * <p>To recover from missed request deletion events, paginate this list without
+     * `changedSinceDate` or other optional filters.
+     * Reconcile missing records only after a successful, complete traversal with
+     * access to the audit.
      * 
      * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
      * allowing efficient polling for changes without retrieving the entire dataset.
@@ -2303,11 +3185,11 @@ public class Audits {
      * 4. Repeat until `hasNextPage` is false
      * 
      * <p>Delta sync usage:
-     * 1. Store the timestamp of your last sync
-     * 2. Pass that timestamp as `changedSinceDate`
-     * 3. Only requests created, modified, or deleted since that timestamp are returned
-     * 4. Process updates and soft-deletes by checking the `deletionDate` field
-     * 5. Update your last sync timestamp to the current time
+     * 1. Capture the timestamp before requesting the first page
+     * 2. Pass the previous successful sync's start timestamp as `changedSinceDate`
+     * 3. Keep the same filters across pages and use `deletionDate` to process deletes
+     * 4. Save the captured start timestamp only after every page succeeds
+     * 5. Handle records returned by more than one sync idempotently
      * 
      * <p>`segmentIds` on each returned request is resolved against the audit's
      * current scope. A scope-only change (a segment leaving or joining the audit
@@ -2321,8 +3203,63 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListInformationRequestsResponse listInformationRequests(ListInformationRequestsRequest request) {
+        return listInformationRequests(request, Optional.empty());
+    }
+
+    /**
+     * List information requests for an audit
+     * 
+     * <p>Retrieves a paginated list of all information requests for an audit, enabling
+     * external audit management systems to display and track evidence requests.
+     * 
+     * <p>This list includes soft-deleted requests (`deletionDate !== null`) even when
+     * `changedSinceDate` is omitted. When supplied, `changedSinceDate` filters both
+     * live and deleted requests.
+     * 
+     * <p>This is the only endpoint that returns a deleted information request.
+     * Deletion makes the request and its child endpoints inaccessible by ID.
+     * A `403` or `404` can also mean access was lost. Use `deletionDate` or the
+     * `v1.information-request.deleted` webhook to confirm deletion. Remove the
+     * deleted request and its comments and evidence from your local mirror.
+     * Deleting a request produces no separate deletion events or tombstones for
+     * its children.
+     * 
+     * <p>To recover from missed request deletion events, paginate this list without
+     * `changedSinceDate` or other optional filters.
+     * Reconcile missing records only after a successful, complete traversal with
+     * access to the audit.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Capture the timestamp before requesting the first page
+     * 2. Pass the previous successful sync's start timestamp as `changedSinceDate`
+     * 3. Keep the same filters across pages and use `deletionDate` to process deletes
+     * 4. Save the captured start timestamp only after every page succeeds
+     * 5. Handle records returned by more than one sync idempotently
+     * 
+     * <p>`segmentIds` on each returned request is resolved against the audit's
+     * current scope. A scope-only change (a segment leaving or joining the audit
+     * without the request row being written) is not a delta-sync event. Re-fetch
+     * without `changedSinceDate`, or GET by id, to see the current projection.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListInformationRequestsResponse listInformationRequests(ListInformationRequestsRequest request, Optional<Options> options) {
         RequestOperation<ListInformationRequestsRequest, ListInformationRequestsResponse> operation
-              = new ListInformationRequests.Sync(sdkConfiguration, _headers);
+              = new ListInformationRequests.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2367,6 +3304,33 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public CreateInformationRequestResponse createInformationRequest(String auditId, CreateInformationRequestInput createInformationRequestInput) {
+        return createInformationRequest(auditId, createInformationRequestInput, Optional.empty());
+    }
+
+    /**
+     * Create a new information request
+     * 
+     * <p>Creates a new information request for an audit during audit setup or as requirements evolve.
+     * 
+     * <p>After creating all information requests, use POST /audits/{auditId}/share-information-request-list
+     * to make them visible to the customer organization. Until shared, requests remain in draft state
+     * visible only to auditors.
+     * 
+     * <p>New requests are created in an initial state indicating evidence is needed. The status
+     * progresses through the workflow: initial state → awaiting review → approved or flagged.
+     * 
+     * <p>Rate limit: 600 requests / minute.
+     * 
+     * @param auditId 
+     * @param createInformationRequestInput Input for creating a new information request.
+     *         New requests are created in an initial state by default.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateInformationRequestResponse createInformationRequest(
+            String auditId, CreateInformationRequestInput createInformationRequestInput,
+            Optional<Options> options) {
         CreateInformationRequestRequest request =
             CreateInformationRequestRequest
                 .builder()
@@ -2374,7 +3338,7 @@ public class Audits {
                 .createInformationRequestInput(createInformationRequestInput)
                 .build();
         RequestOperation<CreateInformationRequestRequest, CreateInformationRequestResponse> operation
-              = new CreateInformationRequest.Sync(sdkConfiguration, _headers);
+              = new CreateInformationRequest.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2420,6 +3384,33 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public GetInformationRequestResponse getInformationRequest(String auditId, String requestId) {
+        return getInformationRequest(auditId, requestId, Optional.empty());
+    }
+
+    /**
+     * Get an information request by ID
+     * 
+     * <p>Retrieves a single information request by its ID for an audit, allowing external
+     * audit management systems to fetch the latest state of a specific request without
+     * paginating through the full list.
+     * 
+     * <p>This endpoint returns a 4xx HTTP error for a soft-deleted information
+     * request. To confirm deletion, use
+     * `GET /audits/{auditId}/information-requests`, which supports
+     * `changedSinceDate` and includes soft-deleted requests with `deletionDate`
+     * set.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetInformationRequestResponse getInformationRequest(
+            String auditId, String requestId,
+            Optional<Options> options) {
         GetInformationRequestRequest request =
             GetInformationRequestRequest
                 .builder()
@@ -2427,7 +3418,7 @@ public class Audits {
                 .requestId(requestId)
                 .build();
         RequestOperation<GetInformationRequestRequest, GetInformationRequestResponse> operation
-              = new GetInformationRequest.Sync(sdkConfiguration, _headers);
+              = new GetInformationRequest.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2482,6 +3473,39 @@ public class Audits {
     public UpdateInformationRequestResponse updateInformationRequest(
             String auditId, String requestId,
             PartialUpdateInformationRequest partialUpdateInformationRequest) {
+        return updateInformationRequest(auditId, requestId, partialUpdateInformationRequest,
+            Optional.empty());
+    }
+
+    /**
+     * Update an information request for an audit
+     * 
+     * <p>Updates an existing information request for an audit, allowing modification of request
+     * details as audit requirements evolve. Supports partial updates where only specified
+     * fields are changed; omitted fields remain unchanged.
+     * 
+     * <p>Common use cases:
+     * - Updating due dates as audit timelines shift
+     * - Refining descriptions to clarify requirements
+     * - Adjusting request type
+     * 
+     * <p>Note: The `modificationDate` is automatically updated to the current timestamp
+     * when any field is changed.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param partialUpdateInformationRequest Input for partially updating an information request. Only provided fields
+     *         will be updated; omitted fields remain unchanged. At least one field must
+     *         be provided.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateInformationRequestResponse updateInformationRequest(
+            String auditId, String requestId,
+            PartialUpdateInformationRequest partialUpdateInformationRequest, Optional<Options> options) {
         UpdateInformationRequestRequest request =
             UpdateInformationRequestRequest
                 .builder()
@@ -2490,7 +3514,7 @@ public class Audits {
                 .partialUpdateInformationRequest(partialUpdateInformationRequest)
                 .build();
         RequestOperation<UpdateInformationRequestRequest, UpdateInformationRequestResponse> operation
-              = new UpdateInformationRequest.Sync(sdkConfiguration, _headers);
+              = new UpdateInformationRequest.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2501,14 +3525,13 @@ public class Audits {
      * the request as deleted (setting `deletionDate`) while preserving it in the system
      * for audit history and compliance tracking.
      * 
-     * <p>Soft deletion allows:
-     * - Maintaining complete audit trail of all requests ever created
-     * - Retrieving deleted requests via `changedSinceDate` for synchronization
+     * <p>When information request webhooks are enabled, Vanta can deliver
+     * `v1.information-request.deleted` after the deletion succeeds to the
+     * subscribed audit firm that had access to the audit before deletion.
+     * The payload identifies the deleted request and its audit.
      * 
-     * <p>After deletion:
-     * - The request remains in list responses with `deletionDate` set, even when
-     * 
-     * <p>`changedSinceDate` is omitted
+     * <p>Use the information request list to reconcile deletions. The list returns
+     * the request with `deletionDate` set, even when `changedSinceDate` is omitted.
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
@@ -2525,14 +3548,13 @@ public class Audits {
      * the request as deleted (setting `deletionDate`) while preserving it in the system
      * for audit history and compliance tracking.
      * 
-     * <p>Soft deletion allows:
-     * - Maintaining complete audit trail of all requests ever created
-     * - Retrieving deleted requests via `changedSinceDate` for synchronization
+     * <p>When information request webhooks are enabled, Vanta can deliver
+     * `v1.information-request.deleted` after the deletion succeeds to the
+     * subscribed audit firm that had access to the audit before deletion.
+     * The payload identifies the deleted request and its audit.
      * 
-     * <p>After deletion:
-     * - The request remains in list responses with `deletionDate` set, even when
-     * 
-     * <p>`changedSinceDate` is omitted
+     * <p>Use the information request list to reconcile deletions. The list returns
+     * the request with `deletionDate` set, even when `changedSinceDate` is omitted.
      * 
      * <p>Rate limit: 50 requests / minute.
      * 
@@ -2542,6 +3564,35 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public DeleteInformationRequestResponse deleteInformationRequest(String auditId, String requestId) {
+        return deleteInformationRequest(auditId, requestId, Optional.empty());
+    }
+
+    /**
+     * Delete an information request for an audit
+     * 
+     * <p>Deletes an information request for an audit. This performs a soft delete, marking
+     * the request as deleted (setting `deletionDate`) while preserving it in the system
+     * for audit history and compliance tracking.
+     * 
+     * <p>When information request webhooks are enabled, Vanta can deliver
+     * `v1.information-request.deleted` after the deletion succeeds to the
+     * subscribed audit firm that had access to the audit before deletion.
+     * The payload identifies the deleted request and its audit.
+     * 
+     * <p>Use the information request list to reconcile deletions. The list returns
+     * the request with `deletionDate` set, even when `changedSinceDate` is omitted.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteInformationRequestResponse deleteInformationRequest(
+            String auditId, String requestId,
+            Optional<Options> options) {
         DeleteInformationRequestRequest request =
             DeleteInformationRequestRequest
                 .builder()
@@ -2549,7 +3600,7 @@ public class Audits {
                 .requestId(requestId)
                 .build();
         RequestOperation<DeleteInformationRequestRequest, DeleteInformationRequestResponse> operation
-              = new DeleteInformationRequest.Sync(sdkConfiguration, _headers);
+              = new DeleteInformationRequest.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2616,6 +3667,46 @@ public class Audits {
     public FlagInformationRequestEvidenceResponse flagInformationRequestEvidence(
             String auditId, String requestId,
             FlagInformationRequestEvidenceInput flagInformationRequestEvidenceInput) {
+        return flagInformationRequestEvidence(auditId, requestId, flagInformationRequestEvidenceInput,
+            Optional.empty());
+    }
+
+    /**
+     * Flag evidence for an information request
+     * 
+     * <p>Flags evidence for an information request when it doesn't meet audit requirements,
+     * marking issues that need to be addressed before approval. This action changes the
+     * request's approvalStatus to a flagged state and creates an activity log entry.
+     * 
+     * <p>Flagging workflow:
+     * 1. Auditor reviews submitted evidence
+     * 2. If issues are found, auditor calls this endpoint with detailed reason
+     * 3. Request status changes to flagged state
+     * 4. Customer is notified and can see the reason in activity logs
+     * 5. Customer addresses issues and updates evidence
+     * 6. When ready, customer changes status back to awaiting review
+     * 7. Auditor reviews again and either flags again or accepts
+     * 
+     * <p>The `reason` field should clearly explain what's missing or incorrect so the
+     * customer knows exactly what to fix. This reason is visible to the customer
+     * and appears in the activity log.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param flagInformationRequestEvidenceInput Input for flagging evidence on an information request, indicating issues
+     *         that need to be addressed. This changes the request's approvalStatus to
+     *         a flagged state and creates an activity log entry.
+     *         
+     *         The customer will be notified and can resubmit evidence after addressing the issues.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public FlagInformationRequestEvidenceResponse flagInformationRequestEvidence(
+            String auditId, String requestId,
+            FlagInformationRequestEvidenceInput flagInformationRequestEvidenceInput, Optional<Options> options) {
         FlagInformationRequestEvidenceRequest request =
             FlagInformationRequestEvidenceRequest
                 .builder()
@@ -2624,7 +3715,7 @@ public class Audits {
                 .flagInformationRequestEvidenceInput(flagInformationRequestEvidenceInput)
                 .build();
         RequestOperation<FlagInformationRequestEvidenceRequest, FlagInformationRequestEvidenceResponse> operation
-              = new FlagInformationRequestEvidence.Sync(sdkConfiguration, _headers);
+              = new FlagInformationRequestEvidence.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2685,6 +3776,42 @@ public class Audits {
     public AcceptInformationRequestEvidenceResponse acceptInformationRequestEvidence(
             String auditId, String requestId,
             AcceptInformationRequestEvidenceInput acceptInformationRequestEvidenceInput) {
+        return acceptInformationRequestEvidence(auditId, requestId, acceptInformationRequestEvidenceInput,
+            Optional.empty());
+    }
+
+    /**
+     * Accept evidence for an information request
+     * 
+     * <p>Accepts evidence for an information request, confirming that all submitted evidence
+     * meets audit requirements. This action changes the request's approvalStatus to
+     * an approved state and creates an activity log entry.
+     * 
+     * <p>Acceptance workflow:
+     * 1. Auditor reviews submitted evidence
+     * 2. If evidence is satisfactory, auditor calls this endpoint
+     * 3. Request status changes to approved state and is considered complete for this audit cycle
+     * 
+     * <p>Use this endpoint when:
+     * - All required evidence has been submitted
+     * - Evidence quality meets audit standards
+     * - Evidence addresses all specified framework codes
+     * - No additional information is needed
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param acceptInformationRequestEvidenceInput Input for accepting evidence on an information request, indicating that
+     *         the submitted evidence meets requirements. This changes the request's
+     *         approvalStatus to an approved state and creates an activity log entry.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public AcceptInformationRequestEvidenceResponse acceptInformationRequestEvidence(
+            String auditId, String requestId,
+            AcceptInformationRequestEvidenceInput acceptInformationRequestEvidenceInput, Optional<Options> options) {
         AcceptInformationRequestEvidenceRequest request =
             AcceptInformationRequestEvidenceRequest
                 .builder()
@@ -2693,7 +3820,7 @@ public class Audits {
                 .acceptInformationRequestEvidenceInput(acceptInformationRequestEvidenceInput)
                 .build();
         RequestOperation<AcceptInformationRequestEvidenceRequest, AcceptInformationRequestEvidenceResponse> operation
-              = new AcceptInformationRequestEvidence.Sync(sdkConfiguration, _headers);
+              = new AcceptInformationRequestEvidence.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2726,13 +3853,31 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ShareInformationRequestListResponse shareInformationRequestList(String auditId) {
+        return shareInformationRequestList(auditId, Optional.empty());
+    }
+
+    /**
+     * Share information request list with customer
+     * 
+     * <p>Shares the current information request list for an audit with the customer organization,
+     * making it visible in their portal. This action allows the customer to see all information
+     * requests that have been created for their audit. Only IRL audits are supported.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ShareInformationRequestListResponse shareInformationRequestList(String auditId, Optional<Options> options) {
         ShareInformationRequestListRequest request =
             ShareInformationRequestListRequest
                 .builder()
                 .auditId(auditId)
                 .build();
         RequestOperation<ShareInformationRequestListRequest, ShareInformationRequestListResponse> operation
-              = new ShareInformationRequestList.Sync(sdkConfiguration, _headers);
+              = new ShareInformationRequestList.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2773,13 +3918,35 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public GetFrameworkCodesResponse getFrameworkCodes(String auditId) {
+        return getFrameworkCodes(auditId, Optional.empty());
+    }
+
+    /**
+     * Get framework codes for an audit
+     * 
+     * <p>Retrieves all valid framework codes for the specified audit. This endpoint helps users discover
+     * which framework codes are available for creating and updating information requests for this audit.
+     * 
+     * <p>Use this endpoint to:
+     * - Discover available framework codes (`frameworkCodes`, the original flat list)
+     * - Validate framework codes against the audit's frameworks
+     * - See which codes belong to which in-scope framework (`codesByFramework`)
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetFrameworkCodesResponse getFrameworkCodes(String auditId, Optional<Options> options) {
         GetFrameworkCodesRequest request =
             GetFrameworkCodesRequest
                 .builder()
                 .auditId(auditId)
                 .build();
         RequestOperation<GetFrameworkCodesRequest, GetFrameworkCodesResponse> operation
-              = new GetFrameworkCodes.Sync(sdkConfiguration, _headers);
+              = new GetFrameworkCodes.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2878,8 +4045,59 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListInformationRequestEvidenceResponse listInformationRequestEvidence(ListInformationRequestEvidenceRequest request) {
+        return listInformationRequestEvidence(request, Optional.empty());
+    }
+
+    /**
+     * List evidence for an information request
+     * 
+     * <p>Retrieves a paginated list of all evidence attached to an information request,
+     * enabling auditors to review evidence submitted by customers.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>If the information request itself has been deleted, this endpoint returns a
+     * 4xx HTTP error instead of its evidence.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only evidence created, modified, shared, or deleted since that timestamp is returned
+     * 4. Process updates, including soft-deletes (deletionDate !== null)
+     * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Identifying evidence and files:
+     * - Use `id` as the key for each evidence item, whatever its type.
+     * - To recognize the same file across information requests, use the
+     * 
+     * <p>file key for the evidence type. UPLOADED_DOCUMENT uses `evidence.id`.
+     * VANTA_DOCUMENT and VANTA_POLICY use `evidence.file.id`, which
+     * identifies the source document or policy file. VANTA_TEST uses
+     * `evidence.snapshotId` plus `evidence.fileType`. LINK, OBSERVATION,
+     * and VANTA_TEST_SNAPSHOT evidence has no file.
+     * - Do not use `file.url` as a key. It is a temporary download link.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListInformationRequestEvidenceResponse listInformationRequestEvidence(ListInformationRequestEvidenceRequest request, Optional<Options> options) {
         RequestOperation<ListInformationRequestEvidenceRequest, ListInformationRequestEvidenceResponse> operation
-              = new ListInformationRequestEvidence.Sync(sdkConfiguration, _headers);
+              = new ListInformationRequestEvidence.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -2940,6 +4158,41 @@ public class Audits {
     public GetInformationRequestEvidenceResponse getInformationRequestEvidence(
             String auditId, String requestId,
             String evidenceId) {
+        return getInformationRequestEvidence(auditId, requestId, evidenceId,
+            Optional.empty());
+    }
+
+    /**
+     * Get information request evidence by ID
+     * 
+     * <p>Retrieves a single evidence item attached to an information request by its ID.
+     * 
+     * <p>This endpoint always includes soft-deleted evidence (where `deletionDate !== null`),
+     * so an evidence ID surfaced by a `changedSinceDate` delta sync stays fetchable after
+     * the evidence is deleted. Clients should check the `deletionDate` field to identify
+     * and handle deleted records appropriately in their systems.
+     * 
+     * <p>Evidence is only resolvable while its information request exists. Once the
+     * request itself is deleted, this endpoint returns a 4xx HTTP error instead
+     * of the evidence. Check the request's `deletionDate` using
+     * `GET /audits/{auditId}/information-requests` before treating its evidence
+     * as deleted too.
+     * 
+     * <p>Evidence that the customer has not shared with the auditor is reported as not
+     * found, rather than distinguishing it from an ID that does not exist.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param evidenceId 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetInformationRequestEvidenceResponse getInformationRequestEvidence(
+            String auditId, String requestId,
+            String evidenceId, Optional<Options> options) {
         GetInformationRequestEvidenceRequest request =
             GetInformationRequestEvidenceRequest
                 .builder()
@@ -2948,7 +4201,7 @@ public class Audits {
                 .evidenceId(evidenceId)
                 .build();
         RequestOperation<GetInformationRequestEvidenceRequest, GetInformationRequestEvidenceResponse> operation
-              = new GetInformationRequestEvidence.Sync(sdkConfiguration, _headers);
+              = new GetInformationRequestEvidence.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3021,6 +4274,47 @@ public class Audits {
     public GetInformationRequestTestSnapshotEvidenceDetailResponse getInformationRequestTestSnapshotEvidenceDetail(
             String auditId, String requestId,
             String evidenceId) {
+        return getInformationRequestTestSnapshotEvidenceDetail(auditId, requestId, evidenceId,
+            Optional.empty());
+    }
+
+    /**
+     * Get test snapshot detail for an evidence row
+     * 
+     * <p>Retrieves the rich detail for a single VANTA_TEST_SNAPSHOT evidence row
+     * attached to an information request. The response includes test-level
+     * metadata (description, integrations, SLA), the raw test data captured
+     * at snapshot time, and the resources that were excluded from the test
+     * (out-of-scope resources).
+     * 
+     * <p>For structured snapshots, the `rawTestData` array contains one row per
+     * resource the test ran against; each row carries `resourceId`,
+     * `resourceType`, and the raw JSON for that resource.
+     * 
+     * <p>For unstructured snapshots, the `rawTestData` array contains a single
+     * row with `resourceId` and `resourceType` set to `null` and `rawJson`
+     * containing the entire test-run JSON blob.
+     * 
+     * <p>The `outOfScopeResources` field lists resources excluded at the test
+     * level (customer-disabled) and the framework level (segment
+     * configuration). Empty exclusion groups are filtered out.
+     * 
+     * <p>The `apiRequests` array contains the HTTP requests captured during API
+     * introspection tests. Empty when the test does not perform API
+     * introspection.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param evidenceId 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetInformationRequestTestSnapshotEvidenceDetailResponse getInformationRequestTestSnapshotEvidenceDetail(
+            String auditId, String requestId,
+            String evidenceId, Optional<Options> options) {
         GetInformationRequestTestSnapshotEvidenceDetailRequest request =
             GetInformationRequestTestSnapshotEvidenceDetailRequest
                 .builder()
@@ -3029,7 +4323,7 @@ public class Audits {
                 .evidenceId(evidenceId)
                 .build();
         RequestOperation<GetInformationRequestTestSnapshotEvidenceDetailRequest, GetInformationRequestTestSnapshotEvidenceDetailResponse> operation
-              = new GetInformationRequestTestSnapshotEvidenceDetail.Sync(sdkConfiguration, _headers);
+              = new GetInformationRequestTestSnapshotEvidenceDetail.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3106,8 +4400,48 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListCommentsForInformationRequestResponse listCommentsForInformationRequest(ListCommentsForInformationRequestRequest request) {
+        return listCommentsForInformationRequest(request, Optional.empty());
+    }
+
+    /**
+     * List comments for an information request
+     * 
+     * <p>Retrieves a paginated list of comments for an information request, enabling
+     * auditors to view communication history and collaborate with customers.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>If the information request itself has been deleted, this endpoint returns a
+     * 4xx HTTP error instead of its comments.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only comments created, modified, or deleted since that timestamp are returned
+     * 4. Process updates, including soft-deletes (deletionDate !== null)
+     * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListCommentsForInformationRequestResponse listCommentsForInformationRequest(ListCommentsForInformationRequestRequest request, Optional<Options> options) {
         RequestOperation<ListCommentsForInformationRequestRequest, ListCommentsForInformationRequestResponse> operation
-              = new ListCommentsForInformationRequest.Sync(sdkConfiguration, _headers);
+              = new ListCommentsForInformationRequest.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3146,6 +4480,31 @@ public class Audits {
     public CreateCommentForInformationRequestResponse createCommentForInformationRequest(
             String auditId, String requestId,
             AddInformationRequestCommentInput addInformationRequestCommentInput) {
+        return createCommentForInformationRequest(auditId, requestId, addInformationRequestCommentInput,
+            Optional.empty());
+    }
+
+    /**
+     * Create a comment for an information request
+     * 
+     * <p>Creates a new comment for an information request. The comment author must be an auditor
+     * in the audit firm making the request. The comment will be associated with the information
+     * request and visible to all authorized users.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param addInformationRequestCommentInput Comments enable communication between auditors and customers about
+     *         evidence requirements and submissions. All comments are immediately
+     *         visible to both parties once created.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateCommentForInformationRequestResponse createCommentForInformationRequest(
+            String auditId, String requestId,
+            AddInformationRequestCommentInput addInformationRequestCommentInput, Optional<Options> options) {
         CreateCommentForInformationRequestRequest request =
             CreateCommentForInformationRequestRequest
                 .builder()
@@ -3154,7 +4513,7 @@ public class Audits {
                 .addInformationRequestCommentInput(addInformationRequestCommentInput)
                 .build();
         RequestOperation<CreateCommentForInformationRequestRequest, CreateCommentForInformationRequestResponse> operation
-              = new CreateCommentForInformationRequest.Sync(sdkConfiguration, _headers);
+              = new CreateCommentForInformationRequest.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3211,6 +4570,39 @@ public class Audits {
     public GetCommentForInformationRequestResponse getCommentForInformationRequest(
             String auditId, String requestId,
             String commentId) {
+        return getCommentForInformationRequest(auditId, requestId, commentId,
+            Optional.empty());
+    }
+
+    /**
+     * Get an information request comment by ID
+     * 
+     * <p>Retrieves a single comment on an information request by its ID.
+     * 
+     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
+     * response. Clients should check `deletionDate` to determine whether the
+     * comment has been deleted. This matches
+     * `GET /audits/{auditId}/information-requests/{requestId}/comments`, which
+     * supports `changedSinceDate` and returns soft-deleted comments for delta sync.
+     * 
+     * <p>Comments are only resolvable while their information request exists. Once
+     * the request itself is deleted, this endpoint returns a 4xx HTTP error
+     * instead of the comment. Check the request's `deletionDate` using
+     * `GET /audits/{auditId}/information-requests` before treating its comments
+     * as deleted too.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param commentId 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetCommentForInformationRequestResponse getCommentForInformationRequest(
+            String auditId, String requestId,
+            String commentId, Optional<Options> options) {
         GetCommentForInformationRequestRequest request =
             GetCommentForInformationRequestRequest
                 .builder()
@@ -3219,7 +4611,7 @@ public class Audits {
                 .commentId(commentId)
                 .build();
         RequestOperation<GetCommentForInformationRequestRequest, GetCommentForInformationRequestResponse> operation
-              = new GetCommentForInformationRequest.Sync(sdkConfiguration, _headers);
+              = new GetCommentForInformationRequest.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3258,6 +4650,32 @@ public class Audits {
     public UpdateCommentForInformationRequestResponse updateCommentForInformationRequest(
             String auditId, String requestId,
             String commentId, UpdateInformationRequestCommentInput updateInformationRequestCommentInput) {
+        return updateCommentForInformationRequest(auditId, requestId, commentId,
+            updateInformationRequestCommentInput, Optional.empty());
+    }
+
+    /**
+     * Update a comment for an information request
+     * 
+     * <p>Updates an existing comment for an information request. Only the original author
+     * of the comment can update it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 25 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param commentId 
+     * @param updateInformationRequestCommentInput Updates an existing comment on an information request.
+     *         Only the original author of the comment can update it.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateCommentForInformationRequestResponse updateCommentForInformationRequest(
+            String auditId, String requestId,
+            String commentId, UpdateInformationRequestCommentInput updateInformationRequestCommentInput,
+            Optional<Options> options) {
         UpdateCommentForInformationRequestRequest request =
             UpdateCommentForInformationRequestRequest
                 .builder()
@@ -3267,7 +4685,7 @@ public class Audits {
                 .updateInformationRequestCommentInput(updateInformationRequestCommentInput)
                 .build();
         RequestOperation<UpdateCommentForInformationRequestRequest, UpdateCommentForInformationRequestResponse> operation
-              = new UpdateCommentForInformationRequest.Sync(sdkConfiguration, _headers);
+              = new UpdateCommentForInformationRequest.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3306,6 +4724,32 @@ public class Audits {
     public DeleteCommentForInformationRequestResponse deleteCommentForInformationRequest(
             String auditId, String requestId,
             String commentId, DeleteInformationRequestCommentInput deleteInformationRequestCommentInput) {
+        return deleteCommentForInformationRequest(auditId, requestId, commentId,
+            deleteInformationRequestCommentInput, Optional.empty());
+    }
+
+    /**
+     * Delete a comment for an information request
+     * 
+     * <p>Deletes an existing comment for an information request. Only the original author
+     * of the comment can delete it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 25 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param commentId 
+     * @param deleteInformationRequestCommentInput Deletes an existing comment on an information request.
+     *         Only the original author of the comment can delete it.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteCommentForInformationRequestResponse deleteCommentForInformationRequest(
+            String auditId, String requestId,
+            String commentId, DeleteInformationRequestCommentInput deleteInformationRequestCommentInput,
+            Optional<Options> options) {
         DeleteCommentForInformationRequestRequest request =
             DeleteCommentForInformationRequestRequest
                 .builder()
@@ -3315,7 +4759,7 @@ public class Audits {
                 .deleteInformationRequestCommentInput(deleteInformationRequestCommentInput)
                 .build();
         RequestOperation<DeleteCommentForInformationRequestRequest, DeleteCommentForInformationRequestResponse> operation
-              = new DeleteCommentForInformationRequest.Sync(sdkConfiguration, _headers);
+              = new DeleteCommentForInformationRequest.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3356,7 +4800,7 @@ public class Audits {
      */
     public ListInformationRequestAuditorFilesResponse listInformationRequestAuditorFiles(String auditId, String requestId) {
         return listInformationRequestAuditorFiles(auditId, requestId, Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -3381,6 +4825,34 @@ public class Audits {
     public ListInformationRequestAuditorFilesResponse listInformationRequestAuditorFiles(
             String auditId, String requestId,
             Optional<Integer> pageSize, Optional<String> pageCursor) {
+        return listInformationRequestAuditorFiles(auditId, requestId, pageSize,
+            pageCursor, Optional.empty());
+    }
+
+    /**
+     * List auditor files for an information request
+     * 
+     * <p>Lists the files auditors shared with the customer on an information
+     * request, newest upload first, with ties ordered by ID so pages are stable.
+     * Deleted files are not returned; list again to see the current set.
+     * 
+     * <p>Each `url` is a download link that expires one hour after it is issued.
+     * List the files again to get fresh download URLs. Do not use `url` as a key.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param pageSize Maximum number of files to return per page.
+     * @param pageCursor Pagination cursor from a previous response. Provide to fetch the next page of files.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListInformationRequestAuditorFilesResponse listInformationRequestAuditorFiles(
+            String auditId, String requestId,
+            Optional<Integer> pageSize, Optional<String> pageCursor,
+            Optional<Options> options) {
         ListInformationRequestAuditorFilesRequest request =
             ListInformationRequestAuditorFilesRequest
                 .builder()
@@ -3390,7 +4862,7 @@ public class Audits {
                 .pageCursor(pageCursor)
                 .build();
         RequestOperation<ListInformationRequestAuditorFilesRequest, ListInformationRequestAuditorFilesResponse> operation
-              = new ListInformationRequestAuditorFiles.Sync(sdkConfiguration, _headers);
+              = new ListInformationRequestAuditorFiles.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3444,6 +4916,39 @@ public class Audits {
     public DeleteInformationRequestAuditorFileResponse deleteInformationRequestAuditorFile(
             String auditId, String requestId,
             String auditorFileId, DeleteInformationRequestAuditorFileInput deleteInformationRequestAuditorFileInput) {
+        return deleteInformationRequestAuditorFile(auditId, requestId, auditorFileId,
+            deleteInformationRequestAuditorFileInput, Optional.empty());
+    }
+
+    /**
+     * Delete an auditor file from an information request
+     * 
+     * <p>Deletes an auditor file from an information request. Any auditor assigned
+     * to the audit may delete any auditor's file, not only their own. Identify
+     * the deleting auditor by `email`: they must be an active user in your audit
+     * firm and assigned to the audit, otherwise this returns 403.
+     * 
+     * <p>A completed audit returns 409; reopen the audit before deleting files.
+     * Approving the request does not lock its files. An unknown or already
+     * deleted file returns 404.
+     * 
+     * <p>Lists no longer return the file or new download URLs for it. Download URLs
+     * issued before the delete stay valid until they expire, at most one hour.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param auditorFileId 
+     * @param deleteInformationRequestAuditorFileInput 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteInformationRequestAuditorFileResponse deleteInformationRequestAuditorFile(
+            String auditId, String requestId,
+            String auditorFileId, DeleteInformationRequestAuditorFileInput deleteInformationRequestAuditorFileInput,
+            Optional<Options> options) {
         DeleteInformationRequestAuditorFileRequest request =
             DeleteInformationRequestAuditorFileRequest
                 .builder()
@@ -3453,7 +4958,7 @@ public class Audits {
                 .deleteInformationRequestAuditorFileInput(deleteInformationRequestAuditorFileInput)
                 .build();
         RequestOperation<DeleteInformationRequestAuditorFileRequest, DeleteInformationRequestAuditorFileResponse> operation
-              = new DeleteInformationRequestAuditorFile.Sync(sdkConfiguration, _headers);
+              = new DeleteInformationRequestAuditorFile.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3544,6 +5049,56 @@ public class Audits {
     public InitiateInformationRequestAuditorFileUploadResponse initiateInformationRequestAuditorFileUpload(
             String auditId, String requestId,
             InitiateAuditorFileUploadInput initiateAuditorFileUploadInput) {
+        return initiateInformationRequestAuditorFileUpload(auditId, requestId, initiateAuditorFileUploadInput,
+            Optional.empty());
+    }
+
+    /**
+     * Start an auditor file upload
+     * 
+     * <p>Starts an upload of a file an auditor provides for the customer, such as
+     * instructions or a template, on an information request. This does not upload
+     * customer evidence. Use this three-step flow:
+     * 
+     * <p>1. Call this endpoint with `email`, `filename` and `contentType` to receive
+     * 
+     * <p>an `uploadId`, a temporary `url` and form `fields`.
+     * 2. POST the file to `url` as `multipart/form-data` before `transferExpiresAt`.
+     * 
+     * <p>Copy every returned field name and value unchanged, then append the file
+     * under `file` as the final part. Do not hard-code the field names or send
+     * your Vanta bearer token to this URL. Let your HTTP client set the
+     * multipart Content-Type header and boundary. Wait for a 2xx response;
+     * the response body may be empty.
+     * 3. POST `{ "uploadId": "&lt;returned uploadId&gt;" }` to
+     * 
+     * <p>`/v1/audits/{auditId}/information-requests/{requestId}/auditor-files/uploads/finalize`
+     * and complete finalization before `finalizationExpiresAt`.
+     * 
+     * <p>The file is attached only after finalization succeeds. Each upload accepts
+     * one file up to 50MB, inclusive. The auditor identified
+     * by `email` is credited as the uploader and must be an active user in your
+     * firm with access to the audit. A completed audit returns 409.
+     * 
+     * <p>Each application is limited to 10 unfinished auditor file uploads per
+     * customer, across all audits and requests. Uploads count toward this limit
+     * until they are finalized, fail, or expire. Starting another upload at this
+     * limit returns 429, even if the earlier file transfers have succeeded.
+     * Repeating this start operation creates a new upload; it does not recover
+     * an earlier upload whose response was lost.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param initiateAuditorFileUploadInput 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public InitiateInformationRequestAuditorFileUploadResponse initiateInformationRequestAuditorFileUpload(
+            String auditId, String requestId,
+            InitiateAuditorFileUploadInput initiateAuditorFileUploadInput, Optional<Options> options) {
         InitiateInformationRequestAuditorFileUploadRequest request =
             InitiateInformationRequestAuditorFileUploadRequest
                 .builder()
@@ -3552,7 +5107,7 @@ public class Audits {
                 .initiateAuditorFileUploadInput(initiateAuditorFileUploadInput)
                 .build();
         RequestOperation<InitiateInformationRequestAuditorFileUploadRequest, InitiateInformationRequestAuditorFileUploadResponse> operation
-              = new InitiateInformationRequestAuditorFileUpload.Sync(sdkConfiguration, _headers);
+              = new InitiateInformationRequestAuditorFileUpload.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3643,6 +5198,56 @@ public class Audits {
     public FinalizeInformationRequestAuditorFileUploadResponse finalizeInformationRequestAuditorFileUpload(
             String auditId, String requestId,
             FinalizeAuditorFileUploadInput finalizeAuditorFileUploadInput) {
+        return finalizeInformationRequestAuditorFileUpload(auditId, requestId, finalizeAuditorFileUploadInput,
+            Optional.empty());
+    }
+
+    /**
+     * Complete an auditor file upload and attach the file
+     * 
+     * <p>Completes an auditor file upload by validating the file and attaching it
+     * to the information request. First start an upload with
+     * `POST /v1/audits/{auditId}/information-requests/{requestId}/auditor-files/uploads`,
+     * then transfer the file to the returned `url` and wait for its 2xx response.
+     * Calling finalize before the file arrives ends that upload; start a new one.
+     * 
+     * <p>Send `{ "uploadId": "&lt;returned uploadId&gt;" }` using the same application,
+     * audit and information request that started the upload. Vanta uses the
+     * auditor identified by `email` at the start; that auditor must still be an
+     * active user in your firm with audit access. Unsupported file types return
+     * `422` during finalization.
+     * 
+     * <p>A 201 response contains the attached file's `id`, which differs from
+     * `uploadId`. Use `GET /v1/audits/{auditId}/information-requests/{requestId}/auditor-files`
+     * to find that ID and obtain a temporary download URL.
+     * 
+     * <p>Retry the same upload ID with backoff after a lost response, a 5xx or a 429.
+     * Stop retrying at `finalizationExpiresAt`. A 409 means the audit is
+     * completed; stop this attempt. For 404, 413 or 422, stop this attempt and
+     * correct the input or start a new upload.
+     * 
+     * <p>A 429 can mean too many requests, another finalization of this upload is
+     * still running, or too many files are being finalized for this application
+     * and customer.
+     * After a failed attempt, you may need to wait up to 60 seconds before
+     * retrying. Expired uploads, missing files and unsupported files return 422;
+     * files over 50MB return 413. Retrying a finalization
+     * that already succeeded returns the original auditor file ID, even if the
+     * file was later deleted; it does not attach the file again. Current access
+     * is still required.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param requestId 
+     * @param finalizeAuditorFileUploadInput 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public FinalizeInformationRequestAuditorFileUploadResponse finalizeInformationRequestAuditorFileUpload(
+            String auditId, String requestId,
+            FinalizeAuditorFileUploadInput finalizeAuditorFileUploadInput, Optional<Options> options) {
         FinalizeInformationRequestAuditorFileUploadRequest request =
             FinalizeInformationRequestAuditorFileUploadRequest
                 .builder()
@@ -3651,7 +5256,7 @@ public class Audits {
                 .finalizeAuditorFileUploadInput(finalizeAuditorFileUploadInput)
                 .build();
         RequestOperation<FinalizeInformationRequestAuditorFileUploadRequest, FinalizeInformationRequestAuditorFileUploadResponse> operation
-              = new FinalizeInformationRequestAuditorFileUpload.Sync(sdkConfiguration, _headers);
+              = new FinalizeInformationRequestAuditorFileUpload.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3734,8 +5339,51 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListInformationRequestActivityResponse listInformationRequestActivity(ListInformationRequestActivityRequest request) {
+        return listInformationRequestActivity(request, Optional.empty());
+    }
+
+    /**
+     * List information request activity
+     * 
+     * <p>Retrieves a paginated list of activity logs for an information request, providing
+     * an audit trail of the changes and actions taken on it.
+     * 
+     * <p>Activity recording Vanta's automated preparation of a request is never returned by
+     * this endpoint, so `fillOutcome` is always null here. Some internal status transitions
+     * are also withheld, and those are removed after a page is selected, so a page can
+     * contain fewer entries than `pageSize` — or none at all — while more pages remain.
+     * Follow `results.pageInfo.hasNextPage` rather than treating a short or empty page as
+     * the end of the list.
+     * 
+     * <p>If the information request has been deleted, this endpoint returns a 4xx
+     * HTTP error instead of its activity.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only activity created since that timestamp is returned
+     * 4. Process updates to track all changes to the information request
+     * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListInformationRequestActivityResponse listInformationRequestActivity(ListInformationRequestActivityRequest request, Optional<Options> options) {
         RequestOperation<ListInformationRequestActivityRequest, ListInformationRequestActivityResponse> operation
-              = new ListInformationRequestActivity.Sync(sdkConfiguration, _headers);
+              = new ListInformationRequestActivity.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3788,6 +5436,37 @@ public class Audits {
     public GetAuditEvidenceCommentResponse getAuditEvidenceComment(
             String auditId, String auditEvidenceId,
             String commentId) {
+        return getAuditEvidenceComment(auditId, auditEvidenceId, commentId,
+            Optional.empty());
+    }
+
+    /**
+     * Get an audit evidence comment by ID
+     * 
+     * <p>Retrieves a single comment on a classic audit evidence item by its ID.
+     * 
+     * <p>Soft-deleted comments (where `deletionDate !== null`) are included in the
+     * response. Clients should check `deletionDate` to determine whether the
+     * comment has been deleted. This matches
+     * `GET /audits/{auditId}/comments`, which supports `changedSinceDate` and
+     * returns soft-deleted comments for delta sync.
+     * 
+     * <p>Comments remain fetchable when the parent evidence item has been
+     * soft-deleted, so delayed webhook consumers can still resolve a comment ID
+     * after evidence deletion.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param auditEvidenceId 
+     * @param commentId 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public GetAuditEvidenceCommentResponse getAuditEvidenceComment(
+            String auditId, String auditEvidenceId,
+            String commentId, Optional<Options> options) {
         GetAuditEvidenceCommentRequest request =
             GetAuditEvidenceCommentRequest
                 .builder()
@@ -3796,7 +5475,7 @@ public class Audits {
                 .commentId(commentId)
                 .build();
         RequestOperation<GetAuditEvidenceCommentRequest, GetAuditEvidenceCommentResponse> operation
-              = new GetAuditEvidenceComment.Sync(sdkConfiguration, _headers);
+              = new GetAuditEvidenceComment.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3865,8 +5544,44 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public DuplicateResponse duplicate(DuplicateAuditRequest request) {
+        return duplicate(request, Optional.empty());
+    }
+
+    /**
+     * Duplicate an IRL audit
+     * 
+     * <p>Duplicates an existing IRL audit into a new audit engagement with the supplied
+     * displayName, audit dates, early access date, and auditor roster. Company, audit
+     * type, and framework are copied from the source audit and cannot be changed.
+     * 
+     * <p>Each email in `allowAuditorEmails` must match an active user in the
+     * authenticated audit firm's domain. Provision auditors via `POST /auditors`
+     * before referencing them here, or copy emails from `GET /audits/{sourceAuditId}`
+     * → `allowAuditorEmails` when duplicating with the same roster.
+     * 
+     * <p>Information requests are copied from the source audit. After duplication:
+     * 
+     * <p>- Requests with Vanta evidence will be pre-filled and marked as internal review.
+     * 
+     * <p>Review them before sharing with your customer.
+     * - Requests where evidence was not available or was uploaded externally will need
+     * 
+     * <p>evidence added manually.
+     * - Evidence capture dates and due dates can be modified after duplication.
+     * 
+     * <p>Audits with generated information requests can be duplicated only after their information
+     * requests have been created successfully.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DuplicateResponse duplicate(DuplicateAuditRequest request, Optional<Options> options) {
         RequestOperation<DuplicateAuditRequest, DuplicateResponse> operation
-              = new Duplicate.Sync(sdkConfiguration, _headers);
+              = new Duplicate.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3895,8 +5610,24 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListAuditControlsResponse listControls(ListAuditControlsRequest request) {
+        return listControls(request, Optional.empty());
+    }
+
+    /**
+     * List audit controls
+     * 
+     * <p>Returns a paginated list of controls for an audit.
+     * 
+     * <p>Rate limit: 250 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListAuditControlsResponse listControls(ListAuditControlsRequest request, Optional<Options> options) {
         RequestOperation<ListAuditControlsRequest, ListAuditControlsResponse> operation
-              = new ListAuditControls.Sync(sdkConfiguration, _headers);
+              = new ListAuditControls.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -3932,6 +5663,28 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public CreateCustomControlResponse createCustomControl(String auditId, CreateCustomControlInput createCustomControlInput) {
+        return createCustomControl(auditId, createCustomControlInput, Optional.empty());
+    }
+
+    /**
+     * Create a custom control for an audit
+     * 
+     * <p>Create a custom control for an audit.
+     * 
+     * <p>This endpoint supports classic audits only. Audits that use information request
+     * lists (IRL) are not supported and return a 422 error.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param createCustomControlInput 
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateCustomControlResponse createCustomControl(
+            String auditId, CreateCustomControlInput createCustomControlInput,
+            Optional<Options> options) {
         CreateCustomControlRequest request =
             CreateCustomControlRequest
                 .builder()
@@ -3939,7 +5692,7 @@ public class Audits {
                 .createCustomControlInput(createCustomControlInput)
                 .build();
         RequestOperation<CreateCustomControlRequest, CreateCustomControlResponse> operation
-              = new CreateCustomControl.Sync(sdkConfiguration, _headers);
+              = new CreateCustomControl.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -4000,7 +5753,7 @@ public class Audits {
      */
     public ListInformationRequestsForControlResponse listInformationRequestsForControl(String auditId, String controlId) {
         return listInformationRequestsForControl(auditId, controlId, Optional.empty(),
-            Optional.empty());
+            Optional.empty(), Optional.empty());
     }
 
     /**
@@ -4035,6 +5788,44 @@ public class Audits {
     public ListInformationRequestsForControlResponse listInformationRequestsForControl(
             String auditId, String controlId,
             Optional<Integer> pageSize, Optional<String> pageCursor) {
+        return listInformationRequestsForControl(auditId, controlId, pageSize,
+            pageCursor, Optional.empty());
+    }
+
+    /**
+     * List information requests linked to a control within an audit
+     * 
+     * <p>Returns a paginated list of active information requests linked to a specific
+     * control within an IRL audit. Only links saved on the audit's current
+     * control rows are included.
+     * 
+     * <p>Soft-deleted information requests are not included in the response. To
+     * synchronize deletions, use `GET /audits/{auditId}/information-requests`,
+     * which supports `changedSinceDate` and includes soft-deleted records.
+     * 
+     * <p>Returns 404 when the control is not part of the audit. Returns an empty page
+     * when the control is part of the audit but has no active IRLs linked to it.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param pageSize Maximum number of information requests to return per page.
+     * @param pageCursor Pagination cursor from a previous response. Provide to fetch the next page of results.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListInformationRequestsForControlResponse listInformationRequestsForControl(
+            String auditId, String controlId,
+            Optional<Integer> pageSize, Optional<String> pageCursor,
+            Optional<Options> options) {
         ListInformationRequestsForControlRequest request =
             ListInformationRequestsForControlRequest
                 .builder()
@@ -4044,7 +5835,7 @@ public class Audits {
                 .pageCursor(pageCursor)
                 .build();
         RequestOperation<ListInformationRequestsForControlRequest, ListInformationRequestsForControlResponse> operation
-              = new ListInformationRequestsForControl.Sync(sdkConfiguration, _headers);
+              = new ListInformationRequestsForControl.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -4119,8 +5910,47 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListCommentsForControlResponse listCommentsForControl(ListCommentsForControlRequest request) {
+        return listCommentsForControl(request, Optional.empty());
+    }
+
+    /**
+     * List comments for a control within an audit
+     * 
+     * <p>Retrieves a paginated list of comments on a control within an IRL audit,
+     * enabling auditors to view collaboration history on the control.
+     * 
+     * <p>This endpoint always includes soft-deleted records (where `deletionDate !== null`).
+     * Clients should check the `deletionDate` field to identify and handle deleted records
+     * appropriately in their systems.
+     * 
+     * <p>This endpoint supports delta synchronization via the `changedSinceDate` parameter,
+     * allowing efficient polling for changes without retrieving the entire dataset.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Pagination usage:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage` to see if more data exists
+     * 3. If true, use `results.pageInfo.endCursor` as `pageCursor` in next request
+     * 4. Repeat until `hasNextPage` is false
+     * 
+     * <p>Delta sync usage:
+     * 1. Store the timestamp of your last sync
+     * 2. Pass that timestamp as `changedSinceDate`
+     * 3. Only comments created, modified, or deleted since that timestamp are returned
+     * 4. Process updates, including soft-deletes (deletionDate !== null)
+     * 5. Update your last sync timestamp to the current time
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListCommentsForControlResponse listCommentsForControl(ListCommentsForControlRequest request, Optional<Options> options) {
         RequestOperation<ListCommentsForControlRequest, ListCommentsForControlResponse> operation
-              = new ListCommentsForControl.Sync(sdkConfiguration, _headers);
+              = new ListCommentsForControl.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -4162,6 +5992,32 @@ public class Audits {
     public CreateCommentForControlResponse createCommentForControl(
             String auditId, String controlId,
             AddAuditControlCommentInput addAuditControlCommentInput) {
+        return createCommentForControl(auditId, controlId, addAuditControlCommentInput,
+            Optional.empty());
+    }
+
+    /**
+     * Create a comment for a control within an audit
+     * 
+     * <p>Creates a new comment on a control within an IRL audit. The comment author
+     * must be an auditor in the audit firm making the request. The comment will be
+     * associated with the control and visible to all authorized users.
+     * 
+     * <p>Returns 404 when the control is not part of the audit.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param addAuditControlCommentInput Comments enable auditors and customers to collaborate on a control within an
+     *         audit. All comments are immediately visible to authorized parties once created.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateCommentForControlResponse createCommentForControl(
+            String auditId, String controlId,
+            AddAuditControlCommentInput addAuditControlCommentInput, Optional<Options> options) {
         CreateCommentForControlRequest request =
             CreateCommentForControlRequest
                 .builder()
@@ -4170,7 +6026,7 @@ public class Audits {
                 .addAuditControlCommentInput(addAuditControlCommentInput)
                 .build();
         RequestOperation<CreateCommentForControlRequest, CreateCommentForControlResponse> operation
-              = new CreateCommentForControl.Sync(sdkConfiguration, _headers);
+              = new CreateCommentForControl.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -4209,6 +6065,32 @@ public class Audits {
     public UpdateCommentForControlResponse updateCommentForControl(
             String auditId, String controlId,
             String commentId, UpdateAuditControlCommentInput updateAuditControlCommentInput) {
+        return updateCommentForControl(auditId, controlId, commentId,
+            updateAuditControlCommentInput, Optional.empty());
+    }
+
+    /**
+     * Update a comment for a control within an audit
+     * 
+     * <p>Updates an existing comment on a control. Only the original author
+     * of the comment can update it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param commentId 
+     * @param updateAuditControlCommentInput Updates an existing comment on a control.
+     *         Only the original author of the comment can update it.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpdateCommentForControlResponse updateCommentForControl(
+            String auditId, String controlId,
+            String commentId, UpdateAuditControlCommentInput updateAuditControlCommentInput,
+            Optional<Options> options) {
         UpdateCommentForControlRequest request =
             UpdateCommentForControlRequest
                 .builder()
@@ -4218,7 +6100,7 @@ public class Audits {
                 .updateAuditControlCommentInput(updateAuditControlCommentInput)
                 .build();
         RequestOperation<UpdateCommentForControlRequest, UpdateCommentForControlResponse> operation
-              = new UpdateCommentForControl.Sync(sdkConfiguration, _headers);
+              = new UpdateCommentForControl.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -4257,6 +6139,32 @@ public class Audits {
     public DeleteCommentForControlResponse deleteCommentForControl(
             String auditId, String controlId,
             String commentId, DeleteAuditControlCommentInput deleteAuditControlCommentInput) {
+        return deleteCommentForControl(auditId, controlId, commentId,
+            deleteAuditControlCommentInput, Optional.empty());
+    }
+
+    /**
+     * Delete a comment for a control within an audit
+     * 
+     * <p>Deletes an existing comment on a control. Only the original author
+     * of the comment can delete it. The author is identified by their email address,
+     * which must match the email of the user who created the comment.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param commentId 
+     * @param deleteAuditControlCommentInput Deletes an existing comment on a control.
+     *         Only the original author of the comment can delete it.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public DeleteCommentForControlResponse deleteCommentForControl(
+            String auditId, String controlId,
+            String commentId, DeleteAuditControlCommentInput deleteAuditControlCommentInput,
+            Optional<Options> options) {
         DeleteCommentForControlRequest request =
             DeleteCommentForControlRequest
                 .builder()
@@ -4266,7 +6174,7 @@ public class Audits {
                 .deleteAuditControlCommentInput(deleteAuditControlCommentInput)
                 .build();
         RequestOperation<DeleteCommentForControlRequest, DeleteCommentForControlResponse> operation
-              = new DeleteCommentForControl.Sync(sdkConfiguration, _headers);
+              = new DeleteCommentForControl.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -4332,6 +6240,44 @@ public class Audits {
     public UpsertAssessmentForControlResponse upsertAssessmentForControl(
             String auditId, String controlId,
             UpsertAuditControlAssessmentInput upsertAuditControlAssessmentInput) {
+        return upsertAssessmentForControl(auditId, controlId, upsertAuditControlAssessmentInput,
+            Optional.empty());
+    }
+
+    /**
+     * Upsert a control's assessment within an audit
+     * 
+     * <p>Records (upserts) an auditor's assessment state and justification for a
+     * control within an IRL audit — the API equivalent of assessing a control in
+     * the web app. Overwrites the assessment for this control in the chosen
+     * audit segment.
+     * 
+     * <p>`segmentId` may be any segment on the audit, `PROGRAM` or `SYSTEM` (see
+     * `segments` on the audit). It may be omitted only when the audit has
+     * exactly one segment. The `assessmentState` must be valid for that
+     * segment's framework (the request is rejected otherwise). The acting
+     * auditor is identified by `auditorEmail`, which must belong to the audit
+     * firm making the request.
+     * 
+     * <p>Returns 404 when the control is not part of the audit or the auditor email
+     * does not resolve to a firm user. Returns 422 when `segmentId` is omitted
+     * on an audit with more than one segment, when `segmentId` is not a segment
+     * on this audit, or when the control is not assigned to that segment for
+     * this audit. Applies to both Full and Controlled Audit View audits.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param auditId 
+     * @param controlId 
+     * @param upsertAuditControlAssessmentInput Input for upserting a control's auditor assessment within an audit. Overwrites
+     *         the assessment for this control in the chosen audit segment.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public UpsertAssessmentForControlResponse upsertAssessmentForControl(
+            String auditId, String controlId,
+            UpsertAuditControlAssessmentInput upsertAuditControlAssessmentInput, Optional<Options> options) {
         UpsertAssessmentForControlRequest request =
             UpsertAssessmentForControlRequest
                 .builder()
@@ -4340,7 +6286,7 @@ public class Audits {
                 .upsertAuditControlAssessmentInput(upsertAuditControlAssessmentInput)
                 .build();
         RequestOperation<UpsertAssessmentForControlRequest, UpsertAssessmentForControlResponse> operation
-              = new UpsertAssessmentForControl.Sync(sdkConfiguration, _headers);
+              = new UpsertAssessmentForControl.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 
@@ -4421,8 +6367,50 @@ public class Audits {
      * @throws RuntimeException subclass if the API call fails
      */
     public ListCodeChangesResponse listCodeChanges(ListCodeChangesRequest request) {
+        return listCodeChanges(request, Optional.empty());
+    }
+
+    /**
+     * List code changes for an audit
+     * 
+     * <p>Retrieves code changes population data for an audit.
+     * 
+     * <p>This endpoint provides access to code change records (pull requests)
+     * visible to auditors during an audit engagement.
+     * 
+     * <p>Supports filtering by:
+     * - `search`: Searches code change titles and repository names (case-insensitive)
+     * - `sourcesMatchesAny`: Filters by version control source (accepted values: github, gitlab,
+     * bitbucket, azuredevops)
+     * - `closedAfterDate` / `closedBeforeDate`: Filters by the closed date range
+     * 
+     * <p>Uses cursor-based pagination. To paginate:
+     * 1. Make initial request with desired `pageSize`
+     * 2. Check `results.pageInfo.hasNextPage`
+     * 3. Use `results.pageInfo.endCursor` as `pageCursor` for next request
+     * 
+     * <p>Results are sorted by closed date (newest first). This sort order is
+     * fixed and cannot be customized via query parameters.
+     * 
+     * <p>On an audit that covers more than one framework, each code change in
+     * scope for any of the audit's frameworks is returned once.
+     * 
+     * <p>Audits with system segments are not supported by this endpoint.
+     * 
+     * <p>Only Controlled Audit View (CAV) audits are supported. Full Audit View
+     * audits are rejected with 403. Returns 403 if the customer has not made
+     * this population page visible to auditors.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListCodeChangesResponse listCodeChanges(ListCodeChangesRequest request, Optional<Options> options) {
         RequestOperation<ListCodeChangesRequest, ListCodeChangesResponse> operation
-              = new ListCodeChanges.Sync(sdkConfiguration, _headers);
+              = new ListCodeChanges.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

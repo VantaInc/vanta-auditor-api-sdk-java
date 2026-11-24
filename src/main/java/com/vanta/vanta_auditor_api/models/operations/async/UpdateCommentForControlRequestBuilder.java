@@ -10,8 +10,11 @@ import com.vanta.vanta_auditor_api.models.components.UpdateAuditControlCommentIn
 import com.vanta.vanta_auditor_api.models.operations.UpdateCommentForControlRequest;
 import com.vanta.vanta_auditor_api.operations.UpdateCommentForControl;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class UpdateCommentForControlRequestBuilder {
@@ -20,6 +23,7 @@ public class UpdateCommentForControlRequestBuilder {
     private String controlId;
     private String commentId;
     private UpdateAuditControlCommentInput updateAuditControlCommentInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -50,6 +54,18 @@ public class UpdateCommentForControlRequestBuilder {
         this.updateAuditControlCommentInput = updateAuditControlCommentInput;
         return this;
     }
+                
+    public UpdateCommentForControlRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public UpdateCommentForControlRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private UpdateCommentForControlRequest buildRequest() {
@@ -63,9 +79,12 @@ public class UpdateCommentForControlRequestBuilder {
     }
 
     public CompletableFuture<UpdateCommentForControlResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<UpdateCommentForControlRequest, UpdateCommentForControlResponse> operation
-              = new UpdateCommentForControl.Async(sdkConfiguration, _headers);
+              = new UpdateCommentForControl.Async(sdkConfiguration, options, _headers);
         UpdateCommentForControlRequest request = buildRequest();
 
         return operation.doRequest(request)

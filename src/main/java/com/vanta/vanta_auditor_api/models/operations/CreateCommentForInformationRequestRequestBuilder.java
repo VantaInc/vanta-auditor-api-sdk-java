@@ -9,14 +9,18 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.AddInformationRequestCommentInput;
 import com.vanta.vanta_auditor_api.operations.CreateCommentForInformationRequest;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 
 public class CreateCommentForInformationRequestRequestBuilder {
 
     private String auditId;
     private String requestId;
     private AddInformationRequestCommentInput addInformationRequestCommentInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -41,6 +45,18 @@ public class CreateCommentForInformationRequestRequestBuilder {
         this.addInformationRequestCommentInput = addInformationRequestCommentInput;
         return this;
     }
+                
+    public CreateCommentForInformationRequestRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public CreateCommentForInformationRequestRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private CreateCommentForInformationRequestRequest buildRequest() {
@@ -53,9 +69,12 @@ public class CreateCommentForInformationRequestRequestBuilder {
     }
 
     public CreateCommentForInformationRequestResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<CreateCommentForInformationRequestRequest, CreateCommentForInformationRequestResponse> operation
-              = new CreateCommentForInformationRequest.Sync(sdkConfiguration, _headers);
+              = new CreateCommentForInformationRequest.Sync(sdkConfiguration, options, _headers);
         CreateCommentForInformationRequestRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

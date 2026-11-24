@@ -8,11 +8,15 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.ListPeopleInAuditScope;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.time.Duration;
+import java.util.Optional;
 
 public class ListPeopleInAuditScopeRequestBuilder {
 
     private ListPeopleInAuditScopeRequest request;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -25,11 +29,26 @@ public class ListPeopleInAuditScopeRequestBuilder {
         this.request = request;
         return this;
     }
+                
+    public ListPeopleInAuditScopeRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListPeopleInAuditScopeRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
     public ListPeopleInAuditScopeResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<ListPeopleInAuditScopeRequest, ListPeopleInAuditScopeResponse> operation
-              = new ListPeopleInAuditScope.Sync(sdkConfiguration, _headers);
+              = new ListPeopleInAuditScope.Sync(sdkConfiguration, options, _headers);
 
         return operation.handleResponse(operation.doRequest(request));
     }

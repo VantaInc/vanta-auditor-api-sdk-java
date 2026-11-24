@@ -10,6 +10,8 @@ import com.vanta.vanta_auditor_api.models.operations.CreateAuditorRequestBuilder
 import com.vanta.vanta_auditor_api.models.operations.CreateAuditorResponse;
 import com.vanta.vanta_auditor_api.operations.CreateAuditor;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
+import java.util.Optional;
 
 
 public class Auditors {
@@ -56,8 +58,24 @@ public class Auditors {
      * @throws RuntimeException subclass if the API call fails
      */
     public CreateAuditorResponse create(AddAuditorInput request) {
+        return create(request, Optional.empty());
+    }
+
+    /**
+     * Create an auditor
+     * 
+     * <p>Create an auditor in Vanta.
+     * 
+     * <p>Rate limit: 10 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public CreateAuditorResponse create(AddAuditorInput request, Optional<Options> options) {
         RequestOperation<AddAuditorInput, CreateAuditorResponse> operation
-              = new CreateAuditor.Sync(sdkConfiguration, _headers);
+              = new CreateAuditor.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

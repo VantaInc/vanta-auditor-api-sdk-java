@@ -30,7 +30,7 @@ generation:
     generateNewTests: false
     skipResponseBodyAssertions: false
 java:
-  version: 0.8.8
+  version: 0.8.9
   additionalDependencies: []
   additionalPlugins: []
   artifactID: vanta-auditor-api
@@ -45,6 +45,7 @@ java:
   enableFormatting: false
   enableSlf4jLogging: false
   enableStreamingUploads: false
+  enforceOperationTimeout: false
   explicitDocImports: false
   flattenGlobalSecurity: true
   forwardCompatibleEnumsByDefault: false

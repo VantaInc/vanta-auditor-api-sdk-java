@@ -10,8 +10,11 @@ import com.vanta.vanta_auditor_api.models.components.AddCommentInput;
 import com.vanta.vanta_auditor_api.models.operations.CreateCommentForAuditEvidenceRequest;
 import com.vanta.vanta_auditor_api.operations.CreateCommentForAuditEvidence;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class CreateCommentForAuditEvidenceRequestBuilder {
@@ -19,6 +22,7 @@ public class CreateCommentForAuditEvidenceRequestBuilder {
     private String auditId;
     private String auditEvidenceId;
     private AddCommentInput addCommentInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -43,6 +47,18 @@ public class CreateCommentForAuditEvidenceRequestBuilder {
         this.addCommentInput = addCommentInput;
         return this;
     }
+                
+    public CreateCommentForAuditEvidenceRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public CreateCommentForAuditEvidenceRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private CreateCommentForAuditEvidenceRequest buildRequest() {
@@ -55,9 +71,12 @@ public class CreateCommentForAuditEvidenceRequestBuilder {
     }
 
     public CompletableFuture<CreateCommentForAuditEvidenceResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<CreateCommentForAuditEvidenceRequest, CreateCommentForAuditEvidenceResponse> operation
-              = new CreateCommentForAuditEvidence.Async(sdkConfiguration, _headers);
+              = new CreateCommentForAuditEvidence.Async(sdkConfiguration, options, _headers);
         CreateCommentForAuditEvidenceRequest request = buildRequest();
 
         return operation.doRequest(request)

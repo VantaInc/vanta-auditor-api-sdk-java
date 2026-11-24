@@ -9,14 +9,18 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.InitiateAuditorFileUploadInput;
 import com.vanta.vanta_auditor_api.operations.InitiateInformationRequestAuditorFileUpload;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 
 public class InitiateInformationRequestAuditorFileUploadRequestBuilder {
 
     private String auditId;
     private String requestId;
     private InitiateAuditorFileUploadInput initiateAuditorFileUploadInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -41,6 +45,18 @@ public class InitiateInformationRequestAuditorFileUploadRequestBuilder {
         this.initiateAuditorFileUploadInput = initiateAuditorFileUploadInput;
         return this;
     }
+                
+    public InitiateInformationRequestAuditorFileUploadRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public InitiateInformationRequestAuditorFileUploadRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private InitiateInformationRequestAuditorFileUploadRequest buildRequest() {
@@ -53,9 +69,12 @@ public class InitiateInformationRequestAuditorFileUploadRequestBuilder {
     }
 
     public InitiateInformationRequestAuditorFileUploadResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<InitiateInformationRequestAuditorFileUploadRequest, InitiateInformationRequestAuditorFileUploadResponse> operation
-              = new InitiateInformationRequestAuditorFileUpload.Sync(sdkConfiguration, _headers);
+              = new InitiateInformationRequestAuditorFileUpload.Sync(sdkConfiguration, options, _headers);
         InitiateInformationRequestAuditorFileUploadRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

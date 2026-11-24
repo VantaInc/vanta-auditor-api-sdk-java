@@ -10,8 +10,11 @@ import com.vanta.vanta_auditor_api.models.components.DeleteAuditControlCommentIn
 import com.vanta.vanta_auditor_api.models.operations.DeleteCommentForControlRequest;
 import com.vanta.vanta_auditor_api.operations.DeleteCommentForControl;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 public class DeleteCommentForControlRequestBuilder {
@@ -20,6 +23,7 @@ public class DeleteCommentForControlRequestBuilder {
     private String controlId;
     private String commentId;
     private DeleteAuditControlCommentInput deleteAuditControlCommentInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -50,6 +54,18 @@ public class DeleteCommentForControlRequestBuilder {
         this.deleteAuditControlCommentInput = deleteAuditControlCommentInput;
         return this;
     }
+                
+    public DeleteCommentForControlRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public DeleteCommentForControlRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private DeleteCommentForControlRequest buildRequest() {
@@ -63,9 +79,12 @@ public class DeleteCommentForControlRequestBuilder {
     }
 
     public CompletableFuture<DeleteCommentForControlResponse> call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         AsyncRequestOperation<DeleteCommentForControlRequest, DeleteCommentForControlResponse> operation
-              = new DeleteCommentForControl.Async(sdkConfiguration, _headers);
+              = new DeleteCommentForControl.Async(sdkConfiguration, options, _headers);
         DeleteCommentForControlRequest request = buildRequest();
 
         return operation.doRequest(request)

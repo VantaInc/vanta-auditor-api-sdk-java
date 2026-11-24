@@ -8,12 +8,16 @@ import static com.vanta.vanta_auditor_api.operations.Operations.RequestOperation
 import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.GetAudit;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 
 public class GetAuditRequestBuilder {
 
     private String auditId;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -26,6 +30,18 @@ public class GetAuditRequestBuilder {
         this.auditId = auditId;
         return this;
     }
+                
+    public GetAuditRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public GetAuditRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private GetAuditRequest buildRequest() {
@@ -36,9 +52,12 @@ public class GetAuditRequestBuilder {
     }
 
     public GetAuditResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<GetAuditRequest, GetAuditResponse> operation
-              = new GetAudit.Sync(sdkConfiguration, _headers);
+              = new GetAudit.Sync(sdkConfiguration, options, _headers);
         GetAuditRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

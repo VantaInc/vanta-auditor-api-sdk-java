@@ -10,9 +10,11 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.ListAuditEvidence;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.String;
+import java.time.Duration;
 import java.time.OffsetDateTime;
 import java.util.Optional;
 
@@ -25,6 +27,7 @@ public class ListAuditEvidenceRequestBuilder {
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
     private Optional<OffsetDateTime> changedSinceDate = Optional.empty();
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -73,6 +76,18 @@ public class ListAuditEvidenceRequestBuilder {
         this.changedSinceDate = changedSinceDate;
         return this;
     }
+                
+    public ListAuditEvidenceRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListAuditEvidenceRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private ListAuditEvidenceRequest buildRequest() {
@@ -89,9 +104,12 @@ public class ListAuditEvidenceRequestBuilder {
     }
 
     public ListAuditEvidenceResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<ListAuditEvidenceRequest, ListAuditEvidenceResponse> operation
-              = new ListAuditEvidence.Sync(sdkConfiguration, _headers);
+              = new ListAuditEvidence.Sync(sdkConfiguration, options, _headers);
         ListAuditEvidenceRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

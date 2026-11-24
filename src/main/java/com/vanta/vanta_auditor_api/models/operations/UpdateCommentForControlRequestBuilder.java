@@ -9,8 +9,11 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.models.components.UpdateAuditControlCommentInput;
 import com.vanta.vanta_auditor_api.operations.UpdateCommentForControl;
 import com.vanta.vanta_auditor_api.utils.Headers;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.String;
+import java.time.Duration;
+import java.util.Optional;
 
 public class UpdateCommentForControlRequestBuilder {
 
@@ -18,6 +21,7 @@ public class UpdateCommentForControlRequestBuilder {
     private String controlId;
     private String commentId;
     private UpdateAuditControlCommentInput updateAuditControlCommentInput;
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -48,6 +52,18 @@ public class UpdateCommentForControlRequestBuilder {
         this.updateAuditControlCommentInput = updateAuditControlCommentInput;
         return this;
     }
+                
+    public UpdateCommentForControlRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public UpdateCommentForControlRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private UpdateCommentForControlRequest buildRequest() {
@@ -61,9 +77,12 @@ public class UpdateCommentForControlRequestBuilder {
     }
 
     public UpdateCommentForControlResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<UpdateCommentForControlRequest, UpdateCommentForControlResponse> operation
-              = new UpdateCommentForControl.Sync(sdkConfiguration, _headers);
+              = new UpdateCommentForControl.Sync(sdkConfiguration, options, _headers);
         UpdateCommentForControlRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));

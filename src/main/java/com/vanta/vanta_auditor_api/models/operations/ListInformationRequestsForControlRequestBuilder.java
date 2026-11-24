@@ -10,9 +10,11 @@ import com.vanta.vanta_auditor_api.SDKConfiguration;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestsForControl;
 import com.vanta.vanta_auditor_api.utils.Headers;
 import com.vanta.vanta_auditor_api.utils.LazySingletonValue;
+import com.vanta.vanta_auditor_api.utils.Options;
 import com.vanta.vanta_auditor_api.utils.Utils;
 import java.lang.Integer;
 import java.lang.String;
+import java.time.Duration;
 import java.util.Optional;
 
 public class ListInformationRequestsForControlRequestBuilder {
@@ -24,6 +26,7 @@ public class ListInformationRequestsForControlRequestBuilder {
                             "10",
                             new TypeReference<Optional<Integer>>() {});
     private Optional<String> pageCursor = Optional.empty();
+    private Optional<Duration> timeout = Optional.empty();
     private final SDKConfiguration sdkConfiguration;
     private final Headers _headers = new Headers(); 
 
@@ -66,6 +69,18 @@ public class ListInformationRequestsForControlRequestBuilder {
         this.pageCursor = pageCursor;
         return this;
     }
+                
+    public ListInformationRequestsForControlRequestBuilder timeout(Duration timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = Optional.of(timeout);
+        return this;
+    }
+
+    public ListInformationRequestsForControlRequestBuilder timeout(Optional<Duration> timeout) {
+        Utils.checkNotNull(timeout, "timeout");
+        this.timeout = timeout;
+        return this;
+    }
 
 
     private ListInformationRequestsForControlRequest buildRequest() {
@@ -82,9 +97,12 @@ public class ListInformationRequestsForControlRequestBuilder {
     }
 
     public ListInformationRequestsForControlResponse call() {
-        
+        Optional<Options> options = Optional.of(Options.builder()
+            .timeout(timeout)
+            .build());
+
         RequestOperation<ListInformationRequestsForControlRequest, ListInformationRequestsForControlResponse> operation
-              = new ListInformationRequestsForControl.Sync(sdkConfiguration, _headers);
+              = new ListInformationRequestsForControl.Sync(sdkConfiguration, options, _headers);
         ListInformationRequestsForControlRequest request = buildRequest();
 
         return operation.handleResponse(operation.doRequest(request));
