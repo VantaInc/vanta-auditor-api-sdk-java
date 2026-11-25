@@ -5,15 +5,15 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.811.0
   generationVersion: 2.968.1
-  releaseVersion: 0.8.9
-  configChecksum: 249bee88645a1f9e11e95465570de772
+  releaseVersion: 0.8.10
+  configChecksum: c9665bc1db478a6d267f5b90b5df827d
   repoURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java.git
   installationURL: https://github.com/VantaInc/vanta-auditor-api-sdk-java
   published: true
 persistentEdits:
-  generation_id: 3084dade-c98e-45de-bb64-49ff80d56f56
-  pristine_commit_hash: 4b52d08cc545f4d478aa2b757593115557d593ea
-  pristine_tree_hash: a00c1eae5acef3db003ba82432d2f0a38bce3207
+  generation_id: 1569ee63-bd50-40c6-918f-5a93abff2add
+  pristine_commit_hash: 7892c310ea0b5bdcaabeb2d1801619939e81f776
+  pristine_tree_hash: 0afa6f379dd925f47b33c69759e955d05e0f4a6c
 features:
   java:
     additionalDependencies: 0.1.0
@@ -1732,8 +1732,8 @@ trackedFiles:
     pristine_git_object: de7d1b163d5926363b94e775645373b750f65b30
   gradle.properties:
     id: 2afbb999f001
-    last_write_checksum: sha1:1704f02d11685d8f70aadb37d6d284e8494d8506
-    pristine_git_object: 6a7f497c0f3286d43c6204d9af7f28c85e056826
+    last_write_checksum: sha1:e5886b604ee8c122dd503c7de1f16400ce7b8f02
+    pristine_git_object: f6a76e94931f9f7566be034059a054021788b82a
   gradle/wrapper/gradle-wrapper.jar:
     id: ec27dae6e852
     last_write_checksum: sha1:f725fb1467084142d74fd7cd8eab691ab3442611
@@ -1780,8 +1780,8 @@ trackedFiles:
     pristine_git_object: 1ced6e5fdc73f73fc5f2600676e7a4e3bedc9717
   src/main/java/com/vanta/vanta_auditor_api/SDKConfiguration.java:
     id: ce55360c720c
-    last_write_checksum: sha1:73558d0b71a7af6c28dbc03567d203c251191c49
-    pristine_git_object: 37d769e9a72a03f783bfb22896b02af5718257bd
+    last_write_checksum: sha1:62b7477703535fdeaff9104a54d4665d5fad97a5
+    pristine_git_object: 642a363dd03bbabdca97a8e02469d807047643cf
   src/main/java/com/vanta/vanta_auditor_api/SecuritySource.java:
     id: 18c0da44b51f
     last_write_checksum: sha1:55dc5f4240c7317c9a5a4080b6e17dc1b6fdd403

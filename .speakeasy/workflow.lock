@@ -14,7 +14,7 @@ targets:
         sourceRevisionDigest: sha256:9e7553ff70dfbd7804f7a1e83858b2dd22a1e3112861e5180258523aeb51a2a7
         sourceBlobDigest: sha256:1e96badc9fb30f75bf60e093badadbd5052a71cd306e0f8cdd7c131899aa5077
         codeSamplesNamespace: conduct-an-audit-java-code-samples
-        codeSamplesRevisionDigest: sha256:bb48f78d11142f58c1ccc706c85215cb0b1bac7dba35f54df86b88a8533228ce
+        codeSamplesRevisionDigest: sha256:d919dca44108589f3dcfc8b2581c1d4d10389b9b894fe81ce9468a92691bed1c
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: pinned
