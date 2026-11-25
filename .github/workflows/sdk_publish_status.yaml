@@ -1,0 +1,65 @@
+name: Inspect Sonatype deployment
+
+"on":
+  workflow_dispatch:
+    inputs:
+      deployment_id:
+        description: Sonatype Central deployment ID
+        required: true
+        type: string
+
+permissions: {}
+
+jobs:
+  inspect-deployment:
+    if: github.ref == 'refs/heads/main'
+    environment: sdk-publish
+    runs-on: ubuntu-22.04
+    timeout-minutes: 2
+    steps:
+      - name: Read Central deployment status
+        env:
+          SONATYPE_DEPLOYMENT_ID: ${{ inputs.deployment_id }}
+          SONATYPE_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          SONATYPE_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        run: |
+          python3 - <<'PY'
+          import base64
+          import http.client
+          import json
+          import os
+          from uuid import UUID
+
+          try:
+              deployment_id = UUID(os.environ["SONATYPE_DEPLOYMENT_ID"])
+          except ValueError:
+              raise SystemExit("Enter a valid Sonatype Central deployment ID.") from None
+
+          username = os.environ["SONATYPE_USERNAME"]
+          password = os.environ["SONATYPE_PASSWORD"]
+          if not username or not password:
+              raise SystemExit("Sonatype credentials are missing from the sdk-publish environment.")
+
+          token = base64.b64encode(f"{username}:{password}".encode()).decode("ascii")
+          print(f"::add-mask::{token}", flush=True)
+
+          connection = http.client.HTTPSConnection("central.sonatype.com", timeout=30)
+          try:
+              connection.request(
+                  "POST",
+                  f"/api/v1/publisher/status?id={deployment_id}",
+                  headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+              )
+              response = connection.getresponse()
+              if response.status != 200:
+                  raise SystemExit(f"Sonatype status request failed (HTTP {response.status}).")
+              deployment = json.load(response)
+          finally:
+              connection.close()
+
+          print(json.dumps({
+              "deploymentId": str(deployment_id),
+              "deploymentState": deployment["deploymentState"],
+              "errors": deployment.get("errors"),
+          }, indent=2))
+          PY
