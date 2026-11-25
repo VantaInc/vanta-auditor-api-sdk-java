@@ -48,7 +48,11 @@ jobs:
               connection.request(
                   "POST",
                   f"/api/v1/publisher/status?id={deployment_id}",
-                  headers={"Authorization": f"Bearer {token}", "Accept": "application/json"},
+                  headers={
+                      "Authorization": f"Bearer {token}",
+                      "Accept": "application/json",
+                      "User-Agent": "Vanta Auditor SDK deployment diagnostics",
+                  },
               )
               response = connection.getresponse()
               if response.status != 200:
