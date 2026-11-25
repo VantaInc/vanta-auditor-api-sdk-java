@@ -1,0 +1,19 @@
+.github/workflows/sdk_publish_status.yaml
+  s_a4f04ac2cd3875::t_0676e952988364 1-65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9f5cfab4ac7241aeb3516e384b67fcb39fc066b1",
+  "prompts": {},
+  "sessions": {
+    "s_a4f04ac2cd3875": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a20f4e-73d7-7b52-945d-2313ec473d71",
+        "model": "gpt-6.2-sol"
+      },
+      "human_author": "Victor Noventa <victor@bitcomplete.io>"
+    }
+  }
+}
