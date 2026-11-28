@@ -49,7 +49,7 @@ The samples below show how a published SDK artifact is used:
 
 Gradle:
 ```groovy
-implementation 'com.vanta:vanta-auditor-api:0.8.9'
+implementation 'com.vanta:vanta-auditor-api:0.8.10'
 ```
 
 Maven:
@@ -57,7 +57,7 @@ Maven:
 <dependency>
     <groupId>com.vanta</groupId>
     <artifactId>vanta-auditor-api</artifactId>
-    <version>0.8.9</version>
+    <version>0.8.10</version>
 </dependency>
 ```
 
@@ -306,6 +306,7 @@ public class Application {
 * [listInformationRequestEvidence](docs/sdks/audits/README.md#listinformationrequestevidence) - List evidence for an information request
 * [getInformationRequestEvidence](docs/sdks/audits/README.md#getinformationrequestevidence) - Get information request evidence by ID
 * [getInformationRequestTestSnapshotEvidenceDetail](docs/sdks/audits/README.md#getinformationrequesttestsnapshotevidencedetail) - Get test snapshot detail for an evidence row
+* [listInformationRequestTestSnapshotRawData](docs/sdks/audits/README.md#listinformationrequesttestsnapshotrawdata) - List raw test data for a test snapshot
 * [listCommentsForInformationRequest](docs/sdks/audits/README.md#listcommentsforinformationrequest) - List comments for an information request
 * [createCommentForInformationRequest](docs/sdks/audits/README.md#createcommentforinformationrequest) - Create a comment for an information request
 * [getCommentForInformationRequest](docs/sdks/audits/README.md#getcommentforinformationrequest) - Get an information request comment by ID
@@ -433,7 +434,7 @@ public class Application {
 many more subclasses in the JDK platform).
 
 **Inherit from [`VantaError`](./src/main/java/models/errors/VantaError.java)**:
-* [`com.vanta.vanta_auditor_api.models.errors.OutboundError`](./src/main/java/models/errors/com.vanta.vanta_auditor_api.models.errors.OutboundError.java): Applicable to 2 of 61 methods.*
+* [`com.vanta.vanta_auditor_api.models.errors.OutboundError`](./src/main/java/models/errors/com.vanta.vanta_auditor_api.models.errors.OutboundError.java): Applicable to 2 of 62 methods.*
 
 
 </details>
