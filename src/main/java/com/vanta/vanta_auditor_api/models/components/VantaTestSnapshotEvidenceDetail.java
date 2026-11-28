@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.vanta.vanta_auditor_api.utils.Utils;
+import java.lang.Deprecated;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
@@ -65,9 +66,14 @@ public class VantaTestSnapshotEvidenceDetail {
     private Optional<? extends SlaRemediation> slaRemediation;
 
     /**
-     * Raw test data captured at snapshot time.
+     * Always empty. Read captured records from `GET
+     * /v1/audits/{auditId}/information-requests/{requestId}/evidence/{evidenceId}/test-snapshot/raw-data`.
+     * This field will be removed on 2027-01-25.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
     @JsonProperty("rawTestData")
+    @Deprecated
     private List<VantaTestSnapshotRawTestDataRow> rawTestData;
 
     /**
@@ -181,8 +187,13 @@ public class VantaTestSnapshotEvidenceDetail {
     }
 
     /**
-     * Raw test data captured at snapshot time.
+     * Always empty. Read captured records from `GET
+     * /v1/audits/{auditId}/information-requests/{requestId}/evidence/{evidenceId}/test-snapshot/raw-data`.
+     * This field will be removed on 2027-01-25.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     @JsonIgnore
     public List<VantaTestSnapshotRawTestDataRow> rawTestData() {
         return rawTestData;
@@ -291,8 +302,13 @@ public class VantaTestSnapshotEvidenceDetail {
     }
 
     /**
-     * Raw test data captured at snapshot time.
+     * Always empty. Read captured records from `GET
+     * /v1/audits/{auditId}/information-requests/{requestId}/evidence/{evidenceId}/test-snapshot/raw-data`.
+     * This field will be removed on 2027-01-25.
+     * 
+     * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
      */
+    @Deprecated
     public VantaTestSnapshotEvidenceDetail withRawTestData(List<VantaTestSnapshotRawTestDataRow> rawTestData) {
         Utils.checkNotNull(rawTestData, "rawTestData");
         this.rawTestData = rawTestData;
@@ -405,6 +421,7 @@ public class VantaTestSnapshotEvidenceDetail {
 
         private Optional<? extends SlaRemediation> slaRemediation = Optional.empty();
 
+        @Deprecated
         private List<VantaTestSnapshotRawTestDataRow> rawTestData;
 
         private Optional<? extends VantaTestSnapshotOutOfScopeResources> outOfScopeResources = Optional.empty();
@@ -495,8 +512,13 @@ public class VantaTestSnapshotEvidenceDetail {
 
 
         /**
-         * Raw test data captured at snapshot time.
+         * Always empty. Read captured records from `GET
+         * /v1/audits/{auditId}/information-requests/{requestId}/evidence/{evidenceId}/test-snapshot/raw-data`.
+         * This field will be removed on 2027-01-25.
+         * 
+         * @deprecated field: This will be removed in a future release, please migrate away from it as soon as possible.
          */
+        @Deprecated
         public Builder rawTestData(List<VantaTestSnapshotRawTestDataRow> rawTestData) {
             Utils.checkNotNull(rawTestData, "rawTestData");
             this.rawTestData = rawTestData;

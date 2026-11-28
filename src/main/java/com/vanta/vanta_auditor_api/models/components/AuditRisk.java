@@ -65,8 +65,8 @@ public class AuditRisk {
     private JsonNullable<Double> impact;
 
     /**
-     * Inherent risk score, or null if not scored. Defaults to the likelihood * impact product; when the
-     * organization scores risks by factors, this is the rolled-up factor score rounded to two decimals.
+     * Inherent risk score, or null if not scored. The score combines the ratings of the dimensions that
+     * the risk is scored on, such as likelihood and impact, rounded to two decimals.
      */
     @JsonInclude(Include.NON_ABSENT)
     @JsonProperty("inherentRisk")
@@ -238,8 +238,8 @@ public class AuditRisk {
     }
 
     /**
-     * Inherent risk score, or null if not scored. Defaults to the likelihood * impact product; when the
-     * organization scores risks by factors, this is the rolled-up factor score rounded to two decimals.
+     * Inherent risk score, or null if not scored. The score combines the ratings of the dimensions that
+     * the risk is scored on, such as likelihood and impact, rounded to two decimals.
      */
     @JsonIgnore
     public JsonNullable<Double> inherentRisk() {
@@ -419,8 +419,8 @@ public class AuditRisk {
     }
 
     /**
-     * Inherent risk score, or null if not scored. Defaults to the likelihood * impact product; when the
-     * organization scores risks by factors, this is the rolled-up factor score rounded to two decimals.
+     * Inherent risk score, or null if not scored. The score combines the ratings of the dimensions that
+     * the risk is scored on, such as likelihood and impact, rounded to two decimals.
      */
     public AuditRisk withInherentRisk(double inherentRisk) {
         Utils.checkNotNull(inherentRisk, "inherentRisk");
@@ -429,8 +429,8 @@ public class AuditRisk {
     }
 
     /**
-     * Inherent risk score, or null if not scored. Defaults to the likelihood * impact product; when the
-     * organization scores risks by factors, this is the rolled-up factor score rounded to two decimals.
+     * Inherent risk score, or null if not scored. The score combines the ratings of the dimensions that
+     * the risk is scored on, such as likelihood and impact, rounded to two decimals.
      */
     public AuditRisk withInherentRisk(JsonNullable<Double> inherentRisk) {
         Utils.checkNotNull(inherentRisk, "inherentRisk");
@@ -793,8 +793,8 @@ public class AuditRisk {
 
 
         /**
-         * Inherent risk score, or null if not scored. Defaults to the likelihood * impact product; when the
-         * organization scores risks by factors, this is the rolled-up factor score rounded to two decimals.
+         * Inherent risk score, or null if not scored. The score combines the ratings of the dimensions that
+         * the risk is scored on, such as likelihood and impact, rounded to two decimals.
          */
         public Builder inherentRisk(double inherentRisk) {
             Utils.checkNotNull(inherentRisk, "inherentRisk");
@@ -803,8 +803,8 @@ public class AuditRisk {
         }
 
         /**
-         * Inherent risk score, or null if not scored. Defaults to the likelihood * impact product; when the
-         * organization scores risks by factors, this is the rolled-up factor score rounded to two decimals.
+         * Inherent risk score, or null if not scored. The score combines the ratings of the dimensions that
+         * the risk is scored on, such as likelihood and impact, rounded to two decimals.
          */
         public Builder inherentRisk(JsonNullable<Double> inherentRisk) {
             Utils.checkNotNull(inherentRisk, "inherentRisk");

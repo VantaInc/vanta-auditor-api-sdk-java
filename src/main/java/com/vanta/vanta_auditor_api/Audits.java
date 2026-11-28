@@ -147,6 +147,9 @@ import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestAudit
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestEvidenceResponse;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestTestSnapshotRawDataRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestTestSnapshotRawDataRequestBuilder;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestTestSnapshotRawDataResponse;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsForControlRequest;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsForControlRequestBuilder;
 import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestsForControlResponse;
@@ -245,6 +248,7 @@ import com.vanta.vanta_auditor_api.operations.ListCommentsForInformationRequest;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestActivity;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestAuditorFiles;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestEvidence;
+import com.vanta.vanta_auditor_api.operations.ListInformationRequestTestSnapshotRawData;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequests;
 import com.vanta.vanta_auditor_api.operations.ListInformationRequestsForControl;
 import com.vanta.vanta_auditor_api.operations.ListIntegrations;
@@ -4210,17 +4214,11 @@ public class Audits {
      * 
      * <p>Retrieves the rich detail for a single VANTA_TEST_SNAPSHOT evidence row
      * attached to an information request. The response includes test-level
-     * metadata (description, integrations, SLA), the raw test data captured
-     * at snapshot time, and the resources that were excluded from the test
-     * (out-of-scope resources).
+     * metadata (description, integrations, SLA) and out-of-scope resources.
      * 
-     * <p>For structured snapshots, the `rawTestData` array contains one row per
-     * resource the test ran against; each row carries `resourceId`,
-     * `resourceType`, and the raw JSON for that resource.
-     * 
-     * <p>For unstructured snapshots, the `rawTestData` array contains a single
-     * row with `resourceId` and `resourceType` set to `null` and `rawJson`
-     * containing the entire test-run JSON blob.
+     * <p>To retrieve captured raw test data, call
+     * `GET
+     * /v1/audits/{auditId}/information-requests/{requestId}/evidence/{evidenceId}/test-snapshot/raw-data`.
      * 
      * <p>The `outOfScopeResources` field lists resources excluded at the test
      * level (customer-disabled) and the framework level (segment
@@ -4230,7 +4228,7 @@ public class Audits {
      * introspection tests. Empty when the test does not perform API
      * introspection.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @return The call builder
      */
@@ -4243,17 +4241,11 @@ public class Audits {
      * 
      * <p>Retrieves the rich detail for a single VANTA_TEST_SNAPSHOT evidence row
      * attached to an information request. The response includes test-level
-     * metadata (description, integrations, SLA), the raw test data captured
-     * at snapshot time, and the resources that were excluded from the test
-     * (out-of-scope resources).
+     * metadata (description, integrations, SLA) and out-of-scope resources.
      * 
-     * <p>For structured snapshots, the `rawTestData` array contains one row per
-     * resource the test ran against; each row carries `resourceId`,
-     * `resourceType`, and the raw JSON for that resource.
-     * 
-     * <p>For unstructured snapshots, the `rawTestData` array contains a single
-     * row with `resourceId` and `resourceType` set to `null` and `rawJson`
-     * containing the entire test-run JSON blob.
+     * <p>To retrieve captured raw test data, call
+     * `GET
+     * /v1/audits/{auditId}/information-requests/{requestId}/evidence/{evidenceId}/test-snapshot/raw-data`.
      * 
      * <p>The `outOfScopeResources` field lists resources excluded at the test
      * level (customer-disabled) and the framework level (segment
@@ -4263,7 +4255,7 @@ public class Audits {
      * introspection tests. Empty when the test does not perform API
      * introspection.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -4283,17 +4275,11 @@ public class Audits {
      * 
      * <p>Retrieves the rich detail for a single VANTA_TEST_SNAPSHOT evidence row
      * attached to an information request. The response includes test-level
-     * metadata (description, integrations, SLA), the raw test data captured
-     * at snapshot time, and the resources that were excluded from the test
-     * (out-of-scope resources).
+     * metadata (description, integrations, SLA) and out-of-scope resources.
      * 
-     * <p>For structured snapshots, the `rawTestData` array contains one row per
-     * resource the test ran against; each row carries `resourceId`,
-     * `resourceType`, and the raw JSON for that resource.
-     * 
-     * <p>For unstructured snapshots, the `rawTestData` array contains a single
-     * row with `resourceId` and `resourceType` set to `null` and `rawJson`
-     * containing the entire test-run JSON blob.
+     * <p>To retrieve captured raw test data, call
+     * `GET
+     * /v1/audits/{auditId}/information-requests/{requestId}/evidence/{evidenceId}/test-snapshot/raw-data`.
      * 
      * <p>The `outOfScopeResources` field lists resources excluded at the test
      * level (customer-disabled) and the framework level (segment
@@ -4303,7 +4289,7 @@ public class Audits {
      * introspection tests. Empty when the test does not perform API
      * introspection.
      * 
-     * <p>Rate limit: 10 requests / minute.
+     * <p>Rate limit: 50 requests / minute.
      * 
      * @param auditId 
      * @param requestId 
@@ -4324,6 +4310,76 @@ public class Audits {
                 .build();
         RequestOperation<GetInformationRequestTestSnapshotEvidenceDetailRequest, GetInformationRequestTestSnapshotEvidenceDetailResponse> operation
               = new GetInformationRequestTestSnapshotEvidenceDetail.Sync(sdkConfiguration, options, _headers);
+        return operation.handleResponse(operation.doRequest(request));
+    }
+
+    /**
+     * List raw test data for a test snapshot
+     * 
+     * <p>Lists raw test data captured in a test snapshot, in capture order.
+     * Structured entries contain the primary resource ID, type, and captured
+     * JSON. Unstructured entries contain one captured JSON record, with null
+     * resource ID and type.
+     * 
+     * <p>Pass `results.pageInfo.endCursor` as `pageCursor` to continue until
+     * `results.pageInfo.hasNextPage` is false.
+     * 
+     * <p>Deleted evidence returns 404.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @return The call builder
+     */
+    public ListInformationRequestTestSnapshotRawDataRequestBuilder listInformationRequestTestSnapshotRawData() {
+        return new ListInformationRequestTestSnapshotRawDataRequestBuilder(sdkConfiguration);
+    }
+
+    /**
+     * List raw test data for a test snapshot
+     * 
+     * <p>Lists raw test data captured in a test snapshot, in capture order.
+     * Structured entries contain the primary resource ID, type, and captured
+     * JSON. Unstructured entries contain one captured JSON record, with null
+     * resource ID and type.
+     * 
+     * <p>Pass `results.pageInfo.endCursor` as `pageCursor` to continue until
+     * `results.pageInfo.hasNextPage` is false.
+     * 
+     * <p>Deleted evidence returns 404.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListInformationRequestTestSnapshotRawDataResponse listInformationRequestTestSnapshotRawData(ListInformationRequestTestSnapshotRawDataRequest request) {
+        return listInformationRequestTestSnapshotRawData(request, Optional.empty());
+    }
+
+    /**
+     * List raw test data for a test snapshot
+     * 
+     * <p>Lists raw test data captured in a test snapshot, in capture order.
+     * Structured entries contain the primary resource ID, type, and captured
+     * JSON. Unstructured entries contain one captured JSON record, with null
+     * resource ID and type.
+     * 
+     * <p>Pass `results.pageInfo.endCursor` as `pageCursor` to continue until
+     * `results.pageInfo.hasNextPage` is false.
+     * 
+     * <p>Deleted evidence returns 404.
+     * 
+     * <p>Rate limit: 50 requests / minute.
+     * 
+     * @param request The request object containing all the parameters for the API call.
+     * @param options additional options
+     * @return The response from the API call
+     * @throws RuntimeException subclass if the API call fails
+     */
+    public ListInformationRequestTestSnapshotRawDataResponse listInformationRequestTestSnapshotRawData(ListInformationRequestTestSnapshotRawDataRequest request, Optional<Options> options) {
+        RequestOperation<ListInformationRequestTestSnapshotRawDataRequest, ListInformationRequestTestSnapshotRawDataResponse> operation
+              = new ListInformationRequestTestSnapshotRawData.Sync(sdkConfiguration, options, _headers);
         return operation.handleResponse(operation.doRequest(request));
     }
 

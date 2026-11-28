@@ -43,6 +43,7 @@
 * [listInformationRequestEvidence](#listinformationrequestevidence) - List evidence for an information request
 * [getInformationRequestEvidence](#getinformationrequestevidence) - Get information request evidence by ID
 * [getInformationRequestTestSnapshotEvidenceDetail](#getinformationrequesttestsnapshotevidencedetail) - Get test snapshot detail for an evidence row
+* [listInformationRequestTestSnapshotRawData](#listinformationrequesttestsnapshotrawdata) - List raw test data for a test snapshot
 * [listCommentsForInformationRequest](#listcommentsforinformationrequest) - List comments for an information request
 * [createCommentForInformationRequest](#createcommentforinformationrequest) - Create a comment for an information request
 * [getCommentForInformationRequest](#getcommentforinformationrequest) - Get an information request comment by ID
@@ -2690,17 +2691,10 @@ public class Application {
 
 Retrieves the rich detail for a single VANTA_TEST_SNAPSHOT evidence row
 attached to an information request. The response includes test-level
-metadata (description, integrations, SLA), the raw test data captured
-at snapshot time, and the resources that were excluded from the test
-(out-of-scope resources).
+metadata (description, integrations, SLA) and out-of-scope resources.
 
-For structured snapshots, the `rawTestData` array contains one row per
-resource the test ran against; each row carries `resourceId`,
-`resourceType`, and the raw JSON for that resource.
-
-For unstructured snapshots, the `rawTestData` array contains a single
-row with `resourceId` and `resourceType` set to `null` and `rawJson`
-containing the entire test-run JSON blob.
+To retrieve captured raw test data, call
+`GET /v1/audits/{auditId}/information-requests/{requestId}/evidence/{evidenceId}/test-snapshot/raw-data`.
 
 The `outOfScopeResources` field lists resources excluded at the test
 level (customer-disabled) and the framework level (segment
@@ -2710,7 +2704,7 @@ The `apiRequests` array contains the HTTP requests captured during API
 introspection tests. Empty when the test does not perform API
 introspection.
 
-Rate limit: 10 requests / minute.
+Rate limit: 50 requests / minute.
 
 ### Example Usage
 
@@ -2754,6 +2748,72 @@ public class Application {
 ### Response
 
 **[GetInformationRequestTestSnapshotEvidenceDetailResponse](../../models/operations/GetInformationRequestTestSnapshotEvidenceDetailResponse.md)**
+
+### Errors
+
+| Error Type                 | Status Code                | Content Type               |
+| -------------------------- | -------------------------- | -------------------------- |
+| models/errors/APIException | 4XX, 5XX                   | \*/\*                      |
+
+## listInformationRequestTestSnapshotRawData
+
+Lists raw test data captured in a test snapshot, in capture order.
+Structured entries contain the primary resource ID, type, and captured
+JSON. Unstructured entries contain one captured JSON record, with null
+resource ID and type.
+
+Pass `results.pageInfo.endCursor` as `pageCursor` to continue until
+`results.pageInfo.hasNextPage` is false.
+
+Deleted evidence returns 404.
+
+Rate limit: 50 requests / minute.
+
+### Example Usage
+
+<!-- UsageSnippet language="java" operationID="ListInformationRequestTestSnapshotRawData" method="get" path="/audits/{auditId}/information-requests/{requestId}/evidence/{evidenceId}/test-snapshot/raw-data" example="Example 1" -->
+```java
+package hello.world;
+
+import com.vanta.vanta_auditor_api.Vanta;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestTestSnapshotRawDataRequest;
+import com.vanta.vanta_auditor_api.models.operations.ListInformationRequestTestSnapshotRawDataResponse;
+import java.lang.Exception;
+
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+
+        Vanta sdk = Vanta.builder()
+                .bearerAuth(System.getenv().getOrDefault("BEARER_AUTH", ""))
+            .build();
+
+        ListInformationRequestTestSnapshotRawDataRequest req = ListInformationRequestTestSnapshotRawDataRequest.builder()
+                .auditId("<id>")
+                .requestId("<id>")
+                .evidenceId("<id>")
+                .build();
+
+        ListInformationRequestTestSnapshotRawDataResponse res = sdk.audits().listInformationRequestTestSnapshotRawData()
+                .request(req)
+                .call();
+
+        if (res.paginatedResponseVantaTestSnapshotRawTestDataPageRow().isPresent()) {
+            System.out.println(res.paginatedResponseVantaTestSnapshotRawTestDataPageRow().get());
+        }
+    }
+}
+```
+
+### Parameters
+
+| Parameter                                                                                                                       | Type                                                                                                                            | Required                                                                                                                        | Description                                                                                                                     |
+| ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                                       | [ListInformationRequestTestSnapshotRawDataRequest](../../models/operations/ListInformationRequestTestSnapshotRawDataRequest.md) | :heavy_check_mark:                                                                                                              | The request object to use for the request.                                                                                      |
+
+### Response
+
+**[ListInformationRequestTestSnapshotRawDataResponse](../../models/operations/ListInformationRequestTestSnapshotRawDataResponse.md)**
 
 ### Errors
 
